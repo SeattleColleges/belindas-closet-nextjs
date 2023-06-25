@@ -19,4 +19,4 @@ jobs:
 
       - name: Run CD for Production
         run: |
-          # Perform deployment steps for the production environment
+          echo Perform deployment steps for the production environment
