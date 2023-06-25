@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16 # was originally using v14 but getting error. I believe using v2 would allow older version
+          node-version: 16 # was originally using v14 but getting error. I believe using setup-node@v2 would allow older version
 
       - name: Install dependencies
         run: npm ci
@@ -53,8 +53,8 @@ jobs:
 #      - name: Run End-to-End Tests
 #        run: npm run test:e2e
 #
-##      - name: Run Snapshot Tests
-##        run: npm run test:snapshot
+#      - name: Run Snapshot Tests
+#        run: npm run test:snapshot
 
 
 
