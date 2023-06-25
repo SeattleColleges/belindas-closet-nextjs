@@ -1,5 +1,12 @@
 name: Continuous Deployment
-
+on:
+  workflow_call: # required when creating a reusable workflow
+    inputs:
+      config-path:
+        required: false
+    secrets:
+      token:
+        required: false
 jobs:
   deploy-to-staging:
     runs-on: ubuntu-latest
@@ -9,7 +16,7 @@ jobs:
 
       - name: Run CD for Staging
         run: |
-          # Perform deployment steps for the staging environment
+          # TODO Perform deployment steps for the staging environment
 
   deploy-to-production:
     runs-on: ubuntu-latest
