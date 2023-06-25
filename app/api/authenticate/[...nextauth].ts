@@ -1,6 +1,5 @@
 // importing NextAuthOptions to pass into exported function
 import NextAuth, {NextAuthOptions} from "next-auth";
-
 import CredentialsProvider  from "next-auth/providers/credentials";
 
 const authOptions: NextAuthOptions = {
@@ -17,7 +16,10 @@ const authOptions: NextAuthOptions = {
     // Accessing providers from nextjs documentation by CredentialsProvider import
     CredentialsProvider({
       type: 'credentials',
-      credentials: {},
+      credentials: { 
+        /* in here, a default form can be added with email & password */ 
+        /* instead of default form, we can overwrite this by adding a sign in page object & providing a path */ 
+      },
       // this function will fire when sending signin request to backend api
       authorize(credentials, req){
         // credentials will contain user data from frontend (email,password)
@@ -43,13 +45,18 @@ const authOptions: NextAuthOptions = {
           email: '',
           role: '',
         }
-
       },
     }),
 
   ],
 
-    
+  // defining our sign in page by passing the route (make sure the path exists)
+  pages: {
+    signIn: '/auth/signin', 
+    // todo: add the error and sign out page
+    // error: '/auth/error',
+    // signOut: '/auth/signout
+  }
   
 
 }
