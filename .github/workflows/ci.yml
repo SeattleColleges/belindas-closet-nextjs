@@ -27,7 +27,31 @@ jobs:
         run: npm run lint --if-present
 
 # TODO: Tests
-#      - name: Run tests
-#        run: npm test
+#      - name: Run Unit Tests
+#        run: npm run test:unit
+#
+#      - name: Run Integration Tests
+#        run: npm run test:integration
+#
+#      - name: Run Component Tests
+#        run: npm run test:components
+#
+#      - name: Run API Tests
+#        run: npm run test:api
+#
+#      - name: Run End-to-End Tests
+#        run: npm run test:e2e
+#
+##      - name: Run Snapshot Tests
+##        run: npm run test:snapshot
+#
+#      - name: Run Routing Tests
+#        run: npm run test:routing
+#
+#      - name: Run Redux/State Management Tests
+#        run: npm run test:redux
+#
+#      - name: Run Error Handling Tests
+#        run: npm run test:error-handling
 
 
