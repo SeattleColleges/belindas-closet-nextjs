@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Compile TypeScript
+        run: npm run compile
+
       - name: Lint Code
         run: npm run lint --if-present
 
