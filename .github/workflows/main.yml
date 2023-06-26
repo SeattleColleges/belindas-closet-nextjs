@@ -11,14 +11,15 @@ on:
       - closed
 
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true || github.event_name == 'push'
+
 
   Continuous-Integration:
     uses: ./.github/workflows/ci.yml
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
 
   Continuous-Deployment:
     uses: ./.github/workflows/cd.yml
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
 
 
 
