@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Compile TypeScript
-        run: npm run compile
+        run: npx tsc --project tsconfig.github.json
 
       - name: Lint Code
         run: npm run lint --if-present
