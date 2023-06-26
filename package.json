@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "compile": "tsc"
+    "compile": "tsc --listFiles"
   },
   "dependencies": {
     "@types/node": "20.3.1",
