@@ -9,7 +9,8 @@ jobs:
   Continuous-Integration:
       uses: ./.github/workflows/ci.yml
 
-  #TODO: add CD ensure it is dependent on CI passing
+  Continuous-Deployment:
+    uses ./.github/workflows/cd.yml
 
 
 
