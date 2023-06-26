@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoginComponent = () => {
+const Login = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="bg-gray-100 p-8 rounded shadow-md">
@@ -14,8 +14,7 @@ const LoginComponent = () => {
               type="email"
               id="email"
               className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Enter your email"
-            />
+              placeholder="Enter your email"/>
           </div>
           <div className="mb-4">
             <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
@@ -25,19 +24,20 @@ const LoginComponent = () => {
               type="password"
               id="password"
               className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Enter your password"
-            />
+              placeholder="Enter your password"/>
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mb-4"
-          >
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mb-4">
             Sign In
           </button>
         </form>
+        <p className="text-center text-blue-500 underline font-bold">
+            Forgot Password
+        </p>
         <p className="text-center">
-          <a href="/signup" className="text-blue-500 underline font-bold">
-            sign up
+          <a href="/api/auth/sign-up" className="text-blue-500 underline font-bold">
+            Sign Up
           </a>
         </p>
       </div>
@@ -45,4 +45,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export default Login;

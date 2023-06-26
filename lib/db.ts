@@ -11,7 +11,6 @@ const startDb = async () => {
   // If no connection, connect to database with mongoose.connect(...)
   if (!connection) connection = await mongoose.connect(url);
   return connection;
-
-}
+};
 
 export default startDb;

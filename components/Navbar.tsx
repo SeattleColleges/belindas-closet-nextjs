@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import AuthProfileMenu from "../AuthProfileMenu";
+import AuthProfileMenu from "../components/AuthProfileMenu";
 
 export default function Navbar() {
   return (
@@ -9,4 +9,4 @@ export default function Navbar() {
       <AuthProfileMenu/>
     </nav>
   )
-}
+};
