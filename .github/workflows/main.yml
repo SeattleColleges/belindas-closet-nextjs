@@ -7,10 +7,10 @@ on:
 
 jobs:
   Continuous-Integration:
-      uses: ./.github/workflows/ci.yml
+    uses: ./.github/workflows/ci.yml
 
   Continuous-Deployment:
-    uses ./.github/workflows/cd.yml
+    uses: ./.github/workflows/cd.yml
 
 
 
