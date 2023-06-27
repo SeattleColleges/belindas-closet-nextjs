@@ -55,6 +55,38 @@
         "chunks": [],
         "async": false
       }
+    },
+    "(app-client)/./components/AuthProfileMenu.tsx": {
+      "*": {
+        "id": "(sc_client)/./components/AuthProfileMenu.tsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./components/AuthProvider.tsx": {
+      "*": {
+        "id": "(sc_client)/./components/AuthProvider.tsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./node_modules/next/dist/client/link.js": {
+      "*": {
+        "id": "(sc_client)/./node_modules/next/dist/client/link.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./app/api/auth/sign-up/page.tsx": {
+      "*": {
+        "id": "(sc_client)/./app/api/auth/sign-up/page.tsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
     }
   },
   "edgeSSRModuleMapping": {},
@@ -218,13 +250,49 @@
         "app-client-internals:static/chunks/app-client-internals.js"
       ],
       "async": false
+    },
+    "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/components/AuthProfileMenu.tsx": {
+      "id": "(app-client)/./components/AuthProfileMenu.tsx",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/components/AuthProvider.tsx": {
+      "id": "(app-client)/./components/AuthProvider.tsx",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/node_modules/next/dist/client/link.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/link.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/node_modules/next/dist/esm/client/link.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/link.js",
+      "name": "*",
+      "chunks": [
+        "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/app/api/auth/sign-up/page.tsx": {
+      "id": "(app-client)/./app/api/auth/sign-up/page.tsx",
+      "name": "*",
+      "chunks": [
+        "app/api/auth/sign-up/page:static/chunks/app/api/auth/sign-up/page.js"
+      ],
+      "async": false
     }
   },
   "entryCSSFiles": {
-    "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/app/page": {
-      "modules": [],
-      "files": []
-    },
     "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/app/layout": {
       "modules": [
         "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/app/globals.css",
@@ -233,6 +301,14 @@
       "files": [
         "static/css/app/layout.css"
       ]
+    },
+    "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/app/page": {
+      "modules": [],
+      "files": []
+    },
+    "/Users/robel/Documents/SummerGroupProject/belindas-closet-nextjs/app/api/auth/sign-up/page": {
+      "modules": [],
+      "files": []
     }
   }
 }
