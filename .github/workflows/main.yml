@@ -13,11 +13,11 @@ on:
 jobs:
 
 
-  Continuous-Integration:
+  CI:
     uses: ./.github/workflows/ci.yml
     if: github.event.pull_request.merged == true || github.event_name == 'push'
 
-  Continuous-Deployment:
+  CD:
     uses: ./.github/workflows/cd.yml
     if: github.event.pull_request.merged == true || github.event_name == 'push'
 
