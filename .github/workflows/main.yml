@@ -4,8 +4,22 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
 
 jobs:
-  ci:
+
+
+  CI:
     uses: ./.github/workflows/ci.yml
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
+
+  CD:
+    uses: ./.github/workflows/cd.yml
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
+
+
 

@@ -1,0 +1,9 @@
+name: PR Workflow
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  Continuous-Integration:
+    uses: ./.github/workflows/ci.yml
