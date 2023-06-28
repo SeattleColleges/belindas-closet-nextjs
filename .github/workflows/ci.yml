@@ -41,6 +41,15 @@ jobs:
       - name: Code Coverage
         run: npm run test:coverage
 
+      - name: Publish test coverage report
+        uses: EndBug/add-and-commit@v4
+        with:
+          add: docs
+          force: true
+          message: Add generated docs
+          env:
+            GITHUB_TOKEN: $
+
 #      - name: Run Redux/State Management Tests
 #        run: npm run redux:tests
 #
