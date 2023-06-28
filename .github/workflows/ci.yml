@@ -32,11 +32,25 @@ jobs:
         run: npm run lint --if-present
 
       - name: Run Unit Tests
-        run: npm run unit-tests
+        run: npm run unit:tests
 
-# TODO: Tests
-#      - name: Run Unit Tests
-#        run: npm run test:unit
+#      - name: Run Error Handling Tests
+#        run: npm run test:error-handling
+
+      - name: Code Coverage
+        run: npm run test:coverage
+
+#      - name: Run Redux/State Management Tests
+#        run: npm run redux:tests
+#
+#      - name: Run Component Tests
+#        run: npm run test:components
+#
+#      - name: Run End-to-End Tests
+#        run: npm run test:e2e
+#
+#      - name: Run Snapshot Tests
+#        run: npm run test:snapshot
 #
 #      - name: Run Routing Tests
 #        run: npm run test:routing
@@ -44,23 +58,8 @@ jobs:
 #      - name: Run API Tests
 #        run: npm run test:api
 #
-#      - name: Run Redux/State Management Tests
-#        run: npm run test:redux
-#
-#      - name: Run Error Handling Tests
-#        run: npm run test:error-handling
-#
-#      - name: Run Component Tests
-#        run: npm run test:components
-#
 #      - name: Run Integration Tests
 #        run: npm run test:integration
-#
-#      - name: Run End-to-End Tests
-#        run: npm run test:e2e
-#
-#      - name: Run Snapshot Tests
-#        run: npm run test:snapshot
 
 
 

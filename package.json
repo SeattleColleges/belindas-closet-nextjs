@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "compile": "tsc",
-    "unit-tests": "jest tests/unit",
-    "test-coverage": "jest --codeCoverage--"
+    "unit:tests": "jest tests/unit",
+    "test:coverage": "jest --codeCoverage--"
   },
   "dependencies": {
     "@types/node": "20.3.1",
