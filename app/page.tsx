@@ -32,8 +32,10 @@ const Login = () => {
             Sign In
           </button>
         </form>
-        <p className="text-center text-blue-500 underline font-bold">
+        <p className="text-center">
+          <a href="/api/auth/forgot-password" className="text-blue-500 underline font-bold">
             Forgot Password
+          </a>
         </p>
         <p className="text-center">
           <a href="/api/auth/sign-up" className="text-blue-500 underline font-bold">
