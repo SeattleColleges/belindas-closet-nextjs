@@ -9,7 +9,7 @@ on:
 #      token:
 #        required: false
 jobs:
-  build:
+  check-code:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
