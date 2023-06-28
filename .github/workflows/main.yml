@@ -1,5 +1,6 @@
 name: CI-CD Workflow
-run-name: Submitter | ${{ github.actor }} BRANCH | ${{ github.ref }}
+run-name: Submitted by ${{ github.actor }} | BRANCH ${{ github.ref }}
+
 # runs when a branch is pushed to main or merged. The closing of the PR triggers the event and the if statements check
 # whether the branch was merged or not before running the CI and CD jobs
 on:
