@@ -41,19 +41,6 @@ jobs:
       - name: Code Coverage
         run: npm run test:coverage
 
-  coverage:
-    permissions:
-      checks: write
-      pull-requests: write
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: jwalton/gh-find-current-pr@v1
-        id: findPr
-      - uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          prnumber: ${{ steps.findPr.outputs.number }}
 
 #      - name: Run Redux/State Management Tests
 #        run: npm run redux:tests
