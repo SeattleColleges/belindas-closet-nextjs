@@ -9,7 +9,7 @@
     "lint": "next lint",
     "compile": "tsc",
     "unit:tests": "jest tests/unit",
-    "test:coverage": "jest --codeCoverage--"
+    "test:coverage": "jest --coverage--"
   },
   "dependencies": {
     "@types/node": "20.3.1",
