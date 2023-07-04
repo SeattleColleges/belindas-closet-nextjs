@@ -36,3 +36,8 @@ next-env.d.ts
 
 # intellij
 /.idea/
+/.github/workflows/admin-notifications.yml
+/.github/workflows/tutorial-demo.yml
+
+# intellij
+/.idea/

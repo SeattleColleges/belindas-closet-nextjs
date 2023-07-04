@@ -1,4 +1,5 @@
 name: Continuous Integration
+run-name: Node.js CI
 on:
   workflow_call: # required when creating a reusable workflow
 #    inputs:
@@ -9,7 +10,7 @@ on:
 #      token:
 #        required: false
 jobs:
-  build:
+  check-code:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,12 +26,33 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Compile TypeScript
+        run: npx tsc --listFiles
+
       - name: Lint Code
         run: npm run lint --if-present
 
-# TODO: Tests
-#      - name: Run Unit Tests
-#        run: npm run test:unit
+      - name: Run Unit Tests
+        run: npm run unit:tests
+
+#      - name: Run Error Handling Tests
+#        run: npm run test:error-handling
+
+      - name: Code Coverage
+        run: npm run test:coverage
+
+
+#      - name: Run Redux/State Management Tests
+#        run: npm run redux:tests
+#
+#      - name: Run Component Tests
+#        run: npm run test:components
+#
+#      - name: Run End-to-End Tests
+#        run: npm run test:e2e
+#
+#      - name: Run Snapshot Tests
+#        run: npm run test:snapshot
 #
 #      - name: Run Routing Tests
 #        run: npm run test:routing
@@ -38,23 +60,8 @@ jobs:
 #      - name: Run API Tests
 #        run: npm run test:api
 #
-#      - name: Run Redux/State Management Tests
-#        run: npm run test:redux
-#
-#      - name: Run Error Handling Tests
-#        run: npm run test:error-handling
-#
-#      - name: Run Component Tests
-#        run: npm run test:components
-#
 #      - name: Run Integration Tests
 #        run: npm run test:integration
-#
-#      - name: Run End-to-End Tests
-#        run: npm run test:e2e
-#
-#      - name: Run Snapshot Tests
-#        run: npm run test:snapshot
 
 
 

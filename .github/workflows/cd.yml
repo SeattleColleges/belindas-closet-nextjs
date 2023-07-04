@@ -1,4 +1,5 @@
 name: Continuous Deployment
+run-name: Node.js CD
 on:
   workflow_call: # required when creating a reusable workflow
 #    inputs:
