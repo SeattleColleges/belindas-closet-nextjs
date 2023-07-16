@@ -1,5 +1,4 @@
 'use client';
-
 import React, { Component } from 'react';
 
 class AddProduct extends Component {
