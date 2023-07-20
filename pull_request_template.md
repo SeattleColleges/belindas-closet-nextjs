@@ -1,6 +1,11 @@
 ### **Pull requests should follow a common structure for organizational purposes and quick readability.** 
 
-## **So what format should we follow?**
+# **Naming convention for PR titles is as follows**
+< repo > _ < sprint > _ < issue > _ < pr or issue name >\
+\
+Example:\
+belindas-closet-android_2_5_landing-page\
+This would be for the belindas-closet-android repo, sprint 2, issue 5, with the name "landing page."\
 
 # **When first submitting your pull request, make sure to assign it on github to your team members who will be responsible for validating your pull request and make sure there are no merge conflicts.**
 
