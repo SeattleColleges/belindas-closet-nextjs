@@ -1,50 +1,32 @@
 'use client';
 
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import styles from '../product-page/page.module.css';
 
-class AddProduct extends Component {
-  state = {
-    productName: '',
-    showText: false
+const AddProduct = () => {
+  const [productName, setProductName] = useState("");
+
+  const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setProductName(e.target.value);
   }
 
-  handleChange = (e: { target: { value: any; }; }) => {
-    let updatedProductName = e.target.value;
-    this.setState({ productName: updatedProductName });
-    //console.log(updatedProductName); 
-    this.setState({
-      showText: false,
-    });
+  const handleSubmit = (e: any) => {
   }
 
-  handleSubmit = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    this.setState({
-      showText: true,
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <h1>Add a Product</h1>
-        </div>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <form onSubmit={this.handleSubmit}>
-            <label>Add a Product</label>
-            <input type="text" name="productName" onChange={this.handleChange} value={this.state.productName} style={{color: 'black'}} />
-            <button type="submit" onClick={this.handleSubmit}>Submit</button>
-          </form>
-        </div>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <p>{this.state.showText && <p>Product Name: {this.state.productName}</p>}</p>
-        </div>
+  return (
+    <div className={styles.main}>
+      <div className={styles.title}>
+        <h1>Add a Product</h1>
       </div>
-    );
-  }
+      <div className={styles.main}>
+        <form onSubmit={handleSubmit}>
+          <label>Add a Product:</label>
+          <input type="text" name="productName" onChange={handleChange} value={productName} style={{color: 'black'}} />
+          <button type="submit" onClick={handleSubmit}>Submit</button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default AddProduct;
-
-
