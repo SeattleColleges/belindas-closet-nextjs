@@ -12,6 +12,7 @@
 # - `from_branch: main` is the source branch
 # - `target_branch: staging` is the destination branch
 # - `github_token: ${{ secrets.GITHUB_TOKEN }}` provides access to the repo for merging
+# test comment
 
 name: Sync Main to Staging
 run-name: Sync-Staging
