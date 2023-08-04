@@ -4,7 +4,7 @@ import styles from './forgot-password-page.module.css';
 
 const ForgotPassword = () => {
   return (
-    <div className={styles.flexContainer}>
+    <div className={styles.container}>
       <div className={styles.formContainer}>
           <h2 className={styles.title}>Forgot Password</h2>
           <form>
