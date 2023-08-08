@@ -25,15 +25,13 @@ const AddProduct = () => {
 }
 
   return (
-    <div className={styles.main}>
-      <div className={styles.title}>
-        <h1>Add a Product</h1>
-      </div>
-      <div className={styles.main}>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Type:</label>
-              <select value={productValue} onChange={handleProductSelect} style={{color: 'black'}}>
+    <div className={styles.container}>
+        <form className={styles.formContainer} onSubmit={handleSubmit}>
+            <div className={styles.title}>
+              <h1>Add a Product</h1>
+            </div>
+            <label className={styles.inputLabel}>Type: </label>
+              <select className={styles.inputField} value={productValue} onChange={handleProductSelect} style={{color: 'black'}}>
                 <option value="">Choose</option>
                 <option value="Option 1">Shoes</option>
                 <option value="Option 2">Long sleeve shirt</option>
@@ -51,10 +49,8 @@ const AddProduct = () => {
                 <option value="Option 14">Hoodie</option>
                 <option value="Option 15">Sweatshirt</option>
             </select>
-          </div>
-          <div>
-          <label>Size:</label>
-            <select value={sizeValue} onChange={handleSizeSelect} style={{color: 'black'}}>
+          <label className={styles.inputLabel}>Size:</label>
+            <select className={styles.inputField} value={sizeValue} onChange={handleSizeSelect} style={{color: 'black'}}>
               <option value="">Choose</option>
               <option value="Option 1">XXS</option>
               <option value="Option 2">XS</option>
@@ -66,14 +62,10 @@ const AddProduct = () => {
               <option value="Option 8">XXXL</option>
               <option value="Option 9">XXXXL</option>
             </select>
-          </div>
-          <div>
-            <label>Optional Description:</label>
-            <input type="text" name="productName" onChange={handleDescriptionChange} value={productDescription} style={{color: 'black'}} />
-          </div>
-          <button type="submit" onClick={handleSubmit}>Submit</button>
+            <label className={styles.inputLabel}>Optional Description:</label>
+            <input className={styles.inputField}type="text" name="productName" onChange={handleDescriptionChange} value={productDescription} style={{color: 'black'}} />
+          <button className={styles.submitButton} type="submit" onClick={handleSubmit}>Submit</button>
         </form>
-      </div>
     </div>
   );
 }

@@ -45,6 +45,9 @@ const SignUp = () => {
   return (
     <div className={styles.container}>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
+        <div className={styles.title}>
+          <h1>Sign Up</h1>
+        </div>
         <InputField
           label="Name"
           type="name"
@@ -67,7 +70,7 @@ const SignUp = () => {
           onChange={handleChange}
         />
         <button 
-          className={styles.inputField}
+          className={styles.submitButton}
           type="submit">Sign Up</button>
       </form> 
     </div>
