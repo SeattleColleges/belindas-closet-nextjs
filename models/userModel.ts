@@ -6,7 +6,7 @@ interface UserDocument extends Document {
     email: string;
     name: string;
     password: string;
-    role: "admin" | "creator" | "user";
+    role: "admin" | "user";
 }
 
 interface Methods {
