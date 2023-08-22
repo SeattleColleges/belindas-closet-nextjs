@@ -1,13 +1,8 @@
 
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-// todo: imports for db once db file has been created added to project directory
-// import startDb from "@/lib/db";
-
-// todo: once db has been created, user model can be set up (kind of like an interface) to grab and store users infor 
-// import UserModel from "@/models/userModel";
-
+import startDb from "../../../../lib/db";
+import UserModel from "../../../../models/userModel";
 
 
 // sign-in route creation
@@ -32,24 +27,18 @@ const authOptions: NextAuthOptions = {
                   email: string;
                   password: string;
               };
-
-              // todo: once db has been created along with construction of schema, 
-                    // we can use the schema to grab and store users information
-                    // below code is a sandbox and rough ideas of how to comparing user's email and password..
-                    // ..return statement would return users info after comparison
-
-              /*
-              // perform loging logic and/or find out user from db
-                // upon capturing email and password, start and connect db to check for matching user email
+              
+              // perform login logic to find user from db
+              // upon capturing email and password, start and connect db to check for matching user email
               await startDb();
               const user = await UserModel.findOne({ email });
 
-                // if there's no user, throw error and notify user
-              if (!user) throw Error("email/password mismatch")
+              // if there's no user, throw error and notify user
+              if (!user) throw Error("email not found");
 
-                // if user does exist, then compare the password
+              // if user does exist, then compare the password
               const passwordMatch = await user.comparePassword(password);
-              if (!passwordMatch) throw Error("email/password mismatch");
+              if (!passwordMatch) throw Error("wrong password");
               
               // if user's login info is valid, return user object containing user's info (authenticated user)
               return { 
@@ -58,15 +47,6 @@ const authOptions: NextAuthOptions = {
                   role: user.role,
                   id: user._id
               };
-              */
-
-              return { 
-                name: "name", 
-                email: "email",
-                role: "role",
-                id: "_id"
-            };
-
           },
       }),
   ],
