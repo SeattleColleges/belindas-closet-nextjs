@@ -1,71 +1,56 @@
-"use client";
-
-import InputField from "@/components/InputFields";
-import Link from "next/link";
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
-import { signIn } from "next-auth/react";
-import Router, { useRouter } from "next/navigation";
+import React from 'react';
 import styles from './signin-page.module.css';
+import Image from 'next/image';
+import logo from '../../../logo.png'
 
-// similar to sign-up page, but we're only handling email and password 
-const Signin = () => {
-  const [error, setError] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    password: "",
-  });
-  
-  const router = useRouter();
-
-  const { email, password } = userInfo;
-
-  const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    const { name, value } = target;
-
-    setUserInfo({ ...userInfo, [name]: value });
-  };
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-
-    // handle form submission logic. Import signIn from next-auth react
-    // since we're using email and password, we need to pass in credentials option
-    const res = await signIn("credentials", {
-      email, 
-      password,
-      // this prevents the defualt redirect and it's needed to render error message coming from backend
-      redirect: false,
-    });
-
-    // check if the response contains an error and update error state if necessary
-    if (res?.error) return setError(res.error);
-    // todo: once successfully signed in, route user to their profile
-    // router.replace("/profile")
-  };
-
+const Login = () => {
   return (
     <div className={styles.container}>
-      <form className={styles.formContainer} onSubmit={handleSubmit}>
-        <InputField
-          label="Email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Password"
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleChange}
-        />
-        <button 
-          className={styles.inputField}
-          type="submit">Sign Up</button>
-      </form>
+      <div className={styles.formContainer}>
+        <div className={styles.logoContainer}>
+          <Image src={logo} alt="logo" />
+        </div>       
+        <h2 className={styles.title}>Sign In</h2>
+        <form>
+          <div className={styles.mb4}>
+            <label htmlFor="email" className={styles.inputLabel}>
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              className={styles.inputField}
+              placeholder="Enter your email"/>
+          </div>
+          <div className={styles.mb4}>
+            <label htmlFor="password" className={styles.inputLabel}>
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              className={styles.inputField}
+              placeholder="Enter your password"/>
+          </div>
+          <button
+            type="submit"
+            className={styles.submitButton}>
+            Sign In
+          </button>
+        </form>
+        <p className={styles.textCenter}>
+          <a href="/api/auth/forgot-password" className={styles.link}>
+            Forgot Password
+          </a>
+        </p>
+        <p className={styles.textCenter}>
+          <a href="/api/auth/sign-up" className={styles.link}>
+            Sign Up
+          </a>
+        </p>
+      </div>
     </div>
-  )
+  );
 };
 
-export default Signin;
+export default Login;
