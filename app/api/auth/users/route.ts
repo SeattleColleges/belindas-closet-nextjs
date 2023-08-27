@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
-
-
-// todo: imports for db once db file has been created added to project directory
-// import startDb from "@/lib/db";
-
-// todo: once db has been created, user model can be set up (kind of like an interface) to grab and store users infor 
-// import UserModel from "@/models/userModel";
+import startDb from "../../../../lib/db";
+import UserModel from "../../../../models/userModel";
 
 
 interface NewUserRequest {
@@ -25,7 +20,6 @@ interface NewUserResponse {
 
 
 // sign-up route creation
-
 // with the next response, either return the user or an error
 type NewResponse = NextResponse<{ user?: NewUserResponse; error?: string}>;
 
@@ -34,13 +28,6 @@ export const POST = async (req: Request): Promise<NewResponse> => {
   // request the data coming from the frontend, then compare incoming data to what's in our db
   const body = (await req.json()) as NewUserRequest;
 
-
-  // todo: once db has been created along with construction of schema, 
-        // we can compare sign-up email to emails in our db 
-        // upon creation of a user model, we can create a new user using user model
-        // then return new user info as a response to the frontend sign-up page
-
-/*
   await startDb();
 
   const oldUser = await UserModel.findOne({ email: body.email });
@@ -54,8 +41,6 @@ export const POST = async (req: Request): Promise<NewResponse> => {
   // if user doesn't exist, create a new user with the UserModel
   const user = await UserModel.create({ ...body });
 
-  
-
   // once user has been created, return a NextResponse with new user's info
   return NextResponse.json({
     user: {
@@ -63,15 +48,6 @@ export const POST = async (req: Request): Promise<NewResponse> => {
       email: user.email,
       name: user.name,
       role: user.role,
-    },
-  });
-*/
-  return NextResponse.json({
-    user: {
-      id: "_id",
-      email: "email",
-      name: "name",
-      role: "role",
     },
   });
 

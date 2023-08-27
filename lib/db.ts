@@ -7,5 +7,6 @@ const startDb = async () => {
     if (!connection) {
         connection = await mongoose.connect(url)
     }
+
 }
 export default startDb;
