@@ -13,10 +13,10 @@ const Home = () => {
         </div>
         <h1 className={styles.title}>Welcome to Belinda&apos;s Closet</h1>
         <div className={styles.buttonContainer}>
-          <a href="/api/auth/sign-in">
+          <a href="/auth/sign-in">
             <button className={styles.loginButton}>Sign In</button>
           </a>
-          <a href="/api/auth/sign-up">
+          <a href="/auth/sign-up">
             <button className={styles.signUpButton}>Sign Up</button>
           </a>
         </div>

@@ -1,4 +1,3 @@
-// since we're handling some change events, we're marking this as a client component ("use client")
 "use client";
 import InputField from "@/components/InputFields";
 import Link from "next/link";
@@ -45,9 +44,7 @@ const SignUp = () => {
   return (
     <div className={styles.container}>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
-        <div className={styles.title}>
-          <h1>Sign Up</h1>
-        </div>
+        <h1 className={styles.title}>Sign Up</h1>
         <InputField
           label="Name"
           type="name"
@@ -69,12 +66,19 @@ const SignUp = () => {
           value={password}
           onChange={handleChange}
         />
-        <button 
-          className={styles.submitButton}
-          type="submit">Sign Up</button>
-      </form> 
+        <button className={styles.submitButton} type="submit">
+          Sign Up
+        </button>
+        <p className={styles.textCenter}>
+          Already have an account?{" "}
+          <a href="sign-in" className={styles.link}>
+            Log In
+          </a>
+        </p>
+        
+      </form>
     </div>
-  )
+  );
 };
 
 export default SignUp;
