@@ -61,14 +61,14 @@ jobs:
       - name: Archive Next.js build
         uses: actions/upload-artifact@v3
         with:
-            name: next.js-build-${{ matrix.node-version }}
+            name: next.js-build-18.x
             path: .next/
             retention-days: 14
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
-          name: code-coverage-report-${{ matrix.node-version }}
+          name: code-coverage-report-18.x
           path: docs/coverage/index.html
           retention-days: 14
 
