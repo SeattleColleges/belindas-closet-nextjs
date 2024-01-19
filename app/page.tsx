@@ -51,7 +51,7 @@ const Home = () => {
         </div>
         <div className={styles.categoryContainer}>
           {categories.map((category, index)=>(
-            <CategoryCard title={category.type} image={category.image} onCardClick={()=>onCardClick(category.type)}/>
+            <CategoryCard title={category.type} image={category.image} onCardClick={()=>onCardClick(category.type)} key={category.type}/>
           ))}
         </div>
       </div>
