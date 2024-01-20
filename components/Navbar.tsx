@@ -10,8 +10,8 @@ export default function Navbar() {
     <nav className="flex items-center max-w-screen-lg mx-auto px-5 py-2 shadow-md justify-between mt-2 mb-2 rounded">
       <a href="/"><Image src={logo} alt="logo" width={40} height={40}/></a>
       <Link href="/">Home</Link>
-      <Link href="/auth/sign-in">sign in</Link>
-      <Link href="/auth/sign-up">sign up</Link>
+      <Link href="/auth/sign-in">Sign in</Link>
+      <Link href="/donation-info">Donation Info</Link>
       <AuthProfileMenu />      
     </nav>
   )

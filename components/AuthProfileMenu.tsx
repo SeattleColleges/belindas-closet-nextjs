@@ -10,7 +10,7 @@ export default function AuthProfileMenu() {
     return (
         <div className="flex items-center justify-center">
             <a href="/profile" className="hover:underline">Hi {data?.user?.name},</a>
-            <a className="ml-3 hover:underline" href="/product-page">add product</a>
+            <a className="ml-3 hover:underline" href="/product-page">Add product</a>
             <button className="ml-3 hover:underline" onClick={() => signOut({ callbackUrl: "/" })}>Sign out</button>
         </div>
     );
