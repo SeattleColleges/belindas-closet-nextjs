@@ -1,10 +1,28 @@
+'use client';
 import React from "react";
 import styles from "./home.module.css";
 import Image from "next/image";
 import logo from "./logo.png";
 import google_play from "./google_play.png";
+import CategoryCard from "@/components/CategoryCard";
+import { useRouter } from "next/navigation";
+
+// TEMPORARY CATEGORIES LIST
+const placeholderImg = google_play
+const categories = [
+  {'type': 'Shirts', 'image': placeholderImg},
+  {'type': 'Shoes', 'image': placeholderImg},
+  {'type': 'Pants', 'image': placeholderImg},
+  {'type': 'Skirts', 'image': placeholderImg},
+  {'type': 'Suits', 'image': placeholderImg}
+]
+
 
 const Home = () => {
+  const router = useRouter();
+  const onCardClick=(type: string)=>{
+    router.replace("/category-page?category="+type);
+  }
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
@@ -30,6 +48,11 @@ const Home = () => {
               </button>
             </a>
           </p>
+        </div>
+        <div className={styles.categoryContainer}>
+          {categories.map((category, index)=>(
+            <CategoryCard title={category.type} image={category.image} onCardClick={()=>onCardClick(category.type)} key={category.type}/>
+          ))}
         </div>
       </div>
     </div>

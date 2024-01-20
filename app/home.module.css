@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .formContainer {
@@ -112,8 +112,17 @@
   cursor: pointer;
   border-radius: 5px;
   text-decoration: none;
+  margin-bottom: 1rem;
 }
 
 .downloadButton:hover {
   background-color: #0c141c;
+}
+
+.categoryContainer{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: flex-start;
+  padding-inline-start: 2.5rem;
 }
