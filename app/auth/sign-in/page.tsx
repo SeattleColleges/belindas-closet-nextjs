@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 import Router, { useRouter } from "next/navigation";
 import styles from "./signin-page.module.css";
 import Image from "next/image";
-import logo from "../../logo.png";
+import mascot from "../../nsc_mascot_green_cropped.png";
 
 // similar to sign-up page, but we're only handling email and password 
 const Signin = () => {
@@ -50,11 +50,12 @@ const Signin = () => {
 
   return (
     <div className={styles.container}>
-      <form className={styles.formContainer} onSubmit={handleSubmit}>
-        <div className={styles.logoContainer}>
-          <Image src={logo} alt="logo" />
-        </div>
-        <h1 className={styles.title}>Sign In</h1>
+    <div className={styles.centerContainer}>
+      <div className={styles.logoContainer}>
+        <Image src={mascot} alt="mascot" />
+      </div>
+    <form className={styles.formContainer} onSubmit={handleSubmit}>
+      <h1 className={styles.title}>Sign In</h1>
         <InputField
           label="Email"
           type="email"
@@ -85,6 +86,7 @@ const Signin = () => {
         </p>
         </div>
       </form>
+    </div>
     </div>
   );
 };
