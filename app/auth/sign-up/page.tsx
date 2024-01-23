@@ -7,12 +7,13 @@ import styles from './signup-page.module.css';
 const SignUp = () => {
   // handling user's incoming info
   const [userInfo, setUserInfo] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
 
-  const { name, email, password } = userInfo;
+  const { firstName, lastName, email, password } = userInfo;
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const { name, value } = target;
@@ -46,10 +47,17 @@ const SignUp = () => {
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <h1 className={styles.title}>Sign Up</h1>
         <InputField
-          label="Name"
-          type="name"
-          name="name"
-          value={name}
+          label="First Name"
+          type="text"
+          name="firstName"
+          value={firstName}
+          onChange={handleChange}
+        />
+        <InputField
+          label="Last Name"
+          type="text"
+          name="lastName"
+          value={lastName}
           onChange={handleChange}
         />
         <InputField
@@ -82,3 +90,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
