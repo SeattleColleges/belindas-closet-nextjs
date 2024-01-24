@@ -11,9 +11,10 @@ const SignUp = () => {
     lastName: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
-  const { firstName, lastName, email, password } = userInfo;
+  const { firstName, lastName, email, password, confirmPassword } = userInfo;
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const { name, value } = target;
@@ -25,7 +26,11 @@ const SignUp = () => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     // prevent the default behavior
     e.preventDefault();
-
+  // Check if password and confirmPassword match
+  if (password !== confirmPassword) {
+    console.error("Passwords do not match");
+    return;
+  }
     // send request to backend api then log the response
     const res = await fetch("/api/auth/users", {
       method: "POST",
@@ -72,6 +77,13 @@ const SignUp = () => {
           type="password"
           name="password"
           value={password}
+          onChange={handleChange}
+        />
+        <InputField
+          label="Confirm Password"
+          type="password"
+          name="confirmPassword"
+          value={confirmPassword}
           onChange={handleChange}
         />
         <button className={styles.submitButton} type="submit">
