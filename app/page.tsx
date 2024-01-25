@@ -14,14 +14,18 @@ const categories = [
   {'type': 'Shoes', 'image': placeholderImg},
   {'type': 'Pants', 'image': placeholderImg},
   {'type': 'Skirts', 'image': placeholderImg},
-  {'type': 'Suits', 'image': placeholderImg}
+  {'type': 'Suits', 'image': placeholderImg},
+  {'type': 'Dress', 'image': placeholderImg},
+  {'type': 'Casual Wear', 'image': placeholderImg},
+  {'type': 'Accessories', 'image': placeholderImg},
+  {'type': 'Jacket/Blazer', 'image': placeholderImg},
 ]
 
 
 const Home = () => {
   const router = useRouter();
   const onCardClick=(type: string)=>{
-    router.replace("/category-page?category="+type);
+    router.push("/category-page/"+type);
   }
   return (
     <div className={styles.container}>
