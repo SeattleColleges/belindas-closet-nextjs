@@ -54,7 +54,7 @@ const Signin = () => {
       <div className={styles.logoContainer}>
         <Image src={mascot} alt="mascot" />
       </div>
-    <form className={styles.formContainer} onSubmit={handleSubmit}>
+    <form className={`${styles.formContainer} ${styles['sign-in-form']}`} onSubmit={handleSubmit}>
       <h1 className={styles.title}>Sign In</h1>
         <InputField
           label="Email"

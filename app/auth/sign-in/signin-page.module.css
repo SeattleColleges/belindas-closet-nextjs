@@ -32,6 +32,15 @@
     font-size: 1.8rem;
     margin-bottom: 1rem;
   }
+
+  .sign-in-form input {
+    display: block;
+    padding: 5px;
+    border: 1px gray solid;
+    border-radius: 3px;
+    margin-top: 15px;
+    color: black;
+  }
   
   .submitButton {
     width: 100%;
