@@ -26,11 +26,13 @@ const SignUp = () => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     // prevent the default behavior
     e.preventDefault();
+
   // Check if password and confirmPassword match
   if (password !== confirmPassword) {
     console.error("Passwords do not match");
     return;
   }
+
     // send request to backend api then log the response
     const res = await fetch("/api/auth/users", {
       method: "POST",
@@ -89,17 +91,9 @@ const SignUp = () => {
         <button className={styles.submitButton} type="submit">
           Sign Up
         </button>
-        <p className={styles.textCenter}>
-          Already have an account?{" "}
-          <a href="sign-in" className={styles.link}>
-            Log In
-          </a>
-        </p>
-        
       </form>
     </div>
   );
 };
 
 export default SignUp;
-
