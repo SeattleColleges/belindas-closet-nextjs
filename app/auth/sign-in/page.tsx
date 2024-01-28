@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import styles from "./signin-page.module.css";
 import Image from "next/image";
 import mascot from "../../nsc_mascot_green_cropped.png";
-import { jwtDecode } from "jwt-decode";
 
 const Signin = () => {
   const [error, setError] = useState("");
@@ -42,14 +41,14 @@ const Signin = () => {
       throw new Error(await res.text());
     }
     const { token } = await res.json();
-    const user = jwtDecode(token);
-    const userRole = user.role;
+    const userRole = JSON.parse(atob(token.split(".")[1])).role; // decode token to get user role
+    // Redirect to user page
     if (userRole === "admin") {
       router.push("/admin-page"); // redirect to admin-page which is not created yet
     } else if (userRole === "creator") {
       router.push("/creator-page"); // redirect to creator-page
     } else {
-      router.push("/profile"); // TODO: redirect to user-page instead of profile
+      router.push("/profile"); // TODO: change profile to user-page
     }
   };
 
