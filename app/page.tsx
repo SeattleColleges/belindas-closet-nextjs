@@ -25,7 +25,8 @@ const categories = [
 const Home = () => {
   const router = useRouter();
   const onCardClick=(type: string)=>{
-    router.push("/category-page/"+type);
+    const encodedCategoryId = encodeURIComponent(type); //sanitize item name for route
+    router.push(`/category-page/${encodedCategoryId}`);
   }
   return (
     <div className={styles.container}>
