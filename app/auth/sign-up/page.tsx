@@ -16,6 +16,14 @@ const SignUp = () => {
 
   const { firstName, lastName, email, password, confirmPassword } = userInfo;
 
+  // State to track whether the password is visible or not
+ const [showPassword, setShowPassword] = useState(false);
+
+ // Function to toggle password visibility
+ const togglePasswordVisibility = () => {
+   setShowPassword(!showPassword);
+ };
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const { name, value } = target;
     // updating user's info 
@@ -32,7 +40,7 @@ const SignUp = () => {
     console.error("Passwords do not match");
     return;
   }
-
+  
     // send request to backend api then log the response
     const res = await fetch("/api/auth/users", {
       method: "POST",
@@ -74,20 +82,34 @@ const SignUp = () => {
           value={email}
           onChange={handleChange}
         />
-        <InputField
-          label="Password"
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Confirm Password"
-          type="password"
-          name="confirmPassword"
-          value={confirmPassword}
-          onChange={handleChange}
-        />
+      {/* Password input with toggle button */}
+      <div className={styles.passwordContainer}>
+          <InputField
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
+        </div>
+        {/* Confirm Password input with toggle button */}
+        <div className={styles.passwordContainer}>
+          <InputField
+            label="Confirm Password"
+            type={showPassword ? "text" : "password"}
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={handleChange}
+          />
+        </div>
+        {/* Toggle button to control password visibility */}
+        <button
+          type="button"
+          onClick={togglePasswordVisibility}
+          className={styles.toggleButton}
+        >
+          {showPassword ? "Hide Password" : "Show Password"}
+        </button>
         <button className={styles.submitButton} type="submit">
           Sign Up
         </button>
