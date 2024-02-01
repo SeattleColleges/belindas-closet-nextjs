@@ -1,12 +1,16 @@
 "use client";
-import { useSearchParams } from 'next/navigation'
 
-const Category=()=>{
-    const searchParams = useSearchParams();
-    const category = searchParams.get('category')
-    return <p>{category}</p>
+// const Category=({ params }: { params: { category: string } })=>{
+//     return <p>{params.category}</p>
+// }
+
+export default function Category() {
+    return(
+        <>
+            <h1>CATEGORY 1</h1>
+            <h2>CATEGORY 2</h2>
+        </>
+    )
 }
 
-export default Category;
-
-
+//export default function Category;

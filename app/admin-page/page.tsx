@@ -27,6 +27,3 @@ const Admin = () => {
     </div>
   );
 };
-
-export default Admin;
-//this like to test to commit
