@@ -26,15 +26,15 @@ export default function Navbar() {
         {showCategories && (
           <div className="absolute bg-black p-3 rounded-b shadow-md text-center left-1/2 transform -translate-x-1/2 top-12">
             <ul>
-              <li className="p-2"><Link href="">Shirts</Link></li>
-              <li className="p-2"><Link href="">Shoes</Link></li>
-              <li className="p-2"><Link href="">Pants</Link></li>
-              <li className="p-2"><Link href="">Skirts</Link></li>
-              <li className="p-2"><Link href="">Suits</Link></li>
-              <li className="p-2"><Link href="">Dress</Link></li>
-              <li className="p-2"><Link href="">Casual Wear</Link></li>
-              <li className="p-2"><Link href="">Accessories</Link></li>
-              <li className="p-2"><Link href="">Jackets and Blazers</Link></li>
+              <li className="p-2"><Link href="/category-page/Shirts" onClick={toggleCategoriesMenu}>Shirts</Link></li>
+              <li className="p-2"><Link href="/category-page/Shoes" onClick={toggleCategoriesMenu}>Shoes</Link></li>
+              <li className="p-2"><Link href="/category-page/Pants" onClick={toggleCategoriesMenu}>Pants</Link></li>
+              <li className="p-2"><Link href="/category-page/Skirts" onClick={toggleCategoriesMenu}>Skirts</Link></li>
+              <li className="p-2"><Link href="/category-page/Suits" onClick={toggleCategoriesMenu}>Suits</Link></li>
+              <li className="p-2"><Link href="/category-page/Dress" onClick={toggleCategoriesMenu}>Dress</Link></li>
+              <li className="p-2"><Link href="/category-page/Casual Wear" onClick={toggleCategoriesMenu}>Casual Wear</Link></li>
+              <li className="p-2"><Link href="/category-page/Accessories" onClick={toggleCategoriesMenu}>Accessories</Link></li>
+              <li className="p-2"><Link href="/category-page/Jacket%2FBlazer" onClick={toggleCategoriesMenu}>Jackets and Blazers</Link></li>
             </ul>
           </div>
         )}
