@@ -3,7 +3,9 @@ import InputField from "@/components/InputFields";
 import Link from "next/link";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import styles from './signup-page.module.css';
-
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import {IconButton, InputAdornment, TextField} from "@mui/material";
 const SignUp = () => {
   // handling user's incoming info
   const [userInfo, setUserInfo] = useState({
@@ -13,7 +15,14 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
-
+  // Set initial state for errors
+    const [errors, setErrors] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
   const { firstName, lastName, email, password, confirmPassword } = userInfo;
 
   // State to track whether the password is visible or not
@@ -61,21 +70,27 @@ const SignUp = () => {
     <div className={styles.container}>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         <h1 className={styles.title}>Sign Up</h1>
-        <InputField
+        <TextField
+            fullWidth
+            margin="normal"
           label="First Name"
           type="text"
           name="firstName"
           value={firstName}
           onChange={handleChange}
         />
-        <InputField
+        <TextField
+            fullWidth
+            margin="normal"
           label="Last Name"
           type="text"
           name="lastName"
           value={lastName}
           onChange={handleChange}
         />
-        <InputField
+        <TextField
+            fullWidth
+            margin="normal"
           label="Email"
           type="email"
           name="email"
@@ -83,33 +98,60 @@ const SignUp = () => {
           onChange={handleChange}
         />
       {/* Password input with toggle button */}
-      <div className={styles.passwordContainer}>
-          <InputField
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={password}
-            onChange={handleChange}
+          <TextField
+              fullWidth
+              margin="normal"
+              label="Password"
+              name="password"
+              value={password}
+              type={showPassword ? "text" : "password"}
+              onChange={handleChange}
+              error={Boolean(errors.password)}
+              helperText={errors.password}
+              InputProps={{
+                  endAdornment: (
+                      <InputAdornment position="end">
+                          {/* Toggle button to control password visibility */}
+                          <IconButton
+                              onClick={togglePasswordVisibility}
+                          >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                      </InputAdornment>
+                  ),
+              }}
           />
-        </div>
-        {/* Confirm Password input with toggle button */}
-        <div className={styles.passwordContainer}>
-          <InputField
-            label="Confirm Password"
-            type={showPassword ? "text" : "password"}
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={handleChange}
+          {/* Confirm Password input with toggle button */}
+          <TextField
+              fullWidth
+              margin="normal"
+              label="Confirm Password"
+              name="confirmPassword"
+              value={confirmPassword}
+              type={showPassword ? "text" : "password"}
+              onChange={handleChange}
+              error={Boolean(errors.confirmPassword)}
+              helperText={errors.confirmPassword}
+              InputProps={{
+                  endAdornment: (
+                      <InputAdornment position="end">
+                          {/* Toggle button to control password visibility */}
+                          <IconButton
+                              onClick={togglePasswordVisibility}
+                          >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                      </InputAdornment>
+                  ),
+              }}
           />
-        </div>
-        {/* Toggle button to control password visibility */}
-        <button
-          type="button"
-          onClick={togglePasswordVisibility}
-          className={styles.toggleButton}
-        >
-          {showPassword ? "Hide Password" : "Show Password"}
-        </button>
+        {/*<button*/}
+        {/*  type="button"*/}
+        {/*  onClick={togglePasswordVisibility}*/}
+        {/*  className={styles.toggleButton}*/}
+        {/*>*/}
+        {/*  {showPassword ? "Hide Password" : "Show Password"}*/}
+        {/*</button>*/}
         <button className={styles.submitButton} type="submit">
           Sign Up
         </button>
