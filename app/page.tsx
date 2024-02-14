@@ -4,8 +4,12 @@ import styles from "./home.module.css";
 import Image from "next/image";
 import logo from "./logo.png";
 import google_play from "./google_play.png";
-import CategoryCard from "@/components/CategoryCard";
-import { useRouter } from "next/navigation";
+import CustomCardContent from "@/components/CustomCardContent";
+import Grid from '@mui/material/Unstable_Grid2';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Card from '@mui/material/Card';
+import { Container, Typography, Link, Button } from '@mui/material';
 
 // TEMPORARY CATEGORIES LIST
 const placeholderImg = google_play
@@ -21,45 +25,34 @@ const categories = [
   {'type': 'Jacket/Blazer', 'image': placeholderImg},
 ]
 
-
 const Home = () => {
-  const router = useRouter();
-  const onCardClick=(type: string)=>{
-    const encodedCategoryId = encodeURIComponent(type); //sanitize item name for route
-    router.push(`/category-page/${encodedCategoryId}`);
-  }
   return (
     <div className={styles.container}>
-      <div className={styles.formContainer}>
-        <div className={styles.logoContainer}>
+      <Box width={800} display="flex" alignItems="center" flexDirection="column" gap={2} bgcolor='#293745' p={3}>
+        <Container disableGutters fixed maxWidth="xs" sx={{width: "15%"}}>
           <Image src={logo} alt="logo" />
-        </div>
-        <h1 className={styles.title}>Welcome to Belinda&apos;s Closet</h1>
-        <div className={styles.buttonContainer}>
-          <a href="/auth/sign-in">
-            <button className={styles.loginButton}>Sign In</button>
-          </a>
-          <a href="/auth/sign-up">
-            <button className={styles.signUpButton}>Sign Up</button>
-          </a>
-        </div>
+        </Container>
+        <Typography component='h1' variant='h3' sx={{color: 'white'}}>
+          Belinda&apos;s Closet
+        </Typography>
+        <Stack direction="row" spacing={2}>
+          <Button href="/auth/sign-in" component='a' variant="contained">Sign In</Button>
+          <Button href="/auth/sign-up" component='a' variant="contained">Sign Up</Button>
+        </Stack>
         {/* download mobile app link */}
-        <div className={styles.downloadContainer}>
-          <p className="textCenter">
-            <a href="" className={styles.link}>
-              <button className={styles.downloadButton}>
-                <Image src={google_play} alt="google_play" />
-                Download App
-              </button>
-            </a>
-          </p>
-        </div>
-        <div className={styles.categoryContainer}>
-          {categories.map((category, index)=>(
-            <CategoryCard title={category.type} image={category.image} onCardClick={()=>onCardClick(category.type)} key={category.type}/>
-          ))}
-        </div>
-      </div>
+        <Button component='a' href="" variant="outlined" startIcon={<Image src={google_play} alt="google_play" />} sx={{color:'white' }}>
+          Download App
+        </Button>
+          <Grid container spacing={2}>
+              {categories.map((category, index)=>(
+                <Grid lg={4} sm={4} component="div" key={index}>
+                  <Card>
+                    <CustomCardContent title={category.type} image={placeholderImg} />
+                  </Card>
+                </Grid>
+              ))}
+          </Grid>
+        </Box>
     </div>
   );
 };
