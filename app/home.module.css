@@ -122,7 +122,7 @@
 .categoryContainer{
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 5%;
   justify-content: flex-start;
-  padding-inline-start: 7rem;
+  /* padding-inline-start: 2rem; */
 }
