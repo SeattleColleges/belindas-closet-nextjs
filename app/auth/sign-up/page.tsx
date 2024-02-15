@@ -12,6 +12,7 @@ const SignUp = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "creator",
   });
 
   const { firstName, lastName, email, password, confirmPassword } = userInfo;
@@ -34,7 +35,8 @@ const SignUp = () => {
   }
 
     // send request to backend api then log the response
-    const res = await fetch("/api/auth/users", {
+    // hardwired link for local development, change port if needed
+    const res = await fetch("http://localhost:3000/api/auth/signup", {
       method: "POST",
       body: JSON.stringify(userInfo),
       headers: {
@@ -47,6 +49,8 @@ const SignUp = () => {
     } catch (error) {
       console.error("Error parson JSON response:", error);
     }
+    if (res.ok) alert('sign up was successful')
+
   };
 
   return (
@@ -94,6 +98,7 @@ const SignUp = () => {
       </form>
     </div>
   );
+  
 };
 
 export default SignUp;
