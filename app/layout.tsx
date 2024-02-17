@@ -2,6 +2,8 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import SessionProvider from '@/components/SessionProvider';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme/theme';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,6 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    <ThemeProvider theme={theme}>
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider>
@@ -25,5 +28,6 @@ export default function RootLayout({
         </SessionProvider>
       </body>
     </html>
+    </ThemeProvider>
   )
 };
