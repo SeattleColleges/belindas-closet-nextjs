@@ -3,10 +3,15 @@
 import styles from './page.module.css';
 import React, { useState, useEffect, Dispatch, SetStateAction, createContext, Context } from "react";
 import Link from 'next/link';
+import ProductCard from "@/components/ProductCard";
+import google_play from "../../google_play.png";
+;
+
+const placeholderImg = google_play
 interface Product {
   _id: string;
+  productImage: typeof placeholderImg;
   productType: string[];
-  productGender: string[];
   productDescription: string;
   // more product fields can be added
 }
@@ -40,21 +45,20 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
 
   useEffect(() => {
     fetchData(categoryId, setProducts); // Pass categoryId to fetchData
-  }, [categoryId]); // Add categoryId as a dependency
+  }, [categoryId]); 
 
   return (
     <div className={styles.displaySection}>
       <h1>Found {products.length} products in {categoryId}</h1>
-      <div className={styles.productList}>
+      <div className={styles.productContainer}>
         {products.map((product, index) => (
-          <div key={index} className={styles.product}>
-            <p>product ID: {product._id}</p>
-            <p>Product Type: {product.productType.join(', ')}</p>
-            <p>Description: {product.productDescription}</p>
-            <Link href={`/category-page/${categoryId}/products/${product._id}`} legacyBehavior>
-              <a>View Details</a>
-            </Link>
-          </div>
+          <ProductCard 
+          image={google_play} 
+          categories={product.productType} 
+          description={product.productDescription} 
+          href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL 
+          key={index} 
+        />
         ))}
       </div>
     </div>
