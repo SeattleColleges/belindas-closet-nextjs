@@ -7,15 +7,15 @@ import { Box, Container, Typography } from "@mui/material";
  * Represents a user.
  */
 interface User {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    role: string;
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
 }
 /**
  * fetch user info from the server
- * @param setUserInfo 
+ * @param setUserInfo
  */
 async function fetchUser(setUserInfo: (userInfo: User[]) => void) {
   const apiUrl = "http://localhost:3000/api/user";

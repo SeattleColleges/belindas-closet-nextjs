@@ -27,7 +27,7 @@ interface ConfirmationDialogRawProps {
 }
 /**
  * Renders a confirmation dialog for editing user roles.
- * 
+ *
  * @param props - The component props.
  * @returns The rendered ConfirmationDialogRaw component.
  */
@@ -122,7 +122,7 @@ export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
  * @returns {JSX.Element} The rendered EditUserRoleDialog component.
  */
 export default function EditUserRoleDialog({
-  user
+  user,
 }: {
   user: UserCardProps;
   onClose: () => void;
@@ -143,7 +143,14 @@ export default function EditUserRoleDialog({
   };
 
   return (
-    <Box sx={{ width: "100%", maxWidth: 800, bgcolor: "background.paper", color : "#000"}}>
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: 800,
+        bgcolor: "background.paper",
+        color: "#000",
+      }}
+    >
       <List component="div" role="group">
         <ListItemButton
           divider
