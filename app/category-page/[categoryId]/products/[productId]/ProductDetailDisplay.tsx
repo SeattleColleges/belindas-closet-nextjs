@@ -102,22 +102,31 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
           <Stack direction="row" spacing={2} justifyContent="center">
             {/* Edit Button */}
             <Box p={2} display="flex" justifyContent="center">
-              <Button variant="contained" color="primary">
-                <EditIcon sx={{ mr: 1 }} />
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<EditIcon />}
+              >
                 Edit
               </Button>
             </Box>
             {/* Delete Button */}
             <Box p={2} display="flex" justifyContent="center">
-              <Button variant="contained" color="error">
-                <DeleteIcon sx={{ mr: 1 }} />
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<DeleteIcon />}
+              >
                 Delete
               </Button>
             </Box>
             {/* Archive Button */}
             <Box p={2} display="flex" justifyContent="center">
-              <Button variant="contained" color="warning">
-                <ArchiveIcon sx={{ mr: 1 }} />
+              <Button
+                variant="contained"
+                color="warning"
+                startIcon={<ArchiveIcon />}
+              >
                 Archive
               </Button>
             </Box>
