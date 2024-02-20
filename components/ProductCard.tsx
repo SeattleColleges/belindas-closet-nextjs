@@ -6,6 +6,8 @@ import ButtonBase from "@mui/material/ButtonBase";
 import { StaticImageData } from "next/image";
 import { Stack, Button, Link } from "@mui/material";
 import Image from "next/image";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArchiveIcon from "@mui/icons-material/Archive";
 
 type ProductCardProps = {
   image: StaticImageData;
@@ -29,6 +31,16 @@ export default function ProductCard({
   description,
   href,
 }: ProductCardProps) {
+  const [userRole, setUserRole] = React.useState("");
+
+  // Get user role from token
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const role = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(role);
+    }
+  }, []);
   return (
     <Paper
       sx={{
@@ -73,24 +85,31 @@ export default function ProductCard({
               <Typography variant="body2" color="text.secondary">
                 {sizePantsInseam}
               </Typography>
-
               <Typography variant="body2" gutterBottom>
                 {description}
               </Typography>
             </Grid>
-            <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <Button
-                variant="contained"
-                href={href}
-                startIcon={<Link />}
-                color="primary"
-              >
-                View
-              </Button>
-            </Stack>
           </Grid>
         </Grid>
       </Grid>
+      <Stack direction="row" spacing={2} justifyContent="flex-end" mt={2}>
+        <Button variant="contained" href={href} color="primary">
+          View
+        </Button>
+        {userRole === "admin" ||
+          (userRole === "creator" && (
+            <Stack direction="row" spacing={2}>
+              {/* TODO: Add delete function to this button  */}
+              <Button variant="contained" startIcon={<DeleteIcon />} color="error">
+                Delete
+              </Button>
+              {/* TODO: Add archive function to this button  */}
+              <Button variant="contained" startIcon={<ArchiveIcon />} color="warning">
+                Archive
+              </Button>
+            </Stack>
+          ))}
+      </Stack>
     </Paper>
   );
 }

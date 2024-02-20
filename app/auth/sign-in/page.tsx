@@ -41,6 +41,7 @@ const Signin = () => {
       throw new Error(await res.text());
     }
     const { token } = await res.json();
+    localStorage.setItem("token", token); // store token in local storage
     const userRole = JSON.parse(atob(token.split(".")[1])).role; // decode token to get user role
     // Redirect to user page
     if (userRole === "admin") {
