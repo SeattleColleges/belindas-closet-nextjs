@@ -69,16 +69,16 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }}>
-          <Link href="/" passHref>
-            <Button color="secondary">
-              <Image src={logo} alt="logo" width={50} height={50} />
-            </Button>
-          </Link>
+            <Link href="/" passHref>
+              <Button color="secondary">
+                <Image src={logo} alt="logo" width={50} height={50} />
+              </Button>
+            </Link>
           </Box>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Grid container spacing={2}>
               {navItems.map((item, index) => (
-                <Grid item key={item} sx={{ display: "flex" }} >
+                <Grid item key={item} sx={{ display: "flex" }}>
                   {index === 2 ? <CategoryDropDownMenu /> : null}
                   <Link href={links[index]} passHref>
                     <Button key={item} sx={{ color: "#fff" }}>

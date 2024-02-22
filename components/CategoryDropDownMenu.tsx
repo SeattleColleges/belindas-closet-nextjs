@@ -38,7 +38,7 @@ export default function CategoryDropDownMenu() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
         startIcon={<ArrowDropDown />}
-        color = {open ? "inherit" : "inherit"}
+        color={open ? "inherit" : "inherit"}
       >
         Products
       </Button>
