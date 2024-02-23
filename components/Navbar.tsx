@@ -1,47 +1,118 @@
-'use client';
+"use client";
 
-import Profile from "@/app/profile/page";
 import Link from "next/link";
-import React, { useState } from "react";
-import AuthProfileMenu from "./AuthProfileMenu";
-import Image from 'next/image';
-import logo from '../app/logo.png';
+import React from "react";
+import Image from "next/image";
+import logo from "../app/logo.png";
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Toolbar,
+  Grid,
+  Drawer,
+  Box,
+  CssBaseline,
+  Divider,
+  List,
+} from "@mui/material";
+
+import MenuIcon from "@mui/icons-material/Menu";
+import CategoryDropDownMenu from "./CategoryDropDownMenu";
+
+const drawerWidth = 240;
+const navItems = ["Home", "Sign In", "Donation"];
+const links = ["/", "/auth/sign-in", "/donation-info"];
 
 export default function Navbar() {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const [showCategories, setShowCategories] = useState(false);
-
-  const toggleCategoriesMenu = () => {
-    setShowCategories(!showCategories);
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
   };
 
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+      <Link href="/" passHref>
+        <Button color="secondary">
+          <Image src={logo} alt="logo" width={50} height={50} />
+        </Button>
+      </Link>
+      <Divider />
+      <List>
+        {navItems.map((item, index) => (
+          <Grid item key={item}>
+            {index === 2 ? <CategoryDropDownMenu /> : null}
+            <Link href={links[index]} passHref>
+              <Button key={item} sx={{ color: "#000" }}>
+                {item}
+              </Button>
+            </Link>
+          </Grid>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
-    <nav className="flex items-center max-w-screen-lg mx-auto px-5 py-2 shadow-md justify-between mt-2 mb-2 rounded">
-      <a href="/"><Image src={logo} alt="logo" width={40} height={40}/></a>
-      <Link href="/">Home</Link>
-      <Link href="/auth/sign-in">Sign in</Link>
-
-      <div className="relative">
-        <span onClick={toggleCategoriesMenu} className="cursor-pointer">Products <span className="text-xs"> &#9660;</span></span>
-        {showCategories && (
-          <div className="absolute bg-black p-3 rounded-b shadow-md text-center left-1/2 transform -translate-x-1/2 top-12">
-            <ul>
-              <li className="p-2"><Link href="/category-page/Shirts" onClick={toggleCategoriesMenu}>Shirts</Link></li>
-              <li className="p-2"><Link href="/category-page/Shoes" onClick={toggleCategoriesMenu}>Shoes</Link></li>
-              <li className="p-2"><Link href="/category-page/Pants" onClick={toggleCategoriesMenu}>Pants</Link></li>
-              <li className="p-2"><Link href="/category-page/Skirts" onClick={toggleCategoriesMenu}>Skirts</Link></li>
-              <li className="p-2"><Link href="/category-page/Suits" onClick={toggleCategoriesMenu}>Suits</Link></li>
-              <li className="p-2"><Link href="/category-page/Dress" onClick={toggleCategoriesMenu}>Dress</Link></li>
-              <li className="p-2"><Link href="/category-page/Casual Wear" onClick={toggleCategoriesMenu}>Casual Wear</Link></li>
-              <li className="p-2"><Link href="/category-page/Accessories" onClick={toggleCategoriesMenu}>Accessories</Link></li>
-              <li className="p-2"><Link href="/category-page/Jacket%2FBlazer" onClick={toggleCategoriesMenu}>Jackets and Blazers</Link></li>
-            </ul>
-          </div>
-        )}
-      </div>
-
-      <Link href="/donation-info">Donation Info</Link>
-      <AuthProfileMenu />      
-    </nav>
-  )
-};
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar component="nav">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Box sx={{ flexGrow: 1 }}>
+            <Link href="/" passHref>
+              <Button color="secondary">
+                <Image src={logo} alt="logo" width={50} height={50} />
+              </Button>
+            </Link>
+          </Box>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Grid container spacing={2}>
+              {navItems.map((item, index) => (
+                <Grid item key={item} sx={{ display: "flex" }}>
+                  {index === 2 ? <CategoryDropDownMenu /> : null}
+                  <Link href={links[index]} passHref>
+                    <Button key={item} sx={{ color: "#fff" }}>
+                      {item}
+                    </Button>
+                  </Link>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <nav>
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </nav>
+      <Box component="main">
+        <Toolbar />
+      </Box>
+    </Box>
+  );
+}
