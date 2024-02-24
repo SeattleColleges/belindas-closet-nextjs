@@ -2,8 +2,10 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import SessionProvider from '@/components/SessionProvider';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from "@mui/material/styles";
 import theme from './theme/theme';
+import CssBaseline from "@mui/material/CssBaseline";
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,13 +23,14 @@ export default function RootLayout({
 }) {
   return (
     <ThemeProvider theme={theme}>
-    <html lang="en">
-      <body className={inter.className}>
-        <SessionProvider>
-          <Navbar/>{children}
-        </SessionProvider>
-      </body>
-    </html>
+      <CssBaseline />
+      <html lang="en">
+        <body>
+          <SessionProvider>
+            <Navbar/>{children}
+          </SessionProvider>
+        </body>
+      </html>
     </ThemeProvider>
   )
 };
