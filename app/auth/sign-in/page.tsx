@@ -6,6 +6,15 @@ import { useRouter } from "next/navigation";
 import styles from "./signin-page.module.css";
 import Image from "next/image";
 import mascot from "../../nsc_mascot_green_cropped.png";
+import {
+  Container,
+  Paper,
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Link as MuiLink,
+} from "@mui/material";
 
 const Signin = () => {
   const [error, setError] = useState("");
@@ -13,7 +22,7 @@ const Signin = () => {
     email: "",
     password: "",
   });
-  
+
   const router = useRouter();
 
   const { email, password } = userInfo;
@@ -37,62 +46,109 @@ const Signin = () => {
       }),
     });
     if (!res.ok) {
-      alert("Invalid email or password"); // error message for now
-      throw new Error(await res.text());
-    }
-    const { token } = await res.json();
-    localStorage.setItem("token", token); // store token in local storage
-    const userRole = JSON.parse(atob(token.split(".")[1])).role; // decode token to get user role
-    // Redirect to user page
-    if (userRole === "admin") {
-      router.push("/admin-page"); // redirect to admin-page which is not created yet
-    } else if (userRole === "creator") {
-      router.push("/creator-page"); // redirect to creator-page
+      setError("Invalid email or password");
     } else {
-      router.push("/profile"); // TODO: change profile to user-page
+      const { token } = await res.json();
+      const userRole = JSON.parse(atob(token.split(".")[1])).role; // decode token to get user role
+      // Redirect to user page
+      if (userRole === "admin") {
+        router.push("/admin-page"); // redirect to admin-page which is not created yet
+      } else if (userRole === "creator") {
+        router.push("/creator-page"); // redirect to creator-page
+      } else {
+        router.push("/profile"); // TODO: change profile to user-page
+      }
     }
   };
 
   return (
-    <div className={styles.container}>
-    <div className={styles.centerContainer}>
-      <div className={styles.logoContainer}>
-        <Image src={mascot} alt="mascot" />
-      </div>
-    <form className={`${styles.formContainer} ${styles['sign-in-form']}`} onSubmit={handleSubmit}>
-      <h1 className={styles.title}>Sign In</h1>
-        <InputField
-          label="Email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Password"
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleChange}
-        />
-        <button className={styles.submitButton} type="submit">
+    <Container
+      fixed
+      maxWidth="lg"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        bgcolor: "#12202d",
+        height: "100vh",
+        flexDirection: "column",
+      }}
+    >
+      <Image src={mascot} alt="logo" style={{ width: 200, height: 100 }} />
+      <Paper
+        elevation={4}
+        sx={{
+          padding: "20px",
+          width: "400px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography component="h1" variant="h5">
           Sign In
-        </button>
-        <div className={styles.linkContainer}>
-        <p className={styles.textCenter}>
-          <a href="/auth/forgot-password" className={styles.link}>
-            Forgot Password
-          </a>
-        </p>
-        <p className={styles.textCenter}>
-          <a href="/auth/sign-up" className={styles.link}>
-            Sign Up
-          </a>
-        </p>
-        </div>
-      </form>
-    </div>
-    </div>
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ mt: 1, width: "100%" }}
+        >
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={userInfo.email}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={userInfo.password}
+            onChange={handleChange}
+          />
+          {error && (
+            <Typography color="error" textAlign="center">
+              {error}
+            </Typography>
+          )}
+          <Button
+            style={{ textTransform: "none" }}
+            color="primary"
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+          <Box textAlign="center">
+            <MuiLink href="/auth/forgot-password" variant="body2">
+              Forgot password?
+            </MuiLink>
+          </Box>
+          <Box textAlign="center" sx={{ mt: 2 }}>
+            <Typography variant="body2">
+              Don&apos;t have an account?&nbsp;
+              <MuiLink href="/auth/sign-up" variant="body2">
+                {"Sign Up"}
+              </MuiLink>
+            </Typography>
+          </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 
