@@ -1,4 +1,5 @@
 'use client';
+import { ThemeContext } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -21,8 +22,8 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          color: "darkgrey",
-          backgroundColor: "grey",
+          color: "#fff",
+          backgroundColor: "lightgray", // replace with a design image
           // "& h1": {
           //   color: "black"
           // }
