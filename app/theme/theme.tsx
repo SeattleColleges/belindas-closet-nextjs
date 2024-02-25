@@ -17,6 +17,19 @@ const theme = createTheme({
       contrastText: '#fff', 
     },
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          color: "darkgrey",
+          backgroundColor: "grey",
+          // "& h1": {
+          //   color: "black"
+          // }
+        }
+      }
+    }
+  }
 });
 
 export default theme;

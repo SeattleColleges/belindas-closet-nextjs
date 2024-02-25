@@ -27,7 +27,7 @@ const categories = [
 
 const Home = () => {
   return (
-    <div className={styles.container}>
+    <Box component="div" width={'100%'} display="flex" justifyContent="center" alignItems="center" flexDirection="column" bgcolor='#314252'>
       <Box width={800} display="flex" alignItems="center" flexDirection="column" gap={2} bgcolor='#293745' p={3}>
         <Container disableGutters fixed maxWidth="xs" sx={{width: "15%"}}>
           <Image src={logo} alt="logo" />
@@ -53,7 +53,7 @@ const Home = () => {
               ))}
           </Grid>
         </Box>
-    </div>
+    </Box>
   );
 };
 
