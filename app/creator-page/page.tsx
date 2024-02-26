@@ -1,5 +1,3 @@
-import styles from "../home.module.css";
-
 const Creator = () => {
     // Temporary boilerplate code to make it compile
     return (
