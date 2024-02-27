@@ -12,7 +12,7 @@ import Card from '@mui/material/Card';
 import { Container, Typography, Link, Button } from '@mui/material';
 
 // TEMPORARY CATEGORIES LIST
-const placeholderImg = google_play
+const placeholderImg = logo;
 const categories = [
   {'type': 'Shirts', 'image': placeholderImg},
   {'type': 'Shoes', 'image': placeholderImg},
@@ -27,10 +27,10 @@ const categories = [
 
 const Home = () => {
   return (
-    <Box component="div" width={'100%'} display="flex" justifyContent="center" alignItems="center" flexDirection="column" bgcolor='#314252'>
-      <Box width={800} display="flex" alignItems="center" flexDirection="column" gap={2} bgcolor='#293745' p={3}>
-        <Container disableGutters fixed maxWidth="xs" sx={{width: "15%"}}>
-          <Image src={logo} alt="logo" />
+    <Container fixed maxWidth="lg" sx={{display: "flex", justifyContent: "center", alignItems: "center", bgcolor: '#12202d'}}>
+      <Box width={800} display="flex" alignItems="center" flexDirection="column" gap={2} p={3}>
+        <Container disableGutters fixed maxWidth="xs" sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <Image src={logo} alt="logo" style={{width: 100, height: 100, display: 'block', margin: 'auto'}} />
         </Container>
         <Typography component='h1' variant='h3' sx={{color: 'white'}}>
           Belinda&apos;s Closet
@@ -45,7 +45,7 @@ const Home = () => {
         </Button>
           <Grid container spacing={2}>
               {categories.map((category, index)=>(
-                <Grid lg={4} sm={4} component="div" key={index}>
+                <Grid xs={12} md={6} lg={4} component="div" key={index}>
                   <Card>
                     <CustomCardContent title={category.type} image={placeholderImg} />
                   </Card>
@@ -53,7 +53,7 @@ const Home = () => {
               ))}
           </Grid>
         </Box>
-    </Box>
+     </Container>
   );
 };
 

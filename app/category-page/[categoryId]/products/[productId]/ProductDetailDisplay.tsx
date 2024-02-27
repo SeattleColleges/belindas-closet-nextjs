@@ -43,7 +43,6 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
         alignItems="center"
         flexDirection="column"
         gap={2}
-        bgcolor="#293745"
         p={3}
       >
         <Typography component="h1" variant="h4">

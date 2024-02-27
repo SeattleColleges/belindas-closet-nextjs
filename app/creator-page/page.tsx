@@ -1,18 +1,16 @@
-import styles from "../home.module.css";
-
 const Creator = () => {
     // Temporary boilerplate code to make it compile
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
        
         <div >
-            <div className={styles.loginButton}>
+            <div>
                 <a href="/">
                 <button>All Products</button>
                 </a>
             </div>
             
-            <div className={styles.loginButton}>
+            <div>
                 <a href="/add-product-page">
                 <button>Add Products</button>
                 </a>

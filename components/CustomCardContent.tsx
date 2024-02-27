@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import React from "react";
-import { CardActionArea, Typography, CardHeader } from '@mui/material';
+import { CardActionArea, Typography } from '@mui/material';
 import { useRouter } from "next/navigation";
 import CardContent from '@mui/material/CardContent';
 
@@ -19,8 +19,8 @@ const CustomCardContent: React.FC<CategoryCardProps> =({title, image})=>{
     return (
         <CardActionArea onClick={() => navigate()}>
             <CardContent>
-                <Image src={image} alt="logo" style={{width: "100%"}} />
-                <Typography variant='h5' align='center' gutterBottom>
+                <Image src={image} alt="logo" style={{width: 128, height: 128, display: 'block', margin: 'auto'}} />
+                <Typography variant='h5' align='center' mt={2}>
                     {title}
                 </Typography>
             </CardContent>
