@@ -4,7 +4,7 @@ import styles from './page.module.css';
 import React, { useState, useEffect, Dispatch, SetStateAction, createContext, Context } from "react";
 import Link from 'next/link';
 import ProductCard from "@/components/ProductCard";
-import google_play from "../../google_play.png";
+import google_play from "../../google_play.png"; 
 ;
 
 const placeholderImg = google_play
@@ -47,7 +47,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
     fetchData(categoryId, setProducts); // Pass categoryId to fetchData
   }, [categoryId]); 
 
-  return (
+  return (                        
     <div className={styles.displaySection}>
       <h1>Found {products.length} products in {categoryId}</h1>
       <div className={styles.productContainer}>
