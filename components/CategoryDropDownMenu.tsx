@@ -27,6 +27,7 @@ export default function CategoryDropDownMenu() {
   const navigate = (item: string) => {
     const encodedCategoryId = encodeURIComponent(item); //sanitize item name for route
     router.push(`/category-page/${encodedCategoryId}`);
+    handleClose();
   };
 
   return (
