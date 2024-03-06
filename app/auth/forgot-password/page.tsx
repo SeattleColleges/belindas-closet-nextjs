@@ -1,7 +1,8 @@
 "use client";
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
 import styles from "./forgot-password-page.module.css";
-import InputField from "@/components/InputFields";
+import TextField from "@/components/InputFields";
+import { Container, Typography, Link, Button } from '@mui/material';
 
 const ForgotPassword = () => {
   
@@ -25,21 +26,25 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <Container fixed maxWidth="lg" sx={{display: "flex", justifyContent: "center", alignItems: "center", bgcolor: '#12202d'}}>
       <form className={styles.formContainer} onSubmit={handleSubmit}>
-        <h1 className={styles.title}>Forgot Password</h1>
-        <InputField
+
+        <Typography variant='h3' sx={{fontWeight: 'bold', fontSize: '1.8rem', marginBottom: '1rem', color: '#101c29'}}>
+        Forgot Password
+        </Typography>
+
+        <TextField
           label="Email"
           type="email"
           name="email"
           value={email}
           onChange={handleChange}
         />
-        <button type="submit" className={styles.submitButton}>
+        <Button component='a' type="submit" variant="outlined">
           Submit
-        </button>
+        </Button>
       </form>
-    </div>
+    </Container>
   );
 };
 
