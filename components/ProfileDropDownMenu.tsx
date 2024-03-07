@@ -89,7 +89,7 @@ export default function ProfileDropDownMenu() {
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Sign In</MenuItem>
+        <MenuItem onClick={handleClose}>Sign Out</MenuItem>
       </Menu>
     </div>
   );

@@ -52,6 +52,9 @@
 //             </Link>
 //           </Grid>
 //         ))} 
+//         <Grid item>
+//           <ProfileDropDownMenu /> 
+//         </Grid>
 //       </List>
 //     </Box>
 //   );
@@ -89,7 +92,10 @@
 //                   </Link>
 //                 </Grid>
 //               ))}
-//             </Grid>
+//                <Grid item>
+//                <ProfileDropDownMenu /> 
+//                </Grid>
+//                </Grid>
 //           </Box>
 //         </Toolbar>
 //       </AppBar>
@@ -125,6 +131,7 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import { useSession } from "next-auth/react"; // Import useSession hook
 import logo from "../app/logo.png";
 import {
   AppBar,
@@ -143,13 +150,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import ProfileDropDownMenu from "./ProfileDropDownMenu";
 
-
-const drawerWidth = 240;             
+const drawerWidth = 240;
 const navItems = ["Home", "Sign In", "Donation"];
 const links = ["/", "/auth/sign-in", "/donation-info"];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { data: session } = useSession(); // Get session data
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -173,10 +180,12 @@ export default function Navbar() {
               </Button>
             </Link>
           </Grid>
-        ))} 
-        <Grid item>
-          <ProfileDropDownMenu /> 
-        </Grid>
+        ))}
+        {session ? (   //Remove Profile before sign-in
+          <Grid item>
+            <ProfileDropDownMenu />
+          </Grid>
+        ) : null}
       </List>
     </Box>
   );
@@ -214,9 +223,11 @@ export default function Navbar() {
                   </Link>
                 </Grid>
               ))}
-              <Grid item>
-                <ProfileDropDownMenu /> 
-              </Grid>
+              {session ? (   //Remove Profile before sign-in
+                <Grid item>
+                  <ProfileDropDownMenu />
+                </Grid>
+              ) : null}
             </Grid>
           </Box>
         </Toolbar>
