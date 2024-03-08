@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ArchiveIcon from "@mui/icons-material/Archive";
 
 type ProductCardProps = {
+  _id: string,
   image: StaticImageData;
   categories: string[];
   gender: string;
@@ -21,6 +22,7 @@ type ProductCardProps = {
   href: string;
 };
 export default function ProductCard({
+  _id,
   image,
   categories,
   gender,
@@ -40,7 +42,42 @@ export default function ProductCard({
       const role = JSON.parse(atob(token.split(".")[1])).role;
       setUserRole(role);
     }
-  }, []);
+  }
+  , []);
+
+    // delete product function
+    const handleDelete = async (_id: string) => {
+      try {
+        const response = await fetch(`http://localhost:3000/products/remove/:id`, {
+          method: "DELETE", 
+          headers: {
+            "Content-Type": "application/json", 
+          },
+        });
+        console.log("Product deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
+    };
+
+  // archive product function
+  // const handleArchive = async (product_id) => {
+  //   try {
+  //     const response = await fetch(`http://localhost:3000/products/archive/:id`, {
+  //       method: "PATCH", 
+  //       headers: {
+  //         "Content-Type": "application/json", 
+  //       },
+  //     });
+
+  //     console.log("Product archived successfully!");
+
+  //   } catch (error) {
+  //     console.error("Error archiving product:", error);
+  //   }
+  // };
+
+
   return (
     <Paper
       sx={{
@@ -100,11 +137,11 @@ export default function ProductCard({
           (userRole === "creator" && (
             <Stack direction="row" spacing={2}>
               {/* TODO: Add delete function to this button  */}
-              <Button variant="contained" startIcon={<DeleteIcon />} color="error">
+              <Button variant="contained" startIcon={<DeleteIcon />} color="error" onClick={() => handleDelete(_id)}>
                 Delete
               </Button>
               {/* TODO: Add archive function to this button  */}
-              <Button variant="contained" startIcon={<ArchiveIcon />} color="warning">
+              <Button variant="contained" startIcon={<ArchiveIcon />} color="warning" onClick={() => handleArchive()}>
                 Archive
               </Button>
             </Stack>
