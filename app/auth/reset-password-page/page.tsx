@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 
 const ResetPasswordPage = () => {
+  const URL = process.env.BELINDAS_API_URL || "http://localhost:3000";
   const [password, setPassword] = useState({
     newPassword: "",
     confirmPassword: "",
@@ -54,7 +55,7 @@ const ResetPasswordPage = () => {
 
     // send request to backend api then log the response
     // TODO: send request to backend api then log the response
-    const res = await fetch("localhost:3000/api/auth/reset-password", {
+    const res = await fetch(`${URL}/auth/reset-password`, {
       method: "POST",
       body: JSON.stringify(password),
       headers: {

@@ -32,7 +32,7 @@ const ProductDetail = ({
   const decodedCategoryId = decodeURIComponent(categoryId);
 
   useEffect(() => {
-    const fetchUrl = `http://localhost:3000/api/products/find/${productId}`;
+    const fetchUrl = process.env.BELINDAS_API_URL + `/products/find/${productId}` || "http://localhost:3000/products/find/" + productId;
 
     const fetchProductDetails = async () => {
       setIsLoading(false);

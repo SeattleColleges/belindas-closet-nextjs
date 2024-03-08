@@ -18,7 +18,7 @@ interface User {
  * @param setUserInfo
  */
 async function fetchUser(setUserInfo: (userInfo: User[]) => void) {
-  const apiUrl = "http://localhost:3000/api/user";
+  const apiUrl = process.env.BELINDAS_API_URL + "/user" || "http://localhost:3000/user";
   try {
     const res = await fetch(apiUrl, {
       method: "GET",

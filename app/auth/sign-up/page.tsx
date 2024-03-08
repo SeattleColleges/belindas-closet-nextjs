@@ -7,6 +7,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {IconButton, InputAdornment, TextField} from "@mui/material";
 const SignUp = () => {
+  const URL = process.env.BELINDAS_API_URL || "http://localhost:3000";
   // handling user's incoming info
   const [userInfo, setUserInfo] = useState({
     firstName: "",
@@ -53,7 +54,7 @@ const SignUp = () => {
   
     // send request to backend api then log the response
     // hardwired link for local development, change port if needed
-    const res = await fetch("http://localhost:3000/api/auth/signup", {
+    const res = await fetch(`${URL}/auth/signup`, {
       method: "POST",
       body: JSON.stringify(userInfo),
       headers: {

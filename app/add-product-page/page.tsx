@@ -13,6 +13,7 @@ import {
   ProductSizePantsInseamList,
 } from "./product-prop-list";
 const AddProduct = () => {
+  const URL = process.env.BELINDAS_API_URL || "http://localhost:3000";
   const [productType, setProductType] = useState(ProductTypeList.Shoes);
   const [productGender, setProductGender] = useState(ProductGenderList.MALE);
   const [productSizeShoe, setProductSizeShoe] = useState(
@@ -82,7 +83,7 @@ const AddProduct = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3000/api/products/new", {
+      const res = await fetch(`${URL}/products/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

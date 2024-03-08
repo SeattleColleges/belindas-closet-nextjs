@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 
 const Signin = () => {
+  const URL = process.env.BELINDAS_API_URL || "http://localhost:3000";
   const [error, setError] = useState("");
   const [userInfo, setUserInfo] = useState({
     email: "",
@@ -37,7 +38,7 @@ const Signin = () => {
     e.preventDefault();
 
     // Fetch sign in
-    const res = await fetch("http://localhost:3000/api/auth/login", {
+    const res = await fetch(`${URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

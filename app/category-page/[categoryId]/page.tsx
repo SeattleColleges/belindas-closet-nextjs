@@ -21,7 +21,7 @@ async function fetchData(
   categoryId: string,
   setProducts: Dispatch<SetStateAction<Product[]>>
 ) {
-  const apiUrl = "http://localhost:3000/api/products/findByType/";
+  const apiUrl = process.env.BELINDAS_API_URL + "/products/findByType/" || "http://localhost:3000";
   const queryParam = encodeURIComponent(categoryId);
   const fetchUrl = `${apiUrl}${queryParam}`;
 
