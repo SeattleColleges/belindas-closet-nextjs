@@ -12,8 +12,9 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
+import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
 
-interface Product {
+export interface Product {
   _id: string;
   productType: string[];
   productGender: string[];
@@ -26,6 +27,16 @@ interface Product {
 }
 
 const ProductDetailDisplay = ({ product }: { product: Product }) => {
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  const handleDeleteButtonClick = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+  };
+
   return (
     <Container
       fixed
@@ -115,6 +126,7 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
                 variant="contained"
                 color="error"
                 startIcon={<DeleteIcon />}
+                onClick={handleDeleteButtonClick}
               >
                 Delete
               </Button>
@@ -130,6 +142,11 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
               </Button>
             </Box>
           </Stack>
+            <ConfirmDeleteDialog
+              open={openDeleteDialog}
+              onClose={handleCloseDeleteDialog}
+              product={product}
+            />
         </Paper>
       </Box>
     </Container>

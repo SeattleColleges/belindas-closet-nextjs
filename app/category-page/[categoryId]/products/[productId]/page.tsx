@@ -17,6 +17,7 @@ interface Product {
   productSizePantsInseam: string[];
   productDescription: string;
   productImage: string;
+  isHidden: boolean;
 }
 
 const ProductDetail = ({
