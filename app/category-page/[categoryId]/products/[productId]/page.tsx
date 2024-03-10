@@ -18,6 +18,7 @@ interface Product {
   productDescription: string;
   productImage: string;
   isHidden: boolean;
+  isSold: boolean;
 }
 
 const ProductDetail = ({

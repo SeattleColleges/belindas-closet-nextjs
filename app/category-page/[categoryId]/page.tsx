@@ -16,6 +16,7 @@ interface Product {
   productSizePantsInseam: string;
   productDescription: string;
   isHidden: Boolean;
+  isSold: Boolean;
 }
 
 async function fetchData(
@@ -55,8 +56,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
   }, [categoryId]);
 
   useEffect(() => {
-    // Filter out hidden products
-    setFilteredProducts(products.filter(product => !product.isHidden));
+    setFilteredProducts(products.filter(product => !product.isHidden && !product.isSold));
   }, [products]);
 
   return (
