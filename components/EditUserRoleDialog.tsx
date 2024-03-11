@@ -31,8 +31,8 @@ interface ConfirmationDialogRawProps {
  * @param props - The component props.
  * @returns The rendered ConfirmationDialogRaw component.
  */
-export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
-  const { onClose, value: valueProp, open, ...other } = props;
+export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps & { user: UserCardProps } ) {
+  const { onClose, value: valueProp, open, user, ...other } = props;
   const [value, setValue] = useState(valueProp);
   const radioGroupRef = useRef<HTMLElement>(null);
 
@@ -62,9 +62,27 @@ export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
    * Handles the click event when the user confirms the role update.
    * @returns {void}
    */
-  const handleOk = () => {
-    onClose(value);
+  const handleOk = async () => {
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
     // TODO: Update user role in the database
+    try {
+      const response = await fetch(`http://localhost:3000/api/user/update/${user.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ role: value })
+      });
+      if (response.ok) {
+        onClose(value);
+      } else {
+        console.error('Failed to update user role:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating user role:', error);
+    }
   };
 
   /**
@@ -167,6 +185,7 @@ export default function EditUserRoleDialog({
           open={open}
           onClose={handleClose}
           value={value}
+          user={user}
         />
       </List>
     </Box>
