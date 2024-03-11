@@ -25,7 +25,17 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Container fixed maxWidth="lg" sx={{display: "flex", justifyContent: "center", alignItems: "center", bgcolor: '#12202d'}}>
+    <Container 
+      fixed 
+      maxWidth="lg" 
+      sx={{
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center", 
+        bgcolor: '#12202d', 
+        height: "100vh",
+        flexDirection: "column"
+      }}>
 
       <Paper
         elevation={4}
@@ -35,10 +45,12 @@ const ForgotPassword = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: "2em",
-          marginBottom: "2em"
         }}
       >
+
+        <Typography component="h1" variant="h5">
+          Forgot Password
+        </Typography>
 
       <Box  
         component="form"
@@ -46,19 +58,27 @@ const ForgotPassword = () => {
         noValidate
         sx={{ mt: 1, width: "100%"}}>
 
-          <Typography variant='h3' sx={{ fontFamily: 'Roboto, Helvetic, Arialsans-serif',fontWeight: 'bold', fontSize: '1.8rem', marginBottom: '1rem', color: 'black'}}>
-          Forgot Password
-          </Typography>
+          
 
           <TextField
+            margin="normal"
+            required
+            fullWidth
             variant="outlined"
-            label="Email"
+            label="Email Address"
             type="email"
             name="email"
             value={email}
             onChange={handleChange}
           />
-          <Button component='a' type="submit" variant="outlined" sx={{marginLeft: "1em",borderColor: "black"}}>
+          <Button 
+            style={{ textTransform: "none" }}
+            color="primary"
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
             Submit
           </Button>
       </Box>
