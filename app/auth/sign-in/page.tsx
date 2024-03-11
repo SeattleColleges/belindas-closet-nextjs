@@ -48,7 +48,12 @@ const Signin = () => {
     if (!res.ok) {
       setError("Invalid email or password");
     } else {
+     
       const { token } = await res.json();
+      
+      // localStorage used for testing on local machines only -- remove later when done with local tests
+      localStorage.setItem("token", token);
+
       const userRole = JSON.parse(atob(token.split(".")[1])).role; // decode token to get user role
       // Redirect to user page
       if (userRole === "admin") {

@@ -10,7 +10,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ArchiveIcon from "@mui/icons-material/Archive";
 
 type ProductCardProps = {
-  _id: string,
   image: StaticImageData;
   categories: string[];
   gender: string;
@@ -20,9 +19,9 @@ type ProductCardProps = {
   size: string;
   description: string;
   href: string;
+  productId: string;
 };
 export default function ProductCard({
-  _id,
   image,
   categories,
   gender,
@@ -32,46 +31,51 @@ export default function ProductCard({
   sizePantsInseam,
   description,
   href,
+  productId
 }: ProductCardProps) {
   const [userRole, setUserRole] = React.useState("");
-
   // Get user role from token
+  const token = localStorage.getItem("token"); // get token from local storage
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
       const role = JSON.parse(atob(token.split(".")[1])).role;
       setUserRole(role);
     }
+    // texting what role is returned delete later
+    console.log(userRole);
   }
-  , []);
+  , [token, userRole]);
 
-    // delete product function
-    const handleDelete = async (_id: string) => {
+    // delete product function -----------------------------------
+    const handleDelete = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/products/remove/:id`, {
-          method: "DELETE", 
+        const response = await fetch(`http://localhost:3000/api/products/remove/${productId}`, {
+          method: "DELETE",
           headers: {
-            "Content-Type": "application/json", 
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}` // pass token to the server
           },
         });
-        console.log("Product deleted successfully!");
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        console.log(`Successful delete the product with id: ${productId}`)
       } catch (error) {
         console.error("Error deleting product:", error);
       }
+      window.location.reload();
     };
 
-  // archive product function
+  // archive product function -----------------------------------------
   // const handleArchive = async (product_id) => {
   //   try {
   //     const response = await fetch(`http://localhost:3000/products/archive/:id`, {
-  //       method: "PATCH", 
+  //       method: "PATCH",
   //       headers: {
-  //         "Content-Type": "application/json", 
+  //         "Content-Type": "application/json",
   //       },
   //     });
-
   //     console.log("Product archived successfully!");
-
   //   } catch (error) {
   //     console.error("Error archiving product:", error);
   //   }
@@ -133,19 +137,21 @@ export default function ProductCard({
         <Button variant="contained" href={href} color="primary">
           View
         </Button>
-        {userRole === "admin" ||
-          (userRole === "creator" && (
-            <Stack direction="row" spacing={2}>
+        
+        {userRole === "admin" || userRole === "creator" ? 
+            (<Stack direction="row" spacing={2}>
               {/* TODO: Add delete function to this button  */}
-              <Button variant="contained" startIcon={<DeleteIcon />} color="error" onClick={() => handleDelete(_id)}>
+              <Button variant="contained" startIcon={<DeleteIcon />} color="error" onClick={() => handleDelete()}>
                 Delete
               </Button>
               {/* TODO: Add archive function to this button  */}
-              <Button variant="contained" startIcon={<ArchiveIcon />} color="warning" onClick={() => handleArchive()}>
+              <Button variant="contained" startIcon={<ArchiveIcon />} color="warning" >
                 Archive
               </Button>
-            </Stack>
-          ))}
+            </Stack>) 
+            : null
+          }
+          
       </Stack>
     </Paper>
   );

@@ -4,7 +4,9 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import ProductCard from "@/components/ProductCard";
 import logo from "../../logo.png";
 import { Container, Grid, Typography } from "@mui/material";
+
 const placeholderImg = logo;
+
 interface Product {
   _id: string;
   productImage: typeof placeholderImg;
@@ -15,6 +17,7 @@ interface Product {
   productSizePantsWaist: string;
   productSizePantsInseam: string;
   productDescription: string;
+  isHidden: boolean;
 }
 
 async function fetchData(
@@ -37,7 +40,6 @@ async function fetchData(
     } else {
       const data = await res.json();
       setProducts(data);
-      console.log(data);
     }
   } catch (error) {
     console.error("Error getting product:", error);
@@ -46,7 +48,7 @@ async function fetchData(
 
 const ViewProduct = ({ categoryId }: { categoryId: string }) => {
   const [products, setProducts] = useState<Product[]>([]);
-
+  
   useEffect(() => {
     fetchData(categoryId, setProducts); // Pass categoryId to fetchData
   }, [categoryId]);
@@ -74,7 +76,8 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
         <Grid container spacing={2}>
           {products.map((product, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
-              <ProductCard
+              {product.isHidden == false && ( // Only display the product if it's not hidden
+                <ProductCard
                 image={logo}
                 categories={product.productType}
                 gender={product.productGender}
@@ -84,7 +87,9 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
                 sizePantsInseam={product.productSizePantsInseam}
                 description={product.productDescription}
                 href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL
+                productId={product._id}
               />
+              )}
             </Grid>
           ))}
         </Grid>
