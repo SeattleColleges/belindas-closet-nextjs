@@ -15,6 +15,8 @@ interface Product {
   productSizePantsWaist: string;
   productSizePantsInseam: string;
   productDescription: string;
+  isHidden: Boolean;
+  isSold: Boolean;
 }
 
 async function fetchData(
@@ -36,6 +38,7 @@ async function fetchData(
       throw new Error(res.statusText);
     } else {
       const data = await res.json();
+      const filteredData = data.filter((product: Product) => !product.isHidden);
       setProducts(data);
       console.log(data);
     }
@@ -46,10 +49,15 @@ async function fetchData(
 
 const ViewProduct = ({ categoryId }: { categoryId: string }) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     fetchData(categoryId, setProducts); // Pass categoryId to fetchData
   }, [categoryId]);
+
+  useEffect(() => {
+    setFilteredProducts(products.filter(product => !product.isHidden && !product.isSold));
+  }, [products]);
 
   return (
     <Container
@@ -69,10 +77,10 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
           justifyContent={"center"}
           align={"center"}
         >
-          Found {products.length} products in {categoryId}
+          Found {filteredProducts.length} products in {categoryId}
         </Typography>
         <Grid container spacing={2}>
-          {products.map((product, index) => (
+          {filteredProducts.map((product, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
               <ProductCard
                 image={logo}

@@ -12,8 +12,10 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
+import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
+import ConfirmArchiveDialog from "@/components/ConfirmArchiveDialog";
 
-interface Product {
+export interface Product {
   _id: string;
   productType: string[];
   productGender: string[];
@@ -23,9 +25,31 @@ interface Product {
   productSizePantsInseam: string[];
   productDescription: string;
   productImage: string;
+  isHidden: boolean;
+  isSold: boolean;
 }
 
 const ProductDetailDisplay = ({ product }: { product: Product }) => {
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  const handleDeleteButtonClick = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+  };
+
+  const [openArchiveDialog, setOpenArchiveDialog] = useState(false);
+
+  const handleArchiveButtonClick = () => {
+    setOpenArchiveDialog(true);
+  };
+
+  const handleCloseArchiveDialog = () => {
+    setOpenArchiveDialog(false);
+  };
+
   return (
     <Container
       fixed
@@ -115,6 +139,7 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
                 variant="contained"
                 color="error"
                 startIcon={<DeleteIcon />}
+                onClick={handleDeleteButtonClick}
               >
                 Delete
               </Button>
@@ -125,11 +150,22 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
                 variant="contained"
                 color="warning"
                 startIcon={<ArchiveIcon />}
+                onClick={handleArchiveButtonClick}
               >
                 Archive
               </Button>
             </Box>
           </Stack>
+            <ConfirmDeleteDialog
+              open={openDeleteDialog}
+              onClose={handleCloseDeleteDialog}
+              product={product}
+            />
+            <ConfirmArchiveDialog
+              open={openArchiveDialog}
+              onClose={handleCloseArchiveDialog}
+              product={product}
+            />
         </Paper>
       </Box>
     </Container>
