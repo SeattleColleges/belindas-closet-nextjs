@@ -51,6 +51,7 @@ export default function ConfirmDeleteDialog({
               });
               if (response.ok) {
                 onClose();
+                window.history.back()
               } else {
                 console.error('Failed to delete product', response.statusText);
               }

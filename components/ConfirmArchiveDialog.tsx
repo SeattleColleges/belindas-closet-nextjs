@@ -51,6 +51,7 @@ export default function ConfirmArchiveDialog({
               });
               if (response.ok) {
                 onClose();
+                window.history.back()
               } else {
                 console.error('Failed to archive product', response.statusText);
               }
