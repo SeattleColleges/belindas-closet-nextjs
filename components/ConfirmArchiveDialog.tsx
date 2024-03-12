@@ -5,6 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import React, { useState } from "react";
 import { Product } from "@/app/category-page/[categoryId]/products/[productId]/ProductDetailDisplay";
+import Snackbar from "@mui/material/Snackbar";
 
 /**
  * Props for the ConfirmArchiveDialog component.
@@ -25,6 +26,8 @@ export default function ConfirmArchiveDialog({
     onClose,
     product,
 }: ConfirmArchiveDialogProps) {
+    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
+    
     /**
     * Handles the click event when the user confirms "No" to archiving product.
     * @returns {void}
@@ -51,11 +54,17 @@ export default function ConfirmArchiveDialog({
               });
               if (response.ok) {
                 onClose();
-                window.history.back()
+                setSnackBarMessage("Product archived successfully!");
+                setTimeout(() => {
+                    window.history.back();
+                }, 2000);
               } else {
+                const errorMessage = await response.json();
+                setSnackBarMessage(errorMessage.message);
                 console.error('Failed to archive product', response.statusText);
               }
         } catch (error) {
+            setSnackBarMessage("Error archiving product");
             console.error('Error archiving product:', error);
         }
     };
@@ -80,6 +89,13 @@ export default function ConfirmArchiveDialog({
                 <Button onClick={handleYes}>Yes</Button>
             </DialogActions>
             </Dialog>
+            <Snackbar
+                open={Boolean(snackBarMessage)}
+                autoHideDuration={6000}
+                onClose={() => setSnackBarMessage("")}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                message={snackBarMessage}
+            />
         </Box>
     );
 }
