@@ -10,6 +10,7 @@ import mascot from "../../nsc_mascot_green_cropped.png";
 import { Link as MuiLink } from "@mui/material";
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
   // handling user's incoming info
@@ -41,6 +42,9 @@ const SignUp = () => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   }
+
+  // route to sign in page
+  const router = useRouter();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const { name, value } = target;
@@ -96,6 +100,7 @@ const SignUp = () => {
       }
       setError("");
       setSuccess("Sign up successful!");
+      router.push("/auth/sign-in");
     } catch (error) {
       console.error("Failed to sign up", error);
     }
