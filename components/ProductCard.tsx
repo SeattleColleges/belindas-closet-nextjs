@@ -19,7 +19,9 @@ type ProductCardProps = {
   size: string;
   description: string;
   href: string;
-  productId: string;
+  _id: string;
+  isHidden: boolean;
+  isSold: boolean;
 };
 export default function ProductCard({
   image,
@@ -31,17 +33,17 @@ export default function ProductCard({
   sizePantsInseam,
   description,
   href,
-  productId
+  _id,
 }: ProductCardProps) {
   const [userRole, setUserRole] = React.useState("");
-  // Get user role from token
+
   const token = localStorage.getItem("token"); // get token from local storage
   React.useEffect(() => {
     if (token) {
       const role = JSON.parse(atob(token.split(".")[1])).role;
       setUserRole(role);
     }
-    // texting what role is returned delete later
+    // testing what role is returned via console log -- delete later
     console.log(userRole);
   }
   , [token, userRole]);
@@ -49,17 +51,19 @@ export default function ProductCard({
     // delete product function -----------------------------------
     const handleDelete = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/products/remove/${productId}`, {
+        const response = await fetch(`http://localhost:3000/api/products/remove/${_id}`, {
+          // delete API uses DELETE method
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}` // pass token to the server
           },
+            
         });
         if (!response.ok) {
           throw new Error(response.statusText);
         }
-        console.log(`Successful delete the product with id: ${productId}`)
+        console.log(`Successful delete the product with id: ${_id}`)
       } catch (error) {
         console.error("Error deleting product:", error);
       }
@@ -67,19 +71,22 @@ export default function ProductCard({
     };
 
   // archive product function -----------------------------------------
-  // const handleArchive = async (product_id) => {
-  //   try {
-  //     const response = await fetch(`http://localhost:3000/products/archive/:id`, {
-  //       method: "PATCH",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     console.log("Product archived successfully!");
-  //   } catch (error) {
-  //     console.error("Error archiving product:", error);
-  //   }
-  // };
+  const handleArchive = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/products/archive/${_id}`, {
+        // archive API uses PUT method
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+           Authorization: `Bearer ${token}` // pass token to the server
+        },
+      });
+      console.log("Product archived successfully!");
+    } catch (error) {
+      console.error("Error archiving product:", error);
+    }
+    window.location.reload();
+  };
 
 
   return (
@@ -139,16 +146,18 @@ export default function ProductCard({
         </Button>
         
         {userRole === "admin" || userRole === "creator" ? 
-            (<Stack direction="row" spacing={2}>
-              {/* TODO: Add delete function to this button  */}
-              <Button variant="contained" startIcon={<DeleteIcon />} color="error" onClick={() => handleDelete()}>
-                Delete
-              </Button>
-              {/* TODO: Add archive function to this button  */}
-              <Button variant="contained" startIcon={<ArchiveIcon />} color="warning" >
-                Archive
-              </Button>
-            </Stack>) 
+            (
+              <Stack direction="row" spacing={2}>
+                {/* TODO: Add delete function to this button  */}
+                <Button variant="contained" startIcon={<DeleteIcon />} color="error" onClick={() => handleDelete()}>
+                  Delete
+                </Button>
+                {/* TODO: Add archive function to this button  */}
+                <Button variant="contained" startIcon={<ArchiveIcon />} color="warning" onClick={() => handleArchive()}>
+                  Archive
+                </Button>
+              </Stack>
+            ) 
             : null
           }
           
