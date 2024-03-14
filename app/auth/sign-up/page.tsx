@@ -1,11 +1,17 @@
 "use client";
-import InputField from "@/components/InputFields";
-import Link from "next/link";
+
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
-import styles from './signup-page.module.css';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import {IconButton, InputAdornment, TextField} from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import Image from "next/image";
+import mascot from "../../nsc_mascot_green_cropped.png";
+import { Link as MuiLink } from "@mui/material";
+import ErrorAlert from "@/components/ErrorAlert";
+import SuccessAlert from "@/components/SuccessAlert";
+import { useRouter } from "next/navigation";
+
 const SignUp = () => {
   // handling user's incoming info
   const [userInfo, setUserInfo] = useState({
@@ -14,29 +20,35 @@ const SignUp = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "creator",
+    role: "user",
   });
-  // Set initial state for errors
-    const [errors, setErrors] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-    });
+  // Set initial state for errors and success
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  // destructure user's info
   const { firstName, lastName, email, password, confirmPassword } = userInfo;
 
   // State to track whether the password is visible or not
- const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
- // Function to toggle password visibility
- const togglePasswordVisibility = () => {
-   setShowPassword(!showPassword);
- };
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // Toggle confirm password visibility
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  }
+
+  // route to sign in page
+  const router = useRouter();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const { name, value } = target;
-    // updating user's info 
+    // updating user's info
     setUserInfo({ ...userInfo, [name]: value });
   };
 
@@ -45,126 +57,198 @@ const SignUp = () => {
     // prevent the default behavior
     e.preventDefault();
 
-  // Check if password and confirmPassword match
-  if (password !== confirmPassword) {
-    console.error("Passwords do not match");
-    return;
-  }
-  
-    // send request to backend api then log the response
-    // hardwired link for local development, change port if needed
-    const res = await fetch("http://localhost:3000/api/auth/signup", {
-      method: "POST",
-      body: JSON.stringify(userInfo),
-      headers: {
-        "Content-type": "application/json"
-      }
-    });
-    try {
-      const data = await res.json();
-      console.log(data);
-    } catch (error) {
-      console.error("Error parson JSON response:", error);
+    // Check if inputs are empty
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      setError("Please fill in all fields");
+      return;
     }
 
-    // temporary alert for testing
-    if (res.ok) alert('sign up was successful')
+    // Check if password and confirmPassword match
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
+    // Check if password is less than 6 characters
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
+
+    // Check if email is valid
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Invalid email");
+      return;
+    }
+
+    // send request to backend api then log the response
+    // hardwired link for local development, change port if needed
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/signup", {
+        method: "POST",
+        body: JSON.stringify(userInfo),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        const { message } = await res.json();
+        setError(message);
+        setSuccess("");
+        return;
+      }
+      setError("");
+      setSuccess("Sign up successful!");
+      router.push("/auth/sign-in");
+    } catch (error) {
+      console.error("Failed to sign up", error);
+    }
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.formContainer} onSubmit={handleSubmit}>
-        <h1 className={styles.title}>Sign Up</h1>
-        <TextField
-            fullWidth
-            margin="normal"
-          label="First Name"
-          type="text"
-          name="firstName"
-          value={firstName}
-          onChange={handleChange}
-        />
-        <TextField
-            fullWidth
-            margin="normal"
-          label="Last Name"
-          type="text"
-          name="lastName"
-          value={lastName}
-          onChange={handleChange}
-        />
-        <TextField
-            fullWidth
-            margin="normal"
-          label="Email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-        />
-      {/* Password input with toggle button */}
-          <TextField
-              fullWidth
-              margin="normal"
-              label="Password"
-              name="password"
-              value={password}
-              type={showPassword ? "text" : "password"}
-              onChange={handleChange}
-              error={Boolean(errors.password)}
-              helperText={errors.password}
-              InputProps={{
-                  endAdornment: (
-                      <InputAdornment position="end">
-                          {/* Toggle button to control password visibility */}
-                          <IconButton
-                              onClick={togglePasswordVisibility}
-                          >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                      </InputAdornment>
-                  ),
-              }}
-          />
-          {/* Confirm Password input with toggle button */}
-          <TextField
-              fullWidth
-              margin="normal"
-              label="Confirm Password"
-              name="confirmPassword"
-              value={confirmPassword}
-              type={showPassword ? "text" : "password"}
-              onChange={handleChange}
-              error={Boolean(errors.confirmPassword)}
-              helperText={errors.confirmPassword}
-              InputProps={{
-                  endAdornment: (
-                      <InputAdornment position="end">
-                          {/* Toggle button to control password visibility */}
-                          <IconButton
-                              onClick={togglePasswordVisibility}
-                          >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                      </InputAdornment>
-                  ),
-              }}
-          />
-        {/*<button*/}
-        {/*  type="button"*/}
-        {/*  onClick={togglePasswordVisibility}*/}
-        {/*  className={styles.toggleButton}*/}
-        {/*>*/}
-        {/*  {showPassword ? "Hide Password" : "Show Password"}*/}
-        {/*</button>*/}
-        <button className={styles.submitButton} type="submit">
+    <Container
+      fixed
+      maxWidth="lg"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        bgcolor: "#12202d",
+        height: "100vh",
+        flexDirection: "column",
+      }}
+    >
+      <Image src={mascot} alt="logo" style={{ width: 200, height: 100 }} />
+      <Paper
+        elevation={4}
+        sx={{
+          padding: "20px",
+          width: "400px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography component="h1" variant="h5">
           Sign Up
-        </button>
-      </form>
-    </div>
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ mt: 1, width: "100%" }}
+        >
+          <TextField
+            sx={{ mb: 2 }}
+            margin="normal"
+            required
+            fullWidth
+            id="firstName"
+            label="First Name"
+            name="firstName"
+            autoComplete="fname"
+            autoFocus
+            value={firstName}
+            onChange={handleChange}
+          />
+          <TextField
+            sx={{ mb: 2 }}
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label="Last Name"
+            name="lastName"
+            autoComplete="lname"
+            value={lastName}
+            onChange={handleChange}
+            autoFocus={false}
+          />
+          <TextField
+            sx={{ mb: 2 }}
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            value={email}
+            onChange={handleChange}
+            type="email"
+            autoFocus={false}
+          />
+          <TextField
+            sx={{ mb: 2 }}
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            label="Password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete="password"
+            value={password}
+            onChange={handleChange}
+            autoFocus={false}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={togglePasswordVisibility}>
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            sx={{ mb: 2 }}
+            margin="normal"
+            required
+            fullWidth
+            id="confirmPassword"
+            label="Confirm Password"
+            name="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            autoComplete="confirm-password"
+            value={confirmPassword}
+            onChange={handleChange}
+            autoFocus={false}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={toggleConfirmPasswordVisibility}>
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {error && <ErrorAlert message={error} />}
+          {success && <SuccessAlert message={success} />}
+          <Button
+            style={{ textTransform: "none" }}
+            color="primary"
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign Up
+          </Button>
+          <Box textAlign="center" sx={{ mt: 2 }}>
+            <Typography variant="body2">
+              Already have an account?{" "}
+              <MuiLink href="/auth/sign-up" variant="body2">
+                {"Sign In"}
+              </MuiLink>
+            </Typography>
+          </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
-  
 };
 
 export default SignUp;
