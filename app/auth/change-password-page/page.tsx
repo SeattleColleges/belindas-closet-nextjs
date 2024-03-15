@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
+import { useRouter } from "next/navigation";
 
 const ChangePasswordPage = () => {
   const [password, setPassword] = useState({
@@ -44,6 +45,9 @@ const ChangePasswordPage = () => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+
+  // router
+  const router = useRouter();
 
   // handle change event
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
@@ -104,8 +108,11 @@ const ChangePasswordPage = () => {
         return;
       } 
       setError("");
-      setPassword({ newPassword: "", confirmPassword: "" });
-      setSuccess("Password changed successfully");
+      //set delay to show success message
+      setSuccess("Password changed successfully, redirecting to sign in page");
+      setTimeout(() => {
+        router.push("/auth/sign-in");
+      }, 3000);
     } catch (error) {
       console.error("Error changing password:", error);
     } finally {
