@@ -31,40 +31,9 @@ export interface Product {
 }
 
 const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
-  if (!product) {
-    return <div>Loading...</div>;
-  }
-
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-
-  const handleDeleteButtonClick = () => {
-    setOpenDeleteDialog(true);
-  };
-
-  const handleCloseDeleteDialog = () => {
-    setOpenDeleteDialog(false);
-  };
-
   const [openArchiveDialog, setOpenArchiveDialog] = useState(false);
-
-  const handleArchiveButtonClick = () => {
-    setOpenArchiveDialog(true);
-  };
-
-  const handleCloseArchiveDialog = () => {
-    setOpenArchiveDialog(false);
-  };
-
   const [openEditDialog, setOpenEditDialog] = useState(false);
-
-  const handleEditButtonClick = () => {
-    setOpenEditDialog(true);
-  };
-
-  const handleCloseEditDialog = () => {
-    setOpenEditDialog(false);
-  };
-
   const [userRole, setUserRole] = React.useState("");
 
   // Get user role from token
@@ -75,6 +44,34 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
       setUserRole(role);
     }
   }, []);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+  const handleDeleteButtonClick = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+  };
+
+  const handleArchiveButtonClick = () => {
+    setOpenArchiveDialog(true);
+  };
+
+  const handleCloseArchiveDialog = () => {
+    setOpenArchiveDialog(false);
+  };
+
+  const handleEditButtonClick = () => {
+    setOpenEditDialog(true);
+  };
+
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+  };
 
   return (
     <Container
