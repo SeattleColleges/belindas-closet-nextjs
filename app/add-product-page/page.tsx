@@ -11,57 +11,48 @@ import {
   ProductSizePantsInseamList,
 } from "./product-prop-list";
 const AddProduct = () => {
-  const [productType, setProductType] = useState(ProductTypeList.Shoes);
-  const [productGender, setProductGender] = useState(ProductGenderList.MALE);
-  const [productSizeShoe, setProductSizeShoe] = useState(
-    ProductSizeShoeList[0]
-  );
-  const [productSizes, setProductSizes] = useState(ProductSizesList.L);
-  const [productSizePantsWaist, setProductSizePantsWaist] = useState(
-    ProductSizePantsWaistList[0]
-  );
-  const [productSizePantsInseam, setProductSizePantsInseam] = useState(
-    ProductSizePantsInseamList[0]
-  );
+  const defaultType: string = ProductTypeList.Shoes;
+  const [productType, setProductType] = useState(defaultType);
+  const defaultGender: string = ProductGenderList.MALE
+  const [productGender, setProductGender] = useState(defaultGender);
+  const [productSizeShoe, setProductSizeShoe] = useState(ProductSizeShoeList[0]);
+  const defaultSize: string = ProductSizesList.L;
+  const [productSizes, setProductSizes] = useState(defaultSize);
+  const [productSizePantsWaist, setProductSizePantsWaist] = useState(ProductSizePantsWaistList[0]);
+  const [productSizePantsInseam, setProductSizePantsInseam] = useState(ProductSizePantsInseamList[0]);
   const [productDescription, setProductDescription] = useState("");
   const [productImage, setProductImage] = useState("");
 
   const handleProductTypeSelect = (e: {
-    target: { value: React.SetStateAction<ProductTypeList> };
+    target: { value: React.SetStateAction<string> };
   }) => {
     setProductType(e.target.value);
   };
 
   const handleProductGenderSelect = (e: {
-    target: { value: React.SetStateAction<ProductGenderList> };
+    target: { value: React.SetStateAction<string> };
   }) => {
     setProductGender(e.target.value);
   };
 
-  const handleProductSizeShoeSelect = (e: {
-    target: { value: React.SetStateAction<number> };
-  }) => {
-    const newValue = parseInt(e.target.value.toString(), 10);
+  const handleProductSizeShoeSelect = (event: any) => {
+    const newValue = parseInt(event.target.value.toString(), 10);
     setProductSizeShoe(newValue);
   };
 
   const handleProductSizeSelect = (e: {
-    target: { value: React.SetStateAction<ProductSizesList> };
+    target: { value: React.SetStateAction<string> };
   }) => {
     setProductSizes(e.target.value);
   };
 
-  const handleProductSizePantsWaistSelect = (e: {
-    target: { value: React.SetStateAction<number> };
-  }) => {
-    const newValue = parseInt(e.target.value.toString(), 10);
+  const handleProductSizePantsWaistSelect = (event: any) => {
+    const newValue = parseInt(event.target.value.toString(), 10);
     setProductSizePantsWaist(newValue);
   };
 
-  const handleProductSizePantsInseamSelect = (e: {
-    target: { value: React.SetStateAction<number> };
-  }) => {
-    const newValue = parseInt(e.target.value.toString(), 10);
+  const handleProductSizePantsInseamSelect = (event: any) => {
+    const newValue = parseInt(event.target.value.toString(), 10);
     setProductSizePantsInseam(newValue);
   };
 
