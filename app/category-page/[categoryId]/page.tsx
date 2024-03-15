@@ -91,7 +91,10 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
                 sizePantsWaist={product.productSizePantsWaist}
                 sizePantsInseam={product.productSizePantsInseam}
                 description={product.productDescription}
-                href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL
+                href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL            
+                _id={product._id} 
+                isHidden={false} 
+                isSold={false}              
               />
             </Grid>
           ))}
