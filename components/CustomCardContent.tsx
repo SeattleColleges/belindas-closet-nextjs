@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import React from "react";
-import { CardActionArea, Typography, CardHeader } from '@mui/material';
+import { CardActionArea, Typography } from '@mui/material';
 import { useRouter } from "next/navigation";
 import CardContent from '@mui/material/CardContent';
 

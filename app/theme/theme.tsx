@@ -1,4 +1,5 @@
 'use client';
+import { ThemeContext } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -53,6 +54,19 @@ const theme = createTheme({
       contrastText: '#fff', 
     },
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          color: "#fff",
+          backgroundColor: "lightgray", // replace with a design image
+          // "& h1": {
+          //   color: "black"
+          // }
+        }
+      }
+    }
+  }
 });
 
 export default theme;

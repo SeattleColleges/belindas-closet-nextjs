@@ -17,6 +17,8 @@ interface Product {
   productSizePantsInseam: string[];
   productDescription: string;
   productImage: string;
+  isHidden: boolean;
+  isSold: boolean;
 }
 
 const ProductDetail = ({
@@ -25,7 +27,7 @@ const ProductDetail = ({
   params: { categoryId: string; productId: string };
 }) => {
   const [product, setProduct] = useState<Product | null>(null); // State to hold the fetched product details
-  const [isLoading, setIsLoading] = useState(false); // State to hold loading status
+  const [isLoading, setIsLoading] = useState(true); // State to hold loading status
   const [error] = useState(null); // State to hold any error that occurs during fetching
 
   const { categoryId, productId } = params;
@@ -35,7 +37,7 @@ const ProductDetail = ({
     const fetchUrl = `http://localhost:3000/api/products/find/${productId}`;
 
     const fetchProductDetails = async () => {
-      setIsLoading(true);
+      setIsLoading(false);
       try {
         const response = await fetch(fetchUrl, {
           method: "GET",

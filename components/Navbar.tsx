@@ -32,7 +32,7 @@ export default function Navbar() {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box sx={{ textAlign: "center" }}>
       <Link href="/" passHref>
         <Button color="secondary">
           <Image src={logo} alt="logo" width={50} height={50} />
@@ -44,7 +44,7 @@ export default function Navbar() {
           <Grid item key={item}>
             {index === 2 ? <CategoryDropDownMenu /> : null}
             <Link href={links[index]} passHref>
-              <Button key={item} sx={{ color: "#000" }}>
+              <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
                 {item}
               </Button>
             </Link>

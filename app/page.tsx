@@ -11,7 +11,7 @@ import Card from '@mui/material/Card';
 import { Container, Typography, Button } from '@mui/material';
 
 // TEMPORARY CATEGORIES LIST
-const placeholderImg = google_play
+const placeholderImg = logo;
 const categories = [
   {'type': 'Shirts', 'image': placeholderImg},
   {'type': 'Shoes', 'image': placeholderImg},
@@ -44,7 +44,7 @@ const Home = () => {
         </Button>
           <Grid container spacing={2}>
               {categories.map((category, index)=>(
-                <Grid lg={4} sm={4} component="div" key={index}>
+                <Grid xs={12} md={6} lg={4} component="div" key={index}>
                   <Card>
                     <CustomCardContent title={category.type} image={placeholderImg} />
                   </Card>
