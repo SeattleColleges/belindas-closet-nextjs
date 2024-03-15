@@ -7,8 +7,9 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
+          color: "#fff",
           minHeight: "100vh",
-          backgroundColor: "#12202d",
+          backgroundColor: "lightgray",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -52,19 +53,6 @@ const theme = createTheme({
       main: '#4caf50',
       dark: '#357a38',
       contrastText: '#fff', 
-    },
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          color: "#fff",
-          backgroundColor: "lightgray", // replace with a design image
-          // "& h1": {
-          //   color: "black"
-          // }
-        }
-      }
     }
   }
 });
