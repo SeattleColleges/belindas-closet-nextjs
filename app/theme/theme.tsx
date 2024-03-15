@@ -2,6 +2,42 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          minHeight: "100vh",
+          backgroundColor: "#12202d",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center"
+        },
+      }
+    },
+    MuiFilledInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "white",
+          '&:hover': {
+            backgroundColor: "white"
+          },
+          '&.Mui-focused': {
+            backgroundColor: "white"
+          }
+        }
+      }
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }
+      }
+     }
+  },
   palette: {
     mode: 'light',
     primary: {
