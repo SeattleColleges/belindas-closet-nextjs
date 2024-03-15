@@ -11,8 +11,8 @@ interface Product {
   _id: string;
   productType: string[];
   productGender: string[];
-  productShoeSize: string[];
-  productSize: string[];
+  productSizeShoe: string[];
+  productSizes: string[];
   productSizePantsWaist: string[];
   productSizePantsInseam: string[];
   productDescription: string;
