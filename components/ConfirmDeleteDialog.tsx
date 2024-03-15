@@ -7,21 +7,6 @@ import React, { useState } from "react";
 import { Product } from "@/app/category-page/[categoryId]/products/[productId]/ProductDetailDisplay";
 import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
 
-interface State extends SnackbarOrigin {
-    open: boolean;
-  }
-
-interface DeleteSuccessResponse {
-    status: "delete_success";
-    message: string;
-    token?: string;
-  }
-  
-interface DeleteErrorResponse {
-    status: "delete_error";
-    message: string;
-  }
-
 /**
  * Props for the ConfirmDeleteDialog component.
  */
