@@ -7,12 +7,13 @@ interface InputSelectProps {
   options: any;
   onChange: any;
   style: any;
+  labelTextColor?: string;
 }
 
-const InputSelect: React.FC<InputSelectProps> = ({ label, value, options, onChange, style }) => {
+const InputSelect: React.FC<InputSelectProps> = ({ label, value, options, onChange, style, labelTextColor }) => {
   return (
     <div>
-      <label className={styles.inputLabel}>{label}:</label>
+      <label className={styles.inputLabel} style={{ color: labelTextColor || '#f0f0f0' }}>{label}:</label>
       <select 
         className={styles.inputField}
         value={value}

@@ -11,7 +11,7 @@ interface Product {
   productType: string[];
   productGender: string;
   productSizeShoe: string;
-  productSize: string;
+  productSizes: string;
   productSizePantsWaist: string;
   productSizePantsInseam: string;
   productDescription: string;
@@ -87,7 +87,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
                 categories={product.productType}
                 gender={product.productGender}
                 sizeShoe={product.productSizeShoe}
-                size={product.productSize}
+                size={product.productSizes}
                 sizePantsWaist={product.productSizePantsWaist}
                 sizePantsInseam={product.productSizePantsInseam}
                 description={product.productDescription}

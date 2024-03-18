@@ -7,12 +7,13 @@ interface InputProps {
   type: string;
   onChange: any;
   style: any;
+  labelTextColor?: string;
 }
 
-const InputText: React.FC<InputProps> = ({ label, value, type, onChange, style }) => {
+const InputText: React.FC<InputProps> = ({ label, value, type, onChange, style, labelTextColor }) => {
   return (
     <div>
-      <label className={styles.inputLabel}>{label}:</label>
+      <label className={styles.inputLabel} style={{ color: labelTextColor || '#f0f0f0' }}>{label}:</label>
       <input
         className={styles.inputField}
         type={type}

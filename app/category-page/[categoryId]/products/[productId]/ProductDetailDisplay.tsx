@@ -14,13 +14,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
 import ConfirmArchiveDialog from "@/components/ConfirmArchiveDialog";
+import EditProductDialog from "@/components/EditProductDialog";
 
 export interface Product {
   _id: string;
   productType: string[];
   productGender: string[];
-  productShoeSize: string[];
-  productSize: string[];
+  productSizeShoe: string[];
+  productSizes: string[];
   productSizePantsWaist: string[];
   productSizePantsInseam: string[];
   productDescription: string;
@@ -29,8 +30,24 @@ export interface Product {
   isSold: boolean;
 }
 
-const ProductDetailDisplay = ({ product }: { product: Product }) => {
+const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openArchiveDialog, setOpenArchiveDialog] = useState(false);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [userRole, setUserRole] = React.useState("");
+
+  // Get user role from token
+  React.useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const role = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(role);
+    }
+  }, []);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   const handleDeleteButtonClick = () => {
     setOpenDeleteDialog(true);
@@ -40,14 +57,20 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
     setOpenDeleteDialog(false);
   };
 
-  const [openArchiveDialog, setOpenArchiveDialog] = useState(false);
-
   const handleArchiveButtonClick = () => {
     setOpenArchiveDialog(true);
   };
 
   const handleCloseArchiveDialog = () => {
     setOpenArchiveDialog(false);
+  };
+
+  const handleEditButtonClick = () => {
+    setOpenEditDialog(true);
+  };
+
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
   };
 
   return (
@@ -92,10 +115,10 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
                     Product Gender: {product.productGender}
                   </Typography>
                   <Typography variant="h6">
-                    Product Shoe Size: {product.productShoeSize || "N/A"}
+                    Product Shoe Size: {product.productSizeShoe || "N/A"}
                   </Typography>
                   <Typography variant="h6">
-                    Product Size: {product.productSize || "N/A"}
+                    Product Size: {product.productSizes || "N/A"}
                   </Typography>
                   <Typography variant="h6">
                     Product Size Pants Waist:{" "}
@@ -122,6 +145,7 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
             )}
           </Box>
 
+          {userRole === "admin" || userRole === "creator" ? (
           <Stack direction="row" spacing={2} justifyContent="center">
             {/* Edit Button */}
             <Box p={2} display="flex" justifyContent="center">
@@ -129,6 +153,7 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
                 variant="contained"
                 color="primary"
                 startIcon={<EditIcon />}
+                onClick={handleEditButtonClick}
               >
                 Edit
               </Button>
@@ -156,6 +181,13 @@ const ProductDetailDisplay = ({ product }: { product: Product }) => {
               </Button>
             </Box>
           </Stack>
+           ) : null}
+
+            <EditProductDialog
+              open={openEditDialog}
+              onClose={handleCloseEditDialog}
+              product={product}
+            />
             <ConfirmDeleteDialog
               open={openDeleteDialog}
               onClose={handleCloseDeleteDialog}
