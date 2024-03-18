@@ -5,7 +5,6 @@ import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
-  Alert,
   Box,
   Button,
   CircularProgress,
@@ -16,6 +15,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import ErrorAlert from "@/components/ErrorAlert";
+import SuccessAlert from "@/components/SuccessAlert";
+import { useRouter } from "next/navigation";
 
 const ChangePasswordPage = () => {
   const [password, setPassword] = useState({
@@ -44,6 +46,9 @@ const ChangePasswordPage = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
+  // router
+  const router = useRouter();
+
   // handle change event
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const { name, value } = target;
@@ -67,6 +72,12 @@ const ChangePasswordPage = () => {
       return;
     }
 
+    // Check if password is less than 8 characters
+    if (newPassword.length < 8) {
+      setError("Password must be at least 8 characters long");
+      return;
+    }
+
     // token after login
     const token = localStorage.getItem("token") || null;
 
@@ -83,10 +94,7 @@ const ChangePasswordPage = () => {
         "http://localhost:3000/api/auth/change-password",
         {
           method: "POST",
-          body: JSON.stringify({
-            newPassword,
-            confirmPassword,
-          }),
+          body: JSON.stringify(password),
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -94,19 +102,19 @@ const ChangePasswordPage = () => {
         }
       );
       if (!res.ok) {
-        setError(error || "Failed to change password");
+        const { message } = await res.json();
+        setError(message);
         setSuccess("");
-      } else {
-        // reset the form
-        setPassword({ newPassword: "", confirmPassword: "" });
-        setSuccess("Password changed successfully");
-        setError("");
-      }
+        return;
+      } 
+      setError("");
+      //set delay to show success message
+      setSuccess("Password changed successfully, redirecting to sign in page");
+      setTimeout(() => {
+        router.push("/auth/sign-in");
+      }, 3000);
     } catch (error) {
       console.error("Error changing password:", error);
-      setError("Failed to change password");
-      setLoading(false);
-      setSuccess("");
     } finally {
       setLoading(false);
     }    
@@ -206,16 +214,8 @@ const ChangePasswordPage = () => {
               ),
             }}
           />
-          {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {error}
-            </Alert>
-          )}
-          {success && (
-            <Alert severity="success" sx={{ mb: 2 }}>
-              {success}
-            </Alert>
-          )}
+          {error && <ErrorAlert message={error} />}
+          {success && <SuccessAlert message={success} />}
           <Button
             type="submit"
             fullWidth
