@@ -41,7 +41,6 @@ export default function ConfirmDeleteDialog({
     const handleYes = async () => {
         // TODO: Confirm Yes to delete product
         const token = localStorage.getItem('token');
-        console.log('Token:', token);
         try {
             const response = await fetch(`http://localhost:3000/api/products/remove/${product._id}`, {
                 method: 'DELETE',

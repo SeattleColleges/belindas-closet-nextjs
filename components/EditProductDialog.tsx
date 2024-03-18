@@ -88,7 +88,6 @@ export default function EditProductDialog({
     */
     const handleSaveChanges = async () => {
         const token = localStorage.getItem('token');
-        console.log('Token:', token);
         try {
             const response = await fetch(`http://localhost:3000/api/products/update/${product._id}`, {
                 method: 'PUT',

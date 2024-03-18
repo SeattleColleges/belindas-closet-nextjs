@@ -42,7 +42,6 @@ export default function ConfirmArchiveDialog({
     const handleYes = async () => {
         // TODO: Confirm Yes to archive product
         const token = localStorage.getItem('token');
-        console.log('Token:', token);
         try {
             const response = await fetch(`http://localhost:3000/api/products/archive/${product._id}`, {
                 method: 'PUT',
