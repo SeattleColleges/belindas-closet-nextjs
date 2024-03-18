@@ -3,6 +3,43 @@ import { ThemeContext } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          color: "#fff",
+          minHeight: "100vh",
+          backgroundColor: "lightgray",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center"
+        },
+      }
+    },
+    MuiFilledInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "white",
+          '&:hover': {
+            backgroundColor: "white"
+          },
+          '&.Mui-focused': {
+            backgroundColor: "white"
+          }
+        }
+      }
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }
+      }
+     }
+  },
   palette: {
     mode: 'light',
     primary: {
@@ -16,19 +53,6 @@ const theme = createTheme({
       main: '#4caf50',
       dark: '#357a38',
       contrastText: '#fff', 
-    },
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          color: "#fff",
-          backgroundColor: "lightgray", // replace with a design image
-          // "& h1": {
-          //   color: "black"
-          // }
-        }
-      }
     }
   }
 });

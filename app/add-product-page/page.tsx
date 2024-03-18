@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "./page.module.css";
-import InputSelect from "@/components/InputSelect";
-import Input from "@/components/Input";
+import { FormControl, Stack, InputLabel, Box, Button, TextField, Typography, Select, MenuItem, } from '@mui/material';
 import {
   ProductTypeList,
   ProductGenderList,
@@ -13,37 +11,32 @@ import {
   ProductSizePantsInseamList,
 } from "./product-prop-list";
 const AddProduct = () => {
-  const [productType, setProductType] = useState(ProductTypeList.Shoes);
-  const [productGender, setProductGender] = useState(ProductGenderList.MALE);
-  const [productSizeShoe, setProductSizeShoe] = useState(
-    ProductSizeShoeList[0]
-  );
-  const [productSizes, setProductSizes] = useState("SELECT_SIZE");
-  const [productSizePantsWaist, setProductSizePantsWaist] = useState(
-    ProductSizePantsWaistList[0]
-  );
-  const [productSizePantsInseam, setProductSizePantsInseam] = useState(
-    ProductSizePantsInseamList[0]
-  );
+  const defaultType: string = ProductTypeList.Shoes;
+  const [productType, setProductType] = useState(defaultType);
+  const defaultGender: string = ProductGenderList.MALE
+  const [productGender, setProductGender] = useState(defaultGender);
+  const [productSizeShoe, setProductSizeShoe] = useState(ProductSizeShoeList[0]);
+  const defaultSize: string = ProductSizesList.L;
+  const [productSizes, setProductSizes] = useState(defaultSize);
+  const [productSizePantsWaist, setProductSizePantsWaist] = useState(ProductSizePantsWaistList[0]);
+  const [productSizePantsInseam, setProductSizePantsInseam] = useState(ProductSizePantsInseamList[0]);
   const [productDescription, setProductDescription] = useState("");
   const [productImage, setProductImage] = useState("");
 
   const handleProductTypeSelect = (e: {
-    target: { value: React.SetStateAction<ProductTypeList> };
+    target: { value: React.SetStateAction<string> };
   }) => {
     setProductType(e.target.value);
   };
 
   const handleProductGenderSelect = (e: {
-    target: { value: React.SetStateAction<ProductGenderList> };
+    target: { value: React.SetStateAction<string> };
   }) => {
     setProductGender(e.target.value);
   };
 
-  const handleProductSizeShoeSelect = (e: {
-    target: { value: React.SetStateAction<number> };
-  }) => {
-    const newValue = parseInt(e.target.value.toString(), 10);
+  const handleProductSizeShoeSelect = (event: any) => {
+    const newValue = parseInt(event.target.value.toString(), 10);
     setProductSizeShoe(newValue);
   };
 
@@ -53,17 +46,13 @@ const AddProduct = () => {
     setProductSizes(e.target.value);
   };
 
-  const handleProductSizePantsWaistSelect = (e: {
-    target: { value: React.SetStateAction<number> };
-  }) => {
-    const newValue = parseInt(e.target.value.toString(), 10);
+  const handleProductSizePantsWaistSelect = (event: any) => {
+    const newValue = parseInt(event.target.value.toString(), 10);
     setProductSizePantsWaist(newValue);
   };
 
-  const handleProductSizePantsInseamSelect = (e: {
-    target: { value: React.SetStateAction<number> };
-  }) => {
-    const newValue = parseInt(e.target.value.toString(), 10);
+  const handleProductSizePantsInseamSelect = (event: any) => {
+    const newValue = parseInt(event.target.value.toString(), 10);
     setProductSizePantsInseam(newValue);
   };
 
@@ -113,114 +102,129 @@ const AddProduct = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.formContainer} onSubmit={handleSubmit}>
-        <div className={styles.title}>
-          <h1>Add a Product</h1>
-        </div>
-        {/* Product Type Field */}
-        <InputSelect
-          label="Product Type"
-          value={productType}
-          options={Object.values(ProductTypeList).map((type) => ({
-            label: type,
-            value: type,
-          }))}
-          onChange={handleProductTypeSelect}
-          style={{ color: "black" }}
-        />
+    <Box width={800} display="flex" alignItems="center" flexDirection="column" gap={2} bgcolor='#293745' p={3}>
+      <form onSubmit={handleSubmit}>
+        <FormControl>
+          <Typography component='h1' variant='h3' sx={{color: 'white', marginBottom: "15px"}}>
+              Add a Product
+            </Typography>
 
-        {/* Product Gender Field */}
-        <InputSelect
-          label="Product Gender"
-          value={productGender}
-          options={Object.values(ProductGenderList).map((gender) => ({
-            label: gender,
-            value: gender,
-          }))}
-          onChange={handleProductGenderSelect}
-          style={{ color: "black" }}
-        />
+          {/* Product Type Field */}
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="type-selectlabel">Product Type</InputLabel>
+            <Select labelId="type-selectlabel" 
+              id="type-select" 
+              value={productType}
+              aria-describedby="product-type-field"
+              onChange={handleProductTypeSelect}
+            >
+              {Object.values(ProductTypeList).map((type) => (
+                <MenuItem value={type} key={type}>{type}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        {/* Product Size Shoe Field */}
-        <InputSelect
-          label="Product Size Shoe"
-          value={productSizeShoe}
-          options={Object.values(ProductSizeShoeList).map((size) => ({
-            label: size,
-            value: size,
-          }))}
-          onChange={handleProductSizeShoeSelect}
-          style={{ color: "black" }}
-        />
+          {/* Product Gender Field */}
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="gender-selectlabel">Product Gender</InputLabel>
+            <Select labelId="gender-selectlabel" 
+              id="gender-select" 
+              value={productGender}
+              aria-describedby="product-gender-field"
+              onChange={handleProductGenderSelect}
+            >
+              {Object.values(ProductGenderList).map((gender) => (
+                <MenuItem value={gender} key={gender}>{gender}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        {/* Product Size Field */}
-        <InputSelect
-          label="Product Size"
-          value={productSizes}
-          options={[
-            { label: "Select Size", value: "SELECT_SIZE" },
-            ...Object.values(ProductSizesList).map((size) => ({
-              label: size,
-              value: size,
-            })),
-          ]}
-          onChange={handleProductSizeSelect}
-          style={{ color: "black" }}
-        />
+          {/* Product Size Shoe Field */}
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="shoesize-selectlabel">Shoe Size</InputLabel>
+            <Select labelId="shoesize-selectlabel" 
+              id="shoesize-select" 
+              value={productSizeShoe}
+              aria-describedby="product-shoesize-field"
+              onChange={handleProductSizeShoeSelect}
+            >
+              {Object.values(ProductSizeShoeList).map((size) => (
+                <MenuItem value={size} key={size}>{size}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        {/* Product Size Pants Waist Field */}
-        <InputSelect
-          label="Product Size Pants Waist"
-          value={productSizePantsWaist}
-          options={Object.values(ProductSizePantsWaistList).map((size) => ({
-            label: size,
-            value: size,
-          }))}
-          onChange={handleProductSizePantsWaistSelect}
-          style={{ color: "black" }}
-        />
+          {/* Product Size Field */}
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="size-selectlabel">Product Size</InputLabel>
+            <Select labelId="size-selectlabel" 
+              id="size-select" 
+              value={productSizes}
+              aria-describedby="product-size-field"
+              onChange={handleProductSizeSelect}
+            >
+              {Object.values(ProductSizesList).map((size) => (
+                <MenuItem value={size} key={size}>{size}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        {/* Product Size Pants Inseam Field */}
-        <InputSelect
-          label="Product Size Pants Inseam"
-          value={productSizePantsInseam}
-          options={Object.values(ProductSizePantsInseamList).map((size) => ({
-            label: size,
-            value: size,
-          }))}
-          onChange={handleProductSizePantsInseamSelect}
-          style={{ color: "black" }}
-        />
+          {/* Product Size Pants Waist Field */}
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="waistsize-selectlabel">Waist Size</InputLabel>
+            <Select labelId="waistsize-selectlabel" 
+              id="waistsize-select" 
+              value={productSizePantsWaist}
+              aria-describedby="product-waist-size-field"
+              onChange={handleProductSizePantsWaistSelect}
+            >
+              {Object.values(ProductSizePantsWaistList).map((size) => (
+                <MenuItem value={size} key={size}>{size}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        {/* Product Description Field */}
-        <Input
-          label="Product Description"
-          value={productDescription}
-          type="text"
-          onChange={handleDescriptionChange}
-          style={{ color: "black" }}
-        />
+          {/* Product Size Pants Inseam Field */}
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="inseamsize-selectlabel">Inseam Length</InputLabel>
+            <Select labelId="inseamsize-selectlabel" 
+              id="inseamsize-select" 
+              value={productSizePantsInseam}
+              aria-describedby="product-inseam-size-field"
+              onChange={handleProductSizePantsInseamSelect}
+            >
+              {Object.values(ProductSizePantsInseamList).map((size) => (
+                <MenuItem value={size} key={size}>{size}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        {/* Product Upload Image Field */}
-        <Input
-          label="Product Image"
-          value={productImage}
-          type="file"
-          onChange={handleImageUpload}
-          style={{ color: "white" }}
-        />
+          {/* Product Description Field */}
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+            <TextField label="Product Description"
+              aria-describedby="product-description-field"
+              id="product-description"
+              onChange={handleDescriptionChange}
+              multiline
+              minRows={2}
+              variant="filled"/>
+          </FormControl>
+          
+          {/* Product Upload Image Field */}
+          <Stack direction="row" alignItems="center" justifyContent="center" spacing={2} sx={{ m: 1 }}>
+            <Button variant="contained" component="label" sx={{ width: 1 }}>
+              Upload Image
+              <input hidden multiple type="file" onChange={handleImageUpload} value={productImage}/>
+            </Button>
+          </Stack>
 
-        {/* Submit Button */}
-        <button
-          className={styles.submitButton}
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
+          {/* Submit Button */}
+          <Button variant="contained" color="primary" onClick={handleSubmit} type="submit" sx={{ mt: 1 }}>
+            Submit
+          </Button>
+        </FormControl>
       </form>
-    </div>
+    </Box>    
   );
 };
 

@@ -1,6 +1,5 @@
 'use client';
 import React from "react";
-import styles from "./home.module.css";
 import Image from "next/image";
 import logo from "./logo.png";
 import google_play from "./google_play.png";
@@ -9,7 +8,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
-import { Container, Typography, Link, Button } from '@mui/material';
+import { Container, Typography, Button } from '@mui/material';
 
 // TEMPORARY CATEGORIES LIST
 const placeholderImg = logo;
@@ -27,10 +26,10 @@ const categories = [
 
 const Home = () => {
   return (
-    <Container fixed maxWidth="lg" sx={{display: "flex", justifyContent: "center", alignItems: "center", bgcolor: '#12202d'}}>
-      <Box width={800} display="flex" alignItems="center" flexDirection="column" gap={2} p={3}>
-        <Container disableGutters fixed maxWidth="xs" sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-          <Image src={logo} alt="logo" style={{width: 100, height: 100, display: 'block', margin: 'auto'}} />
+    <Box bgcolor='#12202d' display="flex" alignItems="center" flexDirection="column">
+      <Box width={800} display="flex" alignItems="center" flexDirection="column" gap={2} bgcolor='#293745' p={3}>
+        <Container disableGutters fixed maxWidth="xs" sx={{width: "15%"}}>
+          <Image src={logo} alt="logo" width={100} />
         </Container>
         <Typography component='h1' variant='h3' sx={{color: 'white'}}>
           Belinda&apos;s Closet
@@ -53,7 +52,7 @@ const Home = () => {
               ))}
           </Grid>
         </Box>
-     </Container>
+    </Box>
   );
 };
 

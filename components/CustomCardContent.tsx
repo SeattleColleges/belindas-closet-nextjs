@@ -19,8 +19,8 @@ const CustomCardContent: React.FC<CategoryCardProps> =({title, image})=>{
     return (
         <CardActionArea onClick={() => navigate()}>
             <CardContent>
-                <Image src={image} alt="logo" style={{width: 128, height: 128, display: 'block', margin: 'auto'}} />
-                <Typography variant='h5' align='center' mt={2}>
+                <Image src={image} alt="logo" width={100} />
+                <Typography variant='h5' align='center' gutterBottom>
                     {title}
                 </Typography>
             </CardContent>
