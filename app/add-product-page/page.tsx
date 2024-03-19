@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { FormControl, Stack, InputLabel, Box, Button, TextField, Typography, Select, MenuItem, } from '@mui/material';
+import { FormControl, Stack, InputLabel, Button, TextField, Typography, Select, MenuItem, } from '@mui/material';
+import WrapperDiv from '@/components/WrapperDiv'
 import {
   ProductTypeList,
   ProductGenderList,
@@ -102,7 +103,7 @@ const AddProduct = () => {
   };
 
   return (
-    <Box width={800} display="flex" alignItems="center" flexDirection="column" gap={2} bgcolor='#293745' p={3}>
+    <WrapperDiv>
       <form onSubmit={handleSubmit}>
         <FormControl>
           <Typography component='h1' variant='h3' sx={{color: 'white', marginBottom: "15px"}}>
@@ -224,7 +225,7 @@ const AddProduct = () => {
           </Button>
         </FormControl>
       </form>
-    </Box>    
+    </WrapperDiv>    
   );
 };
 

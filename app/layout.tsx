@@ -4,7 +4,7 @@ import SessionProvider from '@/components/SessionProvider';
 import { ThemeProvider } from "@mui/material/styles";
 import theme from './theme/theme';
 import CssBaseline from "@mui/material/CssBaseline";
-
+import WrapperDiv from '../components/WrapperDiv'
 
 const inter = Inter({ subsets: ['latin'] })
 

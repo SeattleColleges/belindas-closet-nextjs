@@ -4,6 +4,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import ProductCard from "@/components/ProductCard";
 import logo from "../../logo.png";
 import { Container, Grid, Typography } from "@mui/material";
+import WrapperDiv from '@/components/WrapperDiv'
 const placeholderImg = logo;
 interface Product {
   _id: string;
@@ -60,48 +61,37 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
   }, [products]);
 
   return (
-    <Container
-      fixed
-      maxWidth="lg"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: "#12202d",
-      }}
-    >
-      <Container sx={{ py: 4 }} maxWidth="lg">
-        <Typography
-          variant="h4"
-          gutterBottom
-          justifyContent={"center"}
-          align={"center"}
-        >
-          Found {filteredProducts.length} products in {categoryId}
-        </Typography>
-        <Grid container spacing={2}>
-          {filteredProducts.map((product, index) => (
-            <Grid item key={index} xs={12} sm={6} md={4}>
-              <ProductCard
-                image={logo}
-                categories={product.productType}
-                gender={product.productGender}
-                sizeShoe={product.productSizeShoe}
-                size={product.productSizes}
-                sizePantsWaist={product.productSizePantsWaist}
-                sizePantsInseam={product.productSizePantsInseam}
-                description={product.productDescription}
-                href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL            
-                _id={product._id} 
-                isHidden={false} 
-                isSold={false}              
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+    <Container sx={{ py: 4 }} maxWidth="lg">
+      <Typography
+        variant="h4"
+        gutterBottom
+        justifyContent={"center"}
+        align={"center"}
+      >
+        Found {filteredProducts.length} products in {categoryId}
+      </Typography>
+      <Grid container spacing={2}>
+        {filteredProducts.map((product, index) => (
+          <Grid item key={index} xs={12} sm={6} md={4}>
+            <ProductCard
+              image={logo}
+              categories={product.productType}
+              gender={product.productGender}
+              sizeShoe={product.productSizeShoe}
+              size={product.productSizes}
+              sizePantsWaist={product.productSizePantsWaist}
+              sizePantsInseam={product.productSizePantsInseam}
+              description={product.productDescription}
+              href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL            
+              _id={product._id} 
+              isHidden={false} 
+              isSold={false}              
+            />
+          </Grid>
+        ))}
+      </Grid>
     </Container>
-  );
+);
 };
 
 export default function ProductList({
@@ -112,8 +102,8 @@ export default function ProductList({
   const decodedCategoryId = decodeURIComponent(params.categoryId);
 
   return (
-    <Container>
+    <WrapperDiv>
       <ViewProduct categoryId={decodedCategoryId} />
-    </Container>
+    </WrapperDiv>
   );
 }

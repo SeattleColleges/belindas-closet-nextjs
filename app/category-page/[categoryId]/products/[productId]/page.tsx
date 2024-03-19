@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import {
-  Box,
   CircularProgress,
 } from "@mui/material";
 import ProductDetailDisplay from "../[productId]/ProductDetailDisplay";
+import WrapperDiv from '@/components/WrapperDiv';
 
 interface Product {
   _id: string;
@@ -64,9 +64,9 @@ const ProductDetail = ({
 
   if (isLoading)
     return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <WrapperDiv>
         <CircularProgress />
-      </Box>
+      </WrapperDiv>
     );
   if (error) return <div>Error: {error}</div>;
 

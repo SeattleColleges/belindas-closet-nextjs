@@ -4,13 +4,14 @@ import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography, Stack } from "@mui/material";
 import Image from "next/image";
 import mascot from "../../nsc_mascot_green_cropped.png";
 import { Link as MuiLink } from "@mui/material";
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
 import { useRouter } from "next/navigation";
+import WrapperDiv from '@/components/WrapperDiv';
 
 const SignUp = () => {
   // handling user's incoming info
@@ -107,147 +108,138 @@ const SignUp = () => {
   };
 
   return (
-    <Container
-      fixed
-      maxWidth="lg"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: "#12202d",
-        height: "100vh",
-        flexDirection: "column",
-      }}
-    >
-      <Image src={mascot} alt="logo" style={{ width: 200, height: 100 }} />
-      <Paper
-        elevation={4}
-        sx={{
-          padding: "20px",
-          width: "400px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Sign Up
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          noValidate
-          sx={{ mt: 1, width: "100%" }}
+    <WrapperDiv>
+      <Stack spacing={{ xs: '-6px', sm: '-6px' }} alignItems="center">
+        <Image src={mascot} alt="logo" style={{ width: 200, height: 100, zIndex: 0 }} />
+        <Paper
+          elevation={4}
+          sx={{
+            padding: "20px",
+            width: "400px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
-          <TextField
-            sx={{ mb: 2 }}
-            margin="normal"
-            required
-            fullWidth
-            id="firstName"
-            label="First Name"
-            name="firstName"
-            autoComplete="fname"
-            autoFocus
-            value={firstName}
-            onChange={handleChange}
-          />
-          <TextField
-            sx={{ mb: 2 }}
-            margin="normal"
-            required
-            fullWidth
-            id="lastName"
-            label="Last Name"
-            name="lastName"
-            autoComplete="lname"
-            value={lastName}
-            onChange={handleChange}
-            autoFocus={false}
-          />
-          <TextField
-            sx={{ mb: 2 }}
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            value={email}
-            onChange={handleChange}
-            type="email"
-            autoFocus={false}
-          />
-          <TextField
-            sx={{ mb: 2 }}
-            margin="normal"
-            required
-            fullWidth
-            id="password"
-            label="Password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-            autoComplete="password"
-            value={password}
-            onChange={handleChange}
-            autoFocus={false}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={togglePasswordVisibility}>
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            sx={{ mb: 2 }}
-            margin="normal"
-            required
-            fullWidth
-            id="confirmPassword"
-            label="Confirm Password"
-            name="confirmPassword"
-            type={showConfirmPassword ? "text" : "password"}
-            autoComplete="confirm-password"
-            value={confirmPassword}
-            onChange={handleChange}
-            autoFocus={false}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={toggleConfirmPasswordVisibility}>
-                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          {error && <ErrorAlert message={error} />}
-          {success && <SuccessAlert message={success} />}
-          <Button
-            style={{ textTransform: "none" }}
-            color="primary"
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Typography component="h1" variant="h5">
             Sign Up
-          </Button>
-          <Box textAlign="center" sx={{ mt: 2 }}>
-            <Typography variant="body2">
-              Already have an account?{" "}
-              <MuiLink href="/auth/sign-up" variant="body2">
-                {"Sign In"}
-              </MuiLink>
-            </Typography>
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1, width: "100%" }}
+          >
+            <TextField
+              sx={{ mb: 2 }}
+              margin="normal"
+              required
+              fullWidth
+              id="firstName"
+              label="First Name"
+              name="firstName"
+              autoComplete="fname"
+              autoFocus
+              value={firstName}
+              onChange={handleChange}
+            />
+            <TextField
+              sx={{ mb: 2 }}
+              margin="normal"
+              required
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              autoComplete="lname"
+              value={lastName}
+              onChange={handleChange}
+              autoFocus={false}
+            />
+            <TextField
+              sx={{ mb: 2 }}
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={handleChange}
+              type="email"
+              autoFocus={false}
+            />
+            <TextField
+              sx={{ mb: 2 }}
+              margin="normal"
+              required
+              fullWidth
+              id="password"
+              label="Password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              autoComplete="password"
+              value={password}
+              onChange={handleChange}
+              autoFocus={false}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={togglePasswordVisibility}>
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              sx={{ mb: 2 }}
+              margin="normal"
+              required
+              fullWidth
+              id="confirmPassword"
+              label="Confirm Password"
+              name="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              autoComplete="confirm-password"
+              value={confirmPassword}
+              onChange={handleChange}
+              autoFocus={false}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={toggleConfirmPasswordVisibility}>
+                      {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {error && <ErrorAlert message={error} />}
+            {success && <SuccessAlert message={success} />}
+            <Button
+              style={{ textTransform: "none" }}
+              color="primary"
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Box textAlign="center" sx={{ mt: 2 }}>
+              <Typography variant="body2">
+                Already have an account?{" "}
+                <MuiLink href="/auth/sign-up" variant="body2">
+                  {"Sign In"}
+                </MuiLink>
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      </Paper>
-    </Container>
+        </Paper>
+      </Stack>
+    </WrapperDiv>
   );
 };
 

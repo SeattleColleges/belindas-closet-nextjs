@@ -4,6 +4,7 @@ import logo from "@/app/logo.png";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import WrapperDiv from '@/components/WrapperDiv';
 import {
   Box,
   Button,
@@ -121,23 +122,13 @@ const ChangePasswordPage = () => {
   };
 
   if (loading) {
-    <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+    <WrapperDiv>
       <CircularProgress />
-    </Box>;
+    </WrapperDiv>;
   }
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: "#12202d",
-        height: "100vh",
-        flexDirection: "column",
-      }}
-    >
+    <WrapperDiv>
       <Paper elevation={6} sx={{ width: "100%", maxWidth: 400, padding: 3 }}>
         <Container
           disableGutters
@@ -226,7 +217,7 @@ const ChangePasswordPage = () => {
           </Button>
         </Box>
       </Paper>
-    </Container>
+    </WrapperDiv>
   );
 };
 export default ChangePasswordPage;

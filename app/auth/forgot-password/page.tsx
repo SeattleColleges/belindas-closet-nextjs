@@ -1,7 +1,8 @@
 "use client";
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
 // import styles from "./forgot-password-page.module.css";
-import { Container, Typography, Link, Button, Box, TextField, Paper } from '@mui/material';
+import { Typography, Button, Box, TextField, Paper } from '@mui/material';
+import WrapperDiv from '@/components/WrapperDiv';
 
 const ForgotPassword = () => {
   
@@ -25,18 +26,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Container 
-      fixed 
-      maxWidth="lg" 
-      sx={{
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center", 
-        bgcolor: '#12202d', 
-        height: "100vh",
-        flexDirection: "column"
-      }}>
-
+    <WrapperDiv>
       <Paper
         elevation={4}
         sx={{
@@ -83,7 +73,7 @@ const ForgotPassword = () => {
           </Button>
       </Box>
       </Paper>
-    </Container>
+    </WrapperDiv>
   );
 };
 

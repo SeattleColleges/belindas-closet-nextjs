@@ -1,13 +1,12 @@
 "use client";
 
-import InputField from "@/components/InputFields";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useRouter } from "next/navigation";
-import styles from "./signin-page.module.css";
 import Image from "next/image";
 import mascot from "../../nsc_mascot_green_cropped.png";
+import WrapperDiv from '@/components/WrapperDiv';
 import {
-  Container,
+  Stack,
   Paper,
   Box,
   TextField,
@@ -63,93 +62,84 @@ const Signin = () => {
   };
 
   return (
-    <Container
-      fixed
-      maxWidth="lg"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: "#12202d",
-        height: "100vh",
-        flexDirection: "column",
-      }}
-    >
-      <Image src={mascot} alt="logo" style={{ width: 200, height: 100 }} />
-      <Paper
-        elevation={4}
-        sx={{
-          padding: "20px",
-          width: "400px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Sign In
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          noValidate
-          sx={{ mt: 1, width: "100%" }}
+    <WrapperDiv>
+      <Stack spacing={{ xs: '-6px', sm: '-6px' }} alignItems="center">
+        <Image src={mascot} alt="logo" style={{ width: 200, height: 100, zIndex: 0 }} />
+        <Paper
+          elevation={4}
+          sx={{
+            padding: "20px",
+            width: "400px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={userInfo.email}
-            onChange={handleChange}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={userInfo.password}
-            onChange={handleChange}
-          />
-          {error && (
-            <Typography color="error" textAlign="center">
-              {error}
-            </Typography>
-          )}
-          <Button
-            style={{ textTransform: "none" }}
-            color="primary"
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Typography component="h1" variant="h5">
             Sign In
-          </Button>
-          <Box textAlign="center">
-            <MuiLink href="/auth/forgot-password" variant="body2">
-              Forgot password?
-            </MuiLink>
-          </Box>
-          <Box textAlign="center" sx={{ mt: 2 }}>
-            <Typography variant="body2">
-              Don&apos;t have an account?&nbsp;
-              <MuiLink href="/auth/sign-up" variant="body2">
-                {"Sign Up"}
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1, width: "100%" }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={userInfo.email}
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={userInfo.password}
+              onChange={handleChange}
+            />
+            {error && (
+              <Typography color="error" textAlign="center">
+                {error}
+              </Typography>
+            )}
+            <Button
+              style={{ textTransform: "none" }}
+              color="primary"
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            <Box textAlign="center">
+              <MuiLink href="/auth/forgot-password" variant="body2">
+                Forgot password?
               </MuiLink>
-            </Typography>
+            </Box>
+            <Box textAlign="center" sx={{ mt: 2 }}>
+              <Typography variant="body2">
+                Don&apos;t have an account?&nbsp;
+                <MuiLink href="/auth/sign-up" variant="body2">
+                  {"Sign Up"}
+                </MuiLink>
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      </Paper>
-    </Container>
+        </Paper>
+      </Stack>
+    </WrapperDiv>
   );
 };
 
