@@ -1,8 +1,7 @@
-import WrapperDiv from '@/components/WrapperDiv';
 const Creator = () => {
     // Temporary boilerplate code to make it compile
     return (
-        <WrapperDiv>
+        <div>
        
         <div >
             <div>
@@ -21,7 +20,7 @@ const Creator = () => {
 
             <h1>Placeholder creators page.</h1>
             <p>Place holder text to fill in the space.</p>
-        </WrapperDiv>
+        </div>
     );
 };
 

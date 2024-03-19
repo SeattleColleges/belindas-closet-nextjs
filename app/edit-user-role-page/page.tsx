@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
-import { Box, Container, Typography } from "@mui/material";
-import WrapperDiv from '@/components/WrapperDiv';
+import { Stack, Typography } from "@mui/material";
 
 /**
  * Represents a user.
@@ -51,14 +50,14 @@ const EditUserRolePage = () => {
   }, []);
 
   return (
-      <WrapperDiv>
+      <Stack>
         <Typography component="h1" variant="h4">
           User Management
         </Typography>
         {userInfo.map((user, index) => (
           <UserCard user={user} key={index} />
         ))}
-      </WrapperDiv>
+      </Stack>
   );
 };
 

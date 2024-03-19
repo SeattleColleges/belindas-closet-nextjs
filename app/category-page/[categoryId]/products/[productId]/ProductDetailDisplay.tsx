@@ -4,7 +4,6 @@ import logo from "app/logo.png";
 import {
   Box,
   Button,
-  Container,
   Paper,
   Stack,
   Typography,
@@ -15,7 +14,6 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
 import ConfirmArchiveDialog from "@/components/ConfirmArchiveDialog";
 import EditProductDialog from "@/components/EditProductDialog";
-import WrapperDiv from '@/components/WrapperDiv';
 
 export interface Product {
   _id: string;
@@ -47,7 +45,7 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
   }, []);
 
   if (!product) {
-    return <WrapperDiv>Loading...</WrapperDiv>;
+    return <Typography>Loading...</Typography>;
   }
 
   const handleDeleteButtonClick = () => {
@@ -75,7 +73,7 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
   };
 
   return (
-    <WrapperDiv>
+    <Stack>
       <Typography component="h1" variant="h4">
         {product && product.productType}
       </Typography>
@@ -183,7 +181,7 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
             product={product}
           />
       </Paper>
-    </WrapperDiv>
+    </Stack>
   );
 };
 

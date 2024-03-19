@@ -1,4 +1,3 @@
-import WrapperDiv from '@/components/WrapperDiv'
 // import { Link } from 'react-router-dom'; // Import the Link component from react-router-dom
 
 const Admin = () => {
@@ -7,7 +6,7 @@ const Admin = () => {
   };
 
   return (
-    <WrapperDiv>
+    <div>
       <h1> Wellcome to the PAGE      </h1>
       <p>FIX: allow only users with admin role to be routed to this page</p>
       {/* <Link to="/add-product-page"> */}
@@ -25,7 +24,7 @@ const Admin = () => {
           Edit User Roles
         </button>
       {/* </Link> */}
-    </WrapperDiv>
+    </div>
   );
 };
 

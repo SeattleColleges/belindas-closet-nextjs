@@ -5,7 +5,6 @@ import {
   CircularProgress,
 } from "@mui/material";
 import ProductDetailDisplay from "../[productId]/ProductDetailDisplay";
-import WrapperDiv from '@/components/WrapperDiv';
 
 interface Product {
   _id: string;
@@ -64,9 +63,7 @@ const ProductDetail = ({
 
   if (isLoading)
     return (
-      <WrapperDiv>
-        <CircularProgress />
-      </WrapperDiv>
+      <CircularProgress />
     );
   if (error) return <div>Error: {error}</div>;
 

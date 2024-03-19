@@ -4,7 +4,6 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import ProductCard from "@/components/ProductCard";
 import logo from "../../logo.png";
 import { Container, Grid, Typography } from "@mui/material";
-import WrapperDiv from '@/components/WrapperDiv'
 const placeholderImg = logo;
 interface Product {
   _id: string;
@@ -102,8 +101,6 @@ export default function ProductList({
   const decodedCategoryId = decodeURIComponent(params.categoryId);
 
   return (
-    <WrapperDiv>
       <ViewProduct categoryId={decodedCategoryId} />
-    </WrapperDiv>
   );
 }

@@ -1,12 +1,10 @@
-import WrapperDiv from '@/components/WrapperDiv';
-
 const Profile = () => {
     // Temporary boilerplate code to make it compile
     return (
-        <WrapperDiv>
+        <div>
             <h1>Placeholder Profile so npm run build compiles successfully.</h1>
             <p>FIX: move to pages or use getSession from nextauth</p>
-        </WrapperDiv>
+        </div>
     );
 };
 

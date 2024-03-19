@@ -26,7 +26,10 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <SessionProvider>
-            <Navbar/>{children}
+            <Navbar/>
+            <WrapperDiv>
+              {children}
+            </WrapperDiv>
           </SessionProvider>
         </body>
       </html>
