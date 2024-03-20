@@ -1,7 +1,6 @@
 "use client";
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
-// import styles from "./forgot-password-page.module.css";
-import { Container, Typography, Link, Button, Box, TextField, Paper } from '@mui/material';
+import { Typography, Button, Box, TextField, Paper } from '@mui/material';
 
 const ForgotPassword = () => {
   
@@ -25,65 +24,52 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Container 
-      fixed 
-      maxWidth="lg" 
+    <Paper
+      elevation={4}
       sx={{
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center", 
-        bgcolor: '#12202d', 
-        height: "100vh",
-        flexDirection: "column"
-      }}>
+        padding: "20px",
+        width: "400px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
 
-      <Paper
-        elevation={4}
-        sx={{
-          padding: "20px",
-          width: "400px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+      <Typography component="h1" variant="h5">
+        Forgot Password
+      </Typography>
 
-        <Typography component="h1" variant="h5">
-          Forgot Password
-        </Typography>
+    <Box  
+      component="form"
+      onSubmit={handleSubmit}
+      noValidate
+      sx={{ mt: 1, width: "100%"}}>
 
-      <Box  
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={{ mt: 1, width: "100%"}}>
+        
 
-          
-
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            variant="outlined"
-            label="Email Address"
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-          />
-          <Button 
-            style={{ textTransform: "none" }}
-            color="primary"
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Submit
-          </Button>
-      </Box>
-      </Paper>
-    </Container>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          variant="outlined"
+          label="Email Address"
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+        />
+        <Button 
+          style={{ textTransform: "none" }}
+          color="primary"
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Submit
+        </Button>
+    </Box>
+    </Paper>
   );
 };
 

@@ -100,7 +100,7 @@ export default function ProductCard({
           theme.palette.mode === "dark" ? "#1A2027" : "#fff",
       }}
     >
-      <Grid container spacing={2}>
+      <Grid container spacing={2}  justifyContent="center">
         <Grid item>
           <ButtonBase>
             <Link href={href}>
@@ -140,8 +140,8 @@ export default function ProductCard({
           </Grid>
         </Grid>
       </Grid>
-      <Stack direction="row" spacing={2} justifyContent="flex-end" mt={2}>
-        <Button variant="contained" href={href} color="primary">
+      <Stack direction="column" spacing={2} justifyContent="flex-end" mt={2}>
+        <Button variant="contained" href={href} color="primary"  sx={{minWidth: 30, maxWidth: "215px"}}>
           View
         </Button>
         
@@ -149,11 +149,11 @@ export default function ProductCard({
             (
               <Stack direction="row" spacing={2}>
                 {/* TODO: Add delete function to this button  */}
-                <Button variant="contained" startIcon={<DeleteIcon />} color="error" onClick={() => handleDelete()}>
+                <Button variant="contained" startIcon={<DeleteIcon />} color="error" onClick={() => handleDelete()} sx={{fontSize: 10}}>
                   Delete
                 </Button>
                 {/* TODO: Add archive function to this button  */}
-                <Button variant="contained" startIcon={<ArchiveIcon />} color="warning" onClick={() => handleArchive()}>
+                <Button variant="contained" startIcon={<ArchiveIcon />} color="warning" onClick={() => handleArchive()} sx={{fontSize: 10}}>
                   Archive
                 </Button>
               </Stack>

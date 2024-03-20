@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { FormControl, Stack, InputLabel, Box, Button, TextField, Typography, Select, MenuItem, } from '@mui/material';
+import { FormControl, Stack, InputLabel, Button, TextField, Typography, Select, MenuItem, } from '@mui/material';
 import {
   ProductTypeList,
   ProductGenderList,
@@ -102,129 +102,127 @@ const AddProduct = () => {
   };
 
   return (
-    <Box width={800} display="flex" alignItems="center" flexDirection="column" gap={2} bgcolor='#293745' p={3}>
-      <form onSubmit={handleSubmit}>
-        <FormControl>
-          <Typography component='h1' variant='h3' sx={{color: 'white', marginBottom: "15px"}}>
-              Add a Product
-            </Typography>
+    <form onSubmit={handleSubmit}>
+      <FormControl>
+        <Typography component='h1' variant='h3' sx={{color: 'white', marginBottom: "15px"}}>
+            Add a Product
+          </Typography>
 
-          {/* Product Type Field */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="type-selectlabel">Product Type</InputLabel>
-            <Select labelId="type-selectlabel" 
-              id="type-select" 
-              value={productType}
-              aria-describedby="product-type-field"
-              onChange={handleProductTypeSelect}
-            >
-              {Object.values(ProductTypeList).map((type) => (
-                <MenuItem value={type} key={type}>{type}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          {/* Product Gender Field */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="gender-selectlabel">Product Gender</InputLabel>
-            <Select labelId="gender-selectlabel" 
-              id="gender-select" 
-              value={productGender}
-              aria-describedby="product-gender-field"
-              onChange={handleProductGenderSelect}
-            >
-              {Object.values(ProductGenderList).map((gender) => (
-                <MenuItem value={gender} key={gender}>{gender}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          {/* Product Size Shoe Field */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="shoesize-selectlabel">Shoe Size</InputLabel>
-            <Select labelId="shoesize-selectlabel" 
-              id="shoesize-select" 
-              value={productSizeShoe}
-              aria-describedby="product-shoesize-field"
-              onChange={handleProductSizeShoeSelect}
-            >
-              {Object.values(ProductSizeShoeList).map((size) => (
-                <MenuItem value={size} key={size}>{size}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          {/* Product Size Field */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="size-selectlabel">Product Size</InputLabel>
-            <Select labelId="size-selectlabel" 
-              id="size-select" 
-              value={productSizes}
-              aria-describedby="product-size-field"
-              onChange={handleProductSizeSelect}
-            >
-              {Object.values(ProductSizesList).map((size) => (
-                <MenuItem value={size} key={size}>{size}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          {/* Product Size Pants Waist Field */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="waistsize-selectlabel">Waist Size</InputLabel>
-            <Select labelId="waistsize-selectlabel" 
-              id="waistsize-select" 
-              value={productSizePantsWaist}
-              aria-describedby="product-waist-size-field"
-              onChange={handleProductSizePantsWaistSelect}
-            >
-              {Object.values(ProductSizePantsWaistList).map((size) => (
-                <MenuItem value={size} key={size}>{size}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          {/* Product Size Pants Inseam Field */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="inseamsize-selectlabel">Inseam Length</InputLabel>
-            <Select labelId="inseamsize-selectlabel" 
-              id="inseamsize-select" 
-              value={productSizePantsInseam}
-              aria-describedby="product-inseam-size-field"
-              onChange={handleProductSizePantsInseamSelect}
-            >
-              {Object.values(ProductSizePantsInseamList).map((size) => (
-                <MenuItem value={size} key={size}>{size}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          {/* Product Description Field */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-            <TextField label="Product Description"
-              aria-describedby="product-description-field"
-              id="product-description"
-              onChange={handleDescriptionChange}
-              multiline
-              minRows={2}
-              variant="filled"/>
-          </FormControl>
-          
-          {/* Product Upload Image Field */}
-          <Stack direction="row" alignItems="center" justifyContent="center" spacing={2} sx={{ m: 1 }}>
-            <Button variant="contained" component="label" sx={{ width: 1 }}>
-              Upload Image
-              <input hidden multiple type="file" onChange={handleImageUpload} value={productImage}/>
-            </Button>
-          </Stack>
-
-          {/* Submit Button */}
-          <Button variant="contained" color="primary" onClick={handleSubmit} type="submit" sx={{ mt: 1 }}>
-            Submit
-          </Button>
+        {/* Product Type Field */}
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="type-selectlabel">Product Type</InputLabel>
+          <Select labelId="type-selectlabel" 
+            id="type-select" 
+            value={productType}
+            aria-describedby="product-type-field"
+            onChange={handleProductTypeSelect}
+          >
+            {Object.values(ProductTypeList).map((type) => (
+              <MenuItem value={type} key={type}>{type}</MenuItem>
+            ))}
+          </Select>
         </FormControl>
-      </form>
-    </Box>    
+
+        {/* Product Gender Field */}
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="gender-selectlabel">Product Gender</InputLabel>
+          <Select labelId="gender-selectlabel" 
+            id="gender-select" 
+            value={productGender}
+            aria-describedby="product-gender-field"
+            onChange={handleProductGenderSelect}
+          >
+            {Object.values(ProductGenderList).map((gender) => (
+              <MenuItem value={gender} key={gender}>{gender}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {/* Product Size Shoe Field */}
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="shoesize-selectlabel">Shoe Size</InputLabel>
+          <Select labelId="shoesize-selectlabel" 
+            id="shoesize-select" 
+            value={productSizeShoe}
+            aria-describedby="product-shoesize-field"
+            onChange={handleProductSizeShoeSelect}
+          >
+            {Object.values(ProductSizeShoeList).map((size) => (
+              <MenuItem value={size} key={size}>{size}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {/* Product Size Field */}
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="size-selectlabel">Product Size</InputLabel>
+          <Select labelId="size-selectlabel" 
+            id="size-select" 
+            value={productSizes}
+            aria-describedby="product-size-field"
+            onChange={handleProductSizeSelect}
+          >
+            {Object.values(ProductSizesList).map((size) => (
+              <MenuItem value={size} key={size}>{size}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {/* Product Size Pants Waist Field */}
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="waistsize-selectlabel">Waist Size</InputLabel>
+          <Select labelId="waistsize-selectlabel" 
+            id="waistsize-select" 
+            value={productSizePantsWaist}
+            aria-describedby="product-waist-size-field"
+            onChange={handleProductSizePantsWaistSelect}
+          >
+            {Object.values(ProductSizePantsWaistList).map((size) => (
+              <MenuItem value={size} key={size}>{size}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {/* Product Size Pants Inseam Field */}
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="inseamsize-selectlabel">Inseam Length</InputLabel>
+          <Select labelId="inseamsize-selectlabel" 
+            id="inseamsize-select" 
+            value={productSizePantsInseam}
+            aria-describedby="product-inseam-size-field"
+            onChange={handleProductSizePantsInseamSelect}
+          >
+            {Object.values(ProductSizePantsInseamList).map((size) => (
+              <MenuItem value={size} key={size}>{size}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {/* Product Description Field */}
+        <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <TextField label="Product Description"
+            aria-describedby="product-description-field"
+            id="product-description"
+            onChange={handleDescriptionChange}
+            multiline
+            minRows={2}
+            variant="filled"/>
+        </FormControl>
+        
+        {/* Product Upload Image Field */}
+        <Stack direction="row" alignItems="center" justifyContent="center" spacing={2} sx={{ m: 1 }}>
+          <Button variant="contained" component="label" sx={{ width: 1 }}>
+            Upload Image
+            <input hidden multiple type="file" onChange={handleImageUpload} value={productImage}/>
+          </Button>
+        </Stack>
+
+        {/* Submit Button */}
+        <Button variant="contained" color="primary" onClick={handleSubmit} type="submit" sx={{ mt: 1 }}>
+          Submit
+        </Button>
+      </FormControl>
+    </form>
   );
 };
 

@@ -1,8 +1,7 @@
-
 const Profile = () => {
     // Temporary boilerplate code to make it compile
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen">
+        <div>
             <h1>Placeholder Profile so npm run build compiles successfully.</h1>
             <p>FIX: move to pages or use getSession from nextauth</p>
         </div>

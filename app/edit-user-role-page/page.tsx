@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
-import { Box, Container, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 /**
  * Represents a user.
@@ -50,33 +50,14 @@ const EditUserRolePage = () => {
   }, []);
 
   return (
-    <Container
-      fixed
-      maxWidth="lg"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: "#12202d",
-      }}
-    >
-      <Box
-        width={800}
-        display="flex"
-        alignItems="center"
-        flexDirection="column"
-        gap={2}
-        bgcolor="#293745"
-        p={3}
-      >
+      <Stack>
         <Typography component="h1" variant="h4">
           User Management
         </Typography>
         {userInfo.map((user, index) => (
           <UserCard user={user} key={index} />
         ))}
-      </Box>
-    </Container>
+      </Stack>
   );
 };
 

@@ -1,13 +1,11 @@
 "use client";
 
-import InputField from "@/components/InputFields";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useRouter } from "next/navigation";
-import styles from "./signin-page.module.css";
 import Image from "next/image";
 import mascot from "../../nsc_mascot_green_cropped.png";
 import {
-  Container,
+  Stack,
   Paper,
   Box,
   TextField,
@@ -63,19 +61,8 @@ const Signin = () => {
   };
 
   return (
-    <Container
-      fixed
-      maxWidth="lg"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: "#12202d",
-        height: "100vh",
-        flexDirection: "column",
-      }}
-    >
-      <Image src={mascot} alt="logo" style={{ width: 200, height: 100 }} />
+    <Stack spacing={{ xs: '-6px', sm: '-6px' }} alignItems="center">
+      <Image src={mascot} alt="logo" style={{ width: 200, height: 100, zIndex: 0 }} />
       <Paper
         elevation={4}
         sx={{
@@ -149,7 +136,7 @@ const Signin = () => {
           </Box>
         </Box>
       </Paper>
-    </Container>
+    </Stack>
   );
 };
 

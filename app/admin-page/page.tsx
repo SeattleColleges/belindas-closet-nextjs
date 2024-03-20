@@ -6,7 +6,7 @@ const Admin = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div>
       <h1> Wellcome to the PAGE      </h1>
       <p>FIX: allow only users with admin role to be routed to this page</p>
       {/* <Link to="/add-product-page"> */}

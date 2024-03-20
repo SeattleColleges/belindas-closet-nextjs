@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import {
-  Box,
   CircularProgress,
 } from "@mui/material";
 import ProductDetailDisplay from "../[productId]/ProductDetailDisplay";
@@ -64,9 +63,7 @@ const ProductDetail = ({
 
   if (isLoading)
     return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <CircularProgress />
-      </Box>
+      <CircularProgress />
     );
   if (error) return <div>Error: {error}</div>;
 

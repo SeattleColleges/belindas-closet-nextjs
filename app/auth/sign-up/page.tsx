@@ -4,7 +4,7 @@ import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography, Stack } from "@mui/material";
 import Image from "next/image";
 import mascot from "../../nsc_mascot_green_cropped.png";
 import { Link as MuiLink } from "@mui/material";
@@ -107,19 +107,8 @@ const SignUp = () => {
   };
 
   return (
-    <Container
-      fixed
-      maxWidth="lg"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        bgcolor: "#12202d",
-        height: "100vh",
-        flexDirection: "column",
-      }}
-    >
-      <Image src={mascot} alt="logo" style={{ width: 200, height: 100 }} />
+    <Stack spacing={{ xs: '-6px', sm: '-6px' }} alignItems="center">
+      <Image src={mascot} alt="logo" style={{ width: 200, height: 100, zIndex: 0 }} />
       <Paper
         elevation={4}
         sx={{
@@ -247,7 +236,7 @@ const SignUp = () => {
           </Box>
         </Box>
       </Paper>
-    </Container>
+    </Stack>
   );
 };
 
