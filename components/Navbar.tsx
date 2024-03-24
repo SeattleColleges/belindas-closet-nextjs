@@ -19,7 +19,7 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
-
+import ProfileDropDown from './ProfileDropDown'; 
 const drawerWidth = 240;
 const navItems = ["Home", "Sign In", "Donation"];
 const links = ["/", "/auth/sign-in", "/donation-info"];
@@ -89,6 +89,7 @@ export default function Navbar() {
               ))}
             </Grid>
           </Box>
+        <ProfileDropDown />
         </Toolbar>
       </AppBar>
       <nav>
