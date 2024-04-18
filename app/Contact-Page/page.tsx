@@ -16,10 +16,14 @@ const Contact = () => {
                 </a>
             </div>
 
-        </div>
+        <div>
+            <a href="/contact">
 
-            <h1>Placeholder Contact page.</h1>
+             <h1>Placeholder Contact page.</h1>
             <p>Place holder text to fill in the space.</p>
+            </a>
+        </div>
+        </div>
         </div>
     );
 };
