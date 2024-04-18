@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "../app/logo.png";
 import {
@@ -19,6 +19,7 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
+import AuthProfileMenu from "./AuthProfileMenu";
 
 const drawerWidth = 240;
 const navItems = ["Home", "Sign In", "Donation"];
@@ -30,6 +31,14 @@ export default function Navbar() {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
 
   const drawer = (
     <Box sx={{ textAlign: "center" }}>
@@ -51,6 +60,10 @@ export default function Navbar() {
           </Grid>
         ))}
       </List>
+      <Divider />
+      <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+        {token ? <AuthProfileMenu /> : null}
+      </Grid>
     </Box>
   );
 
@@ -89,6 +102,9 @@ export default function Navbar() {
               ))}
             </Grid>
           </Box>
+          <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+          {token ? <AuthProfileMenu /> : null}
+      </Grid>
         </Toolbar>
       </AppBar>
       <nav>
