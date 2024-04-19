@@ -21,8 +21,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 
 const drawerWidth = 240;
-const navItems = ["Home", "Sign In", "Donation", "Mission"];
-const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page"];
+const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard"];
+const links = [
+  "/",
+  "/auth/sign-in",
+  "/donation-info",
+  "/mission-page",
+  "dashboard",
+];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -44,7 +50,11 @@ export default function Navbar() {
           <Grid item key={item}>
             {index === 2 ? <CategoryDropDownMenu /> : null}
             <Link href={links[index]} passHref>
-              <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
+              <Button
+                key={item}
+                sx={{ color: "#000" }}
+                onClick={handleDrawerToggle}
+              >
                 {item}
               </Button>
             </Link>
