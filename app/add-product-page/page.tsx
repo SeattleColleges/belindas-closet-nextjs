@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { FormControl, Stack, InputLabel, Button, TextField, Typography, Select, MenuItem, } from '@mui/material';
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { FormControl, Stack, InputLabel, Button, TextField, Typography, Select, MenuItem} from '@mui/material';
+import Image from "next/image";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import {
   ProductTypeList,
   ProductGenderList,
@@ -19,6 +21,25 @@ const AddProduct = () => {
   const [productSizePantsInseam, setProductSizePantsInseam] = useState<number | string>('');
   const [productDescription, setProductDescription] = useState<string>('');
   const [productImage, setProductImage] = useState<string>('');
+  const [productImageBlob, setProductImageBlob] = useState<null | File>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null | StaticImport>(null);
+  const [previewHeight, setPreviewHeight] = useState(0);
+
+  const imgElement = React.useRef<any>(null);
+
+  useEffect(() => {
+    if (!productImageBlob) {
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setPreviewUrl(reader.result as string);
+    }
+
+    reader.readAsDataURL(productImageBlob);
+  }, [productImageBlob]);
 
   const handleProductTypeSelect = (e: {
     target: { value: React.SetStateAction<string> };
@@ -62,10 +83,9 @@ const AddProduct = () => {
     setProductDescription(e.target.value);
   };
 
-  const handleImageUpload = (e: {
-    target: { value: React.SetStateAction<any> };
-  }) => {
-    setProductImage(e.target.value);
+  const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    setProductImageBlob(event.target.files![0]);
+    setProductImage(event.target.value);
   };
   // Fetch request to add product to database
   const handleSubmit = async (e: any) => {
@@ -100,6 +120,10 @@ const AddProduct = () => {
       console.error("Error adding product:", error);
     }
   };
+
+  const loadImageSize=()=>{
+    setPreviewHeight(imgElement.current.naturalHeight / imgElement.current.naturalWidth*150);
+  }
 
   const notSizeApplicable = ['', 'Pants', 'Shoes']
 
@@ -244,6 +268,9 @@ const AddProduct = () => {
         {
           productType == '' ? null : (          
           <Stack direction="row" alignItems="center" justifyContent="center" spacing={2} sx={{ m: 1 }}>
+            {previewUrl && 
+                <Image src={previewUrl} ref={imgElement} alt="logo" onLoad={loadImageSize} height={previewHeight} width={150}/>
+            }
             <Button variant="contained" component="label" sx={{ width: 1 }}>
               Upload Image
               <input hidden multiple type="file" onChange={handleImageUpload} value={productImage}/>
