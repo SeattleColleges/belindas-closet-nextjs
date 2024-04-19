@@ -22,8 +22,7 @@ import CategoryDropDownMenu from "./CategoryDropDownMenu";
 
 const drawerWidth = 240;
 const navItems = ["Home", "Sign In", "Donation","Contact"];
-const links = ["/", "/auth/sign-in", "/donation-info","/contact"];
-
+const links = ["/", "/auth/sign-in", "/donation-info","/contact-page"];
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
