@@ -1,4 +1,4 @@
-import AuthProfileMenu from '@/components/AuthProfileMenu'
+import AuthProfileMenu from '../../components/AuthProfileMenu'
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { useSession, signOut } from 'next-auth/react'

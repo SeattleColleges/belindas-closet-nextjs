@@ -1,4 +1,4 @@
-import AuthProfileMenu from '@/components/AuthProfileMenu'
+import AuthProfileMenu from '../../components/AuthProfileMenu'
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { useSession, signOut } from 'next-auth/react'
@@ -9,7 +9,7 @@ jest.mock('next-auth/react', () => ({
   signOut: jest.fn(),
 }))
 
-// Set mock type, imports
+// Set mock type
 const mockSession = useSession as jest.MockedFunction<typeof useSession>
 const mockSignOut = signOut as jest.MockedFunction<typeof signOut>
 
@@ -36,7 +36,6 @@ describe('AuthProfileMenu tests', () => {
   it('validates logout to "/" when sign out button is clicked', () => {
     const signOutBtn = screen.getByRole('button', { name: /sign out/i }) // Act
     fireEvent.click(signOutBtn)
-    
 
     // Assert callback
     expect(mockSignOut).toHaveBeenCalledWith({ callbackUrl: '/' })

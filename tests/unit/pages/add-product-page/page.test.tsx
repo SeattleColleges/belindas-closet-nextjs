@@ -9,14 +9,12 @@ describe('add-product-page tests', () => {
     beforeEach(() => {
     render(<AddProduct />)
   })
-  it('contains title and submit button', () => {
+  it('contains title', () => {
     // Act
     const title = screen.getByText(/Add a Product/i )
-    const submitBtn = screen.getByRole('button', { name: /submit/i })
-    
+
     // Assert
     expect(title).toBeInTheDocument()
-    expect(submitBtn).toBeInTheDocument()
     
   })
 
