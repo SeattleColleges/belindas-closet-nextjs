@@ -21,8 +21,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 
 const drawerWidth = 240;
-const navItems = ["Home", "Sign In", "Donation", "Mission"];
-const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page"];
+const navItems = ["Home", "Sign In", "Donation", "Mission","Contact"];
+const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page","contact-page"];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
