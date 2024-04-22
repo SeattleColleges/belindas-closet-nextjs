@@ -7,23 +7,32 @@ const Admin = () => {
 
   return (
     <div>
-      <h1> Wellcome to the PAGE      </h1>
+      <h1> Welcome to the PAGE      </h1>
       <p>FIX: allow only users with admin role to be routed to this page</p>
+        
+        {/* Changed button styling to match with Creator page's buttons */}
+
         <a href="/add-product-page">
-        <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}>
+        {/* <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}> */}
+        <button>
           Add Product
         </button>
         </a>
-      {/* <a href="/add-product-page"> */}
-        <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}>
+      
+        {/* <Link to="/add-product-page"> */}
+        {/* <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}> */}
+        <button>
           All Products
         </button>
-      {/* </Link> */}
-      {/* <Link to="/add-product-page"> */}
-        <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}>
+        {/* </Link> */}
+
+        <a href="/edit-user-role-page">
+        {/* <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}> */}
+        <button>
           Edit User Roles
         </button>
-      {/* </Link> */}
+        </a>
+
     </div>
   );
 };
