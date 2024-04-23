@@ -32,7 +32,12 @@ const Admin = () => {
           Edit User Roles
         </button>
         </a>
-
+      
+      {/* <Link to="/add-product-page"> */}
+        <button>
+         Contact page
+        </button>
+      {/* </Link> */}
     </div>
   );
 };
