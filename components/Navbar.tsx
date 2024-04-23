@@ -22,7 +22,7 @@ import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
 
 const drawerWidth = 240;
-const navItems = ["Home", "Sign In", "Donation", "Mission","Contact"];
+const navItems = ["Home", "Sign In", "Donation", "Mission","Dashboard","Contact"];
 const links = [
   "/",
   "/auth/sign-in",
