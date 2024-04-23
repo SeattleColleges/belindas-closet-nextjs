@@ -34,7 +34,7 @@ const Admin = () => {
         </a>
       
       {/* <Link to="/add-product-page"> */}
-      <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}>
+        <button>
          Contact page
         </button>
       {/* </Link> */}
