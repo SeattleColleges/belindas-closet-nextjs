@@ -27,7 +27,7 @@ const links = [
   "/auth/sign-in",
   "/donation-info",
   "/mission-page",
-  "dashboard",
+  "/dashboard",
 ];
 
 export default function Navbar() {
