@@ -22,13 +22,14 @@ import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
 
 const drawerWidth = 240;
-const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard"];
+const navItems = ["Home", "Sign In", "Donation", "Mission","Contact"];
 const links = [
   "/",
   "/auth/sign-in",
   "/donation-info",
   "/mission-page",
   "/dashboard",
+  "/contact-page"
 ];
 
 export default function Navbar() {
