@@ -4,33 +4,16 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "../app/logo.png";
-import {
-  AppBar,
-  Button,
-  IconButton,
-  Toolbar,
-  Grid,
-  Drawer,
-  Box,
-  CssBaseline,
-  Divider,
-  List,
-} from "@mui/material";
+import { AppBar, Button, IconButton, Toolbar, Grid, Drawer, Box, CssBaseline, Divider, List } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
 
+const adminTest = false;
 const drawerWidth = 240;
-const navItems = ["Home", "Sign In", "Donation", "Mission","Dashboard","Contact"];
-const links = [
-  "/",
-  "/auth/sign-in",
-  "/donation-info",
-  "/mission-page",
-  "/dashboard",
-  "/contact-page"
-];
+const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard", "Contact"];
+const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/dashboard", "/contact-page"];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -59,15 +42,13 @@ export default function Navbar() {
         {navItems.map((item, index) => (
           <Grid item key={item}>
             {index === 2 ? <CategoryDropDownMenu /> : null}
-            <Link href={links[index]} passHref>
-              <Button
-                key={item}
-                sx={{ color: "#000" }}
-                onClick={handleDrawerToggle}
-              >
-                {item}
-              </Button>
-            </Link>
+            {adminTest || index !== 4 ? (
+              <Link href={links[index]} passHref>
+                <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
+                  {item}
+                </Button>
+              </Link>
+            ) : null}
           </Grid>
         ))}
       </List>
@@ -104,11 +85,13 @@ export default function Navbar() {
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
                   {index === 2 ? <CategoryDropDownMenu /> : null}
-                  <Link href={links[index]} passHref>
-                    <Button key={item} sx={{ color: "#fff" }}>
-                      {item}
-                    </Button>
-                  </Link>
+                  {adminTest || index !== 4 ? (
+                    <Link href={links[index]} passHref>
+                      <Button key={item} sx={{ color: "#fff" }}>
+                        {item}
+                      </Button>
+                    </Link>
+                  ) : null}
                 </Grid>
               ))}
             </Grid>
