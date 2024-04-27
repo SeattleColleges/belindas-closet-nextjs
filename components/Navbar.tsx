@@ -4,37 +4,18 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "../app/logo.png";
-import {
-  AppBar,
-  Button,
-  IconButton,
-  Toolbar,
-  Grid,
-  Drawer,
-  Box,
-  CssBaseline,
-  Divider,
-  List,
-} from "@mui/material";
-
+import { AppBar, Button, IconButton, Toolbar, Grid, Drawer, Box, CssBaseline, Divider, List } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
 
 const drawerWidth = 240;
-const navItems = ["Home", "Sign In", "Donation", "Mission","Dashboard","Contact"];
-const links = [
-  "/",
-  "/auth/sign-in",
-  "/donation-info",
-  "/mission-page",
-  "/dashboard",
-  "/contact-page"
-];
+const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard", "Contact"];
+const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/dashboard", "/contact-page"];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const [userRole, setUserRole] = useState("");
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -44,6 +25,8 @@ export default function Navbar() {
     const token = localStorage.getItem("token");
     if (token) {
       setToken(token);
+      const userRole = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(userRole);
     }
   }, []);
 
@@ -59,15 +42,13 @@ export default function Navbar() {
         {navItems.map((item, index) => (
           <Grid item key={item}>
             {index === 2 ? <CategoryDropDownMenu /> : null}
-            <Link href={links[index]} passHref>
-              <Button
-                key={item}
-                sx={{ color: "#000" }}
-                onClick={handleDrawerToggle}
-              >
-                {item}
-              </Button>
-            </Link>
+            {userRole === "admin" || index !== 4 ? (
+              <Link href={links[index]} passHref>
+                <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
+                  {item}
+                </Button>
+              </Link>
+            ) : null}
           </Grid>
         ))}
       </List>
@@ -104,11 +85,13 @@ export default function Navbar() {
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
                   {index === 2 ? <CategoryDropDownMenu /> : null}
-                  <Link href={links[index]} passHref>
-                    <Button key={item} sx={{ color: "#fff" }}>
-                      {item}
-                    </Button>
-                  </Link>
+                  {userRole === "admin" || index !== 4 ? (
+                    <Link href={links[index]} passHref>
+                      <Button key={item} sx={{ color: "#fff" }}>
+                        {item}
+                      </Button>
+                    </Link>
+                  ) : null}
                 </Grid>
               ))}
             </Grid>
