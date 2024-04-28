@@ -58,6 +58,7 @@ const Signin = () => {
         router.push("/profile"); // TODO: change profile to user-page
       }
     }
+    window.location.reload();
   };
 
   return (
