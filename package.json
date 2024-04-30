@@ -8,8 +8,11 @@
     "start": "next start -p 8080",
     "lint": "next lint",
     "compile": "tsc",
+    "test": "jest",
     "unit:tests": "jest tests/unit",
-    "test:coverage": "jest --coverage--"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage--",
+    "clear_jest": "jest --clearCache"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
