@@ -38,6 +38,12 @@ const Admin = () => {
          Contact page
         </button>
       {/* </Link> */}
+      <a href="/dashboard">
+        {/* <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}> */}
+        <button>
+          Dashboard
+        </button>
+        </a>
     </div>
   );
 };
