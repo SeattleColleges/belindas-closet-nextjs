@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES2015",
+    "types": [
+      "node",
+      "jest"
+    ],
     "lib": [
       "dom",
       "dom.iterable",
