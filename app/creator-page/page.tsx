@@ -1,25 +1,25 @@
-
+import Button from '@mui/material/Button';
 const Creator = () => {
     // Temporary boilerplate code to make it compile
     return (
         <div>
         <div >
+        <div>
+                <Button variant="contained" href="/"> 
+                    All Products
+                </Button>
+            </div>
             <div>
-                <a href="/">
-                <button>All Products</button>
-                </a>
+                <Button variant="contained" href="/add-product-page"> 
+                    Add Products
+                </Button>
             </div>
 
             <div>
-                <a href="/add-product-page">
-                <button>Add Products</button>
-                </a>
+                <Button variant="contained" href="/dashboard"> 
+                    Dashboard
+                </Button>
             </div>
-            
-            <div> <a href="/dashboard">
-                <button>Dashboard</button>
-                </a> 
-                </div>
         <>
      </>
         </div>
