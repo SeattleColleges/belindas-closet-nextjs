@@ -9,6 +9,8 @@ import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
 import { Container, Typography, Button } from '@mui/material';
 import WrapperDiv from '../components/WrapperDiv'
+// import connectDB from '../lib/db';  // Ensure you have this db connection utility
+
 
 // TEMPORARY CATEGORIES LIST
 const placeholderImg = logo;
@@ -23,6 +25,7 @@ const categories = [
   {'type': 'Accessories', 'image': placeholderImg},
   {'type': 'Jacket/Blazer', 'image': placeholderImg},
 ]
+
 
 const Home = () => {
   return (
