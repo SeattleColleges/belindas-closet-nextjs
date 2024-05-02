@@ -12,6 +12,9 @@ import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import React, { useEffect, useRef, useState } from "react";
 import { UserCardProps } from "./UserCard";
+import Snackbar from '@mui/material/Snackbar';
+import Alert, { AlertColor } from '@mui/material/Alert';
+
 
 const options = ["admin", "creator", "user"];
 
@@ -24,7 +27,11 @@ interface ConfirmationDialogRawProps {
   value: string;
   open: boolean;
   onClose: (value?: string) => void;
+  setSnackbarOpen: (open: boolean) => void;
+  setSnackbarMessage: (message: string) => void;
+  setSnackbarSeverity: (severity: 'error' | 'warning' | 'info' | 'success') => void;
 }
+
 /**
  * Renders a confirmation dialog for editing user roles.
  *
@@ -35,7 +42,7 @@ export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps & { user
   const { onClose, value: valueProp, open, user, ...other } = props;
   const [value, setValue] = useState(valueProp);
   const radioGroupRef = useRef<HTMLElement>(null);
-
+  
   useEffect(() => {
     if (!open) {
       setValue(valueProp);
@@ -77,11 +84,20 @@ export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps & { user
       });
       if (response.ok) {
         onClose(value);
+        props.setSnackbarSeverity('success');
+        props.setSnackbarMessage('User role updated successfully!');
+        props.setSnackbarOpen(true);
       } else {
         console.error('Failed to update user role:', response.statusText);
+        props.setSnackbarSeverity('error');
+        props.setSnackbarMessage('Failed to update user role');
+        props.setSnackbarOpen(true);
       }
     } catch (error) {
       console.error('Error updating user role:', error);
+      props.setSnackbarSeverity('error');
+      props.setSnackbarMessage('Error updating user role');
+      props.setSnackbarOpen(true);
     }
   };
 
@@ -144,9 +160,13 @@ export default function EditUserRoleDialog({
 }: {
   user: UserCardProps;
   onClose: () => void;
-}) {
+}): JSX.Element {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(user.role);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
+
 
   const handleClickListItem = () => {
     setOpen(true);
@@ -186,8 +206,16 @@ export default function EditUserRoleDialog({
           onClose={handleClose}
           value={value}
           user={user}
+          setSnackbarOpen={setSnackbarOpen}
+          setSnackbarMessage={setSnackbarMessage}
+          setSnackbarSeverity={setSnackbarSeverity}
         />
       </List>
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+        <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
