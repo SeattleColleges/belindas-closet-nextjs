@@ -1,5 +1,11 @@
 // import { Link } from 'react-router-dom'; // Import the Link component from react-router-dom
 
+'use client'
+import { createContext } from 'react';
+
+import { Button, Typography } from '@material-ui/core';
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+
 const Admin = () => {
   const handleAddProduct = () => {
     // Add code here to handle the "Add Product" button click event
@@ -7,37 +13,40 @@ const Admin = () => {
 
   return (
     <div>
-      <h1> Welcome to the PAGE      </h1>
-      <p>FIX: allow only users with admin role to be routed to this page</p>
-        
-        {/* Changed button styling to match with Creator page's buttons */}
+      <Typography
+        variant="h4"
+        component="h1"
+        gutterBottom
+      >
+        Welcome to the ADMIN PAGE
+      </Typography>
 
-        <a href="/add-product-page">
-        {/* <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}> */}
-        <button>
+      <Typography
+        variant="body1"
+        gutterBottom
+      >
+        FIX: allow only users with admin role to be routed to this page
+      </Typography>
+
+
+      <ButtonGroup
+        color="primary"
+        variant="contained"
+      >
+
+        <Button href="/add-product-page">
           Add Product
-        </button>
-        </a>
-      
-        {/* <Link to="/add-product-page"> */}
-        {/* <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}> */}
-        <button>
-          All Products
-        </button>
-        {/* </Link> */}
+        </Button>
 
-        <a href="/edit-user-role-page">
-        {/* <button style={{ backgroundColor: 'green', color: 'white', padding: '10px 20px', marginTop: '20px' }}> */}
-        <button>
+        <Button href="/">
+          All Products
+        </Button>
+
+        <Button href="/edit-user-role-page">
           Edit User Roles
-        </button>
-        </a>
-      
-      {/* <Link to="/add-product-page"> */}
-        <button>
-         Contact page
-        </button>
-      {/* </Link> */}
+        </Button>
+
+      </ButtonGroup>
     </div>
   );
 };
