@@ -27,6 +27,6 @@ export enum ProductSizesList {
   XXL = "XXL",
 }
 
-export const ProductSizePantsWaistList = [28, 30, 32, 34, 36, 38, 40, 42];
+export const ProductSizePantsWaistList = [28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42];
 
 export const ProductSizePantsInseamList = [28, 30, 32, 34, 36, 38, 40, 42];
