@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
 import { Stack, Typography } from "@mui/material";
+// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+const URL =
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
 /**
  * Represents a user.
@@ -18,7 +21,7 @@ interface User {
  * @param setUserInfo
  */
 async function fetchUser(setUserInfo: (userInfo: User[]) => void) {
-  const apiUrl = "http://localhost:3000/api/user";
+  const apiUrl = `${URL}/user`;
   try {
     const res = await fetch(apiUrl, {
       method: "GET",
@@ -50,14 +53,14 @@ const EditUserRolePage = () => {
   }, []);
 
   return (
-      <Stack>
-        <Typography component="h1" variant="h4">
-          User Management
-        </Typography>
-        {userInfo.map((user, index) => (
-          <UserCard user={user} key={index} />
-        ))}
-      </Stack>
+    <Stack>
+      <Typography component="h1" variant="h4">
+        User Management
+      </Typography>
+      {userInfo.map((user, index) => (
+        <UserCard user={user} key={index} />
+      ))}
+    </Stack>
   );
 };
 

@@ -14,6 +14,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+const URL =
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState({
@@ -54,7 +57,7 @@ const ResetPasswordPage = () => {
 
     // send request to backend api then log the response
     // TODO: send request to backend api then log the response
-    const res = await fetch("localhost:3000/api/auth/reset-password", {
+    const res = await fetch(`${URL}/auth/reset-password`, {
       method: "POST",
       body: JSON.stringify(password),
       headers: {
@@ -88,20 +91,10 @@ const ResetPasswordPage = () => {
           style={{ width: 50, height: 50, marginBottom: 10 }}
         />
       </Container>
-      <Typography
-        component="h1"
-        variant="h5"
-        textAlign="center"
-        sx={{ mb: 2 }}
-      >
+      <Typography component="h1" variant="h5" textAlign="center" sx={{ mb: 2 }}>
         Reset Password
       </Typography>
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={{ mt: 1 }}
-      >
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
           sx={{ mb: 2 }}
           variant="outlined"

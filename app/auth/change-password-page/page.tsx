@@ -18,6 +18,9 @@ import {
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
 import { useRouter } from "next/navigation";
+// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+const URL =
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
 const ChangePasswordPage = () => {
   const [password, setPassword] = useState({
@@ -90,23 +93,20 @@ const ChangePasswordPage = () => {
     // Fetch reset password
     try {
       setLoading(true);
-      const res = await fetch(
-        "http://localhost:3000/api/auth/change-password",
-        {
-          method: "POST",
-          body: JSON.stringify(password),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await fetch(`${URL}/auth/change-password`, {
+        method: "POST",
+        body: JSON.stringify(password),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!res.ok) {
         const { message } = await res.json();
         setError(message);
         setSuccess("");
         return;
-      } 
+      }
       setError("");
       //set delay to show success message
       setSuccess("Password changed successfully, redirecting to sign in page");
@@ -117,11 +117,11 @@ const ChangePasswordPage = () => {
       console.error("Error changing password:", error);
     } finally {
       setLoading(false);
-    }    
+    }
   };
 
   if (loading) {
-    <CircularProgress />
+    <CircularProgress />;
   }
 
   return (
@@ -142,12 +142,7 @@ const ChangePasswordPage = () => {
           style={{ width: 50, height: 50, marginBottom: 10 }}
         />
       </Container>
-      <Typography
-        component="h1"
-        variant="h5"
-        textAlign="center"
-        sx={{ mb: 2 }}
-      >
+      <Typography component="h1" variant="h5" textAlign="center" sx={{ mb: 2 }}>
         Change Password
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>

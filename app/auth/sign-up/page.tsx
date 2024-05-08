@@ -11,6 +11,9 @@ import { Link as MuiLink } from "@mui/material";
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
 import { useRouter } from "next/navigation";
+// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+const URL =
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
 const SignUp = () => {
   // handling user's incoming info
@@ -41,7 +44,7 @@ const SignUp = () => {
   // Toggle confirm password visibility
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
-  }
+  };
 
   // route to sign in page
   const router = useRouter();
@@ -85,7 +88,7 @@ const SignUp = () => {
     // send request to backend api then log the response
     // hardwired link for local development, change port if needed
     try {
-      const res = await fetch("http://localhost:3000/api/auth/signup", {
+      const res = await fetch(`${URL}/auth/signup`, {
         method: "POST",
         body: JSON.stringify(userInfo),
         headers: {
@@ -107,8 +110,12 @@ const SignUp = () => {
   };
 
   return (
-    <Stack spacing={{ xs: '-6px', sm: '-6px' }} alignItems="center">
-      <Image src={mascot} alt="logo" style={{ width: 200, height: 100, zIndex: 0 }} />
+    <Stack spacing={{ xs: "-6px", sm: "-6px" }} alignItems="center">
+      <Image
+        src={mascot}
+        alt="logo"
+        style={{ width: 200, height: 100, zIndex: 0 }}
+      />
       <Paper
         elevation={4}
         sx={{

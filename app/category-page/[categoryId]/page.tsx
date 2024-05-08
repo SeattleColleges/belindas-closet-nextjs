@@ -4,6 +4,9 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import ProductCard from "@/components/ProductCard";
 import logo from "../../logo.png";
 import { Container, Grid, Typography } from "@mui/material";
+// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+const URL =
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 const placeholderImg = logo;
 interface Product {
   _id: string;
@@ -23,7 +26,7 @@ async function fetchData(
   categoryId: string,
   setProducts: Dispatch<SetStateAction<Product[]>>
 ) {
-  const apiUrl = "http://localhost:3000/api/products/findByType/";
+  const apiUrl = `${URL}/products/findByType/`;
   const queryParam = encodeURIComponent(categoryId);
   const fetchUrl = `${apiUrl}${queryParam}`;
 
@@ -56,7 +59,9 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
   }, [categoryId]);
 
   useEffect(() => {
-    setFilteredProducts(products.filter(product => !product.isHidden && !product.isSold));
+    setFilteredProducts(
+      products.filter((product) => !product.isHidden && !product.isSold)
+    );
   }, [products]);
 
   return (
@@ -81,16 +86,16 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
               sizePantsWaist={product.productSizePantsWaist}
               sizePantsInseam={product.productSizePantsInseam}
               description={product.productDescription}
-              href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL            
-              _id={product._id} 
-              isHidden={false} 
-              isSold={false}              
+              href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL
+              _id={product._id}
+              isHidden={false}
+              isSold={false}
             />
           </Grid>
         ))}
       </Grid>
     </Container>
-);
+  );
 };
 
 export default function ProductList({
@@ -100,7 +105,5 @@ export default function ProductList({
 }) {
   const decodedCategoryId = decodeURIComponent(params.categoryId);
 
-  return (
-      <ViewProduct categoryId={decodedCategoryId} />
-  );
+  return <ViewProduct categoryId={decodedCategoryId} />;
 }
