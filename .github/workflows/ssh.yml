@@ -1,0 +1,44 @@
+name: Continuous Deployment via SSH
+on:
+  [workflow_dispatch]
+  # push:
+  #  branches:
+  #   - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install SSH Key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.DEPLOYUSERSSHKEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Execute Deployment Commands
+        run: |
+          ssh -o StrictHostKeyChecking=no deployuser@44.238.195.106 << 'EOF'
+            source ~/.profile || true
+            source ~/.bashrc || true
+            # Ensure you're in the correct directory
+            cd ~/belindasFrontEnd
+            # Fetch the latest changes
+            git pull origin main
+            # Activate the Node.js version managed by nvm
+            source ~/.nvm/nvm.sh
+            nvm use ${{ matrix.node-version }}
+            # Install any new dependencies using npm from nvm
+            npm install
+            # Build the project
+            npm run build
+            # Restart the application with PM2
+            pm2 restart belindas-frontend
+          EOF
