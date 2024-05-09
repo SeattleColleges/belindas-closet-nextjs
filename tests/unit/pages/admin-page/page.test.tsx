@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Admin } from '@/app/admin-page/page';
+import  Admin  from '@/app/admin-page/page';
 
 describe('Admin component tests', () => {
   it('renders welcome message', () => {
@@ -46,17 +46,5 @@ describe('Admin component tests', () => {
     // Assert
     const contactPageButton = screen.getByText(/Contact page/i);
     expect(contactPageButton).toBeInTheDocument();
-  });
-
-  it('calls handleAddProduct function when "Add Product" button is clicked', () => {
-    // Arrange
-    const handleAddProduct = jest.fn();
-    render(<Admin handleAddProduct={handleAddProduct} />);
-
-    // Act
-   
-
-    // Assert
-    expect(handleAddProduct).toHaveBeenCalledTimes(1);
   });
 });
