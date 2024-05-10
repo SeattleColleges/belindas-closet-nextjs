@@ -13,6 +13,9 @@ import {
   Typography,
   Link as MuiLink,
 } from "@mui/material";
+// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+const URL =
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
 const Signin = () => {
   const [error, setError] = useState("");
@@ -35,7 +38,7 @@ const Signin = () => {
     e.preventDefault();
 
     // Fetch sign in
-    const res = await fetch("http://localhost:3000/api/auth/login", {
+    const res = await fetch(`${URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -62,8 +65,12 @@ const Signin = () => {
   };
 
   return (
-    <Stack spacing={{ xs: '-6px', sm: '-6px' }} alignItems="center">
-      <Image src={mascot} alt="logo" style={{ width: 200, height: 100, zIndex: 0 }} />
+    <Stack spacing={{ xs: "-6px", sm: "-6px" }} alignItems="center">
+      <Image
+        src={mascot}
+        alt="logo"
+        style={{ width: 200, height: 100, zIndex: 0 }}
+      />
       <Paper
         elevation={4}
         sx={{

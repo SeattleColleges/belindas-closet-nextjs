@@ -8,6 +8,9 @@ import { Stack, Button, Link } from "@mui/material";
 import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArchiveIcon from "@mui/icons-material/Archive";
+// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+const URL =
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
 type ProductCardProps = {
   image: StaticImageData;
@@ -45,40 +48,38 @@ export default function ProductCard({
     }
     // testing what role is returned via console log -- delete later
     console.log(userRole);
-  }
-  , [token, userRole]);
+  }, [token, userRole]);
 
-    // delete product function -----------------------------------
-    const handleDelete = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/api/products/remove/${_id}`, {
-          // delete API uses DELETE method
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}` // pass token to the server
-          },
-            
-        });
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        console.log(`Successful delete the product with id: ${_id}`)
-      } catch (error) {
-        console.error("Error deleting product:", error);
+  // delete product function -----------------------------------
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${URL}/products/remove/${_id}`, {
+        // delete API uses DELETE method
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // pass token to the server
+        },
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
       }
-      window.location.reload();
-    };
+      console.log(`Successful delete the product with id: ${_id}`);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+    window.location.reload();
+  };
 
   // archive product function -----------------------------------------
   const handleArchive = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/products/archive/${_id}`, {
+      const response = await fetch(`${URL}/products/archive/${_id}`, {
         // archive API uses PUT method
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-           Authorization: `Bearer ${token}` // pass token to the server
+          Authorization: `Bearer ${token}`, // pass token to the server
         },
       });
       console.log("Product archived successfully!");
@@ -87,7 +88,6 @@ export default function ProductCard({
     }
     window.location.reload();
   };
-
 
   return (
     <Paper
@@ -100,7 +100,7 @@ export default function ProductCard({
           theme.palette.mode === "dark" ? "#1A2027" : "#fff",
       }}
     >
-      <Grid container spacing={2}  justifyContent="center">
+      <Grid container spacing={2} justifyContent="center">
         <Grid item>
           <ButtonBase>
             <Link href={href}>
@@ -141,26 +141,39 @@ export default function ProductCard({
         </Grid>
       </Grid>
       <Stack direction="column" spacing={2} justifyContent="flex-end" mt={2}>
-        <Button variant="contained" href={href} color="primary"  sx={{minWidth: 30, maxWidth: "215px"}}>
+        <Button
+          variant="contained"
+          href={href}
+          color="primary"
+          sx={{ minWidth: 30, maxWidth: "215px" }}
+        >
           View
         </Button>
-        
-        {userRole === "admin" || userRole === "creator" ? 
-            (
-              <Stack direction="row" spacing={2}>
-                {/* TODO: Add delete function to this button  */}
-                <Button variant="contained" startIcon={<DeleteIcon />} color="error" onClick={() => handleDelete()} sx={{fontSize: 10}}>
-                  Delete
-                </Button>
-                {/* TODO: Add archive function to this button  */}
-                <Button variant="contained" startIcon={<ArchiveIcon />} color="warning" onClick={() => handleArchive()} sx={{fontSize: 10}}>
-                  Archive
-                </Button>
-              </Stack>
-            ) 
-            : null
-          }
-          
+
+        {userRole === "admin" || userRole === "creator" ? (
+          <Stack direction="row" spacing={2}>
+            {/* TODO: Add delete function to this button  */}
+            <Button
+              variant="contained"
+              startIcon={<DeleteIcon />}
+              color="error"
+              onClick={() => handleDelete()}
+              sx={{ fontSize: 10 }}
+            >
+              Delete
+            </Button>
+            {/* TODO: Add archive function to this button  */}
+            <Button
+              variant="contained"
+              startIcon={<ArchiveIcon />}
+              color="warning"
+              onClick={() => handleArchive()}
+              sx={{ fontSize: 10 }}
+            >
+              Archive
+            </Button>
+          </Stack>
+        ) : null}
       </Stack>
     </Paper>
   );

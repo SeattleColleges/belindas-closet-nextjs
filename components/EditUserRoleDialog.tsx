@@ -12,9 +12,11 @@ import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import React, { useEffect, useRef, useState } from "react";
 import { UserCardProps } from "./UserCard";
-import Snackbar from '@mui/material/Snackbar';
-import Alert, { AlertColor } from '@mui/material/Alert';
-
+import Snackbar from "@mui/material/Snackbar";
+import Alert, { AlertColor } from "@mui/material/Alert";
+// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+const URL =
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
 const options = ["admin", "creator", "user"];
 
@@ -29,7 +31,9 @@ interface ConfirmationDialogRawProps {
   onClose: (value?: string) => void;
   setSnackbarOpen: (open: boolean) => void;
   setSnackbarMessage: (message: string) => void;
-  setSnackbarSeverity: (severity: 'error' | 'warning' | 'info' | 'success') => void;
+  setSnackbarSeverity: (
+    severity: "error" | "warning" | "info" | "success"
+  ) => void;
 }
 
 /**
@@ -38,11 +42,13 @@ interface ConfirmationDialogRawProps {
  * @param props - The component props.
  * @returns The rendered ConfirmationDialogRaw component.
  */
-export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps & { user: UserCardProps } ) {
+export function ConfirmationDialogRaw(
+  props: ConfirmationDialogRawProps & { user: UserCardProps }
+) {
   const { onClose, value: valueProp, open, user, ...other } = props;
   const [value, setValue] = useState(valueProp);
   const radioGroupRef = useRef<HTMLElement>(null);
-  
+
   useEffect(() => {
     if (!open) {
       setValue(valueProp);
@@ -70,33 +76,33 @@ export function ConfirmationDialogRaw(props: ConfirmationDialogRawProps & { user
    * @returns {void}
    */
   const handleOk = async () => {
-    const token = localStorage.getItem('token');
-    console.log('Token:', token);
+    const token = localStorage.getItem("token");
+    console.log("Token:", token);
     // TODO: Update user role in the database
     try {
-      const response = await fetch(`http://localhost:3000/api/user/update/${user.id}`, {
-        method: 'PATCH',
+      const response = await fetch(`${URL}/user/update/${user.id}`, {
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ role: value })
+        body: JSON.stringify({ role: value }),
       });
       if (response.ok) {
         onClose(value);
-        props.setSnackbarSeverity('success');
-        props.setSnackbarMessage('User role updated successfully!');
+        props.setSnackbarSeverity("success");
+        props.setSnackbarMessage("User role updated successfully!");
         props.setSnackbarOpen(true);
       } else {
-        console.error('Failed to update user role:', response.statusText);
-        props.setSnackbarSeverity('error');
-        props.setSnackbarMessage('Failed to update user role');
+        console.error("Failed to update user role:", response.statusText);
+        props.setSnackbarSeverity("error");
+        props.setSnackbarMessage("Failed to update user role");
         props.setSnackbarOpen(true);
       }
     } catch (error) {
-      console.error('Error updating user role:', error);
-      props.setSnackbarSeverity('error');
-      props.setSnackbarMessage('Error updating user role');
+      console.error("Error updating user role:", error);
+      props.setSnackbarSeverity("error");
+      props.setSnackbarMessage("Error updating user role");
       props.setSnackbarOpen(true);
     }
   };
@@ -164,9 +170,9 @@ export default function EditUserRoleDialog({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(user.role);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
-
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] =
+    useState<AlertColor>("success");
 
   const handleClickListItem = () => {
     setOpen(true);
@@ -211,8 +217,16 @@ export default function EditUserRoleDialog({
           setSnackbarSeverity={setSnackbarSeverity}
         />
       </List>
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
-        <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
           {snackbarMessage}
         </Alert>
       </Snackbar>

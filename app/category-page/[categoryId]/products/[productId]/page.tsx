@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  CircularProgress,
-} from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import ProductDetailDisplay from "../[productId]/ProductDetailDisplay";
-
+// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+const URL =
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 interface Product {
   _id: string;
   productType: string[];
@@ -33,7 +33,7 @@ const ProductDetail = ({
   const decodedCategoryId = decodeURIComponent(categoryId);
 
   useEffect(() => {
-    const fetchUrl = `http://localhost:3000/api/products/find/${productId}`;
+    const fetchUrl = `${URL}/products/find/${productId}`;
 
     const fetchProductDetails = async () => {
       setIsLoading(false);
@@ -61,10 +61,7 @@ const ProductDetail = ({
     fetchProductDetails();
   }, [decodedCategoryId, productId]); // Dependency array to trigger effect when categoryId or productId changes
 
-  if (isLoading)
-    return (
-      <CircularProgress />
-    );
+  if (isLoading) return <CircularProgress />;
   if (error) return <div>Error: {error}</div>;
 
   return <ProductDetailDisplay product={product as Product} />;
