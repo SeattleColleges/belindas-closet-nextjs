@@ -13,13 +13,21 @@ export interface UserCardProps {
 
 function UserCard({ user }: { user: UserCardProps }) {
   const [openDialog, setOpenDialog] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleEditClick = () => {
-    setOpenDialog(true);
+    if (menuOpen) {
+      setMenuOpen(false);
+      setOpenDialog(false);
+    } else {
+      setOpenDialog(true);
+      setMenuOpen(true)
+    }
   };
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
+    setMenuOpen(false);
   };
   return (
     <Container
@@ -65,7 +73,7 @@ function UserCard({ user }: { user: UserCardProps }) {
             startIcon={<EditIcon />}
             onClick={handleEditClick}
           >
-            Edit
+            {menuOpen ? "Done" : "Edit"}
           </Button>
         </Box>
       </Stack>
