@@ -27,6 +27,6 @@ describe('add-product-page tests', () => {
     Object.values(ProductTypeList).forEach((type) => {
       const option = screen.getByRole('option', { name: new RegExp(type, 'i') })
       expect(option).toBeInTheDocument()
-    })
+    } )
   })
 })
