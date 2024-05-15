@@ -3,8 +3,9 @@
 'use client'
 import { createContext } from 'react';
 
-import { Button, Typography } from '@material-ui/core';
-import ButtonGroup from '@material-ui/core/ButtonGroup'
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import ButtonGroup from '@mui/material/ButtonGroup'
 
 const Admin = () => {
   const handleAddProduct = () => {
