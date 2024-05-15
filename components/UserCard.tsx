@@ -14,15 +14,23 @@ export interface UserCardProps {
 function UserCard({ user }: { user: UserCardProps }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentRole, setCurrentRole] = useState(user.role);
 
   const handleEditClick = () => {
     if (menuOpen) {
       setMenuOpen(false);
       setOpenDialog(false);
+      if (currentRole !== user.role) {
+        window.location.reload();
+      }
     } else {
       setOpenDialog(true);
       setMenuOpen(true)
     }
+  };
+
+  const handleRoleChange = (newRole: string) => {
+    setCurrentRole(newRole);
   };
 
   const handleCloseDialog = () => {
@@ -63,7 +71,7 @@ function UserCard({ user }: { user: UserCardProps }) {
         </Typography>
         {openDialog && (
           <Box display="flex" justifyContent="center">
-            <EditUserRoleDialog user={user} onClose={handleCloseDialog} />
+            <EditUserRoleDialog user={user} onClose={handleCloseDialog} onRoleChange={handleRoleChange} />
           </Box>
         )}
         <Box p={2} display="flex" justifyContent="center">
