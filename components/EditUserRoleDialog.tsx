@@ -163,9 +163,11 @@ export function ConfirmationDialogRaw(
  */
 export default function EditUserRoleDialog({
   user,
+  onRoleChange,
 }: {
   user: UserCardProps;
   onClose: () => void;
+  onRoleChange: (newRole: string) => void;
 }): JSX.Element {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(user.role);
@@ -183,6 +185,7 @@ export default function EditUserRoleDialog({
 
     if (newValue) {
       setValue(newValue);
+      onRoleChange(newValue);
     }
   };
 
