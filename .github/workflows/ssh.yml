@@ -15,22 +15,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install SSH Key
-        env:
-          DEPLOYUSERSSHKEY: ${{ secrets.DEPLOYUSERSSHKEY }}
         run: |
           mkdir -p ~/.ssh/
-          echo "$DEPLOYUSERSSHKEY" > ~/.ssh/id_rsa
+          echo "${{ secrets.DEPLOYUSERSSHKEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
-      - name: Add SSH Key to SSH Agent
-        run: |
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_rsa
-
+          
       - name: Execute Deployment Commands
         run: |
           ssh -o StrictHostKeyChecking=no deployuser@44.238.195.106 << 'EOF'
-            set -e # Exit immediately if a command exits with a non-zero status
             source ~/.profile || true
             source ~/.bashrc || true
             # Ensure you're in the correct directory
