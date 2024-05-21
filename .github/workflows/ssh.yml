@@ -1,6 +1,6 @@
 name: Continuous Deployment via SSH
 on:
-  workflow_dispatch: # Allows manual triggering of the workflow
+  [workflow_dispatch] # Allows manual triggering of the workflow
   # Uncomment the following lines to enable automatic deployment on push to the main branch
   # push:
   #   branches:
