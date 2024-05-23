@@ -64,6 +64,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
     );
   }, [products]);
 
+  //Edit here to change tile size
   return (
     <Container sx={{ py: 4 }} maxWidth="lg">
       <Typography
@@ -76,7 +77,8 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
       </Typography>
       <Grid container spacing={2}>
         {filteredProducts.map((product, index) => (
-          <Grid item key={index} xs={12} sm={6} md={4}>
+          // <Grid item key={index} xs={12} sm={6} md={4}>
+          <Grid item key={index} xs={12} sm={40} md={40}>
             <ProductCard
               image={logo}
               categories={product.productType}
@@ -97,7 +99,6 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
     </Container>
   );
 };
-
 export default function ProductList({
   params,
 }: {
