@@ -154,7 +154,7 @@ const AddProduct = () => {
         <Typography
           component="h1"
           variant="h3"
-          sx={{ color: "white", marginBottom: "15px" }}
+          sx={{ marginBottom: "15px" }}
         >
           Add a Product
         </Typography>
