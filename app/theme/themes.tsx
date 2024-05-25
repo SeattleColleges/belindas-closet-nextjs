@@ -46,7 +46,7 @@ let lightTheme = createTheme({
       contrastText: "#fff",
     },
     background: {
-      default: "#f5f5f5",
+      default: "#EEE7DA",
     },
   },
 });
