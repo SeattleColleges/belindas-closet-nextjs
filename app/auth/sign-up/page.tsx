@@ -20,6 +20,7 @@ const SignUp = () => {
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
+    pronoun: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -30,7 +31,7 @@ const SignUp = () => {
   const [success, setSuccess] = useState("");
 
   // destructure user's info
-  const { firstName, lastName, email, password, confirmPassword } = userInfo;
+  const { firstName, lastName, pronoun, email, password, confirmPassword } = userInfo;
 
   // State to track whether the password is visible or not
   const [showPassword, setShowPassword] = useState(false);
@@ -61,7 +62,7 @@ const SignUp = () => {
     e.preventDefault();
 
     // Check if inputs are empty
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+    if (!firstName || !lastName || !pronoun ||!email || !password || !confirmPassword) {
       setError("Please fill in all fields");
       return;
     }
@@ -158,6 +159,19 @@ const SignUp = () => {
             name="lastName"
             autoComplete="lname"
             value={lastName}
+            onChange={handleChange}
+            autoFocus={false}
+          />
+               <TextField
+            sx={{ mb: 2 }}
+            margin="normal"
+            required
+            fullWidth
+            id="pronoun"
+            label="Pronoun"
+            name="pronoun"
+            autoComplete="pronoun"
+            value={pronoun}
             onChange={handleChange}
             autoFocus={false}
           />
