@@ -26,6 +26,13 @@ let darkTheme = createTheme({
         },
       },
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#333",
+        },
+      },
+    }
   },
 });
 darkTheme = responsiveFontSizes(darkTheme);
