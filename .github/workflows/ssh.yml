@@ -47,6 +47,7 @@ jobs:
             npm install
             # Build the project
             npm run build
-            # Restart the application with PM2
+            # Install and restart the application with PM2
+            npm install pm2 -g
             pm2 restart belindas-frontend
           EOF
