@@ -10,8 +10,14 @@ import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
 
 const drawerWidth = 240;
-const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard", "Contact"];
-const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/dashboard", "/contact-page"];
+
+// Removed "Dashboard" from navItems array
+const navItems = ["Home", "Sign In", "Donation", "Mission", "Contact"];
+// const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard", "Contact"]; // Original
+
+// Removed "/dashboard" from links array
+const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/contact-page"];
+// const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/dashboard", "/contact-page"]; // Original
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -42,15 +48,23 @@ export default function Navbar() {
         {navItems.map((item, index) => (
           <Grid item key={item}>
             {index === 2 ? <CategoryDropDownMenu /> : null}
-            {userRole === "admin" || index !== 4 ? (
-              <Link href={links[index]} passHref>
-                <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
-                  {item}
-                </Button>
-              </Link>
-            ) : null}
+            <Link href={links[index]} passHref>
+              <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
+                {item}
+              </Button>
+            </Link>
           </Grid>
         ))}
+        {/* Conditionally render "Dashboard" for admin/creator */}
+        {(userRole === "admin" || userRole === "creator") && (
+          <Grid item>
+            <Link href="/dashboard" passHref>
+              <Button sx={{ color: "#000" }} onClick={handleDrawerToggle}>
+                Dashboard
+              </Button>
+            </Link>
+          </Grid>
+        )}
       </List>
       <Divider />
       <Grid item sx={{ display: "flex", justifyContent: "center" }}>
@@ -85,15 +99,23 @@ export default function Navbar() {
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
                   {index === 2 ? <CategoryDropDownMenu /> : null}
-                  {userRole === "admin" || index !== 4 ? (
-                    <Link href={links[index]} passHref>
-                      <Button key={item} sx={{ color: "#fff" }}>
-                        {item}
-                      </Button>
-                    </Link>
-                  ) : null}
+                  <Link href={links[index]} passHref>
+                    <Button key={item} sx={{ color: "#fff" }}>
+                      {item}
+                    </Button>
+                  </Link>
                 </Grid>
               ))}
+              {/* Conditionally render "Dashboard" for admin/creator */}
+              {(userRole === "admin" || userRole === "creator") && (
+                <Grid item>
+                  <Link href="/dashboard" passHref>
+                    <Button sx={{ color: "#fff" }}>
+                      Dashboard
+                    </Button>
+                  </Link>
+                </Grid>
+              )}
             </Grid>
           </Box>
           <Grid item sx={{ display: "flex", justifyContent: "center" }}>
