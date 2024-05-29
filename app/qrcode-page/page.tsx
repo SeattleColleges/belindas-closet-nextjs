@@ -8,7 +8,7 @@ const Home: React.FC = () => {
             <main>
                 <h1>QR Code Generator</h1>
                 <QRCodeGenerator
-                    value="https://www.test.com"
+                    value="https://northseattle.edu/"
                     size={256}
                     bgColor="#000000"
                     fgColor="#FFFFFF"
