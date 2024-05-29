@@ -30,7 +30,7 @@ const Home = () => {
       <Container disableGutters fixed maxWidth="xs" sx={{width: "15%"}}>
         <Image src={logo} alt="logo" width={100} />
       </Container>
-      <Typography component='h1' variant='h3' sx={{color: 'white'}}>
+      <Typography component='h1' variant='h3'>
         Belinda&apos;s Closet
       </Typography>
       <Stack direction="row" spacing={2}>
@@ -38,7 +38,7 @@ const Home = () => {
         <Button href="/auth/sign-up" component='a' variant="contained">Sign Up</Button>
       </Stack>
       {/* download mobile app link */}
-      <Button component='a' href="" variant="outlined" startIcon={<Image src={google_play} alt="google_play" />} sx={{color:'white' }}>
+      <Button component='a' href="" variant="outlined" startIcon={<Image src={google_play} alt="google_play" />}>
         Download App
       </Button>
         <Grid container spacing={2}>

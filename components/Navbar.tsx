@@ -4,10 +4,22 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "../app/logo.png";
-import { AppBar, Button, IconButton, Toolbar, Grid, Drawer, Box, CssBaseline, Divider, List } from "@mui/material";
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Toolbar,
+  Grid,
+  Drawer,
+  Box,
+  CssBaseline,
+  Divider,
+  List,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
+import ThemeToggle from "./ThemeToggle";
 
 const drawerWidth = 240;
 
@@ -46,10 +58,16 @@ export default function Navbar() {
       <Divider />
       <List>
         {navItems.map((item, index) => (
-          <Grid item key={item}>
+          <Grid
+            item
+            key={item}
+            sx={{
+              color: "primary.main",
+            }}
+          >
             {index === 2 ? <CategoryDropDownMenu /> : null}
             <Link href={links[index]} passHref>
-              <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
+              <Button key={item} onClick={handleDrawerToggle}>
                 {item}
               </Button>
             </Link>
@@ -59,7 +77,7 @@ export default function Navbar() {
         {(userRole === "admin" || userRole === "creator") && (
           <Grid item>
             <Link href="/dashboard" passHref>
-              <Button sx={{ color: "#000" }} onClick={handleDrawerToggle}>
+              <Button onClick={handleDrawerToggle}>
                 Dashboard
               </Button>
             </Link>
@@ -67,7 +85,21 @@ export default function Navbar() {
         )}
       </List>
       <Divider />
-      <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+
+       {/* Theme Toggle for drawer */}
+      <Box sx={{ mt: 2 }} />
+      <ThemeToggle />
+
+      {/* Profile menu for drawer */}
+      <Grid
+        container
+        sx={{
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
         {token ? <AuthProfileMenu /> : null}
       </Grid>
     </Box>
@@ -99,24 +131,36 @@ export default function Navbar() {
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
                   {index === 2 ? <CategoryDropDownMenu /> : null}
-                  <Link href={links[index]} passHref>
+                    <Link href={links[index]} passHref>
                     <Button key={item} sx={{ color: "#fff" }}>
-                      {item}
-                    </Button>
-                  </Link>
+                        {item}
+                      </Button>
+                    </Link>
                 </Grid>
               ))}
               {/* Conditionally render "Dashboard" for admin/creator */}
               {(userRole === "admin" || userRole === "creator") && (
                 <Grid item>
                   <Link href="/dashboard" passHref>
-                    <Button sx={{ color: "#fff" }}>
+                    <Button sx={{ color: "primary.contrastText" }}>
                       Dashboard
                     </Button>
                   </Link>
                 </Grid>
               )}
             </Grid>
+          </Box>
+          
+          {/* Theme Toggle for fullsize */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              ml: { xs: 0, sm: 2 },
+            }}
+          >
+            <ThemeToggle />
           </Box>
           <Grid item sx={{ display: "flex", justifyContent: "center" }}>
             {token ? <AuthProfileMenu /> : null}

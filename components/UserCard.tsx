@@ -25,7 +25,7 @@ function UserCard({ user }: { user: UserCardProps }) {
       }
     } else {
       setOpenDialog(true);
-      setMenuOpen(true)
+      setMenuOpen(true);
     }
   };
 
@@ -42,13 +42,11 @@ function UserCard({ user }: { user: UserCardProps }) {
       fixed
       maxWidth="lg"
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: "10px",
-        bgcolor: "#12202d",
-        padding: "20px",
-        margin: "20px",
+        border: 1,
+        borderRadius: 1,
+        borderColor: "primary.main",
+        padding: 2,
+        margin: 2,
       }}
     >
       <Stack
@@ -71,7 +69,11 @@ function UserCard({ user }: { user: UserCardProps }) {
         </Typography>
         {openDialog && (
           <Box display="flex" justifyContent="center">
-            <EditUserRoleDialog user={user} onClose={handleCloseDialog} onRoleChange={handleRoleChange} />
+            <EditUserRoleDialog
+              user={user}
+              onClose={handleCloseDialog}
+              onRoleChange={handleRoleChange}
+            />
           </Box>
         )}
         <Box p={2} display="flex" justifyContent="center">
