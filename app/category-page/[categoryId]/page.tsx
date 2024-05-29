@@ -64,7 +64,6 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
     );
   }, [products]);
 
-  //Edit here to change tile size
   return (
     <Container sx={{ py: 4 }} maxWidth="lg">
       <Typography
