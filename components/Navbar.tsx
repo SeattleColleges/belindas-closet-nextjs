@@ -52,7 +52,7 @@ export default function Navbar() {
     <Box sx={{ textAlign: "center" }}>
       <Link href="/" passHref>
         <Button color="secondary">
-          <Image src={logo} alt="logo" width={50} height={50} />
+          <Image src={logo} alt="logo" width={70} height={50} />
         </Button>
       </Link>
       <Divider />
@@ -122,7 +122,7 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }}>
             <Link href="/" passHref>
               <Button color="secondary">
-                <Image src={logo} alt="logo" width={50} height={50} />
+                <Image src={logo} alt="logo" width={70} height={50}/>
               </Button>
             </Link>
           </Box>
