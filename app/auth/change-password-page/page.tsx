@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logo from "@/app/logo.png";
+import logo from "@/public/belinda-images/logo.png";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
