@@ -6,7 +6,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Box, Button, Paper, Typography, Stack } from "@mui/material";
 import Image from "next/image";
-import mascot from "../../nsc_mascot_green_cropped.png";
+import mascot from "@/public/belinda-images/nsc_mascot_green_cropped.png";
 import { Link as MuiLink } from "@mui/material";
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
