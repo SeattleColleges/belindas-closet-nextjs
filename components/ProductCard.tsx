@@ -96,8 +96,6 @@ export default function ProductCard({
         margin: "auto",
         maxWidth: 500,
         flexGrow: 1,
-        backgroundColor: (theme) =>
-          theme.palette.mode === "dark" ? "#1A2027" : "#fff",
       }}
     >
       <Grid container spacing={2} justifyContent="center">

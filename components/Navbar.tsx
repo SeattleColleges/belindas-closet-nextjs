@@ -4,14 +4,32 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "../app/logo.png";
-import { AppBar, Button, IconButton, Toolbar, Grid, Drawer, Box, CssBaseline, Divider, List } from "@mui/material";
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Toolbar,
+  Grid,
+  Drawer,
+  Box,
+  CssBaseline,
+  Divider,
+  List,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
+import ThemeToggle from "./ThemeToggle";
 
 const drawerWidth = 240;
-const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard", "Contact"];
-const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/dashboard", "/contact-page"];
+
+// Removed "Dashboard" from navItems array
+const navItems = ["Home", "Sign In", "Donation", "Mission", "Contact"];
+// const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard", "Contact"]; // Original
+
+// Removed "/dashboard" from links array
+const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/contact-page"];
+// const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/dashboard", "/contact-page"]; // Original
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -34,26 +52,54 @@ export default function Navbar() {
     <Box sx={{ textAlign: "center" }}>
       <Link href="/" passHref>
         <Button color="secondary">
-          <Image src={logo} alt="logo" width={50} height={50} />
+          <Image src={logo} alt="logo" width={70} height={50} />
         </Button>
       </Link>
       <Divider />
       <List>
         {navItems.map((item, index) => (
-          <Grid item key={item}>
+          <Grid
+            item
+            key={item}
+            sx={{
+              color: "primary.main",
+            }}
+          >
             {index === 2 ? <CategoryDropDownMenu /> : null}
-            {userRole === "admin" || index !== 4 ? (
-              <Link href={links[index]} passHref>
-                <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
-                  {item}
-                </Button>
-              </Link>
-            ) : null}
+            <Link href={links[index]} passHref>
+              <Button key={item} onClick={handleDrawerToggle}>
+                {item}
+              </Button>
+            </Link>
           </Grid>
         ))}
+        {/* Conditionally render "Dashboard" for admin/creator */}
+        {(userRole === "admin" || userRole === "creator") && (
+          <Grid item>
+            <Link href="/dashboard" passHref>
+              <Button onClick={handleDrawerToggle}>
+                Dashboard
+              </Button>
+            </Link>
+          </Grid>
+        )}
       </List>
       <Divider />
-      <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+
+       {/* Theme Toggle for drawer */}
+      <Box sx={{ mt: 2 }} />
+      <ThemeToggle />
+
+      {/* Profile menu for drawer */}
+      <Grid
+        container
+        sx={{
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
         {token ? <AuthProfileMenu /> : null}
       </Grid>
     </Box>
@@ -76,7 +122,7 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }}>
             <Link href="/" passHref>
               <Button color="secondary">
-                <Image src={logo} alt="logo" width={50} height={50} />
+                <Image src={logo} alt="logo" width={70} height={50}/>
               </Button>
             </Link>
           </Box>
@@ -85,16 +131,36 @@ export default function Navbar() {
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
                   {index === 2 ? <CategoryDropDownMenu /> : null}
-                  {userRole === "admin" || index !== 4 ? (
                     <Link href={links[index]} passHref>
-                      <Button key={item} sx={{ color: "#fff" }}>
+                    <Button key={item} sx={{ color: "#fff" }}>
                         {item}
                       </Button>
                     </Link>
-                  ) : null}
                 </Grid>
               ))}
+              {/* Conditionally render "Dashboard" for admin/creator */}
+              {(userRole === "admin" || userRole === "creator") && (
+                <Grid item>
+                  <Link href="/dashboard" passHref>
+                    <Button sx={{ color: "primary.contrastText" }}>
+                      Dashboard
+                    </Button>
+                  </Link>
+                </Grid>
+              )}
             </Grid>
+          </Box>
+          
+          {/* Theme Toggle for fullsize */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              ml: { xs: 0, sm: 2 },
+            }}
+          >
+            <ThemeToggle />
           </Box>
           <Grid item sx={{ display: "flex", justifyContent: "center" }}>
             {token ? <AuthProfileMenu /> : null}

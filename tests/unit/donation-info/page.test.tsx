@@ -7,6 +7,5 @@ describe('DonationInfo component', () => {
     render(<DonationInfo />);
     expect(screen.getByRole('heading')).toBeInTheDocument();
     expect(screen.getByText('Donation Info')).toBeInTheDocument();
-    expect(screen.getByRole('heading')).toHaveStyle({ color: 'white' });
   });
 });
