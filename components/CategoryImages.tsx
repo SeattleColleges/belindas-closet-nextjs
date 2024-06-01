@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useTheme } from "@mui/material";
 
 // Categories list
 export const categories = [
@@ -23,14 +24,14 @@ export function Category({
   title: string;
   alt: string;
 }) {
+  const { palette } = useTheme();
+  const darkImagePath = `/categories-images/dark-images/${id}.png`;
+  const lightImagePath = `/categories-images/light-images/${id}.png`;
+
+  // Check the current theme mode and set the image path accordingly
+  const imagePath = palette.mode === "dark" ? lightImagePath : darkImagePath;
   return (
-    <Image
-      src={`/categories-images/${id}.png`}
-      title={title}
-      alt={alt}
-      width={100}
-      height={100}
-    />
+    <Image src={imagePath} title={title} alt={alt} width={100} height={100} />
   );
 }
 
