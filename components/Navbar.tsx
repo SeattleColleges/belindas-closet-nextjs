@@ -15,6 +15,8 @@ import {
   CssBaseline,
   Divider,
   List,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
@@ -23,17 +25,15 @@ import ThemeToggle from "./ThemeToggle";
 
 const drawerWidth = 240;
 
-// Removed "Dashboard" from navItems array
 const navItems = ["Home", "Sign In", "Donation", "Mission", "Contact"];
-// const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard", "Contact"]; // Original
-
-// Removed "/dashboard" from links array
 const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/contact-page"];
-// const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/dashboard", "/contact-page"]; // Original
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [userRole, setUserRole] = useState("");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -73,7 +73,6 @@ export default function Navbar() {
             </Link>
           </Grid>
         ))}
-        {/* Conditionally render "Dashboard" for admin/creator */}
         {(userRole === "admin" || userRole === "creator") && (
           <Grid item>
             <Link href="/dashboard" passHref>
@@ -85,10 +84,6 @@ export default function Navbar() {
         )}
       </List>
       <Divider />
-
-       {/* Theme Toggle for drawer */}
-      <Box sx={{ mt: 2 }} />
-      <ThemeToggle />
 
       {/* Profile menu for drawer */}
       <Grid
@@ -115,7 +110,7 @@ export default function Navbar() {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -126,7 +121,7 @@ export default function Navbar() {
               </Button>
             </Link>
           </Box>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
             <Grid container spacing={2}>
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
@@ -138,7 +133,6 @@ export default function Navbar() {
                     </Link>
                 </Grid>
               ))}
-              {/* Conditionally render "Dashboard" for admin/creator */}
               {(userRole === "admin" || userRole === "creator") && (
                 <Grid item>
                   <Link href="/dashboard" passHref>
@@ -176,7 +170,7 @@ export default function Navbar() {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
