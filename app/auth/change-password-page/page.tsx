@@ -24,11 +24,12 @@ const URL =
 
 const ChangePasswordPage = () => {
   const [password, setPassword] = useState({
+    currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
   // destructure password from password state
-  const { newPassword, confirmPassword } = password;
+  const { currentPassword, newPassword, confirmPassword } = password;
 
   // state for password visibility
   const [showPassword, setShowPassword] = useState(false);
@@ -40,12 +41,12 @@ const ChangePasswordPage = () => {
   const [loading, setLoading] = useState(false);
 
   // handle toggle password visibility
-  const togglePasswordVisibility = () => {
+  const toggleCurrentPasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   // handle toggle confirm password visibility
-  const toggleConfirmPasswordVisibility = () => {
+  const toggleNewPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
@@ -60,12 +61,22 @@ const ChangePasswordPage = () => {
 
   // handle submit event
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
     // prevent the default behavior
     e.preventDefault();
 
-    // Check if newPassword and confirmPassword are empty
-    if (!newPassword || !confirmPassword) {
-      setError("Please enter a new password and confirm password");
+    // Check if currentPassword, newPassword and confirmPassword are empty
+    if (!password.currentPassword || !newPassword || !confirmPassword) {
+      setError("Please enter all fields");
+      return;
+    }
+
+    // Check if currentPassword the same as newPassword
+    if (currentPassword === newPassword) {
+      setError("New password cannot be the same as the current password");
       return;
     }
 
@@ -101,15 +112,15 @@ const ChangePasswordPage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      const { message } = await res.json();
       if (!res.ok) {
-        const { message } = await res.json();
         setError(message);
         setSuccess("");
         return;
       }
       setError("");
       //set delay to show success message
-      setSuccess("Password changed successfully, redirecting to sign in page");
+      setSuccess(message);
       setTimeout(() => {
         router.push("/auth/sign-in");
       }, 3000);
@@ -152,10 +163,35 @@ const ChangePasswordPage = () => {
           margin="normal"
           required={true}
           fullWidth
+          id="currentPassword"
+          label="Current Password"
+          name="currentPassword"
+          type={showPassword ? "text" : "password"}
+          value={password.currentPassword}
+          onChange={handleChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={toggleCurrentPasswordVisibility}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextField
+          sx={{ mb: 2 }}
+          variant="outlined"
+          margin="normal"
+          required={true}
+          fullWidth
           id="newPassword"
           label="New Password"
           name="newPassword"
-          type={showPassword ? "text" : "password"}
+          type={showConfirmPassword ? "text" : "password"}
           value={password.newPassword}
           onChange={handleChange}
           InputProps={{
@@ -163,9 +199,9 @@ const ChangePasswordPage = () => {
               <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle password visibility"
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleNewPasswordVisibility}
                 >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                  {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             ),
@@ -188,7 +224,7 @@ const ChangePasswordPage = () => {
               <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle confirm password visibility"
-                  onClick={toggleConfirmPasswordVisibility}
+                  onClick={toggleNewPasswordVisibility}
                 >
                   {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
