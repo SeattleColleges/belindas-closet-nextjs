@@ -105,11 +105,7 @@ export default function ProductCard({
         <Grid item>
           <ButtonBase>
             <Link href={href}>
-              <Image
-                src={image}
-                alt="product image"
-                width={128}
-              />
+              <Image src={image} alt="product image" width={128} />
             </Link>
           </ButtonBase>
         </Grid>
@@ -139,8 +135,8 @@ export default function ProductCard({
                 gutterBottom
                 sx={{
                   overflow: "hidden", // Hide text that overflows
-                  textOverflow: "ellipsis", 
-                  display: "-webkit-box", 
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
                   WebkitLineClamp: 3, // Limit the number of lines
                   WebkitBoxOrient: "vertical",
                 }}
@@ -151,16 +147,11 @@ export default function ProductCard({
           </Grid>
         </Grid>
       </Grid>
-      <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
-        <Button
-          variant="contained"
-          href={href}
-          color="primary"
-          sx={{ minWidth: 30, maxWidth: "215px" }}
-        >
+      <Stack direction="column" spacing={2} justifyContent="flex-end" mt={2}>
+        <Button variant="contained" href={href} color="primary">
           View
         </Button>
-
+        {/* Only show delete and archive buttons if user is admin or creator */}
         {userRole === "admin" || userRole === "creator" ? (
           <Stack direction="row" spacing={2}>
             <Button
