@@ -95,7 +95,10 @@ export default function ProductCard({
         p: 2,
         margin: "auto",
         maxWidth: 500,
-        flexGrow: 1,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
       <Grid container spacing={2} justifyContent="center">
@@ -105,7 +108,7 @@ export default function ProductCard({
               <Image
                 src={image}
                 alt="product image"
-                style={{ width: 128, height: 128 }}
+                width={128}
               />
             </Link>
           </ButtonBase>
@@ -131,14 +134,24 @@ export default function ProductCard({
               <Typography variant="body2" color="text.secondary">
                 {sizePantsInseam}
               </Typography>
-              <Typography variant="body2" gutterBottom>
+              <Typography
+                variant="body2"
+                gutterBottom
+                sx={{
+                  overflow: "hidden", // Hide text that overflows
+                  textOverflow: "ellipsis", 
+                  display: "-webkit-box", 
+                  WebkitLineClamp: 3, // Limit the number of lines
+                  WebkitBoxOrient: "vertical",
+                }}
+              >
                 {description}
               </Typography>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Stack direction="column" spacing={2} justifyContent="flex-end" mt={2}>
+      <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
         <Button
           variant="contained"
           href={href}
@@ -150,7 +163,6 @@ export default function ProductCard({
 
         {userRole === "admin" || userRole === "creator" ? (
           <Stack direction="row" spacing={2}>
-            {/* TODO: Add delete function to this button  */}
             <Button
               variant="contained"
               startIcon={<DeleteIcon />}
@@ -160,7 +172,6 @@ export default function ProductCard({
             >
               Delete
             </Button>
-            {/* TODO: Add archive function to this button  */}
             <Button
               variant="contained"
               startIcon={<ArchiveIcon />}

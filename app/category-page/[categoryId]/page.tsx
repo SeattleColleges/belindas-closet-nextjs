@@ -76,8 +76,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
       </Typography>
       <Grid container spacing={2}>
         {filteredProducts.map((product, index) => (
-          // <Grid item key={index} xs={12} sm={6} md={4}>
-          <Grid item key={index} xs={12} sm={40} md={40}>
+          <Grid item key={index} xs={12} sm={6} md={4}>
             <ProductCard
               image={logo}
               categories={product.productType}
