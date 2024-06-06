@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import logo from "@/app/logo.png";
+import logo from "@/public/belinda-images/logo.png";
 import {
   Box,
   Button,

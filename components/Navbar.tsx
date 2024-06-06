@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import logo from "../app/logo.png";
+import header_logo from "@/public/belinda-images/header_logo.png";
 import {
   AppBar,
   Button,
@@ -52,7 +52,7 @@ export default function Navbar() {
     <Box sx={{ textAlign: "center" }}>
       <Link href="/" passHref>
         <Button color="secondary">
-          <Image src={logo} alt="logo" width={70} height={50} />
+          <Image src={header_logo} alt="logo" width={100} height={50} />
         </Button>
       </Link>
       <Divider />
@@ -122,7 +122,7 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }}>
             <Link href="/" passHref>
               <Button color="secondary">
-                <Image src={logo} alt="logo" width={70} height={50}/>
+                <Image src={header_logo} alt="logo" width={100} height={50}/>
               </Button>
             </Link>
           </Box>

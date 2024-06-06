@@ -3,7 +3,7 @@
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import mascot from "../../nsc_mascot_green_cropped.png";
+import mascot from "@/public/belinda-images/nsc_mascot_green_cropped.png";
 import {
   Stack,
   Paper,

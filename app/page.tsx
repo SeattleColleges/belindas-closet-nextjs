@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import logo from "./logo.png";
-import google_play from "./google_play.png";
+import logo from "@/public/belinda-images/logo.png";
+import google_play from "@/public/belinda-images/google_play.png";
 import CustomCardContent from "@/components/CustomCardContent";
 import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
