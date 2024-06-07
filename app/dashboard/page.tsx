@@ -1,6 +1,6 @@
 "use client";
 import { Typography, Drawer, List, ListItem, ListItemText, IconButton } from "@mui/material";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Dashboard = () => {
@@ -11,7 +11,7 @@ const Dashboard = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const handleListItemClick = (index) => {
+  const handleListItemClick = (index: SetStateAction<number>) => {
     setSelectedItem(index);
   };
 
