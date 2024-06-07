@@ -10,8 +10,21 @@ import Card from "@mui/material/Card";
 import { Container, Typography, Button } from "@mui/material";
 import WrapperDiv from "../components/WrapperDiv";
 import { categories } from "@/components/CategoryImages";
+//##FIX-ME : Potential FILE changes: I am still working on it.
+// import { fetchCategoryFields } from "@/utils/api"; // hypothetical function to fetch fields
 // TEMPORARY CATEGORIES LIST
 const Home = () => {
+  // const [categoryFields, setCategoryFields] = useState({});
+
+  // useEffect(() => {
+  //   // Hypothetical function to fetch category fields
+  //   const getCategoryFields = async () => {
+  //     const fields = await fetchCategoryFields();
+  //     setCategoryFields(fields);
+  //   };
+  //   getCategoryFields();
+  // }, []);
+  
   return (
     <WrapperDiv>
       <Container disableGutters fixed maxWidth="xs" sx={{ width: "15%" }}>
@@ -45,6 +58,8 @@ const Home = () => {
                 id={category.id}
                 title={category.title}
                 alt={category.alt}
+
+                // fields={categoryFields[category.id]} // pass the relevant fields
               />
             </Card>
           </Grid>
