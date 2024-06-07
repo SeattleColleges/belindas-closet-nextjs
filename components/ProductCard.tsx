@@ -95,18 +95,17 @@ export default function ProductCard({
         p: 2,
         margin: "auto",
         maxWidth: 500,
-        flexGrow: 1,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
       <Grid container spacing={2} justifyContent="center">
         <Grid item>
           <ButtonBase>
             <Link href={href}>
-              <Image
-                src={image}
-                alt="product image"
-                style={{ width: 128, height: 128 }}
-              />
+              <Image src={image} alt="product image" width={128} />
             </Link>
           </ButtonBase>
         </Grid>
@@ -131,7 +130,17 @@ export default function ProductCard({
               <Typography variant="body2" color="text.secondary">
                 {sizePantsInseam}
               </Typography>
-              <Typography variant="body2" gutterBottom>
+              <Typography
+                variant="body2"
+                gutterBottom
+                sx={{
+                  overflow: "hidden", // Hide text that overflows
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3, // Limit the number of lines
+                  WebkitBoxOrient: "vertical",
+                }}
+              >
                 {description}
               </Typography>
             </Grid>
@@ -139,18 +148,12 @@ export default function ProductCard({
         </Grid>
       </Grid>
       <Stack direction="column" spacing={2} justifyContent="flex-end" mt={2}>
-        <Button
-          variant="contained"
-          href={href}
-          color="primary"
-          sx={{ minWidth: 30, maxWidth: "215px" }}
-        >
+        <Button variant="contained" href={href} color="primary">
           View
         </Button>
-
+        {/* Only show delete and archive buttons if user is admin or creator */}
         {userRole === "admin" || userRole === "creator" ? (
           <Stack direction="row" spacing={2}>
-            {/* TODO: Add delete function to this button  */}
             <Button
               variant="contained"
               startIcon={<DeleteIcon />}
@@ -160,7 +163,6 @@ export default function ProductCard({
             >
               Delete
             </Button>
-            {/* TODO: Add archive function to this button  */}
             <Button
               variant="contained"
               startIcon={<ArchiveIcon />}
