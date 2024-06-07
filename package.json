@@ -14,10 +14,10 @@
     "test:coverage": "jest --coverage--"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.5",
-    "@mui/material": "^5.15.7",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.19",
+    "@mui/material": "^5.15.19",
     "@tanstack/react-query": "5.17.15",
     "@types/bcrypt": "5.0.0",
     "@types/material-ui": "^0.21.17",
@@ -34,7 +34,7 @@
     "postcss": "8.4.25",
     "qrcode.react": "^3.1.0",
     "react": "^18.3.1",
-    "react-dom": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.21.2",
     "tailwindcss": "3.3.2",
