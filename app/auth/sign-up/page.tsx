@@ -6,7 +6,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Box, Button, Paper, Typography, Stack } from "@mui/material";
 import Image from "next/image";
-import mascot from "../../nsc_mascot_green_cropped.png";
+import mascot from "@/public/belinda-images/nsc_mascot_green_cropped.png";
 import { Link as MuiLink } from "@mui/material";
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
@@ -20,6 +20,7 @@ const SignUp = () => {
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
+    pronoun: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -30,7 +31,7 @@ const SignUp = () => {
   const [success, setSuccess] = useState("");
 
   // destructure user's info
-  const { firstName, lastName, email, password, confirmPassword } = userInfo;
+  const { firstName, lastName, pronoun, email, password, confirmPassword } = userInfo;
 
   // State to track whether the password is visible or not
   const [showPassword, setShowPassword] = useState(false);
@@ -61,7 +62,7 @@ const SignUp = () => {
     e.preventDefault();
 
     // Check if inputs are empty
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+    if (!firstName || !lastName || !pronoun ||!email || !password || !confirmPassword) {
       setError("Please fill in all fields");
       return;
     }
@@ -158,6 +159,19 @@ const SignUp = () => {
             name="lastName"
             autoComplete="lname"
             value={lastName}
+            onChange={handleChange}
+            autoFocus={false}
+          />
+               <TextField
+            sx={{ mb: 2 }}
+            margin="normal"
+            required
+            fullWidth
+            id="pronoun"
+            label="Pronoun"
+            name="pronoun"
+            autoComplete="pronoun"
+            value={pronoun}
             onChange={handleChange}
             autoFocus={false}
           />

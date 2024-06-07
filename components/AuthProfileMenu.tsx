@@ -15,6 +15,15 @@ import React, { Fragment } from "react";
 
 export default function AuthProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [userRole, setUserRole] = React.useState("");
+  const token = localStorage.getItem("token");
+  React.useEffect(() => {
+    if (token) {
+      const role = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(role);
+    }
+  }, [token, userRole]);
+  
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -24,6 +33,16 @@ export default function AuthProfileMenu() {
   };
 
   const router = useRouter();
+
+  const handleMyAccount = () => {
+    if (userRole == "admin") {
+      router.push("/admin-page")
+    } else if (userRole == "creator") {
+      router.push("/creator-page")
+    } else {
+      router.push("/profile")
+    }
+  };
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
@@ -81,11 +100,8 @@ export default function AuthProfileMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
+        <MenuItem onClick={handleMyAccount}>
+          <Avatar /> My Account
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>

@@ -3,19 +3,37 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import logo from "../app/logo.png";
-import { AppBar, Button, IconButton, Toolbar, Grid, Drawer, Box, CssBaseline, Divider, List } from "@mui/material";
+import header_logo from "@/public/belinda-images/header_logo.png";
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Toolbar,
+  Grid,
+  Drawer,
+  Box,
+  CssBaseline,
+  Divider,
+  List,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
+import ThemeToggle from "./ThemeToggle";
 
 const drawerWidth = 240;
-const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard", "Contact"];
-const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/dashboard", "/contact-page"];
+
+const navItems = ["Home", "Sign In", "Donation", "Mission", "Contact"];
+const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/contact-page"];
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [userRole, setUserRole] = useState("");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
@@ -34,26 +52,49 @@ export default function Navbar() {
     <Box sx={{ textAlign: "center" }}>
       <Link href="/" passHref>
         <Button color="secondary">
-          <Image src={logo} alt="logo" width={50} height={50} />
+          <Image src={header_logo} alt="logo" width={100} height={50} />
         </Button>
       </Link>
       <Divider />
       <List>
         {navItems.map((item, index) => (
-          <Grid item key={item}>
+          <Grid
+            item
+            key={item}
+            sx={{
+              color: "primary.main",
+            }}
+          >
             {index === 2 ? <CategoryDropDownMenu /> : null}
-            {userRole === "admin" || index !== 4 ? (
-              <Link href={links[index]} passHref>
-                <Button key={item} sx={{ color: "#000" }} onClick={handleDrawerToggle}>
-                  {item}
-                </Button>
-              </Link>
-            ) : null}
+            <Link href={links[index]} passHref>
+              <Button key={item} onClick={handleDrawerToggle}>
+                {item}
+              </Button>
+            </Link>
           </Grid>
         ))}
+        {(userRole === "admin" || userRole === "creator") && (
+          <Grid item>
+            <Link href="/dashboard" passHref>
+              <Button onClick={handleDrawerToggle}>
+                Dashboard
+              </Button>
+            </Link>
+          </Grid>
+        )}
       </List>
       <Divider />
-      <Grid item sx={{ display: "flex", justifyContent: "center" }}>
+
+      {/* Profile menu for drawer */}
+      <Grid
+        container
+        sx={{
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
         {token ? <AuthProfileMenu /> : null}
       </Grid>
     </Box>
@@ -69,32 +110,51 @@ export default function Navbar() {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }}>
             <Link href="/" passHref>
               <Button color="secondary">
-                <Image src={logo} alt="logo" width={50} height={50} />
+                <Image src={header_logo} alt="logo" width={100} height={50}/>
               </Button>
             </Link>
           </Box>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
             <Grid container spacing={2}>
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
                   {index === 2 ? <CategoryDropDownMenu /> : null}
-                  {userRole === "admin" || index !== 4 ? (
                     <Link href={links[index]} passHref>
-                      <Button key={item} sx={{ color: "#fff" }}>
+                    <Button key={item} sx={{ color: "#fff" }}>
                         {item}
                       </Button>
                     </Link>
-                  ) : null}
                 </Grid>
               ))}
+              {(userRole === "admin" || userRole === "creator") && (
+                <Grid item>
+                  <Link href="/dashboard" passHref>
+                    <Button sx={{ color: "primary.contrastText" }}>
+                      Dashboard
+                    </Button>
+                  </Link>
+                </Grid>
+              )}
             </Grid>
+          </Box>
+          
+          {/* Theme Toggle for fullsize */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              ml: { xs: 0, sm: 2 },
+            }}
+          >
+            <ThemeToggle />
           </Box>
           <Grid item sx={{ display: "flex", justifyContent: "center" }}>
             {token ? <AuthProfileMenu /> : null}
@@ -110,7 +170,7 @@ export default function Navbar() {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
