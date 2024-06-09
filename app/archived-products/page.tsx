@@ -14,8 +14,13 @@ const ArchivedProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetch('/api/archived-products')
-      .then(response => response.json())
+    fetch('/archived-products/api')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then(data => setProducts(data))
       .catch(error => console.error('Error fetching archived products:', error));
   }, []);
