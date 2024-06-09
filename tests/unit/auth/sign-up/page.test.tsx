@@ -9,7 +9,6 @@ describe('Sign up page tests', () => {
   // Arrange
   beforeEach(() => {
     jest.clearAllMocks();
-    // eslint-disable-next-line testing-library/no-render-in-lifecycle
     render(<SignUp />)
   })
   it('render contains title, submit button, and sign in link', () => {
