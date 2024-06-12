@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import ProductDetailDisplay from "../[productId]/ProductDetailDisplay";
+//change it?
+// import ProductDetailDisplay from "./ProductDetailDisplay"; // Correct the import path
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL =
   process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
@@ -64,7 +66,11 @@ const ProductDetail = ({
   if (isLoading) return <CircularProgress />;
   if (error) return <div>Error: {error}</div>;
 
-  return <ProductDetailDisplay product={product as Product} />;
+  //original
+  // return <ProductDetailDisplay product={product as Product} />;
+
+  // Pass the categoryId to the ProductDetailDisplay component
+  return <ProductDetailDisplay product={product as Product} categoryId={categoryId} />; // Added categoryId
 };
 
 export default ProductDetail;
