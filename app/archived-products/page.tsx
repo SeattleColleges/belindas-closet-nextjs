@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import '../../styles/archived-products.css';
+import './archived-products.css';
+import React from 'react';
 
 interface Product {
   id: number;
@@ -37,7 +38,7 @@ const ArchivedProductsPage: React.FC = () => {
           </div>
         ))}
       </div>
-      <style jsx>{`
+      <style>{`
         .archived-products-page {
           padding: 20px;
         }
