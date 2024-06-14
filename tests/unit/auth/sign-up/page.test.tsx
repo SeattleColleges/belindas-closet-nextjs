@@ -28,7 +28,7 @@ describe('Sign up page tests', () => {
     }
   })
 
-  it('sign in link direct to localhost /auth/sign-up route', () => {
+  it('sign in link direct to localhost /auth/sign-in route', () => {
     // Arrange
     const signinLink = screen.getByRole('link', { name: /sign in/i })
 
@@ -36,6 +36,6 @@ describe('Sign up page tests', () => {
     fireEvent.click(signinLink)
 
     // Assert
-    expect(signinLink).toHaveProperty('href', 'http://localhost/auth/sign-up')
+    expect(signinLink).toHaveProperty('href', 'http://localhost/auth/sign-in')
   })
 })

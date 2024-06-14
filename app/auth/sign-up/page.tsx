@@ -250,7 +250,7 @@ const SignUp = () => {
           <Box textAlign="center" sx={{ mt: 2 }}>
             <Typography variant="body2">
               Already have an account?{" "}
-              <MuiLink href="/auth/sign-up" variant="body2">
+              <MuiLink href="/auth/sign-in" variant="body2">
                 {"Sign In"}
               </MuiLink>
             </Typography>

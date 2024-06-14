@@ -5,8 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import logo from "@/public/belinda-images/logo.png";
 import { Container, Grid, Typography } from "@mui/material";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 const placeholderImg = logo;
 interface Product {
   _id: string;
@@ -26,9 +25,8 @@ async function fetchData(
   categoryId: string,
   setProducts: Dispatch<SetStateAction<Product[]>>
 ) {
-  const apiUrl = `${URL}/products/findByType/`;
-  const queryParam = encodeURIComponent(categoryId);
-  const fetchUrl = `${apiUrl}${queryParam}`;
+  const apiUrl = `${URL}/products`;
+  const fetchUrl = `${apiUrl}`;
 
   try {
     const res = await fetch(fetchUrl, {
@@ -42,8 +40,8 @@ async function fetchData(
     } else {
       const data = await res.json();
       const filteredData = data.filter((product: Product) => !product.isHidden);
-      setProducts(filteredData); // Updated to set the filteredData
-      console.log(filteredData);
+      setProducts(data);
+      console.log(data);
     }
   } catch (error) {
     console.error("Error getting product:", error);
@@ -72,19 +70,20 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
         justifyContent={"center"}
         align={"center"}
       >
-        Found {filteredProducts.length} products in {categoryId}
+        Found {filteredProducts.length} products in All Products
       </Typography>
       <Grid container spacing={2}>
         {filteredProducts.map((product, index) => (
-          <Grid item key={index} xs={12} sm={4} md={2.5}>
+          // <Grid item key={index} xs={12} sm={40} md={40}>
+          <Grid item key={index} xs={12} sm={6} md={4}>
             <ProductCard
               image={logo}
               categories={product.productType}
               gender={product.productGender}
-              sizeShoe=''
-              size=''
-              sizePantsWaist=''
-              sizePantsInseam=''
+              sizeShoe={product.productSizeShoe}
+              size={product.productSizes}
+              sizePantsWaist={product.productSizePantsWaist}
+              sizePantsInseam={product.productSizePantsInseam}
               description={product.productDescription}
               href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL
               _id={product._id}
