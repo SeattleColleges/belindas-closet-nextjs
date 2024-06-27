@@ -75,15 +75,15 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
       <Grid container spacing={2}>
         {filteredProducts.map((product, index) => (
           // <Grid item key={index} xs={12} sm={40} md={40}>
-          <Grid item key={index} xs={12} sm={6} md={4}>
+          <Grid item key={index} xs={12} sm={4} md={3}>
             <ProductCard
               image={logo}
               categories={product.productType}
               gender={product.productGender}
-              sizeShoe={product.productSizeShoe}
-              size={product.productSizes}
-              sizePantsWaist={product.productSizePantsWaist}
-              sizePantsInseam={product.productSizePantsInseam}
+              sizeShoe=''
+              size=''
+              sizePantsWaist=''
+              sizePantsInseam=''
               description={product.productDescription}
               href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL
               _id={product._id}
