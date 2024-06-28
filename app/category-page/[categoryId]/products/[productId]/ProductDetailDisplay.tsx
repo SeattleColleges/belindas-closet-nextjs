@@ -66,7 +66,7 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
     setOpenEditDialog(false);
   };
 
-  // Check if the product is a shoe
+  // Check if the product is a shoe, pants, etc. 
   const isShoeProduct = product.productType.includes("Shoes");
   const isPantsProduct = product.productType.includes("Pants");
 
@@ -99,9 +99,10 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
                     Product Shoe Size: {product.productSizeShoe || "N/A"}
                   </Typography>
                 )}
-                <Typography variant="h6">
+                {!isShoeProduct && (<Typography variant="h6">
                   Product Size: {product.productSizes || "N/A"}
                 </Typography>
+                )}
                 {!isShoeProduct && isPantsProduct && (
                   <>
                     <Typography variant="h6">
