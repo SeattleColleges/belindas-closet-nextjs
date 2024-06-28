@@ -99,7 +99,8 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
                     Product Shoe Size: {product.productSizeShoe || "N/A"}
                   </Typography>
                 )}
-                {!isShoeProduct && (<Typography variant="h6">
+                {!isShoeProduct &&  (
+                <Typography variant="h6">
                   Product Size: {product.productSizes || "N/A"}
                 </Typography>
                 )}
