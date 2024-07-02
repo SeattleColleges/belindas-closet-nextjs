@@ -3,6 +3,7 @@ import { Container, Button, Menu, MenuItem } from "@mui/material";
 import { ArrowDropDown } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 const navItems = [
+  "All Products",
   "Shirts",
   "Shoes",
   "Pants",
@@ -25,8 +26,12 @@ export default function CategoryDropDownMenu() {
   };
   const router = useRouter();
   const navigate = (item: string) => {
-    const encodedCategoryId = encodeURIComponent(item); //sanitize item name for route
-    router.push(`/category-page/${encodedCategoryId}`);
+    if (item === "All Products") {
+      router.push(`/category-page/all-products`);
+    } else {
+      const encodedCategoryId = encodeURIComponent(item); //sanitize item name for route
+      router.push(`/category-page/${encodedCategoryId}`);
+    }
     handleClose();
   };
 
