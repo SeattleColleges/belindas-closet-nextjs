@@ -38,7 +38,7 @@ export default function CategoryDropDownMenu() {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        startIcon={<ArrowDropDown />}
+        endIcon={<ArrowDropDown />}
         color={open ? "inherit" : "inherit"}
       >
         Products
