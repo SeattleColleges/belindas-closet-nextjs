@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import logo from "@/public/belinda-images/logo.png";
-import {
-  Box,
-  Button,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
@@ -72,6 +66,10 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
     setOpenEditDialog(false);
   };
 
+  // Check if the product is a shoe, pants, etc. 
+  const isShoeProduct = product.productType.includes("Shoes");
+  const isPantsProduct = product.productType.includes("Pants");
+
   return (
     <Stack>
       <Typography component="h1" variant="h4">
@@ -96,20 +94,26 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
                 <Typography variant="h6">
                   Product Gender: {product.productGender}
                 </Typography>
-                <Typography variant="h6">
-                  Product Shoe Size: {product.productSizeShoe || "N/A"}
-                </Typography>
+                {isShoeProduct && (
+                  <Typography variant="h6">
+                    Product Shoe Size: {product.productSizeShoe || "N/A"}
+                  </Typography>
+                )}
+                {!isShoeProduct &&  (
                 <Typography variant="h6">
                   Product Size: {product.productSizes || "N/A"}
                 </Typography>
-                <Typography variant="h6">
-                  Product Size Pants Waist:{" "}
-                  {product.productSizePantsWaist || "N/A"}
-                </Typography>
-                <Typography variant="h6">
-                  Product Size Pants Inseam:{" "}
-                  {product.productSizePantsInseam || "N/A"}
-                </Typography>
+                )}
+                {!isShoeProduct && isPantsProduct && (
+                  <>
+                    <Typography variant="h6">
+                      Product Size Pants Waist: {product.productSizePantsWaist || "N/A"}
+                    </Typography>
+                    <Typography variant="h6">
+                      Product Size Pants Inseam: {product.productSizePantsInseam || "N/A"}
+                    </Typography>
+                  </>
+                )}
                 <Typography variant="h6">
                   Product Description: {product.productDescription || "N/A"}
                 </Typography>
@@ -128,61 +132,62 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
         </Box>
 
         {userRole === "admin" || userRole === "creator" ? (
-        <Stack direction="row" spacing={2} justifyContent="center">
-          {/* Edit Button */}
-          <Box p={2} display="flex" justifyContent="center">
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<EditIcon />}
-              onClick={handleEditButtonClick}
-            >
-              Edit
-            </Button>
-          </Box>
-          {/* Delete Button */}
-          <Box p={2} display="flex" justifyContent="center">
-            <Button
-              variant="contained"
-              color="error"
-              startIcon={<DeleteIcon />}
-              onClick={handleDeleteButtonClick}
-            >
-              Delete
-            </Button>
-          </Box>
-          {/* Archive Button */}
-          <Box p={2} display="flex" justifyContent="center">
-            <Button
-              variant="contained"
-              color="warning"
-              startIcon={<ArchiveIcon />}
-              onClick={handleArchiveButtonClick}
-            >
-              Archive
-            </Button>
-          </Box>
-        </Stack>
-          ) : null}
+          <Stack direction="row" spacing={2} justifyContent="center">
+            {/* Edit Button */}
+            <Box p={2} display="flex" justifyContent="center">
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<EditIcon />}
+                onClick={handleEditButtonClick}
+              >
+                Edit
+              </Button>
+            </Box>
+            {/* Delete Button */}
+            <Box p={2} display="flex" justifyContent="center">
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<DeleteIcon />}
+                onClick={handleDeleteButtonClick}
+              >
+                Delete
+              </Button>
+            </Box>
+            {/* Archive Button */}
+            <Box p={2} display="flex" justifyContent="center">
+              <Button
+                variant="contained"
+                color="warning"
+                startIcon={<ArchiveIcon />}
+                onClick={handleArchiveButtonClick}
+              >
+                Archive
+              </Button>
+            </Box>
+          </Stack>
+        ) : null}
 
-          <EditProductDialog
-            open={openEditDialog}
-            onClose={handleCloseEditDialog}
-            product={product}
-          />
-          <ConfirmDeleteDialog
-            open={openDeleteDialog}
-            onClose={handleCloseDeleteDialog}
-            product={product}
-          />
-          <ConfirmArchiveDialog
-            open={openArchiveDialog}
-            onClose={handleCloseArchiveDialog}
-            product={product}
-          />
+        <EditProductDialog
+          open={openEditDialog}
+          onClose={handleCloseEditDialog}
+          product={product}
+        />
+        <ConfirmDeleteDialog
+          open={openDeleteDialog}
+          onClose={handleCloseDeleteDialog}
+          product={product}
+        />
+        <ConfirmArchiveDialog
+          open={openArchiveDialog}
+          onClose={handleCloseArchiveDialog}
+          product={product}
+        />
       </Paper>
     </Stack>
   );
 };
 
 export default ProductDetailDisplay;
+
