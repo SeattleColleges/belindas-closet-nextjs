@@ -32,8 +32,12 @@ const Creator = () => {
                     Add Product
                 </Button>
 
-                <Button href="/">
+                <Button href="/category-page/all-products">
                     All Products
+                </Button>
+
+                <Button href="/archived-products-page">
+                    Archived Products
                 </Button>
 
             </ButtonGroup>
