@@ -172,7 +172,7 @@ const SignUp = () => {
             onChange={handleChange}
             autoFocus={false}
           />
-               <TextField
+          <TextField
             sx={{ mb: isMobile ? 1 : 2 }}
             margin="normal"
             required
