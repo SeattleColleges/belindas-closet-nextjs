@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button, Menu, MenuItem } from "@mui/material";
+import { Container, Button, Menu, MenuItem, Box } from "@mui/material";
 import { ArrowDropDown } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 const navItems = [
@@ -36,7 +36,7 @@ export default function CategoryDropDownMenu() {
   };
 
   return (
-    <Container>
+    <Box>
       <Button
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
@@ -45,6 +45,7 @@ export default function CategoryDropDownMenu() {
         onClick={handleClick}
         endIcon={<ArrowDropDown />}
         color={open ? "inherit" : "inherit"}
+        sx={{ mr: 2 }}
       >
         Products
       </Button>
@@ -63,6 +64,6 @@ export default function CategoryDropDownMenu() {
           </MenuItem>
         ))}
       </Menu>
-    </Container>
+    </Box>
   );
 }

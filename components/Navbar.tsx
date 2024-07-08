@@ -125,7 +125,7 @@ export default function Navbar() {
             <Grid container spacing={2}>
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
-                  {index === 2 ? <CategoryDropDownMenu /> : null}
+                  {index === 1 ? <CategoryDropDownMenu /> : null}
                     <Link href={links[index]} passHref>
                     <Button key={item} sx={{ color: "#fff" }}>
                         {item}
@@ -160,7 +160,8 @@ export default function Navbar() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              ml: { xs: 0, sm: 2 },
+              ml: 2.5,
+              mr: 1
             }}
           >
             <ThemeToggle />
