@@ -134,7 +134,7 @@ export default function EditProductDialog({
           productSizePantsWaist,
           productSizePantsInseam,
           productDescription,
-          productImage,
+          productImage
         }),
       });
       if (response.ok) {
