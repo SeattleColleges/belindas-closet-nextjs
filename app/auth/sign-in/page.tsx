@@ -12,6 +12,8 @@ import {
   Button,
   Typography,
   Link as MuiLink,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL =
@@ -64,18 +66,28 @@ const Signin = () => {
     window.location.reload();
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+
   return (
     <Stack spacing={{ xs: "-6px", sm: "-6px" }} alignItems="center">
       <Image
         src={mascot}
         alt="logo"
-        style={{ width: 200, height: 100, zIndex: 0 }}
+        style={{ 
+          width: isMobile ? 150 : isTablet ? 160 : 200, 
+          height: isMobile ? 75 : isTablet ? 80 : 100, 
+          zIndex: 0,
+          marginTop: 15, 
+          marginBottom: isMobile ? 2 : isTablet ? 1 : 0.5
+        }}
       />
       <Paper
         elevation={4}
         sx={{
           padding: "20px",
-          width: "400px",
+          width: isMobile ? "280px ": "400px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
