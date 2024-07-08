@@ -14,7 +14,7 @@ import { categories } from "@/components/CategoryImages";
 const Home = () => {
   return (
     <WrapperDiv>
-      <Container disableGutters fixed maxWidth="xs" sx={{ width: "15%" }}>
+      <Container disableGutters fixed maxWidth="xs" sx={{ justifyContent: "center" }}>
         <Image src={logo} alt="logo" width={100} />
       </Container>
       <Typography component="h1" variant="h3">
