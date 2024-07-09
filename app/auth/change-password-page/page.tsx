@@ -14,6 +14,8 @@ import {
   Paper,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
@@ -135,8 +137,11 @@ const ChangePasswordPage = () => {
     <CircularProgress />;
   }
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
   return (
-    <Paper elevation={6} sx={{ width: "100%", maxWidth: 400, padding: 3 }}>
+    <Paper elevation={6} sx={{ width: isMobile ? "280px" : "400px", maxWidth: 400, padding: 3, mt: 3 }}>
       <Container
         disableGutters
         fixed
@@ -150,7 +155,7 @@ const ChangePasswordPage = () => {
         <Image
           src={logo}
           alt="logo"
-          style={{ width: 50, height: 50, marginBottom: 10 }}
+          style={{ width: 65, height: 50, marginBottom: 15 }}
         />
       </Container>
       <Typography component="h1" variant="h5" textAlign="center" sx={{ mb: 2 }}>
@@ -158,7 +163,7 @@ const ChangePasswordPage = () => {
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
-          sx={{ mb: 2 }}
+          sx={{ mb: isMobile ? 1: 2 }}
           variant="outlined"
           margin="normal"
           required={true}
@@ -183,7 +188,7 @@ const ChangePasswordPage = () => {
           }}
         />
         <TextField
-          sx={{ mb: 2 }}
+          sx={{ mb: isMobile ? 1: 2 }}
           variant="outlined"
           margin="normal"
           required={true}
@@ -208,7 +213,7 @@ const ChangePasswordPage = () => {
           }}
         />
         <TextField
-          sx={{ mb: 2 }}
+          sx={{ mb: isMobile ? 1: 2 }}
           variant="outlined"
           margin="normal"
           required={true}
