@@ -69,6 +69,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
         gutterBottom
         justifyContent={"center"}
         align={"center"}
+        mb={3}
       >
         Found {filteredProducts.length} products in All Products
       </Typography>
