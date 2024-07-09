@@ -65,7 +65,7 @@ export default function Navbar() {
               color: "primary.main",
             }}
           >
-            {index === 2 ? <CategoryDropDownMenu /> : null}
+            {index === 1 ? <CategoryDropDownMenu /> : null}
             <Link href={links[index]} passHref>
               <Button key={item} onClick={handleDrawerToggle}>
                 {item}
