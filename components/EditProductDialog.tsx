@@ -6,11 +6,10 @@ import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
 import InputSelect from "@/components/InputSelect";
 import Input from "@/components/Input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
 import { Product } from "@/app/category-page/[categoryId]/products/[productId]/ProductDetailDisplay";
 import {
-  ProductTypeList,
   ProductGenderList,
   ProductSizeShoeList,
   ProductSizesList,
@@ -41,9 +40,6 @@ export default function EditProductDialog({
   product,
 }: EditProductDialogProps) {
   const [snackBarMessage, setSnackBarMessage] = useState<string | null>(null);
-  const [productType, setProductType] = useState<string[]>(
-    product.productType || []
-  );
   const [productGender, setProductGender] = useState<string[]>(
     product.productGender || []
   );
@@ -66,41 +62,50 @@ export default function EditProductDialog({
     product.productImage || ""
   );
 
-  const handleProductTypeSelect = (e: React.ChangeEvent<{ value: string }>) => {
-    setProductType([e.target.value]);
-  };
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  useEffect(() => {
+    setIsUpdated(false);
+  }, [open]);
 
   const handleProductGenderSelect = (
     e: React.ChangeEvent<{ value: string }>
   ) => {
     setProductGender([e.target.value]);
+    setIsUpdated(true);
   };
 
   const handleProductSizeShoeSelect = (
     e: React.ChangeEvent<{ value: string }>
   ) => {
     setProductSizeShoe([e.target.value]);
+    setIsUpdated(true);
   };
   const handleProductSizeSelect = (e: React.ChangeEvent<{ value: string }>) => {
     setProductSizes([e.target.value]);
+    setIsUpdated(true);
   };
   const handleProductSizePantsWaistSelect = (
     e: React.ChangeEvent<{ value: string }>
   ) => {
     setProductSizePantsWaist([e.target.value]);
+    setIsUpdated(true);
   };
   const handleProductSizePantsInseamSelect = (
     e: React.ChangeEvent<{ value: string }>
   ) => {
     setProductSizePantsInseam([e.target.value]);
+    setIsUpdated(true);
   };
 
   const handleDescriptionChange = (e: React.ChangeEvent<{ value: string }>) => {
     setProductDescription(e.target.value);
+    setIsUpdated(true);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<{ value: any }>) => {
     setProductImage(e.target.value);
+    setIsUpdated(true);
   };
   /**
    * Handles the click event when the user confirms "Cancel" to deleting product.
@@ -123,14 +128,13 @@ export default function EditProductDialog({
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          productType,
           productGender,
           productSizeShoe,
           productSizes,
           productSizePantsWaist,
           productSizePantsInseam,
           productDescription,
-          productImage,
+          productImage
         }),
       });
       if (response.ok) {
@@ -150,6 +154,9 @@ export default function EditProductDialog({
     }
   };
 
+  const isShoeProduct = product.productType.includes("Shoes");
+  const isPantsProduct = product.productType.includes("Pants");
+
   return (
     <Box
       sx={{
@@ -167,17 +174,6 @@ export default function EditProductDialog({
         <DialogTitle>Edit Product</DialogTitle>
         <DialogContent dividers>
           <InputSelect
-            label="Product Type"
-            value={productType.join(",")}
-            options={Object.entries(ProductTypeList).map(([key, value]) => ({
-              label: value,
-              value: key,
-            }))}
-            onChange={handleProductTypeSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
-          />
-          <InputSelect
             label="Product Gender"
             value={productGender.join(",")}
             options={Object.entries(ProductGenderList).map(([key, value]) => ({
@@ -188,6 +184,7 @@ export default function EditProductDialog({
             style={{ color: "black" }}
             labelTextColor="black"
           />
+          {isShoeProduct && (
           <InputSelect
             label="Product Size Shoe"
             value={productSizeShoe.join(",")}
@@ -199,6 +196,8 @@ export default function EditProductDialog({
             style={{ color: "black" }}
             labelTextColor="black"
           />
+          )}
+          {!isShoeProduct &&  (
           <InputSelect
             label="Product Size"
             value={productSizes.join(",")}
@@ -210,6 +209,8 @@ export default function EditProductDialog({
             style={{ color: "black" }}
             labelTextColor="black"
           />
+          )}
+          {!isShoeProduct && isPantsProduct && (
           <InputSelect
             label="Product Size Pants Waist"
             value={productSizePantsWaist.join(",")}
@@ -221,6 +222,8 @@ export default function EditProductDialog({
             style={{ color: "black" }}
             labelTextColor="black"
           />
+          )}
+          {!isShoeProduct && isPantsProduct && (
           <InputSelect
             label="Product Size Pants Inseam"
             value={productSizePantsInseam.join(",")}
@@ -232,6 +235,7 @@ export default function EditProductDialog({
             style={{ color: "black" }}
             labelTextColor="black"
           />
+          )}
           <Input
             label="Product Description"
             value={productDescription}
@@ -253,7 +257,7 @@ export default function EditProductDialog({
           <Button autoFocus onClick={handleCancel}>
             Cancel
           </Button>
-          <Button onClick={handleSaveChanges}>Save Changes</Button>
+          <Button onClick={handleSaveChanges} disabled={!isUpdated}>Save Changes</Button>
         </DialogActions>
       </Dialog>
       <Snackbar
