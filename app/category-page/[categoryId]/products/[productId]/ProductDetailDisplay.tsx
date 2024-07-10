@@ -99,33 +99,33 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
                   alignItems="flex-start"
                   textAlign="left"
                 >
-                  <Typography variant="h6" sx={{ fontSize: isMobile ? "1.2rem" : "1.1rem" }}>
+                  <Typography variant="h6">
                     Product Type: {product.productType}
                   </Typography>
-                  <Typography variant="h6" sx={{ fontSize: isMobile ? "1.2rem" : "1.1rem" }}>
+                  <Typography variant="h6">
                     Gender: {product.productGender}
                   </Typography>
                   {isShoeProduct && (
-                    <Typography variant="h6" sx={{ fontSize: isMobile ? "1.2rem" : "1.1rem" }}>
+                    <Typography variant="h6">
                       Shoe Size: {product.productSizeShoe || "N/A"}
                     </Typography>
                   )}
                   {!isShoeProduct &&  (
-                  <Typography variant="h6" sx={{ fontSize: isMobile ? "1.2rem" : "1.1rem" }}>
+                  <Typography variant="h6">
                     Size: {product.productSizes || "N/A"}
                   </Typography>
                   )}
                   {!isShoeProduct && isPantsProduct && (
                     <>
-                      <Typography variant="h6" sx={{ fontSize: isMobile ? "1.2rem" : "1.1rem" }}>
+                      <Typography variant="h6">
                         Waist Size: {product.productSizePantsWaist || "N/A"}
                       </Typography>
-                      <Typography variant="h6" sx={{ fontSize: isMobile ? "1.2rem" : "1.1rem" }}>
+                      <Typography variant="h6">
                         Inseam: {product.productSizePantsInseam || "N/A"}
                       </Typography>
                     </>
                   )}
-                  <Typography variant="h6" sx={{ fontSize: isMobile ? "1.2rem" : "1.1rem" }}>
+                  <Typography variant="h6" sx={{ fontSize: isMobile ? "1.1rem" : "1.1rem" }}>
                     Description: {product.productDescription || "N/A"}
                   </Typography>
                 </Box>
