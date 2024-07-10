@@ -25,8 +25,8 @@ import ThemeToggle from "./ThemeToggle";
 
 const drawerWidth = 240;
 
-const navItems = ["Home", "Sign In", "Donation", "Mission", "Contact"];
-const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/contact-page"];
+const navItems = ["Home", "Donation", "Mission", "Contact"];
+const links = ["/", "/donation-info", "/mission-page", "/contact-page"];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -65,7 +65,7 @@ export default function Navbar() {
               color: "primary.main",
             }}
           >
-            {index === 2 ? <CategoryDropDownMenu /> : null}
+            {index === 1 ? <CategoryDropDownMenu /> : null}
             <Link href={links[index]} passHref>
               <Button key={item} onClick={handleDrawerToggle}>
                 {item}
@@ -125,7 +125,7 @@ export default function Navbar() {
             <Grid container spacing={2}>
               {navItems.map((item, index) => (
                 <Grid item key={item} sx={{ display: "flex" }}>
-                  {index === 2 ? <CategoryDropDownMenu /> : null}
+                  {index === 1 ? <CategoryDropDownMenu /> : null}
                     <Link href={links[index]} passHref>
                     <Button key={item} sx={{ color: "#fff" }}>
                         {item}
@@ -142,6 +142,15 @@ export default function Navbar() {
                   </Link>
                 </Grid>
               )}
+              {!token ? (
+                <Grid item>
+                <Link href="/auth/sign-in" passHref>
+                  <Button sx={{ color: "primary.contrastText" }}>
+                    Sign In
+                  </Button>
+                </Link>
+              </Grid>
+              ) : null }
             </Grid>
           </Box>
           
@@ -151,7 +160,8 @@ export default function Navbar() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              ml: { xs: 0, sm: 2 },
+              ml: 2.5,
+              mr: 1
             }}
           >
             <ThemeToggle />

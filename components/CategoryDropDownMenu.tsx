@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button, Menu, MenuItem } from "@mui/material";
+import { Container, Button, Menu, MenuItem, Box, useTheme, useMediaQuery } from "@mui/material";
 import { ArrowDropDown } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 const navItems = [
@@ -16,6 +16,8 @@ const navItems = [
 ];
 
 export default function CategoryDropDownMenu() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,7 +38,7 @@ export default function CategoryDropDownMenu() {
   };
 
   return (
-    <Container>
+    <Box>
       <Button
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
@@ -45,6 +47,7 @@ export default function CategoryDropDownMenu() {
         onClick={handleClick}
         endIcon={<ArrowDropDown />}
         color={open ? "inherit" : "inherit"}
+        sx={{ mr: isMobile ? 0 : 2 }}
       >
         Products
       </Button>
@@ -56,6 +59,7 @@ export default function CategoryDropDownMenu() {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        sx={{ transform: 'translateX(-6px)' }}
       >
         {navItems.map((item) => (
           <MenuItem key={item} onClick={() => navigate(item)}>
@@ -63,6 +67,6 @@ export default function CategoryDropDownMenu() {
           </MenuItem>
         ))}
       </Menu>
-    </Container>
+    </Box>
   );
 }
