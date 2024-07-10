@@ -59,6 +59,7 @@ export default function CategoryDropDownMenu() {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        sx={{ transform: 'translateX(-6px)' }}
       >
         {navItems.map((item) => (
           <MenuItem key={item} onClick={() => navigate(item)}>
