@@ -32,7 +32,25 @@ let darkTheme = createTheme({
           backgroundColor: "#333",
         },
       },
-    }
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: "#fff",
+          textDecorationColor: "#fff"
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          '&:-webkit-autofill': {
+            '-webkit-box-shadow': '0 0 0 100px #E8F0FE inset',
+            '-webkit-text-fill-color': '#000',
+          },
+        },
+      },
+    },
   },
 });
 darkTheme = responsiveFontSizes(darkTheme);
