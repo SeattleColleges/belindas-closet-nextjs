@@ -1,6 +1,6 @@
 "use client";
 import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
-import { Typography, Button, Box, TextField, Paper } from '@mui/material';
+import { Typography, Button, Box, TextField, Paper, useTheme, useMediaQuery } from '@mui/material';
 
 const ForgotPassword = () => {
   
@@ -23,15 +23,19 @@ const ForgotPassword = () => {
   // TODO: send email to user with reset password link
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Paper
       elevation={4}
       sx={{
         padding: "20px",
-        width: "400px",
+        width: isMobile ? "280px ": "400px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        mt: 3
       }}
     >
 
