@@ -1,8 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import Admin from '../app/admin-page/page';
-
-
+import Admin from '../../../app/admin-page/page';
 
 describe('Admin', () => {
     it('renders the buttons', () => {
