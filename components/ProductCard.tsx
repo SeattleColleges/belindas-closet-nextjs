@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import { StaticImageData } from "next/image";
-import { Stack, Button, Link } from "@mui/material";
+import { Stack, Button, Link, useTheme, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArchiveIcon from "@mui/icons-material/Archive";
@@ -89,6 +89,10 @@ export default function ProductCard({
     window.location.reload();
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
+
   return (
     <Paper
       sx={{
@@ -105,11 +109,11 @@ export default function ProductCard({
         <Grid item>
           <ButtonBase>
             <Link href={href}>
-              <Image src={image} alt="product image" width={128} />
+              <Image src={image} alt="product image" width={isTablet ? 120 : 128} />
             </Link>
           </ButtonBase>
         </Grid>
-        <Grid item xs={12} sm container>
+        <Grid item xs={12} sm container justifyContent={isMobile ? "center" : isTablet ? "center" : "left"}>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
@@ -153,7 +157,7 @@ export default function ProductCard({
         </Button>
         {/* Only show delete and archive buttons if user is admin or creator */}
         {userRole === "admin" || userRole === "creator" ? (
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={2} justifyContent={"center"}>
             <Button
               variant="contained"
               startIcon={<DeleteIcon />}
