@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import logo from "@/public/belinda-images/logo.png";
-import { Box, Button, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Paper, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
@@ -38,6 +38,9 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
     }
   }, []);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   if (!product) {
     return <Typography>Loading...</Typography>;
   }
@@ -72,119 +75,123 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
 
   return (
     <Stack>
-      <Typography component="h1" variant="h4">
+      <Typography component="h1" variant="h4" marginTop="10px">
         {product && product.productType}
       </Typography>
-      <Paper elevation={3}>
-        <Box p={2} m={2}>
-          {product && (
-            <Stack direction="column" spacing={2} justifyContent="center">
-              <Box
-                display="flex"
-                flexDirection="column"
-                gap={2}
-                alignItems="flex-start"
-              >
-                <Typography variant="h6">
-                  Product ID: {product._id}
-                </Typography>
-                <Typography variant="h6">
-                  Product Type: {product.productType}
-                </Typography>
-                <Typography variant="h6">
-                  Product Gender: {product.productGender}
-                </Typography>
-                {isShoeProduct && (
+      <Box display="flex" justifyContent="center">
+        <Paper elevation={3} sx={{  mt: 3, width: isMobile ? "95%" : "100%" }}>
+          <Box p={2} m={2}>
+          <Box display="flex" justifyContent="center">
+            <Image
+              src={logo} // temporary image
+              alt="Product Image"
+              width={isMobile ? 200 : 250}
+              height={isMobile ? 160 : 200}
+              style={{ borderRadius: "5px", marginBottom: "15px" }}
+            />
+            </Box>
+            {product && (
+              <Stack direction="column" spacing={2} justifyContent="center">
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  gap={isMobile ? 1.5 : 2}
+                  alignItems="flex-start"
+                  textAlign="left"
+                >
                   <Typography variant="h6">
-                    Product Shoe Size: {product.productSizeShoe || "N/A"}
+                    Product Type: {product.productType}
                   </Typography>
-                )}
-                {!isShoeProduct &&  (
-                <Typography variant="h6">
-                  Product Size: {product.productSizes || "N/A"}
-                </Typography>
-                )}
-                {!isShoeProduct && isPantsProduct && (
-                  <>
+                  <Typography variant="h6">
+                    Gender: {product.productGender}
+                  </Typography>
+                  {isShoeProduct && (
                     <Typography variant="h6">
-                      Product Size Pants Waist: {product.productSizePantsWaist || "N/A"}
+                      Shoe Size: {product.productSizeShoe || "N/A"}
                     </Typography>
-                    <Typography variant="h6">
-                      Product Size Pants Inseam: {product.productSizePantsInseam || "N/A"}
-                    </Typography>
-                  </>
-                )}
-                <Typography variant="h6">
-                  Product Description: {product.productDescription || "N/A"}
-                </Typography>
+                  )}
+                  {!isShoeProduct &&  (
+                  <Typography variant="h6">
+                    Size: {product.productSizes || "N/A"}
+                  </Typography>
+                  )}
+                  {!isShoeProduct && isPantsProduct && (
+                    <>
+                      <Typography variant="h6">
+                        Waist Size: {product.productSizePantsWaist || "N/A"}
+                      </Typography>
+                      <Typography variant="h6">
+                        Inseam: {product.productSizePantsInseam || "N/A"}
+                      </Typography>
+                    </>
+                  )}
+                  <Typography variant="h6" sx={{ fontSize: isMobile ? "1.1rem" : "1.1rem" }}>
+                    Description: {product.productDescription || "N/A"}
+                  </Typography>
+                </Box>
+              </Stack>
+            )}
+          </Box>
+
+          {userRole === "admin" || userRole === "creator" ? (
+            <Stack 
+              direction={ isMobile ? "column" : "row" } 
+              spacing={isMobile ? 1 : 2}
+              justifyContent="center"
+            >
+              {/* Edit Button */}
+              <Box p={isMobile ? 1 : 2} display="flex" justifyContent="center">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<EditIcon />}
+                  onClick={handleEditButtonClick}
+                >
+                  Edit
+                </Button>
               </Box>
-              <Box display="flex" justifyContent="center">
-                <Image
-                  src={logo} // temporary image
-                  alt="Product Image"
-                  width={250}
-                  height={250}
-                  style={{ borderRadius: "5px", marginTop: "10px" }}
-                />
+              {/* Delete Button */}
+              <Box p={isMobile ? 1 : 2} display="flex" justifyContent="center">
+                <Button
+                  variant="contained"
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                  onClick={handleDeleteButtonClick}
+                >
+                  Delete
+                </Button>
+              </Box>
+              {/* Archive Button */}
+              <Box p={isMobile ? 1 : 2} display="flex" justifyContent="center" sx={{ pb: isMobile ? 3 : 2 }}>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  startIcon={<ArchiveIcon />}
+                  onClick={handleArchiveButtonClick}
+                >
+                  Archive
+                </Button>
               </Box>
             </Stack>
-          )}
-        </Box>
+          ) : null}
 
-        {userRole === "admin" || userRole === "creator" ? (
-          <Stack direction="row" spacing={2} justifyContent="center">
-            {/* Edit Button */}
-            <Box p={2} display="flex" justifyContent="center">
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<EditIcon />}
-                onClick={handleEditButtonClick}
-              >
-                Edit
-              </Button>
-            </Box>
-            {/* Delete Button */}
-            <Box p={2} display="flex" justifyContent="center">
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<DeleteIcon />}
-                onClick={handleDeleteButtonClick}
-              >
-                Delete
-              </Button>
-            </Box>
-            {/* Archive Button */}
-            <Box p={2} display="flex" justifyContent="center">
-              <Button
-                variant="contained"
-                color="warning"
-                startIcon={<ArchiveIcon />}
-                onClick={handleArchiveButtonClick}
-              >
-                Archive
-              </Button>
-            </Box>
-          </Stack>
-        ) : null}
-
-        <EditProductDialog
-          open={openEditDialog}
-          onClose={handleCloseEditDialog}
-          product={product}
-        />
-        <ConfirmDeleteDialog
-          open={openDeleteDialog}
-          onClose={handleCloseDeleteDialog}
-          product={product}
-        />
-        <ConfirmArchiveDialog
-          open={openArchiveDialog}
-          onClose={handleCloseArchiveDialog}
-          product={product}
-        />
-      </Paper>
+          <EditProductDialog
+            open={openEditDialog}
+            onClose={handleCloseEditDialog}
+            product={product}
+          />
+          <ConfirmDeleteDialog
+            open={openDeleteDialog}
+            onClose={handleCloseDeleteDialog}
+            product={product}
+          />
+          <ConfirmArchiveDialog
+            open={openArchiveDialog}
+            onClose={handleCloseArchiveDialog}
+            product={product}
+          />
+        </Paper>
+      </Box>
     </Stack>
   );
 };
