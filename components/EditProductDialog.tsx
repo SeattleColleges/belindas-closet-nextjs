@@ -16,6 +16,7 @@ import {
   ProductSizePantsWaistList,
   ProductSizePantsInseamList,
 } from "@/app/add-product-page/product-prop-list";
+import { useMediaQuery, useTheme } from "@mui/material";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL =
   process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
@@ -154,6 +155,9 @@ export default function EditProductDialog({
     }
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const isShoeProduct = product.productType.includes("Shoes");
   const isPantsProduct = product.productType.includes("Pants");
 
@@ -167,7 +171,7 @@ export default function EditProductDialog({
       }}
     >
       <Dialog
-        sx={{ "& .MuiDialog-paper": { width: "50%", maxHeight: 435 } }}
+        sx={{ "& .MuiDialog-paper": { width: isMobile ? "75%" : "50%", maxHeight: 435 } }}
         maxWidth="xs"
         open={open}
       >
@@ -241,14 +245,14 @@ export default function EditProductDialog({
             value={productDescription}
             type="text"
             onChange={handleDescriptionChange}
-            style={{ color: "black" }}
+            style={{ color: "black", width: "95%" }}
             labelTextColor="black"
           />
           <Input
             label="Product Image"
             type="file"
             onChange={handleImageUpload}
-            style={{ color: "black" }}
+            style={{ color: "black", width: "100%" }}
             labelTextColor="black"
             value={""}
           />
