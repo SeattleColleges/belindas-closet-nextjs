@@ -16,17 +16,24 @@ interface User {
   email: string;
   role: string;
 }
+type JWToken = string | null
 /**
  * fetch user info from the server
  * @param setUserInfo
+ * JWT token for user authentication
+ * @param userToken
  */
-async function fetchUser(setUserInfo: (userInfo: User[]) => void) {
+async function fetchUser(setUserInfo: (userInfo: User[]) => void, userToken: JWToken) {
   const apiUrl = `${URL}/user`;
   try {
+    if (!userToken) {
+      throw new Error('JWT token not found in storage')
+    }
     const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${userToken}`,
       },
     });
     if (!res.ok) {
@@ -34,7 +41,6 @@ async function fetchUser(setUserInfo: (userInfo: User[]) => void) {
     } else {
       const data = await res.json();
       setUserInfo(data);
-      console.log(data);
     }
   } catch (error) {
     console.error("Error getting user info:", error);
@@ -49,7 +55,8 @@ const EditUserRolePage = () => {
   const [userInfo, setUserInfo] = useState<User[]>([]);
 
   useEffect(() => {
-    fetchUser(setUserInfo);
+    const userToken:JWToken = localStorage.getItem("token")
+    fetchUser(setUserInfo,userToken);
   }, []);
 
   return (
