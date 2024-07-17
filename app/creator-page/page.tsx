@@ -21,6 +21,12 @@ const Creator = () => {
             >
                 Welcome to the CREATOR PAGE
             </Typography>
+            <Typography
+                variant="body1"
+                gutterBottom
+            >
+                FIX: allow only users with admin role to be routed to this page
+            </Typography>
             <ButtonGroup
                 color="primary"
                 variant="contained"
