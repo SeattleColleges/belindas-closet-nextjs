@@ -10,11 +10,7 @@ describe('Creator component tests', () => {
       // Check for the heading text
       const heading = screen.getByRole('heading', { level: 1 });
       expect(heading).toBeInTheDocument();
-      expect(heading.textContent).toBe('Welcome to the CREATOR PAGE');
-  
-      // Check for the body text
-      const bodyText = screen.getByText('FIX: Creator Placeholder Text goes here');
-      expect(bodyText).toBeInTheDocument();
+      expect(heading.textContent).toBe('My Account');
   
       // Check for the links and their href attributes
       const addButton = screen.getByRole('link', { name: /Add Product/i });
