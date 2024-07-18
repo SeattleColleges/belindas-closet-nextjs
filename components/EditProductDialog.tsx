@@ -172,7 +172,7 @@ export default function EditProductDialog({
       }}
     >
       <Dialog
-        sx={{ "& .MuiDialog-paper": { width: isMobile ? "75%" : "50%", maxHeight: 435 } }}
+        sx={{ "& .MuiDialog-paper": { width: isMobile ? "100%" : "50%", maxHeight: 435 } }}
         maxWidth="xs"
         open={open}
       >
