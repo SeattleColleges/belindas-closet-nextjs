@@ -16,7 +16,8 @@ import {
   ProductSizePantsWaistList,
   ProductSizePantsInseamList,
 } from "@/app/add-product-page/product-prop-list";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { TextField, useMediaQuery, useTheme } from "@mui/material";
+import { Padding } from "@mui/icons-material";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL =
   process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
@@ -185,8 +186,7 @@ export default function EditProductDialog({
               value: key,
             }))}
             onChange={handleProductGenderSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "16px", marginTop: "4px" }}
           />
           {isShoeProduct && (
           <InputSelect
@@ -197,8 +197,7 @@ export default function EditProductDialog({
               value: size,
             }))}
             onChange={handleProductSizeShoeSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "20px", marginTop: "4px" }}
           />
           )}
           {!isShoeProduct &&  (
@@ -210,8 +209,7 @@ export default function EditProductDialog({
               value: key,
             }))}
             onChange={handleProductSizeSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "16px", marginTop: "4px" }}
           />
           )}
           {!isShoeProduct && isPantsProduct && (
@@ -223,8 +221,7 @@ export default function EditProductDialog({
               value: size,
             }))}
             onChange={handleProductSizePantsWaistSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "16px", marginTop: "4px" }}
           />
           )}
           {!isShoeProduct && isPantsProduct && (
@@ -236,24 +233,27 @@ export default function EditProductDialog({
               value: size,
             }))}
             onChange={handleProductSizePantsInseamSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "24px", marginTop: "4px" }}
           />
           )}
-          <Input
+          <TextField
             label="Product Description"
             value={productDescription}
+            multiline
             type="text"
             onChange={handleDescriptionChange}
-            style={{ color: "black", width: "95%" }}
-            labelTextColor="black"
+            sx={{ width: "95%", marginBottom: "16px", marginTop: "4px" }}
           />
           <Input
             label="Product Image"
             type="file"
             onChange={handleImageUpload}
-            style={{ color: "black", width: "100%" }}
-            labelTextColor="black"
+            style={{ 
+              width: "95%", 
+              fontSize: "1rem",
+              outline: "none",
+              marginTop: "8px"
+            }}
             value={""}
           />
         </DialogContent>
