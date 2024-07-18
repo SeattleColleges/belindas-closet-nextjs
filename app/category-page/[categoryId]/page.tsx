@@ -76,24 +76,29 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
         Found {filteredProducts.length} products in {categoryId}
       </Typography>
       <Grid container spacing={2}>
-        {filteredProducts.map((product, index) => (
-          <Grid item key={index} xs={12} sm={4} md={3}>
-            <ProductCard
-              image={logo}
-              categories={product.productType}
-              gender={product.productGender}
-              sizeShoe=''
-              size=''
-              sizePantsWaist=''
-              sizePantsInseam=''
-              description={product.productDescription}
-              href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL
-              _id={product._id}
-              isHidden={false}
-              isSold={false}
-            />
-          </Grid>
-        ))}
+        {filteredProducts.map((product, index) => {
+          const isJacketBlazer = product.productType.includes("Jacket/Blazer");
+
+          return (
+            <Grid item key={index} xs={12} sm={4} md={3}>
+              <ProductCard
+                image={logo}
+                categories={product.productType}
+                gender={product.productGender}
+                sizeShoe=''
+                size=''
+                sizePantsWaist=''
+                sizePantsInseam=''
+                description={product.productDescription}
+                href={isJacketBlazer ? `/category-page/Jacket%2FBlazer/products/${product._id}` 
+                                     : `/category-page/${categoryId}/products/${product._id}`}
+                _id={product._id}
+                isHidden={false}
+                isSold={false}
+              />
+            </Grid>
+          );
+        })}
       </Grid>
     </Container>
   );
