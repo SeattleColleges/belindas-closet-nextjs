@@ -80,7 +80,7 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
         {product && product.productType}
       </Typography>
       <Box display="flex" justifyContent="center">
-        <Paper elevation={3} sx={{  mt: 3, width: isMobile ? "95%" : isTablet ? "80%" : "600px" }}>
+        <Paper elevation={3} sx={{  mt: 3, width: isMobile ? "100%" : isTablet ? "80%" : "600px" }}>
           <Box p={2} m={2}>
           <Box display="flex" justifyContent="center">
             <Image
