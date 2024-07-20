@@ -82,6 +82,15 @@ export default function Navbar() {
             </Link>
           </Grid>
         )}
+        {!token ? (
+          <Grid item>
+          <Link href="/auth/sign-in" passHref>
+            <Button>
+              Sign In
+            </Button>
+          </Link>
+        </Grid>
+        ) : null }
       </List>
       <Divider />
 
