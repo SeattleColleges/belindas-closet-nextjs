@@ -6,7 +6,6 @@ import '@testing-library/jest-dom'
 const roles = ['admin', 'creator', 'user'];
 
 describe.each(roles)('add-product-page tests for role: %s', (role) => {
-  // Arrange
   beforeEach(() => {
     render(<AddProduct />)
   })
@@ -19,7 +18,6 @@ describe.each(roles)('add-product-page tests for role: %s', (role) => {
   afterAll(() => {
   localStorage.removeItem('token');
   });
-
 
   if (role === 'user') {
     it('displays UnauthorizedPageMessage for user role', async () => {
