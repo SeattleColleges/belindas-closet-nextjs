@@ -2,7 +2,6 @@
 
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import { Box, Grid, useMediaQuery, useTheme } from '@mui/material';
 
 const Creator = () => {

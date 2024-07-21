@@ -2,7 +2,6 @@
 
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import ButtonGroup from '@mui/material/ButtonGroup'
 import { Box, Grid, useMediaQuery, useTheme } from '@mui/material';
 
 const Admin = () => {
@@ -19,19 +18,6 @@ const Admin = () => {
       >
         My Account
       </Typography>
-      {/* <ButtonGroup
-        color="primary"
-        variant="contained"
-        sx={{ flexDirection: isMobile ? "column" : "row",
-          '& .MuiButton-root': {
-            borderRadius: '4px',
-            mr: isMobile ? 0 : 1,
-            ml: isMobile ? 0 : 1,
-            mt: isMobile ? 1 : 0,
-            mb: isMobile ? 2 : 0,
-          },
-         }}
-      > */}
       <Box
         display="flex"
         justifyContent="center"
@@ -82,7 +68,6 @@ const Admin = () => {
           </Grid>
         </Grid>
       </Box>
-      {/* </ButtonGroup> */}
     </div>
   );
 };
