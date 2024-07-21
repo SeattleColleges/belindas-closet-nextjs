@@ -21,7 +21,7 @@ const Contact = () => {
           Contact Us
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'left' }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         <Box sx={{ flex: 1, minWidth: '500px', maxWidth: '40%' }}>
           
 
