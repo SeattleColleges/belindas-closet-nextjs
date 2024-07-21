@@ -3,7 +3,7 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Box, Grid, useMediaQuery, useTheme } from '@mui/material';
 
 const Creator = () => {
     const theme = useTheme();
@@ -19,29 +19,46 @@ const Creator = () => {
             >
                 My Account
             </Typography>
-            <ButtonGroup
-                color="primary"
-                variant="contained"
-                sx={{ flexDirection: isMobile ? "column" : "row",
-                    '& .MuiButton-root': {
-                        borderRadius: '4px',
-                        mr: isMobile ? 0 : 1,
-                        ml: isMobile ? 0 : 1,
-                        mt: isMobile ? 1 : 0,
-                        mb: isMobile ? 2 : 0,
-                        },
-                 }}
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                flexDirection="column"
+                sx={{ mt: 6 }}
             >
-                <Button href="/add-product-page">
-                    Add Product
-                </Button>
-                <Button href="/category-page/all-products">
-                    All Products
-                </Button>
-                <Button href="/archived-products-page">
-                    Archived Products
-                </Button>
-            </ButtonGroup>
+                <Grid container spacing={ isMobile ? 3 : 2 } justifyContent="center" alignItems="center">
+                    <Grid item xs={12} sm="auto">
+                        <Button 
+                            href="/add-product-page"
+                            color="primary" 
+                            variant="contained"
+                            sx={{ width: "200px" }}
+                        >
+                            Add Product
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm="auto">
+                        <Button 
+                            href="/category-page/all-products"
+                            color="primary" 
+                            variant="contained"
+                            sx={{ width: "200px" }}
+                        >
+                            All Products
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm="auto">
+                        <Button 
+                            href="/archived-products-page"
+                            color="primary" 
+                            variant="contained"
+                            sx={{ width: "200px" }}
+                        >
+                            Archived Products
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Box>
         </div>
     );
 };
