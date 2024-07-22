@@ -15,9 +15,9 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import useAuth from "@/hooks/useAuth";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
 const Signin = () => {
   const [error, setError] = useState("");
@@ -27,6 +27,7 @@ const Signin = () => {
   });
 
   const router = useRouter();
+  const { user, isAuth } = useAuth();
 
   const { email, password } = userInfo;
 
@@ -54,6 +55,9 @@ const Signin = () => {
       const { token } = await res.json();
       localStorage.setItem("token", token);
       const userRole = JSON.parse(atob(token.split(".")[1])).role; // decode token to get user role
+      const userId = JSON.parse(atob(token.split(".")[1])).id;
+      localStorage.setItem("userId", userId);
+      window.dispatchEvent(new CustomEvent('auth-change'));
       // Redirect to user page
       if (userRole === "admin") {
         router.push("/admin-page"); // redirect to admin-page which is not created yet
@@ -63,7 +67,6 @@ const Signin = () => {
         router.push("/profile"); // TODO: change profile to user-page
       }
     }
-    window.location.reload();
   };
 
   const theme = useTheme();

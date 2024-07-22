@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../app/add-product-page/page.module.css';
+import { InputLabel, Select, MenuItem } from '@mui/material';
 
 interface InputSelectProps {
   label: string;
@@ -13,19 +13,18 @@ interface InputSelectProps {
 const InputSelect: React.FC<InputSelectProps> = ({ label, value, options, onChange, style, labelTextColor }) => {
   return (
     <div>
-      <label className={styles.inputLabel} style={{ color: labelTextColor || '#f0f0f0' }}>{label}:</label>
-      <select 
-        className={styles.inputField}
-        value={value}
-        onChange={onChange}
-        style={style}
-      >
-        {options.map((option : any) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <InputLabel>{label}:</InputLabel>
+        <Select
+          value={value}
+          onChange={onChange}
+          style={style}
+        >
+          {options.map((option : any) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
     </div>
   );
 };

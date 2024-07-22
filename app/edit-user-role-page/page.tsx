@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
 import { Stack, Typography } from "@mui/material";
+import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL =
   process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
@@ -53,22 +54,32 @@ async function fetchUser(setUserInfo: (userInfo: User[]) => void, userToken: JWT
  */
 const EditUserRolePage = () => {
   const [userInfo, setUserInfo] = useState<User[]>([]);
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     const userToken:JWToken = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userRole = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(userRole);
+    }
     fetchUser(setUserInfo,userToken);
   }, []);
 
-  return (
-    <Stack>
-      <Typography component="h1" variant="h4">
-        User Management
-      </Typography>
-      {userInfo.map((user, index) => (
-        <UserCard user={user} key={index} />
-      ))}
-    </Stack>
-  );
+  if ((userRole === "admin")) {
+    return (
+      <Stack>
+        <Typography component="h1" variant="h4">
+          User Management
+        </Typography>
+        {userInfo.map((user, index) => (
+          <UserCard user={user} key={index} />
+        ))}
+      </Stack>
+    );
+  } else {
+    return <UnauthorizedPageMessage />
+  }
 };
 
 export default EditUserRolePage;

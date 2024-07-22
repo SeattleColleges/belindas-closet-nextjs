@@ -4,6 +4,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import ProductCard from "@/components/ProductCard";
 import logo from "@/public/belinda-images/logo.png";
 import { Container, Grid, Typography } from "@mui/material";
+import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 const placeholderImg = logo;
@@ -62,39 +63,52 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
     );
   }, [products]);
 
-  return (
-    <Container sx={{ py: 4 }} maxWidth="lg">
-      <Typography
-        variant="h4"
-        gutterBottom
-        justifyContent={"center"}
-        align={"center"}
-        mb={3}
-      >
-        Found {filteredProducts.length} products in Archived Products
-      </Typography>
-      <Grid container spacing={2}>
-        {filteredProducts.map((product, index) => (
-          <Grid item key={index} xs={12} sm={4} md={3}>
-            <ProductCard
-              image={logo}
-              categories={product.productType}
-              gender={product.productGender}
-              sizeShoe=''
-              size=''
-              sizePantsWaist=''
-              sizePantsInseam=''
-              description={product.productDescription}
-              href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL
-              _id={product._id}
-              isHidden={false}
-              isSold={false}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
-  );
+  const [userRole, setUserRole] = useState("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userRole = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(userRole);
+    }
+  }, []);
+
+  if ((userRole === "admin" || userRole === "creator")) {
+    return (
+      <Container sx={{ py: 4 }} maxWidth="lg">
+        <Typography
+          variant="h4"
+          gutterBottom
+          justifyContent={"center"}
+          align={"center"}
+          mb={3}
+        >
+          Found {filteredProducts.length} products in Archived Products
+        </Typography>
+        <Grid container spacing={2}>
+          {filteredProducts.map((product, index) => (
+            <Grid item key={index} xs={12} sm={4} md={3}>
+              <ProductCard
+                image={logo}
+                categories={product.productType}
+                gender={product.productGender}
+                sizeShoe=''
+                size=''
+                sizePantsWaist=''
+                sizePantsInseam=''
+                description={product.productDescription}
+                href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL
+                _id={product._id}
+                isHidden={false}
+                isSold={false}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    );
+  } else {
+    return <UnauthorizedPageMessage />;
+  }
 };
 export default function ProductList({
   params,

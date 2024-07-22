@@ -3,13 +3,25 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box, Grid, useMediaQuery, useTheme } from '@mui/material';
+import UnauthorizedPageMessage from '@/components/UnauthorizedPageMessage';
+import { useState, useEffect } from 'react';
 
 const Creator = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    return (
-        <div>
+    const [userRole, setUserRole] = useState("");
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const userRole = JSON.parse(atob(token.split(".")[1])).role;
+            setUserRole(userRole);
+        }
+    }, []);
+
+    if ((userRole === "creator")) {
+        return (
+            <div>
             <Typography
                 variant="h4"
                 component="h1"
@@ -59,7 +71,10 @@ const Creator = () => {
                 </Grid>
             </Box>
         </div>
-    );
+        );
+    } else {
+        return <UnauthorizedPageMessage />;
+    }
 };
 
 export default Creator;
