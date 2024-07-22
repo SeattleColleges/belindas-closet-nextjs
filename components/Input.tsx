@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../app/add-product-page/page.module.css";
+import { InputLabel } from "@mui/material";
 
 interface InputProps {
   label: string;
@@ -7,15 +7,13 @@ interface InputProps {
   type: string;
   onChange: any;
   style: any;
-  labelTextColor?: string;
 }
 
-const InputText: React.FC<InputProps> = ({ label, value, type, onChange, style, labelTextColor }) => {
+const InputText: React.FC<InputProps> = ({ label, value, type, onChange, style }) => {
   return (
     <div>
-      <label className={styles.inputLabel} style={{ color: labelTextColor || '#f0f0f0' }}>{label}:</label>
+      <InputLabel>{label}</InputLabel>
       <input
-        className={styles.inputField}
         type={type}
         value={value}
         onChange={onChange}
