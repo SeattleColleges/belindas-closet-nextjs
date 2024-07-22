@@ -1,7 +1,8 @@
 "use client";
 import { Typography, Drawer, List, ListItem, ListItemText, IconButton } from "@mui/material";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
+import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 
 const Dashboard = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -53,24 +54,37 @@ const Dashboard = () => {
     </div>
   );
 
-  return (
-    <div>
-      <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
-        {drawerContent}
-      </Drawer>
-      <IconButton onClick={handleDrawerToggle} sx={{ position: 'fixed', top: '80px', left: '16px' }}>
-        {drawerOpen ? <MenuIcon sx={{ color: "black" }} /> : <MenuIcon sx={{ color: "black" }} />}
-      </IconButton>
-      <Typography
-        component="h1"
-        variant="h3"
-        sx={{ color: "white", marginLeft: drawerOpen ? 240 : 0 }}
-      >
-        Dashboard
-      </Typography>
-      {/* Add your dashboard content here */}
-    </div>
-  );
+  const [userRole, setUserRole] = useState("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userRole = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(userRole);
+    }
+  }, []);
+
+  if ((userRole === "admin" || userRole === "creator")) {
+    return (
+      <div>
+        <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerToggle}>
+          {drawerContent}
+        </Drawer>
+        <IconButton onClick={handleDrawerToggle} sx={{ position: 'fixed', top: '80px', left: '16px' }}>
+          {drawerOpen ? <MenuIcon sx={{ color: "black" }} /> : <MenuIcon sx={{ color: "black" }} />}
+        </IconButton>
+        <Typography
+          component="h1"
+          variant="h3"
+          sx={{ color: "white", marginLeft: drawerOpen ? 240 : 0 }}
+        >
+          Dashboard
+        </Typography>
+        {/* Add your dashboard content here */}
+      </div>
+    );
+  } else {
+    return <UnauthorizedPageMessage />;
+  };
 };
 
 export default Dashboard;
