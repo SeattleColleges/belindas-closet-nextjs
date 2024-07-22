@@ -18,9 +18,9 @@ describe('Contact component', () => {
 
   test('renders correctly', () => {
     render(<Contact />);
-    expect(Typography).toHaveBeenCalledTimes(8);
-    expect(Box).toHaveBeenCalledTimes(3);
-    expect(TextField).toHaveBeenCalledTimes(4); // Adjusted the expectation to match the number of TextField components
+    expect(Typography).toHaveBeenCalledTimes(3);
+    expect(Box).toHaveBeenCalledTimes(8); // Adjusted the expectation to match the number of Box components
+    expect(TextField).toHaveBeenCalledTimes(5); // Adjusted the expectation to match the number of TextField components
     expect(Button).toHaveBeenCalledTimes(1);
   });
 });

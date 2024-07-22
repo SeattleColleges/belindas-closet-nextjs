@@ -22,6 +22,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
 import ThemeToggle from "./ThemeToggle";
+import useAuth from "@/hooks/useAuth";
 
 const drawerWidth = 240;
 
@@ -30,23 +31,13 @@ const links = ["/", "/donation-info", "/mission-page", "/contact-page"];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [userRole, setUserRole] = useState("");
+  const { isAuth, user } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  const [token, setToken] = useState("");
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setToken(token);
-      const userRole = JSON.parse(atob(token.split(".")[1])).role;
-      setUserRole(userRole);
-    }
-  }, []);
 
   const drawer = (
     <Box sx={{ textAlign: "center" }}>
@@ -73,7 +64,7 @@ export default function Navbar() {
             </Link>
           </Grid>
         ))}
-        {(userRole === "admin" || userRole === "creator") && (
+        {isAuth && user && (user.role === "admin" || user.role === "creator") && (
           <Grid item>
             <Link href="/dashboard" passHref>
               <Button onClick={handleDrawerToggle}>
@@ -82,6 +73,15 @@ export default function Navbar() {
             </Link>
           </Grid>
         )}
+        {!isAuth ? (
+          <Grid item>
+          <Link href="/auth/sign-in" passHref>
+            <Button>
+              Sign In
+            </Button>
+          </Link>
+        </Grid>
+        ) : null }
       </List>
       <Divider />
 
@@ -95,7 +95,7 @@ export default function Navbar() {
           justifyContent: "center",
         }}
       >
-        {token ? <AuthProfileMenu /> : null}
+        {isAuth ? <AuthProfileMenu /> : null}
       </Grid>
     </Box>
   );
@@ -133,7 +133,7 @@ export default function Navbar() {
                     </Link>
                 </Grid>
               ))}
-              {(userRole === "admin" || userRole === "creator") && (
+              {isAuth && user && (user.role === "admin" || user.role === "creator") && (
                 <Grid item>
                   <Link href="/dashboard" passHref>
                     <Button sx={{ color: "primary.contrastText" }}>
@@ -142,7 +142,7 @@ export default function Navbar() {
                   </Link>
                 </Grid>
               )}
-              {!token ? (
+              {!isAuth ? (
                 <Grid item>
                 <Link href="/auth/sign-in" passHref>
                   <Button sx={{ color: "primary.contrastText" }}>
@@ -150,7 +150,7 @@ export default function Navbar() {
                   </Button>
                 </Link>
               </Grid>
-              ) : null }
+              ) : null}
             </Grid>
           </Box>
           
@@ -167,7 +167,7 @@ export default function Navbar() {
             <ThemeToggle />
           </Box>
           <Grid item sx={{ display: "flex", justifyContent: "center" }}>
-            {token ? <AuthProfileMenu /> : null}
+            {isAuth ? <AuthProfileMenu /> : null}
           </Grid>
         </Toolbar>
       </AppBar>
