@@ -7,7 +7,7 @@ let darkTheme = createTheme({
     mode: "dark",
     primary: {
       light: "#3f50b5",
-      main: "#1565c0",
+      main: "#114FA3",
       dark: "#002884",
       contrastText: "#fff",
     },
@@ -74,7 +74,7 @@ let lightTheme = createTheme({
     mode: "light",
     primary: {
       light: "#3f50b5",
-      main: "#1565c0",
+      main: "#114FA3",
       dark: "#002884",
       contrastText: "#fff",
     },
