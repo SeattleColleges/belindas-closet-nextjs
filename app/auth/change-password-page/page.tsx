@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import logo from "@/public/belinda-images/logo.png";
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { ChangeEventHandler, FormEventHandler, useEffect, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
@@ -20,6 +20,7 @@ import {
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
 import { useRouter } from "next/navigation";
+import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL =
   process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
@@ -140,115 +141,128 @@ const ChangePasswordPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
-  return (
-    <Paper elevation={6} sx={{ width: isMobile ? "280px" : "400px", maxWidth: 400, padding: 3, mt: 3 }}>
-      <Container
-        disableGutters
-        fixed
-        maxWidth="xs"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          src={logo}
-          alt="logo"
-          style={{ width: 65, height: 50, marginBottom: 15 }}
-        />
-      </Container>
-      <Typography component="h1" variant="h5" textAlign="center" sx={{ mb: 2 }}>
-        Change Password
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <TextField
-          sx={{ mb: isMobile ? 1: 2 }}
-          variant="outlined"
-          margin="normal"
-          required={true}
-          fullWidth
-          id="currentPassword"
-          label="Current Password"
-          name="currentPassword"
-          type={showPassword ? "text" : "password"}
-          value={password.currentPassword}
-          onChange={handleChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={toggleCurrentPasswordVisibility}
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
+  const [userRole, setUserRole] = useState("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userRole = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(userRole);
+    }
+  }, []);
+  
+  if ((userRole === "admin" || userRole === "creator" || userRole === "user")) {
+    return (
+      <Paper elevation={6} sx={{ width: isMobile ? "280px" : "400px", maxWidth: 400, padding: 3, mt: 3 }}>
+        <Container
+          disableGutters
+          fixed
+          maxWidth="xs"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        />
-        <TextField
-          sx={{ mb: isMobile ? 1: 2 }}
-          variant="outlined"
-          margin="normal"
-          required={true}
-          fullWidth
-          id="newPassword"
-          label="New Password"
-          name="newPassword"
-          type={showConfirmPassword ? "text" : "password"}
-          value={password.newPassword}
-          onChange={handleChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={toggleNewPasswordVisibility}
-                >
-                  {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          sx={{ mb: isMobile ? 1: 2 }}
-          variant="outlined"
-          margin="normal"
-          required={true}
-          fullWidth
-          id="confirmPassword"
-          label="Confirm Password"
-          name="confirmPassword"
-          type={showConfirmPassword ? "text" : "password"}
-          value={password.confirmPassword}
-          onChange={handleChange}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle confirm password visibility"
-                  onClick={toggleNewPasswordVisibility}
-                >
-                  {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-        {error && <ErrorAlert message={error} />}
-        {success && <SuccessAlert message={success} />}
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
         >
+          <Image
+            src={logo}
+            alt="logo"
+            style={{ width: 65, height: 50, marginBottom: 15 }}
+          />
+        </Container>
+        <Typography component="h1" variant="h5" textAlign="center" sx={{ mb: 2 }}>
           Change Password
-        </Button>
-      </Box>
-    </Paper>
-  );
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            sx={{ mb: isMobile ? 1: 2 }}
+            variant="outlined"
+            margin="normal"
+            required={true}
+            fullWidth
+            id="currentPassword"
+            label="Current Password"
+            name="currentPassword"
+            type={showPassword ? "text" : "password"}
+            value={password.currentPassword}
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={toggleCurrentPasswordVisibility}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            sx={{ mb: isMobile ? 1: 2 }}
+            variant="outlined"
+            margin="normal"
+            required={true}
+            fullWidth
+            id="newPassword"
+            label="New Password"
+            name="newPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            value={password.newPassword}
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={toggleNewPasswordVisibility}
+                  >
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            sx={{ mb: isMobile ? 1: 2 }}
+            variant="outlined"
+            margin="normal"
+            required={true}
+            fullWidth
+            id="confirmPassword"
+            label="Confirm Password"
+            name="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            value={password.confirmPassword}
+            onChange={handleChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle confirm password visibility"
+                    onClick={toggleNewPasswordVisibility}
+                  >
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {error && <ErrorAlert message={error} />}
+          {success && <SuccessAlert message={success} />}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Change Password
+          </Button>
+        </Box>
+      </Paper>
+    );
+  } else {
+    return <UnauthorizedPageMessage />;
+  }
 };
 export default ChangePasswordPage;
