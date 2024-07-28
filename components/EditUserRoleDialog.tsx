@@ -14,6 +14,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { UserCardProps } from "./UserCard";
 import Snackbar from "@mui/material/Snackbar";
 import Alert, { AlertColor } from "@mui/material/Alert";
+import { useMediaQuery, useTheme } from "@mui/material";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL =
   process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
@@ -47,11 +48,13 @@ export function ConfirmationDialogRaw(
 ) {
   const { onClose, value: valueProp, open, user, ...other } = props;
   const [value, setValue] = useState(valueProp);
+  const [roleUpdated, setRoleUpdated] = useState(false);
   const radioGroupRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!open) {
       setValue(valueProp);
+      setRoleUpdated(false);
     }
   }, [valueProp, open]);
 
@@ -112,12 +115,21 @@ export function ConfirmationDialogRaw(
    * @param event - The change event object.
    */
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
+    const newValue = (event.target as HTMLInputElement).value;
+    setValue(newValue);
+    if (newValue !== valueProp) {
+      setRoleUpdated(true);
+    } else {
+      setRoleUpdated(false);
+    }
   };
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Dialog
-      sx={{ "& .MuiDialog-paper": { width: "50%", maxHeight: 435 } }}
+      sx={{ "& .MuiDialog-paper": { width: isMobile ? "85%" : "50%", maxHeight: 435 } }}
       maxWidth="xs"
       TransitionProps={{ onEntering: handleEntering }}
       open={open}
@@ -146,7 +158,7 @@ export function ConfirmationDialogRaw(
         <Button autoFocus onClick={handleCancel}>
           Cancel
         </Button>
-        <Button onClick={handleOk}>Ok</Button>
+        <Button onClick={handleOk} disabled={!roleUpdated}>Ok</Button>
       </DialogActions>
     </Dialog>
   );
@@ -189,12 +201,14 @@ export default function EditUserRoleDialog({
     }
   };
 
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
         width: "100%",
         maxWidth: 800,
-        bgcolor: "background.paper",
+        bgcolor: "transparent",
         color: "#000",
       }}
     >
@@ -205,8 +219,19 @@ export default function EditUserRoleDialog({
           aria-controls="role-menu"
           aria-label="User role"
           onClick={handleClickListItem}
+          sx={{ backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+            '&:hover': {
+              backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.2)",
+            }
+            }}
         >
-          <ListItemText primary="Select User Role" secondary={value} />
+          <ListItemText 
+            primary="Select User Role" 
+            secondary={value} 
+            sx={{
+              color: theme.palette.mode === "dark" ? "primary.contrastText" : "primary.dark"
+            }} 
+            />
         </ListItemButton>
         <ConfirmationDialogRaw
           id="role-menu"
@@ -224,6 +249,7 @@ export default function EditUserRoleDialog({
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         <Alert
           onClose={() => setSnackbarOpen(false)}
