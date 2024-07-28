@@ -10,9 +10,11 @@ import Card from "@mui/material/Card";
 import { Container, Typography, Button } from "@mui/material";
 import WrapperDiv from "../components/WrapperDiv";
 import { categories } from "@/components/CategoryImages";
+import useAuth from "@/hooks/useAuth";
 // TEMPORARY CATEGORIES LIST
 const Home = () => {
   const [token, setToken] = useState("");
+  const { isAuth } = useAuth();
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -28,7 +30,7 @@ const Home = () => {
       <Typography component="h1" variant="h3">
         Belinda&apos;s Closet
       </Typography>
-      {!token ? (
+      {!isAuth ? (
         <Stack direction="row" spacing={2}>
           <Button href="/auth/sign-in" component="a" variant="contained">
             Sign In
