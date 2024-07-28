@@ -178,7 +178,7 @@ const SignUp = () => {
             required
             fullWidth
             id="pronoun"
-            label="Pronoun"
+            label="Pronouns"
             name="pronoun"
             autoComplete="pronoun"
             value={pronoun}

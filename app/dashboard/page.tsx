@@ -75,7 +75,7 @@ const Dashboard = () => {
         <Typography
           component="h1"
           variant="h3"
-          sx={{ color: "white", marginLeft: drawerOpen ? 240 : 0 }}
+          sx={{ color: "white", marginLeft: drawerOpen ? 240 : 0, mt: 3 }}
         >
           Dashboard
         </Typography>

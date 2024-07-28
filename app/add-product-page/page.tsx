@@ -165,13 +165,13 @@ const AddProduct = () => {
           <Typography
             component="h1"
             variant="h3"
-            sx={{ marginBottom: "15px" }}
+            sx={{ mb: 3, mt: 3 }}
           >
             Add a Product
           </Typography>
 
           {/* Product Type Field */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 250 }}>
             <InputLabel id="type-selectlabel">Product Type</InputLabel>
             <Select
               labelId="type-selectlabel"
@@ -347,7 +347,7 @@ const AddProduct = () => {
               color="primary"
               onClick={handleSubmit}
               type="submit"
-              sx={{ mt: 1 }}
+              sx={{ m: 1, mt: 2 }}
             >
               Submit
             </Button>

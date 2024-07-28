@@ -15,8 +15,8 @@ import { Typography, Box, TextField, Button } from "@mui/material";
 
 const Contact = () => {
   return (
-    <Box sx={{ padding: 4}}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
+    <Box sx={{ padding: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4, mt: 3 }}>
         <Typography component="h1" variant="h3" gutterBottom>
           Contact Us
         </Typography>
@@ -42,7 +42,7 @@ const Contact = () => {
               fullWidth
             />
             <TextField
-              label="Buisness (optional)"
+              label="Business (optional)"
               variant="outlined"
               fullWidth
             />
