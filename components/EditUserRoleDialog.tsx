@@ -12,8 +12,6 @@ import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import React, { useEffect, useRef, useState } from "react";
 import { UserCardProps } from "./UserCard";
-import Snackbar from "@mui/material/Snackbar";
-import Alert, { AlertColor } from "@mui/material/Alert";
 import { useMediaQuery, useTheme } from "@mui/material";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL =
@@ -29,12 +27,7 @@ interface ConfirmationDialogRawProps {
   keepMounted: boolean;
   value: string;
   open: boolean;
-  onClose: (value?: string) => void;
-  setSnackbarOpen: (open: boolean) => void;
-  setSnackbarMessage: (message: string) => void;
-  setSnackbarSeverity: (
-    severity: "error" | "warning" | "info" | "success"
-  ) => void;
+  onClose: (value?: string, success?: boolean) => void;
 }
 
 /**
@@ -74,39 +67,11 @@ export function ConfirmationDialogRaw(
     onClose();
   };
 
-  /**
-   * Handles the click event when the user confirms the role update.
-   * @returns {void}
-   */
-  const handleOk = async () => {
-    const token = localStorage.getItem("token");
-    console.log("Token:", token);
-    // TODO: Update user role in the database
-    try {
-      const response = await fetch(`${URL}/user/update/${user.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ role: value }),
-      });
-      if (response.ok) {
-        onClose(value);
-        props.setSnackbarSeverity("success");
-        props.setSnackbarMessage("User role updated successfully!");
-        props.setSnackbarOpen(true);
-      } else {
-        console.error("Failed to update user role:", response.statusText);
-        props.setSnackbarSeverity("error");
-        props.setSnackbarMessage("Failed to update user role");
-        props.setSnackbarOpen(true);
-      }
-    } catch (error) {
-      console.error("Error updating user role:", error);
-      props.setSnackbarSeverity("error");
-      props.setSnackbarMessage("Error updating user role");
-      props.setSnackbarOpen(true);
+  const handleOk = () => {
+    if (value !== valueProp) {
+      onClose(value, true);
+    } else {
+      onClose();
     }
   };
 
@@ -175,30 +140,21 @@ export function ConfirmationDialogRaw(
  */
 export default function EditUserRoleDialog({
   user,
-  onRoleChange,
+  onClose,
 }: {
   user: UserCardProps;
-  onClose: () => void;
-  onRoleChange: (newRole: string) => void;
+  onClose: (newRole?: string, success?: boolean) => void;
 }): JSX.Element {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(user.role);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] =
-    useState<AlertColor>("success");
 
   const handleClickListItem = () => {
     setOpen(true);
   };
 
-  const handleClose = (newValue?: string) => {
+  const handleClose =(newValue?: string, success?: boolean) => {
     setOpen(false);
-
-    if (newValue) {
-      setValue(newValue);
-      onRoleChange(newValue);
-    }
+    onClose(newValue, success);
   };
 
   const theme = useTheme();
@@ -240,25 +196,8 @@ export default function EditUserRoleDialog({
           onClose={handleClose}
           value={value}
           user={user}
-          setSnackbarOpen={setSnackbarOpen}
-          setSnackbarMessage={setSnackbarMessage}
-          setSnackbarSeverity={setSnackbarSeverity}
         />
       </List>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity={snackbarSeverity}
-          sx={{ width: "100%" }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 }
