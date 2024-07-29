@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Container, Snackbar, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Snackbar, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from '@mui/icons-material/Check';
 import EditUserRoleDialog from "./EditUserRoleDialog";
@@ -20,6 +20,8 @@ function UserCard({ user }: { user: UserCardProps }) {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
   const [newRole, setNewRole] = useState(user.role);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleEditClick = async () => {
     if (editCompleted) {
@@ -98,16 +100,16 @@ function UserCard({ user }: { user: UserCardProps }) {
         justifyContent="center"
       >
         <Box sx={{ textAlign: "center" }}>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom sx={{ mt: 1, mb: isMobile ? 1 : 2 }}>
             User ID: {user.id}
           </Typography>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom sx={{ mb: isMobile ? 1 : 2 }}>
             Full Name: {user.firstName} {user.lastName}
           </Typography>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom sx={{ mb: isMobile ? 1 : 2 }}>
             Email: {user.email}
           </Typography>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom sx={{ mb: isMobile ? 1 : 2 }}>
             Current Role: {user.role}
           </Typography>
           {editCompleted && (
