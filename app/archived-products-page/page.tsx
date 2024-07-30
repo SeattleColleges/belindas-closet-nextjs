@@ -5,8 +5,8 @@ import ProductCard from "@/components/ProductCard";
 import logo from "@/public/belinda-images/logo.png";
 import { Container, Grid, Typography } from "@mui/material";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 const placeholderImg = logo;
 interface Product {
   _id: string;

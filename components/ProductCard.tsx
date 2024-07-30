@@ -8,9 +8,8 @@ import { Stack, Button, Link, useTheme, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArchiveIcon from "@mui/icons-material/Archive";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 type ProductCardProps = {
   image: StaticImageData;

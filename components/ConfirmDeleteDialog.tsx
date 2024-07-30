@@ -7,9 +7,8 @@ import React, { useState } from "react";
 import { Product } from "@/app/category-page/[categoryId]/products/[productId]/ProductDetailDisplay";
 import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
 import { useMediaQuery, useTheme } from "@mui/material";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 /**
  * Props for the ConfirmDeleteDialog component.
  */

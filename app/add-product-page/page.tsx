@@ -22,9 +22,8 @@ import {
   ProductSizePantsInseamList,
 } from "./product-prop-list";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 const AddProduct = () => {
   const [productType, setProductType] = useState<string>("");
