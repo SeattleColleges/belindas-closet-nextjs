@@ -3,6 +3,7 @@ import { Typography, Drawer, List, ListItem, ListItemText, IconButton } from "@m
 import { SetStateAction, useEffect, useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
+import {WeeklyActivity} from "@/app/dashboard/weeklyActivity";
 
 const Dashboard = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -80,6 +81,7 @@ const Dashboard = () => {
           Dashboard
         </Typography>
         {/* Add your dashboard content here */}
+        <WeeklyActivity />
       </div>
     );
   } else {
