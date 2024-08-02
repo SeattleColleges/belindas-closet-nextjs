@@ -3,6 +3,7 @@ import NavBar from "@/components/Navbar";
 import { CssBaseline } from "@mui/material";
 import WrapperDiv from "@/components/WrapperDiv";
 import ThemeContextProvider from "./theme/providers";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
           <CssBaseline />
           <NavBar />
           <WrapperDiv>{children}</WrapperDiv>
+          <Footer />
         </ThemeContextProvider>
       </body>
     </html>
