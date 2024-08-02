@@ -111,7 +111,7 @@ export default function CategoryBlock({category, variant}: {category: string, va
                                 dominantBaseline='middle' textAnchor='middle' 
                                 paint-order="stroke" 
                                 textLength={'75%'} lengthAdjust="spacingAndGlyphs">
-                                {category}
+                                {category.toLowerCase()}
                             </CategoryText>
                         </CategorySVG>
                     </BlockContent>    

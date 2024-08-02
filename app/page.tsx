@@ -133,28 +133,28 @@ const Home = () => {
       </Stack>
       <Grid container spacing={2} sx={{maxWidth: 1200, width: '100%'}}>
         <Grid xs={6} md={4} lg={3}>
-            <CategoryBlock category="shirts"/>
+            <CategoryBlock category="Shirts"/>
           </Grid>
           <Grid xs={6} md={4} lg={3}>
-            <CategoryBlock category="dresses" variant="light"/>
+            <CategoryBlock category="Dress" variant="light"/>
           </Grid>
           <Grid xs={6} md={4} lg={3}>
-            <CategoryBlock category="pants"/>
+            <CategoryBlock category="Pants"/>
           </Grid>
           <Grid xs={6} md={4} lg={3}>
-            <CategoryBlock category="shoes" variant="light"/>
+            <CategoryBlock category="Shoes" variant="light"/>
           </Grid>
           <Grid xs={6} md={4} lg={3}>
-            <CategoryBlock category="skirts"  variant="light"/>
+            <CategoryBlock category="Skirts"  variant="light"/>
           </Grid>
           <Grid xs={6} md={4} lg={3}>
-            <CategoryBlock category="casual wear"/>
+            <CategoryBlock category="Casual Wear"/>
           </Grid>
           <Grid xs={6} md={4} lg={3}>
-            <CategoryBlock category="accessories" variant="light"/>
+            <CategoryBlock category="Accessories" variant="light"/>
           </Grid>
           <Grid xs={6} md={4} lg={3}>
-            <CategoryBlock category="suits"/>
+            <CategoryBlock category="Suits"/>
           </Grid>
         </Grid>
 
