@@ -67,7 +67,7 @@ export function SimpleItemPreview({ product }: {product: Product }) {
                 padding: 12,
                 overflowX: 'hidden',
                 opacity: 0,
-                borderRadius: 10,
+                borderRadius: 5,
                 '&:hover': {
                     opacity: 1,
                     backgroundColor: '#3f50b588',
@@ -79,8 +79,9 @@ export function SimpleItemPreview({ product }: {product: Product }) {
         function ItemPreview(inProps, ref) {
             const props = useThemeProps({ props: inProps, name: 'ItemPreview' });
             const {product, ...other } = props;
+            console.log(product)
             return (
-                    <ItemPreviewContainer onClick={() => router.push(`/category-page/${product.productType[0]}/products/${product._id}`)}>
+                    <ItemPreviewContainer onClick={() => router.push(`/category-page/${encodeURIComponent(product.productType[0])}/products/${product._id}`)}>
                         <ItemPreviewContent>
                             {product.productType.includes('Shoes') && 
                                 <Stack alignItems='flex-start' px={2}>
