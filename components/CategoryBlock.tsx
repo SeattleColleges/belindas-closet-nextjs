@@ -19,28 +19,28 @@ export default function CategoryBlock({category, variant}: {category: string, va
 
     let categoryLocation: string;
     switch (category) {
-        case 'shirts':
+        case 'Dhirts':
             categoryLocation = 'https://media.istockphoto.com/id/854677216/photo/white-t-shirt-on-brick-background.jpg?s=1024x1024&w=is&k=20&c=nPejcLVjLLPE1zN2TfsBbIbR3Zs2kyfhjaKcLcEiDjs=';
             break;
-        case 'skirts':
+        case 'Skirts':
             categoryLocation = 'https://media.istockphoto.com/id/166672434/photo/waist-down-view-of-a-group-of-men-in-traditional-kilts.jpg?s=1024x1024&w=is&k=20&c=YOHiR057RntiZ41Pwng81d0Q330LeVo8KNhydd1dKmc=';
             break;
-        case 'pants':
+        case 'Pants':
             categoryLocation = 'https://media.istockphoto.com/id/182688952/photo/full-frame-blue-denim-jeans.jpg?s=1024x1024&w=is&k=20&c=Y0CdL7quy30nlFxc14Xw5RkIb23-6zYZT2B0YVVKyVQ=';
             break;
-        case 'shoes':
+        case 'Shoes':
             categoryLocation = 'https://media.istockphoto.com/id/1279108197/photo/variety-of-womens-fashion-comfortable-shoes-of-all-seasons-on-a-light-background-top-view.jpg?s=1024x1024&w=is&k=20&c=I7--KKDMWMPX0yQsaVUTr5S7jBPH9RcM8owFkL6G00E=';
             break; 
-        case 'dresses':
+        case 'Dress':
             categoryLocation = 'https://media.istockphoto.com/id/935032524/photo/women-summer-dresses-on-display-at-camden-market.jpg?s=1024x1024&w=is&k=20&c=tJOs8y-0XOCDy5Mtzsj4FRiPv8EGe1cUPbXp4UuSEuY=';
             break;
-        case 'suits':
+        case 'Suits':
             categoryLocation = 'https://media.istockphoto.com/id/615631610/photo/business-mannequin.jpg?s=1024x1024&w=is&k=20&c=iBFKQ3WXeTkomh8TWaKxyiMnmIugZ9YPx1JQeFlIVg4=';
             break;
-        case 'accessories':
+        case 'Accessories':
             categoryLocation = 'https://media.istockphoto.com/id/482779158/photo/boho-girls-hands-looking-feminine-with-many-rings.jpg?s=1024x1024&w=is&k=20&c=akep0klpBBQ1wceTXbqIsMl3RcoeZmvN9q6OeO_d1oU=';
             break;
-        case 'casual wear':
+        case 'Casual Wear':
             categoryLocation = 'https://media.istockphoto.com/id/1407082939/photo/black-sweatshirts-with-hoodie-for-logo-mockup-template.jpg?s=1024x1024&w=is&k=20&c=ab6YXK41VPNceLEjX0XQ-szWzDhzCPOkyO-OFNwBmV0=';
             break;
         default:
