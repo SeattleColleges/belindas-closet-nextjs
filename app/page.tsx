@@ -43,7 +43,7 @@ async function fetchData(
     } else {
       const data = await res.json();
       const filteredData = data.filter((product: Product) => !product.isHidden && !product.isSold);
-      const sortedData = filteredData.sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+      const sortedData = filteredData.sort((a: Product, b: Product) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
       setProducts(sortedData);
     }
   } catch (error) {
