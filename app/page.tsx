@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
-import logo from "@/public/belinda-images/logo.png";
 import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
 import { Typography, Popover, Link } from "@mui/material";
