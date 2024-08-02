@@ -11,6 +11,8 @@
 
 // export default Contact;
 
+// eliminated fullWidth on textfield components to fix console error 
+
 import { Typography, Box, TextField, Button } from "@mui/material";
 
 const Contact = () => {
@@ -24,33 +26,29 @@ const Contact = () => {
       <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         <Box sx={{ flex: 1, minWidth: '500px', maxWidth: '40%' }}>
           
-
           <Typography component="h2" variant="h5" gutterBottom sx={{ textAlign: 'left' }}>
             Get in Touch With Us
           </Typography>
           <Box component="form" noValidate autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            
             <TextField
               label="Name"
               variant="outlined"
               required
-              fullWidth
-            />
+            /> 
             <TextField
               label="Email"
               variant="outlined"
               required
-              fullWidth
             />
             <TextField
               label="Business (optional)"
               variant="outlined"
-              fullWidth
             />
             <TextField
               label="Message"
               variant="outlined"
               required
-              fullWidth
               multiline
               rows={4}
             />
