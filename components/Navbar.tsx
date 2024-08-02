@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import header_logo from "@/public/belinda-images/header_logo.png";
 import {
@@ -26,8 +26,6 @@ import useAuth from "@/hooks/useAuth";
 
 const drawerWidth = 240;
 
-const navItems = ["Home", "Donation", "Mission", "Contact"];
-const links = ["/", "/donation-info", "/mission-page", "/contact-page"];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);

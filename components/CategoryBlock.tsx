@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { styled, useThemeProps } from '@mui/material/styles';
-import { Block } from '@mui/icons-material';
-import { Typography } from "@mui/material";
 import { useRouter } from 'next/navigation'
 
 export interface CategoryBlockProps {

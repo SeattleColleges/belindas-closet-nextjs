@@ -5,6 +5,7 @@ import CurrentUserCard from "../../components/CurrentUserCard";
 import { Box, Button, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import EditUserDetailsDialog from "@/components/EditUserDetailsDialog";
 import { useRouter } from "next/navigation";
+import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
@@ -91,35 +92,48 @@ const Profile = () => {
     fetchUser();
     }, []);
 
-  return (
-    <Box sx={{ display: "flex", justifyContent: "center", margin: 'auto', width: isMobile ? '75%' : 'auto' }}>
-        <Stack alignItems="center" spacing={3} sx={{ mt: 3, mb: 3 }}>
-            <Typography component="h1" variant="h4">
-                Welcome, { userInfo?.firstName }!
-            </Typography>
-            {userInfo ? (
-            <CurrentUserCard user={userInfo} />
-            ) : null }
-            {openDialog && userInfo && (
-            <Box display="flex" justifyContent="center">
-                <EditUserDetailsDialog
-                    open={openDialog}
-                    user={userInfo}
-                    onClose={handleCloseDialog}
-                />
-            </Box>
-            )}
-            <Box p={2} display="flex" flexDirection="column" justifyContent="center">
-                <Button onClick={handleEditClick}>
-                    {menuOpen ? "Done" : "Edit Profile"}
-                </Button>
-                <Button onClick={ () => router.replace('/auth/change-password-page') } >
-                    Change Password
-                </Button>
-            </Box>
-        </Stack>
-    </Box>
-  );
+  const [userRole, setUserRole] = useState("");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userRole = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(userRole);
+    }
+  }, []);
+
+  if ((userRole === "admin" || userRole === "creator" || userRole === "user")) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", margin: 'auto', width: isMobile ? '75%' : 'auto' }}>
+          <Stack alignItems="center" spacing={3} sx={{ mt: 3, mb: 3 }}>
+              <Typography component="h1" variant="h4">
+                  Welcome, { userInfo?.firstName }!
+              </Typography>
+              {userInfo ? (
+              <CurrentUserCard user={userInfo} />
+              ) : null }
+              {openDialog && userInfo && (
+              <Box display="flex" justifyContent="center">
+                  <EditUserDetailsDialog
+                      open={openDialog}
+                      user={userInfo}
+                      onClose={handleCloseDialog}
+                  />
+              </Box>
+              )}
+              <Box p={2} display="flex" flexDirection="column" justifyContent="center">
+                  <Button onClick={handleEditClick}>
+                      {menuOpen ? "Done" : "Edit Profile"}
+                  </Button>
+                  <Button onClick={ () => router.replace('/auth/change-password-page') } >
+                      Change Password
+                  </Button>
+              </Box>
+          </Stack>
+      </Box>
+    );
+  } else {
+    return <UnauthorizedPageMessage />;
+  }
 };
 
 export default Profile;

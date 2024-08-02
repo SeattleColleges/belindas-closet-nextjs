@@ -1,5 +1,5 @@
 import Stack from "@mui/material/Stack";
-import { Link, Typography, Button } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import Image from "next/image";
 import google_play from "@/public/belinda-images/google_play.png";
 import sc_logo from "@/public/sc-logo.png";
