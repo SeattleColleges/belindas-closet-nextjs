@@ -31,7 +31,7 @@ export default function Footer(){
         <Stack sx={styles.mainDiv}>
             <Stack color="white" sx={styles.leftDiv}>
                 <Typography variant='h4' fontWeight={700}>
-                    Belinda's Closet
+                    Belinda&apos;s Closet
                 </Typography>
                 <Link href='/donation-info' variant="h5" fontWeight={700} color="inherit" sx={{textDecoration: 'none'}}>
                     Make a Donation
