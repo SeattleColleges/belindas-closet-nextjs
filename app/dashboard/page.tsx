@@ -1,5 +1,5 @@
 "use client";
-import { Typography, Drawer, List, ListItem, ListItemText, IconButton, Box, Stack, Button } from "@mui/material";
+import { Typography, Box, Stack, Button } from "@mui/material";
 import { SetStateAction, useEffect, useState } from "react";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 import Image from "next/image";
@@ -96,7 +96,7 @@ const Dashboard = () => {
           />
           <Box sx={{  }}>
             <Typography component="h1" sx={{ mb: 8, fontSize: "1.1rem", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)" }}>
-              Welcome, { userInfo?.firstName }
+              Hello, { userInfo?.firstName }
             </Typography>
             <Button
             fullWidth
