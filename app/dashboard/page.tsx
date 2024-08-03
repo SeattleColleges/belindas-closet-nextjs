@@ -95,7 +95,7 @@ const Dashboard = () => {
             }}
           />
           <Box sx={{  }}>
-            <Typography component="h1" sx={{ mb: 8, fontSize: "1.1rem", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)" }}>
+            <Typography component="h1" sx={{ mb: 10, fontSize: "1.1rem", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)" }}>
               Hello, { userInfo?.firstName }
             </Typography>
             <Button
@@ -177,7 +177,7 @@ const Dashboard = () => {
                 textTransform: "none",
                 backgroundColor: selectedItem === 5 ? "#8BC751" : "white",
                 textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-                mb: 8
+                mb: 6
               }}
             >
               Activity
