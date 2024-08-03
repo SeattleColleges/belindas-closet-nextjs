@@ -13,9 +13,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import React, { useEffect, useRef, useState } from "react";
 import { UserCardProps } from "./UserCard";
 import { useMediaQuery, useTheme } from "@mui/material";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 const options = ["admin", "creator", "user"];
 
