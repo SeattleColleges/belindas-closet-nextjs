@@ -177,7 +177,7 @@ const Dashboard = () => {
                 textTransform: "none",
                 backgroundColor: selectedItem === 5 ? "#8BC751" : "white",
                 textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-                mb: 7
+                mb: 8
               }}
             >
               Activity
