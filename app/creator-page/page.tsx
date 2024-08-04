@@ -37,7 +37,7 @@ const Creator = () => {
                 flexDirection="column"
                 sx={{ mt: 6 }}
             >
-                <Grid container spacing={ isMobile ? 3 : 2 } justifyContent="center" alignItems="center">
+                <Grid container spacing={isMobile ? 3 : 2} justifyContent="center" alignItems="center">
                     <Grid item xs={12} sm="auto">
                         <Button 
                             href="/add-product-page"
@@ -66,6 +66,16 @@ const Creator = () => {
                             sx={{ width: "200px" }}
                         >
                             Archived Products
+                        </Button>
+                    </Grid> 
+                    <Grid item xs={12} sm="auto">
+                        <Button
+                            href="/profile"
+                            color="primary"
+                            variant="contained"
+                            sx={{ width: "200px" }}
+                        >
+                            Profile
                         </Button>
                     </Grid>
                 </Grid>
