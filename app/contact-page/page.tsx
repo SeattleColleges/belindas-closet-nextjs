@@ -1,21 +1,73 @@
-// import { Typography } from "@mui/material";
+"use client";
 
-// const Contact = () => {
-//   return (
-//     <Typography component="h1" variant="h3">
-//       Contact Us
-//     </Typography>
-//     // Save for mission content
-//   );
-// };
-
-// export default Contact;
-
-// eliminated fullWidth on textfield components to fix console error 
-
+import { useState } from 'react';
 import { Typography, Box, TextField, Button } from "@mui/material";
+import emailjs from 'emailjs-com';
+
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    business: '',
+    message: '',
+  });
+
+  const [errors, setErrors] = useState({
+    name: false,
+    email: false,
+    message: false,
+    emailFormat: false,
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    //Regex for most valid email addresses.
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    //check if form fields are empty
+    const newErrors = {
+      name: formData.name.trim() === '',
+      email: formData.email.trim() === '',
+      message: formData.message.trim() === '',
+      emailFormat: !emailRegex.test(formData.email),
+    };
+
+    setErrors(newErrors);
+
+        // If there are any errors, show an alert and stop the form submission
+        if (newErrors.name || newErrors.email || newErrors.message) {
+          alert('Please fill out all required fields.');
+          return;
+      }
+
+        if (newErrors.emailFormat){
+          alert('Please enter a valid email address.');
+          return;
+        }
+
+    //send the email if validation is successful
+    emailjs.sendForm('service_tcqmiub', 'template_umbo1q7', e.target as HTMLFormElement, 'iHLRPRzpKKnhc1Mlr')
+      .then((result) => {
+        alert('Message sent successfully!');
+        setFormData({
+          name: '',
+          email: '',
+          business: '',
+          message: '',
+        }); // Clear the form
+      }, (error) => {
+        alert('Error sending message. Please try again.');
+        console.error(error.text);
+      });
+  };
+
   return (
     <Box sx={{ padding: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4, mt: 3 }}>
@@ -25,25 +77,32 @@ const Contact = () => {
       </Box>
       <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         <Box sx={{ flex: 1, minWidth: '500px', maxWidth: '40%' }}>
-          
           <Typography component="h2" variant="h5" gutterBottom sx={{ textAlign: 'left' }}>
             Get in Touch With Us
           </Typography>
-          <Box component="form" noValidate autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            
+          <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField
               label="Name"
               variant="outlined"
               required
-            /> 
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
             <TextField
               label="Email"
               variant="outlined"
               required
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
             />
             <TextField
               label="Business (optional)"
               variant="outlined"
+              name="business"
+              value={formData.business}
+              onChange={handleChange}
             />
             <TextField
               label="Message"
@@ -51,11 +110,13 @@ const Contact = () => {
               required
               multiline
               rows={4}
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
             />
             <Button variant="contained" color="primary" type="submit">
               Send Message
             </Button>
-
             <Typography variant="body1" paragraph sx={{ textAlign: 'left' }}>
               Email: edi.north@seattlecolleges.edu<br></br>
               Phone: (206) 934-3719
@@ -83,4 +144,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
