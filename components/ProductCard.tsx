@@ -26,7 +26,7 @@ type ProductCardProps = {
   _id: string;
   isHidden: boolean;
   isSold: boolean;
-  showArchiveButton: boolean;
+  showArchiveButton?: boolean; // optional
 };
 export default function ProductCard({
   image,
