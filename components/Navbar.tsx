@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import header_logo from "@/public/belinda-images/header_logo.png";
 import {
@@ -26,8 +26,6 @@ import useAuth from "@/hooks/useAuth";
 
 const drawerWidth = 240;
 
-const navItems = ["Home", "Donation", "Mission", "Contact"];
-const links = ["/", "/donation-info", "/mission-page", "/contact-page"];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -38,67 +36,6 @@ export default function Navbar() {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  const drawer = (
-    <Box sx={{ textAlign: "center" }}>
-      <Link href="/" passHref>
-        <Button color="secondary">
-          <Image src={header_logo} alt="logo" width={100} height={50} />
-        </Button>
-      </Link>
-      <Divider />
-      <List>
-        {navItems.map((item, index) => (
-          <Grid
-            item
-            key={item}
-            sx={{
-              color: "primary.main",
-            }}
-          >
-            {index === 1 ? <CategoryDropDownMenu /> : null}
-            <Link href={links[index]} passHref>
-              <Button key={item} onClick={handleDrawerToggle}>
-                {item}
-              </Button>
-            </Link>
-          </Grid>
-        ))}
-        {isAuth && user && (user.role === "admin" || user.role === "creator") && (
-          <Grid item>
-            <Link href="/dashboard" passHref>
-              <Button onClick={handleDrawerToggle}>
-                Dashboard
-              </Button>
-            </Link>
-          </Grid>
-        )}
-        {!isAuth ? (
-          <Grid item>
-          <Link href="/auth/sign-in" passHref>
-            <Button>
-              Sign In
-            </Button>
-          </Link>
-        </Grid>
-        ) : null }
-      </List>
-      <Divider />
-
-      {/* Profile menu for drawer */}
-      <Grid
-        container
-        sx={{
-          position: "absolute",
-          bottom: 0,
-          width: "100%",
-          justifyContent: "center",
-        }}
-      >
-        {isAuth ? <AuthProfileMenu /> : null}
-      </Grid>
-    </Box>
-  );
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -122,17 +59,10 @@ export default function Navbar() {
             </Link>
           </Box>
           <Box sx={{ display: { xs: "none", md: "block" } }}>
-            <Grid container spacing={2}>
-              {navItems.map((item, index) => (
-                <Grid item key={item} sx={{ display: "flex" }}>
-                  {index === 1 ? <CategoryDropDownMenu /> : null}
-                    <Link href={links[index]} passHref>
-                    <Button key={item} sx={{ color: "#fff" }}>
-                        {item}
-                      </Button>
-                    </Link>
-                </Grid>
-              ))}
+            <Grid container spacing={1}>
+              <Grid item sx={{ display: "flex" }}>
+                <CategoryDropDownMenu />
+              </Grid>
               {isAuth && user && (user.role === "admin" || user.role === "creator") && (
                 <Grid item>
                   <Link href="/dashboard" passHref>
@@ -144,9 +74,29 @@ export default function Navbar() {
               )}
               {!isAuth ? (
                 <Grid item>
+                <Link href="/auth/sign-up" passHref>
+                  <Button
+                    sx={
+                      { color: "primary.main", 
+                      backgroundColor: 'white', 
+                      filter: 'none',
+                      borderRadius: 0,
+                      fontWeight: 700,
+                      '&:hover': {
+                        color: 'primary.contrastText'
+                      }
+                    }} 
+                    >
+                    Sign Up
+                  </Button>
+                </Link>
+              </Grid>
+              ) : null}
+              {!isAuth ? (
+                <Grid item>
                 <Link href="/auth/sign-in" passHref>
                   <Button sx={{ color: "primary.contrastText" }}>
-                    Sign In
+                    Log In
                   </Button>
                 </Link>
               </Grid>
@@ -171,25 +121,6 @@ export default function Navbar() {
           </Grid>
         </Toolbar>
       </AppBar>
-      <nav>
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", md: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
       <Box component="main">
         <Toolbar />
       </Box>
