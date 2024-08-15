@@ -72,7 +72,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
     }
   }, []);
 
-  if ((userRole === "admin" || userRole === "creator")) {
+  if (userRole === "admin" || userRole === "creator") {
     return (
       <Container sx={{ py: 4 }} maxWidth="lg">
         <Typography
@@ -100,6 +100,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
                 _id={product._id}
                 isHidden={false}
                 isSold={false}
+                showArchiveButton={false} // Pass the prop to hide the archive button
               />
             </Grid>
           ))}
@@ -110,6 +111,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
     return <UnauthorizedPageMessage />;
   }
 };
+
 export default function ProductList({
   params,
 }: {

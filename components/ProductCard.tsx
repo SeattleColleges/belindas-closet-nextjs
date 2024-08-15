@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -24,6 +26,7 @@ type ProductCardProps = {
   _id: string;
   isHidden: boolean;
   isSold: boolean;
+  showArchiveButton?: boolean; // optional
 };
 export default function ProductCard({
   image,
@@ -36,6 +39,7 @@ export default function ProductCard({
   description,
   href,
   _id,
+  showArchiveButton,
 }: ProductCardProps) {
   const [userRole, setUserRole] = React.useState("");
 
@@ -166,7 +170,8 @@ export default function ProductCard({
             >
               Delete
             </Button>
-            <Button
+            {showArchiveButton && (
+              <Button
               variant="contained"
               startIcon={<ArchiveIcon />}
               color="warning"
@@ -174,7 +179,7 @@ export default function ProductCard({
               sx={{ fontSize: 10 }}
             >
               Archive
-            </Button>
+            </Button> )}
           </Stack>
         ) : null}
       </Stack>
