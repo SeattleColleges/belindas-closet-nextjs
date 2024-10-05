@@ -1,4 +1,6 @@
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
+
+// Old import replaced by the one above: import '@testing-library/jest-dom/extend-expect';
 
 // Trying to suppress console.error for creator page test (Error: Not implemented: navigation (except hash changes), this solution fails.  
 
