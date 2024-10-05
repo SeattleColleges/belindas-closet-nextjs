@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
-import Grid from "@mui/material/Unstable_Grid2";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import { Typography, Popover, Link } from "@mui/material";
 import WrapperDiv from "../components/WrapperDiv";
