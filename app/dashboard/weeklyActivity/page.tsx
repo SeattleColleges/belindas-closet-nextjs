@@ -177,3 +177,5 @@ export const WeeklyActivity = () =>  {
         </>
     )
 }
+
+export default WeeklyActivity;
