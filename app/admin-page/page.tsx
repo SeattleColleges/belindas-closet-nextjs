@@ -78,6 +78,16 @@ const Admin = () => {
               Archived Products
             </Button>
           </Grid>
+          <Grid item xs={12} sm="auto">
+            <Button 
+              href="/profile" 
+              color="primary" 
+              variant="contained"
+              sx={{ width: "200px" }}
+            >
+              Profile
+            </Button>
+          </Grid>
         </Grid>
       </Box>
     </div>

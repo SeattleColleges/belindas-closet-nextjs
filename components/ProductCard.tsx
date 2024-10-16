@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -8,9 +10,8 @@ import { Stack, Button, Link, useTheme, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArchiveIcon from "@mui/icons-material/Archive";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 type ProductCardProps = {
   image: StaticImageData;
@@ -25,6 +26,7 @@ type ProductCardProps = {
   _id: string;
   isHidden: boolean;
   isSold: boolean;
+  showArchiveButton?: boolean; // optional
 };
 export default function ProductCard({
   image,
@@ -37,6 +39,7 @@ export default function ProductCard({
   description,
   href,
   _id,
+  showArchiveButton,
 }: ProductCardProps) {
   const [userRole, setUserRole] = React.useState("");
 
@@ -167,7 +170,8 @@ export default function ProductCard({
             >
               Delete
             </Button>
-            <Button
+            {showArchiveButton && (
+              <Button
               variant="contained"
               startIcon={<ArchiveIcon />}
               color="warning"
@@ -175,7 +179,7 @@ export default function ProductCard({
               sx={{ fontSize: 10 }}
             >
               Archive
-            </Button>
+            </Button> )}
           </Stack>
         ) : null}
       </Stack>

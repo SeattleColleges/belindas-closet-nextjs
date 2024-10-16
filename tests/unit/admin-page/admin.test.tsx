@@ -35,7 +35,8 @@ describe.each(roles)('admin-page tests for role: %s', (role) => {
 
             const links = screen.getAllByRole('link'); // Update to search for links
             const buttonText = screen.getByText('Edit User Roles');
-            expect(links && buttonText).toBeInTheDocument();
+            const profileBtn = screen.getByText('Profile');
+            expect(links && buttonText && profileBtn).toBeInTheDocument();
         });
     };
 });

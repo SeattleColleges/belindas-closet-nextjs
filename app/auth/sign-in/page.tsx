@@ -16,8 +16,11 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import useAuth from "@/hooks/useAuth";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+// Check env.local file to update API address
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
+if (URL?.includes('localhost')) {
+  console.log('Dev API Address: ',URL)
+}
 
 const Signin = () => {
   const [error, setError] = useState("");
