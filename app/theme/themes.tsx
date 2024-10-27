@@ -7,7 +7,7 @@ let darkTheme = createTheme({
     mode: "dark",
     primary: {
       light: "#3f50b5",
-      main: "#1565c0",
+      main: "#114FA3",
       dark: "#002884",
       contrastText: "#fff",
     },
@@ -32,7 +32,39 @@ let darkTheme = createTheme({
           backgroundColor: "#333",
         },
       },
-    }
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: "#fff",
+          textDecorationColor: "#fff"
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#fff",
+          },
+        },
+        input: {
+          '&:-webkit-autofill': {
+            '-webkit-box-shadow': '0 0 0 100px rgba(69, 69, 69) inset',
+            '-webkit-text-fill-color': '#fff',
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            color: '#fff'
+          },
+        },
+      },
+    },
   },
 });
 darkTheme = responsiveFontSizes(darkTheme);
@@ -42,7 +74,7 @@ let lightTheme = createTheme({
     mode: "light",
     primary: {
       light: "#3f50b5",
-      main: "#1565c0",
+      main: "#114FA3",
       dark: "#002884",
       contrastText: "#fff",
     },

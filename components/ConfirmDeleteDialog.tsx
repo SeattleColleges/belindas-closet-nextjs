@@ -6,9 +6,9 @@ import Dialog from "@mui/material/Dialog";
 import React, { useState } from "react";
 import { Product } from "@/app/category-page/[categoryId]/products/[productId]/ProductDetailDisplay";
 import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+import { useMediaQuery, useTheme } from "@mui/material";
+
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 /**
  * Props for the ConfirmDeleteDialog component.
  */
@@ -69,6 +69,9 @@ export default function ConfirmDeleteDialog({
     }
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box
       sx={{
@@ -79,7 +82,7 @@ export default function ConfirmDeleteDialog({
       }}
     >
       <Dialog
-        sx={{ "& .MuiDialog-paper": { width: "50%", maxHeight: 435 } }}
+        sx={{ "& .MuiDialog-paper": { width: isMobile ? "75%" : "50%", maxHeight: 435 } }}
         maxWidth="xs"
         open={open}
       >

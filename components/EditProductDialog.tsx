@@ -6,20 +6,20 @@ import DialogContent from "@mui/material/DialogContent";
 import Dialog from "@mui/material/Dialog";
 import InputSelect from "@/components/InputSelect";
 import Input from "@/components/Input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Snackbar, { SnackbarOrigin } from "@mui/material/Snackbar";
 import { Product } from "@/app/category-page/[categoryId]/products/[productId]/ProductDetailDisplay";
 import {
-  ProductTypeList,
   ProductGenderList,
   ProductSizeShoeList,
   ProductSizesList,
   ProductSizePantsWaistList,
   ProductSizePantsInseamList,
 } from "@/app/add-product-page/product-prop-list";
+import { TextField, useMediaQuery, useTheme } from "@mui/material";
+import { Padding } from "@mui/icons-material";
 // WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 /**
  * Props for the EditProductDialog component.
@@ -41,9 +41,6 @@ export default function EditProductDialog({
   product,
 }: EditProductDialogProps) {
   const [snackBarMessage, setSnackBarMessage] = useState<string | null>(null);
-  const [productType, setProductType] = useState<string[]>(
-    product.productType || []
-  );
   const [productGender, setProductGender] = useState<string[]>(
     product.productGender || []
   );
@@ -66,41 +63,50 @@ export default function EditProductDialog({
     product.productImage || ""
   );
 
-  const handleProductTypeSelect = (e: React.ChangeEvent<{ value: string }>) => {
-    setProductType([e.target.value]);
-  };
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  useEffect(() => {
+    setIsUpdated(false);
+  }, [open]);
 
   const handleProductGenderSelect = (
     e: React.ChangeEvent<{ value: string }>
   ) => {
     setProductGender([e.target.value]);
+    setIsUpdated(true);
   };
 
   const handleProductSizeShoeSelect = (
     e: React.ChangeEvent<{ value: string }>
   ) => {
     setProductSizeShoe([e.target.value]);
+    setIsUpdated(true);
   };
   const handleProductSizeSelect = (e: React.ChangeEvent<{ value: string }>) => {
     setProductSizes([e.target.value]);
+    setIsUpdated(true);
   };
   const handleProductSizePantsWaistSelect = (
     e: React.ChangeEvent<{ value: string }>
   ) => {
     setProductSizePantsWaist([e.target.value]);
+    setIsUpdated(true);
   };
   const handleProductSizePantsInseamSelect = (
     e: React.ChangeEvent<{ value: string }>
   ) => {
     setProductSizePantsInseam([e.target.value]);
+    setIsUpdated(true);
   };
 
   const handleDescriptionChange = (e: React.ChangeEvent<{ value: string }>) => {
     setProductDescription(e.target.value);
+    setIsUpdated(true);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<{ value: any }>) => {
     setProductImage(e.target.value);
+    setIsUpdated(true);
   };
   /**
    * Handles the click event when the user confirms "Cancel" to deleting product.
@@ -123,14 +129,13 @@ export default function EditProductDialog({
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          productType,
           productGender,
           productSizeShoe,
           productSizes,
           productSizePantsWaist,
           productSizePantsInseam,
           productDescription,
-          productImage,
+          productImage
         }),
       });
       if (response.ok) {
@@ -150,6 +155,12 @@ export default function EditProductDialog({
     }
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const isShoeProduct = product.productType.includes("Shoes");
+  const isPantsProduct = product.productType.includes("Pants");
+
   return (
     <Box
       sx={{
@@ -160,23 +171,12 @@ export default function EditProductDialog({
       }}
     >
       <Dialog
-        sx={{ "& .MuiDialog-paper": { width: "50%", maxHeight: 435 } }}
+        sx={{ "& .MuiDialog-paper": { width: isMobile ? "100%" : "50%", maxHeight: 435 } }}
         maxWidth="xs"
         open={open}
       >
         <DialogTitle>Edit Product</DialogTitle>
         <DialogContent dividers>
-          <InputSelect
-            label="Product Type"
-            value={productType.join(",")}
-            options={Object.entries(ProductTypeList).map(([key, value]) => ({
-              label: value,
-              value: key,
-            }))}
-            onChange={handleProductTypeSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
-          />
           <InputSelect
             label="Product Gender"
             value={productGender.join(",")}
@@ -185,9 +185,9 @@ export default function EditProductDialog({
               value: key,
             }))}
             onChange={handleProductGenderSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "16px", marginTop: "4px" }}
           />
+          {isShoeProduct && (
           <InputSelect
             label="Product Size Shoe"
             value={productSizeShoe.join(",")}
@@ -196,9 +196,10 @@ export default function EditProductDialog({
               value: size,
             }))}
             onChange={handleProductSizeShoeSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "20px", marginTop: "4px" }}
           />
+          )}
+          {!isShoeProduct &&  (
           <InputSelect
             label="Product Size"
             value={productSizes.join(",")}
@@ -207,9 +208,10 @@ export default function EditProductDialog({
               value: key,
             }))}
             onChange={handleProductSizeSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "16px", marginTop: "4px" }}
           />
+          )}
+          {!isShoeProduct && isPantsProduct && (
           <InputSelect
             label="Product Size Pants Waist"
             value={productSizePantsWaist.join(",")}
@@ -218,9 +220,10 @@ export default function EditProductDialog({
               value: size,
             }))}
             onChange={handleProductSizePantsWaistSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "16px", marginTop: "4px" }}
           />
+          )}
+          {!isShoeProduct && isPantsProduct && (
           <InputSelect
             label="Product Size Pants Inseam"
             value={productSizePantsInseam.join(",")}
@@ -229,23 +232,27 @@ export default function EditProductDialog({
               value: size,
             }))}
             onChange={handleProductSizePantsInseamSelect}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ marginBottom: "24px", marginTop: "4px" }}
           />
-          <Input
+          )}
+          <TextField
             label="Product Description"
             value={productDescription}
+            multiline
             type="text"
             onChange={handleDescriptionChange}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            sx={{ width: "95%", marginBottom: "16px", marginTop: "4px" }}
           />
           <Input
             label="Product Image"
             type="file"
             onChange={handleImageUpload}
-            style={{ color: "black" }}
-            labelTextColor="black"
+            style={{ 
+              width: "95%", 
+              fontSize: "1rem",
+              outline: "none",
+              marginTop: "8px"
+            }}
             value={""}
           />
         </DialogContent>
@@ -253,7 +260,7 @@ export default function EditProductDialog({
           <Button autoFocus onClick={handleCancel}>
             Cancel
           </Button>
-          <Button onClick={handleSaveChanges}>Save Changes</Button>
+          <Button onClick={handleSaveChanges} disabled={!isUpdated}>Save Changes</Button>
         </DialogActions>
       </Dialog>
       <Snackbar

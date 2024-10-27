@@ -2,7 +2,6 @@ import React from "react";
 import { Box, BoxProps } from "@mui/material";
 
 const styles = {
-  padding: "1rem",
   borderRadius: "0.5rem",
   width: "100%",
   height: "100%",
@@ -12,6 +11,7 @@ const styles = {
   alignItems: "center",
   gap: "1rem",
   textAlign: "center",
+  paddingBottom: 5
 };
 
 const CustomCardContent: React.FC<BoxProps> = ({ children }) => {

@@ -12,10 +12,15 @@ import {
   Button,
   Typography,
   Link as MuiLink,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+import useAuth from "@/hooks/useAuth";
+// Check env.local file to update API address
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
+if (URL?.includes('localhost')) {
+  console.log('Dev API Address: ',URL)
+}
 
 const Signin = () => {
   const [error, setError] = useState("");
@@ -25,6 +30,7 @@ const Signin = () => {
   });
 
   const router = useRouter();
+  const { user, isAuth } = useAuth();
 
   const { email, password } = userInfo;
 
@@ -52,6 +58,9 @@ const Signin = () => {
       const { token } = await res.json();
       localStorage.setItem("token", token);
       const userRole = JSON.parse(atob(token.split(".")[1])).role; // decode token to get user role
+      const userId = JSON.parse(atob(token.split(".")[1])).id;
+      localStorage.setItem("userId", userId);
+      window.dispatchEvent(new CustomEvent('auth-change'));
       // Redirect to user page
       if (userRole === "admin") {
         router.push("/admin-page"); // redirect to admin-page which is not created yet
@@ -61,21 +70,30 @@ const Signin = () => {
         router.push("/profile"); // TODO: change profile to user-page
       }
     }
-    window.location.reload();
   };
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
 
   return (
     <Stack spacing={{ xs: "-6px", sm: "-6px" }} alignItems="center">
       <Image
         src={mascot}
         alt="logo"
-        style={{ width: 200, height: 100, zIndex: 0 }}
+        style={{ 
+          width: isMobile ? 150 : isTablet ? 160 : 200, 
+          height: isMobile ? 75 : isTablet ? 80 : 100, 
+          zIndex: 0,
+          marginTop: 15, 
+          marginBottom: isMobile ? 2 : isTablet ? 1 : 0.5
+        }}
       />
       <Paper
         elevation={4}
         sx={{
           padding: "20px",
-          width: "400px",
+          width: isMobile ? "280px ": "400px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

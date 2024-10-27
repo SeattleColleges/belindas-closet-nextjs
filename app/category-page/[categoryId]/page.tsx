@@ -4,9 +4,9 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import ProductCard from "@/components/ProductCard";
 import logo from "@/public/belinda-images/logo.png";
 import { Container, Grid, Typography } from "@mui/material";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+
 const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 const placeholderImg = logo;
 interface Product {
   _id: string;
@@ -71,29 +71,34 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
         gutterBottom
         justifyContent={"center"}
         align={"center"}
+        mb={3}
       >
         Found {filteredProducts.length} products in {categoryId}
       </Typography>
       <Grid container spacing={2}>
-        {filteredProducts.map((product, index) => (
-          // <Grid item key={index} xs={12} sm={6} md={4}>
-          <Grid item key={index} xs={12} sm={40} md={40}>
-            <ProductCard
-              image={logo}
-              categories={product.productType}
-              gender={product.productGender}
-              sizeShoe={product.productSizeShoe}
-              size={product.productSizes}
-              sizePantsWaist={product.productSizePantsWaist}
-              sizePantsInseam={product.productSizePantsInseam}
-              description={product.productDescription}
-              href={`/category-page/${categoryId}/products/${product._id}`} // Construct the URL
-              _id={product._id}
-              isHidden={false}
-              isSold={false}
-            />
-          </Grid>
-        ))}
+        {filteredProducts.map((product, index) => {
+          const isJacketBlazer = product.productType.includes("Jacket/Blazer");
+
+          return (
+            <Grid item key={index} xs={12} sm={4} md={3}>
+              <ProductCard
+                image={logo}
+                categories={product.productType}
+                gender={product.productGender}
+                sizeShoe=''
+                size=''
+                sizePantsWaist=''
+                sizePantsInseam=''
+                description={product.productDescription}
+                href={isJacketBlazer ? `/category-page/Jacket%2FBlazer/products/${product._id}` 
+                                     : `/category-page/${categoryId}/products/${product._id}`}
+                _id={product._id}
+                isHidden={false}
+                isSold={false}
+              />
+            </Grid>
+          );
+        })}
       </Grid>
     </Container>
   );

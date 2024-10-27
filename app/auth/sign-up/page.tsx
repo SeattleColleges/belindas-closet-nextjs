@@ -3,7 +3,7 @@
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { IconButton, InputAdornment, TextField, useMediaQuery, useTheme } from "@mui/material";
 import { Box, Button, Paper, Typography, Stack } from "@mui/material";
 import Image from "next/image";
 import mascot from "@/public/belinda-images/nsc_mascot_green_cropped.png";
@@ -11,9 +11,11 @@ import { Link as MuiLink } from "@mui/material";
 import ErrorAlert from "@/components/ErrorAlert";
 import SuccessAlert from "@/components/SuccessAlert";
 import { useRouter } from "next/navigation";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+// Check env.local file to update API address
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
+if (URL?.includes('localhost')) {
+  console.log('Dev API Address: ',URL)
+}
 
 const SignUp = () => {
   // handling user's incoming info
@@ -110,18 +112,28 @@ const SignUp = () => {
     }
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+
   return (
     <Stack spacing={{ xs: "-6px", sm: "-6px" }} alignItems="center">
       <Image
         src={mascot}
         alt="logo"
-        style={{ width: 200, height: 100, zIndex: 0 }}
+        style={{ 
+          width: isMobile ? 150 : isTablet ? 160 : 200, 
+          height: isMobile ? 75 : isTablet ? 80 : 100, 
+          zIndex: 0, 
+          marginTop: 15, 
+          marginBottom: isMobile ? 1.5 : 1 
+        }}
       />
       <Paper
         elevation={4}
         sx={{
           padding: "20px",
-          width: "400px",
+          width: isMobile ? "280px ": "400px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -137,7 +149,7 @@ const SignUp = () => {
           sx={{ mt: 1, width: "100%" }}
         >
           <TextField
-            sx={{ mb: 2 }}
+            sx={{ mb: isMobile ? 1 : 2 }}
             margin="normal"
             required
             fullWidth
@@ -150,7 +162,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
           <TextField
-            sx={{ mb: 2 }}
+            sx={{ mb: isMobile ? 1 : 2 }}
             margin="normal"
             required
             fullWidth
@@ -162,13 +174,13 @@ const SignUp = () => {
             onChange={handleChange}
             autoFocus={false}
           />
-               <TextField
-            sx={{ mb: 2 }}
+          <TextField
+            sx={{ mb: isMobile ? 1 : 2 }}
             margin="normal"
             required
             fullWidth
             id="pronoun"
-            label="Pronoun"
+            label="Pronouns"
             name="pronoun"
             autoComplete="pronoun"
             value={pronoun}
@@ -176,7 +188,7 @@ const SignUp = () => {
             autoFocus={false}
           />
           <TextField
-            sx={{ mb: 2 }}
+            sx={{ mb: isMobile ? 1 : 2 }}
             margin="normal"
             required
             fullWidth
@@ -190,7 +202,7 @@ const SignUp = () => {
             autoFocus={false}
           />
           <TextField
-            sx={{ mb: 2 }}
+            sx={{ mb: isMobile ? 1 : 2 }}
             margin="normal"
             required
             fullWidth
@@ -213,7 +225,7 @@ const SignUp = () => {
             }}
           />
           <TextField
-            sx={{ mb: 2 }}
+            sx={{ mb: isMobile ? 1 : 2 }}
             margin="normal"
             required
             fullWidth
@@ -243,14 +255,14 @@ const SignUp = () => {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: isMobile ? 2: 3, mb: isMobile ? 1: 2 }}
           >
             Sign Up
           </Button>
           <Box textAlign="center" sx={{ mt: 2 }}>
             <Typography variant="body2">
               Already have an account?{" "}
-              <MuiLink href="/auth/sign-up" variant="body2">
+              <MuiLink href="/auth/sign-in" variant="body2">
                 {"Sign In"}
               </MuiLink>
             </Typography>

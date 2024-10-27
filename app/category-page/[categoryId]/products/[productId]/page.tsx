@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import ProductDetailDisplay from "../[productId]/ProductDetailDisplay";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+
 const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+  process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 interface Product {
   _id: string;
   productType: string[];

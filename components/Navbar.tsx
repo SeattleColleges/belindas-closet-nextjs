@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import header_logo from "@/public/belinda-images/header_logo.png";
 import {
@@ -15,95 +15,27 @@ import {
   CssBaseline,
   Divider,
   List,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
 import AuthProfileMenu from "./AuthProfileMenu";
 import ThemeToggle from "./ThemeToggle";
+import useAuth from "@/hooks/useAuth";
 
 const drawerWidth = 240;
 
-// Removed "Dashboard" from navItems array
-const navItems = ["Home", "Sign In", "Donation", "Mission", "Contact"];
-// const navItems = ["Home", "Sign In", "Donation", "Mission", "Dashboard", "Contact"]; // Original
-
-// Removed "/dashboard" from links array
-const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/contact-page"];
-// const links = ["/", "/auth/sign-in", "/donation-info", "/mission-page", "/dashboard", "/contact-page"]; // Original
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [userRole, setUserRole] = useState("");
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { isAuth, user } = useAuth();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  const [token, setToken] = useState("");
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setToken(token);
-      const userRole = JSON.parse(atob(token.split(".")[1])).role;
-      setUserRole(userRole);
-    }
-  }, []);
-
-  const drawer = (
-    <Box sx={{ textAlign: "center" }}>
-      <Link href="/" passHref>
-        <Button color="secondary">
-          <Image src={header_logo} alt="logo" width={100} height={50} />
-        </Button>
-      </Link>
-      <Divider />
-      <List>
-        {navItems.map((item, index) => (
-          <Grid
-            item
-            key={item}
-            sx={{
-              color: "primary.main",
-            }}
-          >
-            {index === 2 ? <CategoryDropDownMenu /> : null}
-            <Link href={links[index]} passHref>
-              <Button key={item} onClick={handleDrawerToggle}>
-                {item}
-              </Button>
-            </Link>
-          </Grid>
-        ))}
-        {/* Conditionally render "Dashboard" for admin/creator */}
-        {(userRole === "admin" || userRole === "creator") && (
-          <Grid item>
-            <Link href="/dashboard" passHref>
-              <Button onClick={handleDrawerToggle}>
-                Dashboard
-              </Button>
-            </Link>
-          </Grid>
-        )}
-      </List>
-      <Divider />
-
-       {/* Theme Toggle for drawer */}
-      <Box sx={{ mt: 2 }} />
-      <ThemeToggle />
-
-      {/* Profile menu for drawer */}
-      <Grid
-        container
-        sx={{
-          position: "absolute",
-          bottom: 0,
-          width: "100%",
-          justifyContent: "center",
-        }}
-      >
-        {token ? <AuthProfileMenu /> : null}
-      </Grid>
-    </Box>
-  );
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -115,7 +47,7 @@ export default function Navbar() {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -126,20 +58,12 @@ export default function Navbar() {
               </Button>
             </Link>
           </Box>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Grid container spacing={2}>
-              {navItems.map((item, index) => (
-                <Grid item key={item} sx={{ display: "flex" }}>
-                  {index === 2 ? <CategoryDropDownMenu /> : null}
-                    <Link href={links[index]} passHref>
-                    <Button key={item} sx={{ color: "#fff" }}>
-                        {item}
-                      </Button>
-                    </Link>
-                </Grid>
-              ))}
-              {/* Conditionally render "Dashboard" for admin/creator */}
-              {(userRole === "admin" || userRole === "creator") && (
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            <Grid container spacing={1}>
+              <Grid item sx={{ display: "flex" }}>
+                <CategoryDropDownMenu />
+              </Grid>
+              {isAuth && user && (user.role === "admin" || user.role === "creator") && (
                 <Grid item>
                   <Link href="/dashboard" passHref>
                     <Button sx={{ color: "primary.contrastText" }}>
@@ -148,6 +72,35 @@ export default function Navbar() {
                   </Link>
                 </Grid>
               )}
+              {!isAuth ? (
+                <Grid item>
+                <Link href="/auth/sign-up" passHref>
+                  <Button
+                    sx={
+                      { color: "primary.main", 
+                      backgroundColor: 'white', 
+                      filter: 'none',
+                      borderRadius: 0,
+                      fontWeight: 700,
+                      '&:hover': {
+                        color: 'primary.contrastText'
+                      }
+                    }} 
+                    >
+                    Sign Up
+                  </Button>
+                </Link>
+              </Grid>
+              ) : null}
+              {!isAuth ? (
+                <Grid item>
+                <Link href="/auth/sign-in" passHref>
+                  <Button sx={{ color: "primary.contrastText" }}>
+                    Log In
+                  </Button>
+                </Link>
+              </Grid>
+              ) : null}
             </Grid>
           </Box>
           
@@ -157,35 +110,17 @@ export default function Navbar() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              ml: { xs: 0, sm: 2 },
+              ml: 2.5,
+              mr: 1
             }}
           >
             <ThemeToggle />
           </Box>
           <Grid item sx={{ display: "flex", justifyContent: "center" }}>
-            {token ? <AuthProfileMenu /> : null}
+            {isAuth ? <AuthProfileMenu /> : null}
           </Grid>
         </Toolbar>
       </AppBar>
-      <nav>
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
       <Box component="main">
         <Toolbar />
       </Box>

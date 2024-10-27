@@ -1,16 +1,17 @@
+"use client";
+
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import { StaticImageData } from "next/image";
-import { Stack, Button, Link } from "@mui/material";
+import { Stack, Button, Link, useTheme, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArchiveIcon from "@mui/icons-material/Archive";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 type ProductCardProps = {
   image: StaticImageData;
@@ -25,6 +26,7 @@ type ProductCardProps = {
   _id: string;
   isHidden: boolean;
   isSold: boolean;
+  showArchiveButton?: boolean; // optional
 };
 export default function ProductCard({
   image,
@@ -37,6 +39,7 @@ export default function ProductCard({
   description,
   href,
   _id,
+  showArchiveButton,
 }: ProductCardProps) {
   const [userRole, setUserRole] = React.useState("");
 
@@ -89,28 +92,31 @@ export default function ProductCard({
     window.location.reload();
   };
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
+
   return (
     <Paper
       sx={{
         p: 2,
         margin: "auto",
         maxWidth: 500,
-        flexGrow: 1,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
       <Grid container spacing={2} justifyContent="center">
         <Grid item>
           <ButtonBase>
             <Link href={href}>
-              <Image
-                src={image}
-                alt="product image"
-                style={{ width: 128, height: 128 }}
-              />
+              <Image src={image} alt="product image" width={isTablet ? 120 : 128} />
             </Link>
           </ButtonBase>
         </Grid>
-        <Grid item xs={12} sm container>
+        <Grid item xs={12} sm container justifyContent={isMobile ? "center" : isTablet ? "center" : "left"}>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
@@ -131,7 +137,17 @@ export default function ProductCard({
               <Typography variant="body2" color="text.secondary">
                 {sizePantsInseam}
               </Typography>
-              <Typography variant="body2" gutterBottom>
+              <Typography
+                variant="body2"
+                gutterBottom
+                sx={{
+                  overflow: "hidden", // Hide text that overflows
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3, // Limit the number of lines
+                  WebkitBoxOrient: "vertical",
+                }}
+              >
                 {description}
               </Typography>
             </Grid>
@@ -139,18 +155,12 @@ export default function ProductCard({
         </Grid>
       </Grid>
       <Stack direction="column" spacing={2} justifyContent="flex-end" mt={2}>
-        <Button
-          variant="contained"
-          href={href}
-          color="primary"
-          sx={{ minWidth: 30, maxWidth: "215px" }}
-        >
+        <Button variant="contained" href={href} color="primary">
           View
         </Button>
-
+        {/* Only show delete and archive buttons if user is admin or creator */}
         {userRole === "admin" || userRole === "creator" ? (
-          <Stack direction="row" spacing={2}>
-            {/* TODO: Add delete function to this button  */}
+          <Stack direction="row" spacing={2} justifyContent={"center"}>
             <Button
               variant="contained"
               startIcon={<DeleteIcon />}
@@ -160,8 +170,8 @@ export default function ProductCard({
             >
               Delete
             </Button>
-            {/* TODO: Add archive function to this button  */}
-            <Button
+            {showArchiveButton && (
+              <Button
               variant="contained"
               startIcon={<ArchiveIcon />}
               color="warning"
@@ -169,7 +179,7 @@ export default function ProductCard({
               sx={{ fontSize: 10 }}
             >
               Archive
-            </Button>
+            </Button> )}
           </Stack>
         ) : null}
       </Stack>

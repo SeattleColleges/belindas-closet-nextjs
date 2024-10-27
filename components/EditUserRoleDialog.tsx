@@ -12,11 +12,9 @@ import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import React, { useEffect, useRef, useState } from "react";
 import { UserCardProps } from "./UserCard";
-import Snackbar from "@mui/material/Snackbar";
-import Alert, { AlertColor } from "@mui/material/Alert";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
-const URL =
-  process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+import { useMediaQuery, useTheme } from "@mui/material";
+
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 const options = ["admin", "creator", "user"];
 
@@ -28,12 +26,7 @@ interface ConfirmationDialogRawProps {
   keepMounted: boolean;
   value: string;
   open: boolean;
-  onClose: (value?: string) => void;
-  setSnackbarOpen: (open: boolean) => void;
-  setSnackbarMessage: (message: string) => void;
-  setSnackbarSeverity: (
-    severity: "error" | "warning" | "info" | "success"
-  ) => void;
+  onClose: (value?: string, success?: boolean) => void;
 }
 
 /**
@@ -47,11 +40,13 @@ export function ConfirmationDialogRaw(
 ) {
   const { onClose, value: valueProp, open, user, ...other } = props;
   const [value, setValue] = useState(valueProp);
+  const [roleUpdated, setRoleUpdated] = useState(false);
   const radioGroupRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!open) {
       setValue(valueProp);
+      setRoleUpdated(false);
     }
   }, [valueProp, open]);
 
@@ -71,39 +66,11 @@ export function ConfirmationDialogRaw(
     onClose();
   };
 
-  /**
-   * Handles the click event when the user confirms the role update.
-   * @returns {void}
-   */
-  const handleOk = async () => {
-    const token = localStorage.getItem("token");
-    console.log("Token:", token);
-    // TODO: Update user role in the database
-    try {
-      const response = await fetch(`${URL}/user/update/${user.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ role: value }),
-      });
-      if (response.ok) {
-        onClose(value);
-        props.setSnackbarSeverity("success");
-        props.setSnackbarMessage("User role updated successfully!");
-        props.setSnackbarOpen(true);
-      } else {
-        console.error("Failed to update user role:", response.statusText);
-        props.setSnackbarSeverity("error");
-        props.setSnackbarMessage("Failed to update user role");
-        props.setSnackbarOpen(true);
-      }
-    } catch (error) {
-      console.error("Error updating user role:", error);
-      props.setSnackbarSeverity("error");
-      props.setSnackbarMessage("Error updating user role");
-      props.setSnackbarOpen(true);
+  const handleOk = () => {
+    if (value !== valueProp) {
+      onClose(value, true);
+    } else {
+      onClose();
     }
   };
 
@@ -112,12 +79,21 @@ export function ConfirmationDialogRaw(
    * @param event - The change event object.
    */
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
+    const newValue = (event.target as HTMLInputElement).value;
+    setValue(newValue);
+    if (newValue !== valueProp) {
+      setRoleUpdated(true);
+    } else {
+      setRoleUpdated(false);
+    }
   };
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Dialog
-      sx={{ "& .MuiDialog-paper": { width: "50%", maxHeight: 435 } }}
+      sx={{ "& .MuiDialog-paper": { width: isMobile ? "85%" : "50%", maxHeight: 435 } }}
       maxWidth="xs"
       TransitionProps={{ onEntering: handleEntering }}
       open={open}
@@ -146,7 +122,7 @@ export function ConfirmationDialogRaw(
         <Button autoFocus onClick={handleCancel}>
           Cancel
         </Button>
-        <Button onClick={handleOk}>Ok</Button>
+        <Button onClick={handleOk} disabled={!roleUpdated}>Ok</Button>
       </DialogActions>
     </Dialog>
   );
@@ -163,38 +139,31 @@ export function ConfirmationDialogRaw(
  */
 export default function EditUserRoleDialog({
   user,
-  onRoleChange,
+  onClose,
 }: {
   user: UserCardProps;
-  onClose: () => void;
-  onRoleChange: (newRole: string) => void;
+  onClose: (newRole?: string, success?: boolean) => void;
 }): JSX.Element {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(user.role);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] =
-    useState<AlertColor>("success");
 
   const handleClickListItem = () => {
     setOpen(true);
   };
 
-  const handleClose = (newValue?: string) => {
+  const handleClose =(newValue?: string, success?: boolean) => {
     setOpen(false);
-
-    if (newValue) {
-      setValue(newValue);
-      onRoleChange(newValue);
-    }
+    onClose(newValue, success);
   };
+
+  const theme = useTheme();
 
   return (
     <Box
       sx={{
         width: "100%",
         maxWidth: 800,
-        bgcolor: "background.paper",
+        bgcolor: "transparent",
         color: "#000",
       }}
     >
@@ -205,8 +174,19 @@ export default function EditUserRoleDialog({
           aria-controls="role-menu"
           aria-label="User role"
           onClick={handleClickListItem}
+          sx={{ backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
+            '&:hover': {
+              backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.2)",
+            }
+            }}
         >
-          <ListItemText primary="Select User Role" secondary={value} />
+          <ListItemText 
+            primary="Select User Role" 
+            secondary={value} 
+            sx={{
+              color: theme.palette.mode === "dark" ? "primary.contrastText" : "primary.dark"
+            }} 
+            />
         </ListItemButton>
         <ConfirmationDialogRaw
           id="role-menu"
@@ -215,24 +195,8 @@ export default function EditUserRoleDialog({
           onClose={handleClose}
           value={value}
           user={user}
-          setSnackbarOpen={setSnackbarOpen}
-          setSnackbarMessage={setSnackbarMessage}
-          setSnackbarSeverity={setSnackbarSeverity}
         />
       </List>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarOpen(false)}
-      >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity={snackbarSeverity}
-          sx={{ width: "100%" }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 }
