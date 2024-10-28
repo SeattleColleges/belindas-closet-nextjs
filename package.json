@@ -14,7 +14,7 @@
     "test:coverage": "jest --coverage--"
   },
   "dependencies": {
-
+    "@emailjs/browser": "^4.4.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.2",
