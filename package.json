@@ -21,6 +21,7 @@
     "@tanstack/react-query": "5.17.15",
     "@types/bcrypt": "5.0.0",
     "@types/material-ui": "^0.21.17",
+<<<<<<< Updated upstream
     "@types/node": "20.4.1",
     "@types/react": "^18.3.1",
     "@types/react-dom": "18.2.6",
@@ -35,6 +36,22 @@
 
     "postcss": "^8.4.47",
     "qrcode.react": "^3.1.0",
+=======
+    "@types/node": "22.7.4",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.20",
+    "bcrypt": "5.1.1",
+    "emailjs-com": "^3.2.0",
+    "eslint": "^8.50.0",
+    "eslint-config-next": "14.2.14",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.7.0",
+    "next": "14.2.14",
+    "next-auth": "^4.24.8",
+    "postcss": "8.4.47",
+    "qrcode.react": "^4.0.1",
+>>>>>>> Stashed changes
     "react": "^18.3.1",
     "react-dom": "18.2.0",
     "react-icons": "^5.2.1",
