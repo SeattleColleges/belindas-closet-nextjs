@@ -1,4 +1,5 @@
 "use client";
+
 import { Chart as ChartJS, registerables } from 'chart.js/auto';
 import { Bar } from "react-chartjs-2";
 import React from "react";
@@ -12,7 +13,7 @@ function generatedDays(length: number): string[] {
     });
 }
 
-export const WeeklyActivity = () => {
+const WeeklyActivity: React.FC = () => {
     const [firstBarRange, setFirstBarRange] = React.useState<number[]>([0, 30]);
     const [secondBarRange, setSecondBarRange] = React.useState<number[]>([0, 7]);
 
