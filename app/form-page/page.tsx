@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { useState, ChangeEvent, FormEvent } from 'react';
 
 interface FormData {
@@ -29,7 +29,7 @@ export default function FormPage() {
 
   return (
     <div>
-      <h1>Belinda's Closet Student Form</h1>
+      <h1>Belinda&apos;s Closet Student Form</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Name:
