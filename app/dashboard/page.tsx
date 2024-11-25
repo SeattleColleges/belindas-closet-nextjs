@@ -2,6 +2,7 @@
 import { Typography, Box, Stack, Button } from "@mui/material";
 import { SetStateAction, useEffect, useState } from "react";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
+import WeeklyActivity from "@/app/dashboard/weeklyActivity/page";
 import Image from "next/image";
 import header_logo from "@/public/belinda-images/nsc_mascot.png";
 
@@ -203,6 +204,7 @@ const Dashboard = () => {
           {sideContent}
         </Box>
         {/* Add your dashboard content here */}
+        <WeeklyActivity />
       </div>
     );
   } else {
