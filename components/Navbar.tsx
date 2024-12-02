@@ -60,11 +60,22 @@ export default function Navbar() {
           </Box>
           <Box sx={{ display: { xs: "none", md: "block" } }}>
             <Grid container spacing={1}>
-              <Grid item sx={{ display: "flex" }}>
+              <Grid item sx={{ 
+                display: "flex",
+                flexShrink: 0,
+                alignItems: "center",
+                marginRight: "1rem", 
+                }}
+                >
                 <CategoryDropDownMenu />
               </Grid>
               {isAuth && user && (user.role === "admin" || user.role === "creator") && (
-                <Grid item>
+                <Grid item sx={{
+                  flexShrink: 0,
+                  alignItems: "center",
+                  marginLeft: "1rem",
+                }}
+                >
                   <Link href="/dashboard" passHref>
                     <Button sx={{ color: "primary.contrastText" }}>
                       Dashboard
