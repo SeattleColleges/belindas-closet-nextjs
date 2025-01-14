@@ -26,6 +26,10 @@ while True:
         }
     )
     
+    # Check for valid response
+    if response.status_code != 200:
+        print(f"Error fetching issue #{ISSUE_NUM}: {response.json()}")
+        break
 
     issues = response.json()
 
