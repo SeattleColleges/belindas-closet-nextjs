@@ -131,7 +131,7 @@ const Home = () => {
           </Stack>
         </Popover>
       </Stack>
-      <Grid container spacing={2} sx={{maxWidth: 1200, width: '100%'}}>
+      <Grid container spacing={0} sx={{maxWidth: 1200, width: '100%'}}>
         <Grid xs={6} md={4} lg={3}>
             <CategoryBlock category="Shirts"/>
           </Grid>
