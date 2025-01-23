@@ -16,15 +16,20 @@ export default function FormPage() {
     size: '',
   });
 
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
+    // Test if all fields are filled out
+    if (formData.name && formData.gender && formData.email && formData.size) {
+      alert('Form submitted successfully!');
+    } else {
+      alert('Please fill out all fields');
+    }
   };
 
   return (
@@ -33,22 +38,51 @@ export default function FormPage() {
       <form onSubmit={handleSubmit}>
         <label>
           Name:
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
         </label>
         <br />
         <label>
           Gender:
-          <input type="text" name="gender" value={formData.gender} onChange={handleChange} />
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="nonbinary">Non-Binary</option>
+          </select>
         </label>
         <br />
         <label>
           Email:
-          <input type="text" name="email" value={formData.email} onChange={handleChange} />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
         </label>
         <br />
         <label>
           Size:
-          <input type="text" name="size" value={formData.size} onChange={handleChange} />
+          <input
+            type="text"
+            name="size"
+            value={formData.size}
+            onChange={handleChange}
+            placeholder="e.g., S, M, L, XL"
+            required
+          />
         </label>
         <br />
         <button type="submit">Submit</button>
@@ -56,4 +90,3 @@ export default function FormPage() {
     </div>
   );
 }
-
