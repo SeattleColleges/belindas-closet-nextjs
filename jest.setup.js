@@ -1,5 +1,15 @@
 import '@testing-library/jest-dom';
 
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+
+module.exports = {
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
+};
+
+
 // Old import replaced by the one above: import '@testing-library/jest-dom/extend-expect';
 
 // Trying to suppress console.error for creator page test (Error: Not implemented: navigation (except hash changes), this solution fails.  
