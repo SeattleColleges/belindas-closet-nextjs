@@ -1,9 +1,7 @@
 "use client";
-
 import { useState } from 'react';
 import { Typography, Box, TextField, Button } from "@mui/material";
 import emailjs from 'emailjs-com';
-
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -40,17 +38,6 @@ const Contact = () => {
     };
 
     setErrors(newErrors);
-
-        // If there are any errors, show an alert and stop the form submission
-        if (newErrors.name || newErrors.email || newErrors.message) {
-          alert('Please fill out all required fields.');
-          return;
-      }
-
-        if (newErrors.emailFormat){
-          alert('Please enter a valid email address.');
-          return;
-        }
 
     //send the email if validation is successful
     emailjs.sendForm('service_tcqmiub', 'template_umbo1q7', e.target as HTMLFormElement, 'iHLRPRzpKKnhc1Mlr')

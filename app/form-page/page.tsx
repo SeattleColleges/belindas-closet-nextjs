@@ -1,5 +1,7 @@
-'use client'
-import { useState, ChangeEvent, FormEvent } from 'react';
+'use client';
+import { useState } from 'react';
+import { Typography, Box, TextField, Button } from "@mui/material";
+import emailjs from 'emailjs-com';
 
 interface FormData {
   name: string;
@@ -8,7 +10,8 @@ interface FormData {
   size: string;
 }
 
-export default function FormPage() {
+const FormPage = () => {
+  const [errors, setErrors] = useState({} as Record<keyof FormData, boolean>);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     gender: '',
@@ -16,77 +19,107 @@ export default function FormPage() {
     size: '',
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Test if all fields are filled out
-    if (formData.name && formData.gender && formData.email && formData.size) {
-      alert('Form submitted successfully!');
-    } else {
-      alert('Please fill out all fields');
+
+    //Regex for most valid email addresses.
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    //check if form fields are empty
+    const newErrors = {
+      name: formData.name.trim() === '',
+      gender: formData.gender.trim() === '',
+      email: formData.email.trim() === '',
+      size: formData.size.trim() === '',
+      emailFormat: !emailRegex.test(formData.email),
+    };
+
+    setErrors(newErrors);
+
+    // If there are any errors, show an alert and stop the form submission
+    if (newErrors.name || newErrors.gender || newErrors.email || newErrors.size) {
+      alert('Please fill out all required fields.');
+      return;
     }
+
+    if (newErrors.emailFormat) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    //send the email if validation is successful
+    emailjs.sendForm('service_tcqmiub', 'template_umbo1q7', e.target as HTMLFormElement, 'iHLRPRzpKKnhc1Mlr')
+      .then((result) => {
+        alert('Form submitted successfully!');
+        setFormData({
+          name: '',
+          gender: '',
+          email: '',
+          size: '',
+        }); // Clear the form
+      }, (error) => {
+        alert('Error submitting form. Please try again.');
+        console.error(error.text);
+      });
   };
 
   return (
-    <div>
-      <h1>Belinda&apos;s Closet Student Form</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
+    <Box sx={{ padding: 3 }}>
+      <Typography variant="h1" align="center">Belinda&apos;s Closet Student Form</Typography>
+      <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <TextField
             type="text"
             name="name"
+            variant='outlined'
+            label="Name"
             value={formData.name}
             onChange={handleChange}
             required
           />
-        </label>
-        <br />
-        <label>
-          Gender:
-          <select
+          <TextField
+            type="text"
             name="gender"
+            variant='outlined'
+            label="Gender"
             value={formData.gender}
             onChange={handleChange}
             required
-          >
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="nonbinary">Non-Binary</option>
-          </select>
-        </label>
-        <br />
-        <label>
-          Email:
-          <input
-            type="email"
+          />
+          <TextField
+            type="text"
             name="email"
+            variant='outlined'
+            label="Email"
             value={formData.email}
             onChange={handleChange}
             required
           />
-        </label>
-        <br />
-        <label>
-          Size:
-          <input
+          <TextField
             type="text"
             name="size"
+            variant='outlined'
+            label="Size"
             value={formData.size}
             onChange={handleChange}
-            placeholder="e.g., S, M, L, XL"
             required
           />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+          <Button variant="contained" color="primary" type="submit">
+            Send Message
+          </Button>
+          <Typography variant="body1" paragraph sx={{ textAlign: 'left' }}>
+            Email: edi.north@seattlecolleges.edu<br></br>
+            Phone: (206) 934-3719
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
-}
+};
+
+export default FormPage;
