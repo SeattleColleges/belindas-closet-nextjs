@@ -24,7 +24,7 @@ const styles = {
         flexDirection: "row"
     }
   };
-
+// dasdasdasda
 export default function Footer(){
 
     return(
