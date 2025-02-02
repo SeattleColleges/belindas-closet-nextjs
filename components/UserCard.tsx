@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Box, Button, Container, Snackbar, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import EditUserRoleDialog from "./EditUserRoleDialog";
 import Alert, { AlertColor } from '@mui/material/Alert';
+import DeleteUserDialog from "./DeleteUserDialog";
 
 export interface UserCardProps {
   id: string;
@@ -16,12 +18,53 @@ export interface UserCardProps {
 function UserCard({ user }: { user: UserCardProps }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [editCompleted, setEditCompleted] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [deleteCompleted, setDeleteCompleted] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
   const [newRole, setNewRole] = useState(user.role);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const handleDeleteClick = async () => {
+    if (deleteCompleted) {
+      window.location.reload();
+    } else if (openDeleteDialog) {
+      setOpenDeleteDialog(false);
+    } else {
+      setOpenDeleteDialog(true);
+    }
+    if (deleteCompleted) {
+      const token = localStorage.getItem('token');
+      try {
+        const apiUrl = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || `http://localhost:3000/api`;
+        const response = await fetch(`${apiUrl}/user/delete/${user.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ deleted: user.firstName })
+        });
+        if (response.ok) {
+          setSnackbarSeverity('success');
+          setSnackbarMessage('User account deleted successfully!');
+          setSnackbarOpen(true);
+        } else {
+          console.error('Failed to delete user account:', response.statusText);
+          setSnackbarSeverity('error');
+          setSnackbarMessage('Failed to delete user account');
+          setSnackbarOpen(true);
+        }
+      } catch (error) {
+        console.error('Error deleting user account:', error);
+        setSnackbarSeverity('error');
+        setSnackbarMessage('Error deleting user account');
+        setSnackbarOpen(true);
+      }
+    }
+  };
 
   const handleEditClick = async () => {
     if (editCompleted) {
@@ -80,7 +123,7 @@ function UserCard({ user }: { user: UserCardProps }) {
       setOpenDialog(false);
     }
   };
-  
+
   return (
     <Container
       fixed
@@ -113,9 +156,9 @@ function UserCard({ user }: { user: UserCardProps }) {
             Current Role: {user.role}
           </Typography>
           {editCompleted && (
-          <Typography variant="body1" gutterBottom>
-            Selected Role: {newRole}
-          </Typography>
+            <Typography variant="body1" gutterBottom>
+              Selected Role: {newRole}
+            </Typography>
           )}
         </Box>
         {openDialog && (
@@ -123,37 +166,51 @@ function UserCard({ user }: { user: UserCardProps }) {
             <EditUserRoleDialog user={user} onClose={handleCloseDialog} />
           </Box>
         )}
-        <Box p={2} display="flex" justifyContent="center">
-        {!openDialog && (
-          <Button
-            variant="contained"
-            color="primary"
-            endIcon={editCompleted ? "" : <EditIcon />}
-            onClick={editCompleted ? handleCancel : handleEditClick}
-          >
-          {editCompleted ? "Cancel" : "Edit"}
-          </Button>
+        <Box p={1} display="flex" justifyContent="center">
+          {!openDialog && (
+            <Button
+              variant="contained"
+              color="primary"
+              endIcon={editCompleted ? "" : <EditIcon />}
+              onClick={editCompleted ? handleCancel : handleEditClick}
+            >
+              {editCompleted ? "Cancel" : "Edit"}
+            </Button>
+          )}
+          {openDialog && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+          )}
+          {editCompleted && (
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ ml: 2 }}
+              endIcon={<CheckIcon />}
+              onClick={handleEditClick}
+            >
+              Done
+            </Button>
+          )}
+        </Box>
+        {openDeleteDialog && (
+          <DeleteUserDialog user={user} />
         )}
-        {openDialog && (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCancel}
-          >
-          Cancel
-          </Button>
-        )}
-        {editCompleted && (
+        <Box p={1} display="flex" justifyContent="center">
           <Button
             variant="contained"
             color="primary"
             sx={{ ml: 2 }}
-            endIcon={<CheckIcon />}
-            onClick={handleEditClick}
+            endIcon={<DeleteIcon />}
+            onClick={handleDeleteClick}
           >
-            Done
+            Delete
           </Button>
-        )}
         </Box>
       </Stack>
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
