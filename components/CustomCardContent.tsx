@@ -9,6 +9,7 @@ type CategoryCardProps = {
   title: string;
   alt: string;
 };
+// fsadfasfsdf
 
 const CustomCardContent: React.FC<CategoryCardProps> = ({ id, title, alt }) => {
 const router = useRouter();
