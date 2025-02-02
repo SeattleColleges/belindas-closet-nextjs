@@ -73,7 +73,7 @@ export default function EditProductDialog({
     e: React.ChangeEvent<{ value: string }>
   ) => {
     setProductGender([e.target.value]);
-    setIsUpdated(true);
+    // setIsUpdated(true);
   };
 
   const handleProductSizeShoeSelect = (

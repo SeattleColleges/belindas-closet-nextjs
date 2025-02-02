@@ -19,7 +19,7 @@ const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 const options = ["admin", "creator", "user"];
 
 /**
- * Props for the ConfirmationDialogRaw component.
+ * Props for the ConfirmationDialogRaw component.123123
  */
 interface ConfirmationDialogRawProps {
   id: string;

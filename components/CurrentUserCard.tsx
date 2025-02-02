@@ -42,7 +42,7 @@ function CurrentUserCard({ user }: { user: CurrentUserCardProps }) {
           Pronouns: {user.pronoun}
         </Typography>
       </Stack>
-    </Container>
+    {/* </Container> */}
   );
 }
 export default CurrentUserCard;
