@@ -109,7 +109,7 @@ export default function CategoryBlock({category, variant}: {category: string, va
                             <CategoryText ownerState={ownerState} 
                                 y="50%" x='50%' 
                                 dominantBaseline='middle' textAnchor='middle' 
-                                paint-order="stroke" 
+                                paintOrder="stroke" 
                                 textLength={'75%'} lengthAdjust="spacingAndGlyphs">
                                 {category.toLowerCase()}
                             </CategoryText>

@@ -7,7 +7,7 @@ export interface ImageBannerProps {
 }
 
 export interface ImageWrapperProps {
-    imageURL: string;
+    imageurl: string;
 }
 
 const myEffect = keyframes`
@@ -45,18 +45,18 @@ export default function ImageBanner(){
         flexDirection: 'row',
         animation: `${myEffect} 70s linear infinite`,
         '&:hover': {
-            'animation-play-state': 'paused'
+            'animationPlayState': 'paused'
         }
     }));
 
     const ImageWrapper = styled('div', {
         name: 'ImageBanner',
         slot: 'wrapper'
-    })<ImageWrapperProps>(({theme, imageURL}) => ({
+    })<ImageWrapperProps>(({theme, imageurl}) => ({
         width: '1500px',
         height: '100%',
         border: '2px solid white',
-        backgroundImage: `url(${imageURL})`,
+        backgroundImage: `url(${imageurl})`,
         backgroundPosition: '0% 7%',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
@@ -69,26 +69,26 @@ export default function ImageBanner(){
             return(
                 <BannerLimiter>
                     <BannerWrapper>
-                    <ImageWrapper color="black" imageURL='/belinda-images/banner-images/belindaspromo1.jpg'>
+                    <ImageWrapper color="black" imageurl='/belinda-images/banner-images/belindaspromo1.jpg'>
                     </ImageWrapper>
-                    <ImageWrapper color="blue"  imageURL='/belinda-images/banner-images/belindaspromo2.jpg'>
+                    <ImageWrapper color="blue"  imageurl='/belinda-images/banner-images/belindaspromo2.jpg'>
                     </ImageWrapper>
-                    <ImageWrapper color="white"  imageURL='/belinda-images/banner-images/belindaspromo3.jpg'>
+                    <ImageWrapper color="white"  imageurl='/belinda-images/banner-images/belindaspromo3.jpg'>
                     </ImageWrapper>
-                    <ImageWrapper color="grey"  imageURL='/belinda-images/banner-images/belindaspromo4.jpg'>
+                    <ImageWrapper color="grey"  imageurl='/belinda-images/banner-images/belindaspromo4.jpg'>
                     </ImageWrapper>
-                    <ImageWrapper color="red"  imageURL='/belinda-images/banner-images/belindaspromo5.jpg'>
+                    <ImageWrapper color="red"  imageurl='/belinda-images/banner-images/belindaspromo5.jpg'>
                     </ImageWrapper>
 
-                    <ImageWrapper color="black" imageURL='/belinda-images/banner-images/belindaspromo1.jpg'>
+                    <ImageWrapper color="black" imageurl='/belinda-images/banner-images/belindaspromo1.jpg'>
                     </ImageWrapper>
-                    <ImageWrapper color="blue"  imageURL='/belinda-images/banner-images/belindaspromo2.jpg'>
+                    <ImageWrapper color="blue"  imageurl='/belinda-images/banner-images/belindaspromo2.jpg'>
                     </ImageWrapper>
-                    <ImageWrapper color="white"  imageURL='/belinda-images/banner-images/belindaspromo3.jpg'>
+                    <ImageWrapper color="white"  imageurl='/belinda-images/banner-images/belindaspromo3.jpg'>
                     </ImageWrapper>
-                    <ImageWrapper color="grey"  imageURL='/belinda-images/banner-images/belindaspromo4.jpg'>
+                    <ImageWrapper color="grey"  imageurl='/belinda-images/banner-images/belindaspromo4.jpg'>
                     </ImageWrapper>
-                    <ImageWrapper color="red"  imageURL='/belinda-images/banner-images/belindaspromo5.jpg'>
+                    <ImageWrapper color="red"  imageurl='/belinda-images/banner-images/belindaspromo5.jpg'>
                     </ImageWrapper>
                 </BannerWrapper>
                 </BannerLimiter>

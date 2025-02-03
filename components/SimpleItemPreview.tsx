@@ -29,16 +29,16 @@ declare module "@mui/material/styles" {
 export function SimpleItemPreview({ product }: {product: Product }) {
     const router = useRouter()
     // variable only to set the background during development and testing
-    let BackgroundImageURL: string;
-    if (product.productType.includes('Skirts')) { BackgroundImageURL = "https://media.istockphoto.com/id/1089326536/photo/horizontal-cropped-image-of-stylish-slim-woman-in-beautiful-yellow-skirt-caucasian-female.jpg?s=1024x1024&w=is&k=20&c=pojdrr2t_2JRhGczoAS66P2JLn65d__9FN_Dhscnwm0="}
-    if (product.productType.includes('Pants')) { BackgroundImageURL = "https://media.istockphoto.com/id/1221134337/photo/front-views-black-trousers.jpg?s=1024x1024&w=is&k=20&c=rVKYfysfiwgAWdVY5d0PXcy_RQHtRtxwNQMe365kVac="}
-    if (product.productType.includes('Shirts')) { BackgroundImageURL = "https://i.etsystatic.com/27918564/r/il/63e701/3281550374/il_794xN.3281550374_8cmm.jpg"}
-    if (product.productType.includes('Shoes')) { BackgroundImageURL = "https://media.istockphoto.com/id/1189775398/photo/wardrobe-order.jpg?s=1024x1024&w=is&k=20&c=gkooE8BGwECY2DvTPOj6BR85cpIna5h1AVlPuOH7UlM="}
-    if (product.productType.includes('Jacket/Blazer')) { BackgroundImageURL = "https://media.istockphoto.com/id/1152838910/photo/male-dark-blue-blazer-on-isolated-background.jpg?s=1024x1024&w=is&k=20&c=kXvTrgkvlSm7ZfIv99wE-fmj3bW36LGb2uG8HGPkWxM="}
-    if (product.productType.includes('Dress')) { BackgroundImageURL = "https://media.istockphoto.com/id/1440977634/photo/vertical-shot-of-the-beautiful-pink-dress-isolated-on-the-white-background.jpg?s=1024x1024&w=is&k=20&c=9ssDBqQ4ZXiOk26XzSAy84N3GW0IWUAbWQRKBnb3Cvw="}
-    if (product.productType.includes('Suits')) { BackgroundImageURL = "https://c7.alamy.com/comp/C5J128/suits-on-the-rack-isolated-on-white-C5J128.jpg"}
-    if (product.productType.includes('Casual Wear')) { BackgroundImageURL = "https://media.istockphoto.com/id/1314274760/photo/sport-pants.jpg?s=1024x1024&w=is&k=20&c=2KOUwWbbErCpdCDKvorVkV7_-BSSYX_E6vX6CjGTFh4="}
-    if (product.productType.includes('Accessories')) { BackgroundImageURL = "https://media.istockphoto.com/id/531786318/photo/top-view-of-female-fashion-accessories.jpg?s=1024x1024&w=is&k=20&c=9sBort3zBYN8iUuRnxt2XqS5NX4WEkfhk5gBLUv7oTc="}
+    let Backgroundimageurl: string;
+    if (product.productType.includes('Skirts')) { Backgroundimageurl = "https://media.istockphoto.com/id/1089326536/photo/horizontal-cropped-image-of-stylish-slim-woman-in-beautiful-yellow-skirt-caucasian-female.jpg?s=1024x1024&w=is&k=20&c=pojdrr2t_2JRhGczoAS66P2JLn65d__9FN_Dhscnwm0="}
+    if (product.productType.includes('Pants')) { Backgroundimageurl = "https://media.istockphoto.com/id/1221134337/photo/front-views-black-trousers.jpg?s=1024x1024&w=is&k=20&c=rVKYfysfiwgAWdVY5d0PXcy_RQHtRtxwNQMe365kVac="}
+    if (product.productType.includes('Shirts')) { Backgroundimageurl = "https://i.etsystatic.com/27918564/r/il/63e701/3281550374/il_794xN.3281550374_8cmm.jpg"}
+    if (product.productType.includes('Shoes')) { Backgroundimageurl = "https://media.istockphoto.com/id/1189775398/photo/wardrobe-order.jpg?s=1024x1024&w=is&k=20&c=gkooE8BGwECY2DvTPOj6BR85cpIna5h1AVlPuOH7UlM="}
+    if (product.productType.includes('Jacket/Blazer')) { Backgroundimageurl = "https://media.istockphoto.com/id/1152838910/photo/male-dark-blue-blazer-on-isolated-background.jpg?s=1024x1024&w=is&k=20&c=kXvTrgkvlSm7ZfIv99wE-fmj3bW36LGb2uG8HGPkWxM="}
+    if (product.productType.includes('Dress')) { Backgroundimageurl = "https://media.istockphoto.com/id/1440977634/photo/vertical-shot-of-the-beautiful-pink-dress-isolated-on-the-white-background.jpg?s=1024x1024&w=is&k=20&c=9ssDBqQ4ZXiOk26XzSAy84N3GW0IWUAbWQRKBnb3Cvw="}
+    if (product.productType.includes('Suits')) { Backgroundimageurl = "https://c7.alamy.com/comp/C5J128/suits-on-the-rack-isolated-on-white-C5J128.jpg"}
+    if (product.productType.includes('Casual Wear')) { Backgroundimageurl = "https://media.istockphoto.com/id/1314274760/photo/sport-pants.jpg?s=1024x1024&w=is&k=20&c=2KOUwWbbErCpdCDKvorVkV7_-BSSYX_E6vX6CjGTFh4="}
+    if (product.productType.includes('Accessories')) { Backgroundimageurl = "https://media.istockphoto.com/id/531786318/photo/top-view-of-female-fashion-accessories.jpg?s=1024x1024&w=is&k=20&c=9sBort3zBYN8iUuRnxt2XqS5NX4WEkfhk5gBLUv7oTc="}
 
     const ItemPreviewContainer = styled('div', {
         name: 'ItemPreview',
@@ -48,7 +48,7 @@ export function SimpleItemPreview({ product }: {product: Product }) {
                     width: 175, 
                     minWidth: 175, 
                     color: 'black',
-                    backgroundImage: `url(${BackgroundImageURL})`,
+                    backgroundImage: `url(${Backgroundimageurl})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
