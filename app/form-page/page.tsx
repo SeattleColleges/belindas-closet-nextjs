@@ -69,8 +69,9 @@ const FormPage = () => {
   };
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", padding: 3, gap: 2 }}>
       <Typography variant="h1" align="center">Belinda&apos;s Closet Student Form</Typography>
+      <Typography variant="subtitle1" color='red'>* Indicates field is required</Typography>
       <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <TextField
@@ -110,7 +111,7 @@ const FormPage = () => {
             required
           />
           <Button variant="contained" color="primary" type="submit">
-            Send Message
+            Submit Form
           </Button>
           <Typography variant="body1" paragraph sx={{ textAlign: 'left' }}>
             Email: edi.north@seattlecolleges.edu<br></br>
@@ -118,7 +119,7 @@ const FormPage = () => {
           </Typography>
         </Box>
       </Box>
-    </Box>
+    </Box >
   );
 };
 
