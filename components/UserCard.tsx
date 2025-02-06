@@ -29,7 +29,7 @@ function UserCard({ user }: { user: UserCardProps }) {
 
   const handleDeleteClick = async () => {
     if (deleteCompleted) {
-      window.location.reload();
+      // window.location.reload();
     } else if (openDeleteDialog) {
       setOpenDeleteDialog(false);
     } else {
@@ -47,6 +47,7 @@ function UserCard({ user }: { user: UserCardProps }) {
           },
           body: JSON.stringify({ deleted: user.firstName })
         });
+        console.log(response);
         if (response.ok) {
           setSnackbarSeverity('success');
           setSnackbarMessage('User account deleted successfully!');
