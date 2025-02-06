@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import EditUserRoleDialog from "./EditUserRoleDialog";
 import Alert, { AlertColor } from '@mui/material/Alert';
-import DeleteUserDialog from "./DeleteUserDialog";
+import ConfirmDeleteUserDialog from "./ConfirmDeleteUserDialog";
 
 export interface UserCardProps {
   id: string;
@@ -19,7 +19,6 @@ function UserCard({ user }: { user: UserCardProps }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [editCompleted, setEditCompleted] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [deleteCompleted, setDeleteCompleted] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
@@ -28,42 +27,10 @@ function UserCard({ user }: { user: UserCardProps }) {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleDeleteClick = async () => {
-    if (deleteCompleted) {
-      // window.location.reload();
-    } else if (openDeleteDialog) {
+    if (openDeleteDialog) {
       setOpenDeleteDialog(false);
     } else {
       setOpenDeleteDialog(true);
-    }
-    if (deleteCompleted) {
-      const token = localStorage.getItem('token');
-      try {
-        const apiUrl = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || `http://localhost:3000/api`;
-        const response = await fetch(`${apiUrl}/user/delete/${user.id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ deleted: user.firstName })
-        });
-        console.log(response);
-        if (response.ok) {
-          setSnackbarSeverity('success');
-          setSnackbarMessage('User account deleted successfully!');
-          setSnackbarOpen(true);
-        } else {
-          console.error('Failed to delete user account:', response.statusText);
-          setSnackbarSeverity('error');
-          setSnackbarMessage('Failed to delete user account');
-          setSnackbarOpen(true);
-        }
-      } catch (error) {
-        console.error('Error deleting user account:', error);
-        setSnackbarSeverity('error');
-        setSnackbarMessage('Error deleting user account');
-        setSnackbarOpen(true);
-      }
     }
   };
 
@@ -119,7 +86,6 @@ function UserCard({ user }: { user: UserCardProps }) {
     if (editCompleted) {
       setOpenDialog(false);
       setEditCompleted(false);
-
     } else {
       setOpenDialog(false);
     }
@@ -200,7 +166,10 @@ function UserCard({ user }: { user: UserCardProps }) {
           )}
         </Box>
         {openDeleteDialog && (
-          <DeleteUserDialog user={user} />
+          <ConfirmDeleteUserDialog
+            user={user}
+            open={openDeleteDialog}
+            setOpen={setOpenDeleteDialog} />
         )}
         <Box p={1} display="flex" justifyContent="center">
           <Button
