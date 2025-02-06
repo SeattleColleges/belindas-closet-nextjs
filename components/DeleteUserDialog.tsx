@@ -9,9 +9,6 @@ import { UserCardProps } from './UserCard';
 
 function DeleteUser({ user }: { user: UserCardProps }) {
     const [open, setOpen] = React.useState(true);
-    // const handleClickOpen = () => {
-    //     setOpen(true);
-    // };
     const handleClose = () => {
         setOpen(false);
     };
@@ -35,17 +32,11 @@ function DeleteUser({ user }: { user: UserCardProps }) {
             }
         } catch (error) {
             console.error('Error deleting user account:', error);
-            // setSnackbarSeverity('error');
-            // setSnackbarMessage('Error deleting user account');
-            // setSnackbarOpen(true);
         }
     }
 
     return (
         <React.Fragment>
-            {/* <Button variant="outlined" onClick={handleClickOpen}>
-                Delete User
-            </Button> */}
             <Dialog
                 open={open}
                 onClose={handleClose}
