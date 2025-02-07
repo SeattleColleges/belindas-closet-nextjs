@@ -55,7 +55,7 @@ export default function Navbar() {
 
   //Sidebar for mobile
   const drawer = (
-      <Box sx={{ width: 240 }} role="presentation" onClick={handleDrawerToggle}>
+      <Box sx={{ width: 240 }} role="presentation" onClick={(e) => e.stopPropagation()}>
         <List>
           <ListItem>
             <Link href="/" passHref legacyBehavior>
@@ -92,7 +92,7 @@ export default function Navbar() {
                 </ListItem>
               </>
           )}
-          {isAuth && <ListItem><AuthProfileMenu /></ListItem>}
+          {isAuth && <ListItem onClick={(e) => e.stopPropagation()}><AuthProfileMenu /></ListItem>}
         </List>
       </Box>
   );
