@@ -27,38 +27,58 @@ export default function FormPage() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    /*
-    Check if any field is empty
-    ----------------------------
-    */
-    if (!formData.name || !formData.gender || !formData.email || !formData.size) {
-      setSnackbarSeverity('error');
-      setSnackbarMessage('Please fill in all fields.');
-      setSnackbarOpen(true);
-      return; // Prevent form submission
-    }
-    /*
-    Check if email format is correct
-    ---------------------------------
-    */
-    else if (!emailRegex.test(formData.email)) {
-      setSnackbarSeverity('error');
-      setSnackbarMessage('Please enter a valid email address.');
-      setSnackbarOpen(true);
-      return; // Prevent form submission
-    }
-    /*
-    FORM SUCCESSFULLY SUBMITTED
-    ----------------------------
-    */
-    else {
+
+    try {
+      /*
+      Check if any field is empty
+      ----------------------------
+      */
+      if (!formData.name || !formData.gender || !formData.email || !formData.size) {
+        throw new Error('Please fill in all fields.');
+      }
+      /*
+      Check if email format is correct
+      ---------------------------------
+      */
+      if (!emailRegex.test(formData.email)) {
+        throw new Error('Please enter a valid email address.');
+      }
+      /*
+      POST form data
+      ---------------
+      */
+      const response = await fetch('http://localhost:3000/api/submission-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit form.');
+      }
+      /*
+      ALERT SUCCESS
+      ----------------------------
+      */
       setSnackbarSeverity('success');
-      setSnackbarMessage("Form successfully submitted!");
+      setSnackbarMessage('Form successfully submitted!');
       setSnackbarOpen(true);
       // For use in testing form submission
       console.log('Form submitted:', formData);
+    } catch (error) {
+      /*
+      ALERT ERROR
+      ----------------------------
+      */
+      if (error instanceof Error) {
+        setSnackbarSeverity('error');
+        setSnackbarMessage(error.message);
+        setSnackbarOpen(true);
+      }
     }
   };
 
