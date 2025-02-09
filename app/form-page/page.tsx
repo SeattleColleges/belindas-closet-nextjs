@@ -1,7 +1,7 @@
-'use client';
-import { useState } from 'react';
-import { Typography, Box, TextField, Button } from "@mui/material";
-import emailjs from 'emailjs-com';
+'use client'
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { Typography, Box, TextField, Button, Snackbar } from "@mui/material";
+import Alert, { AlertColor } from '@mui/material/Alert';
 
 interface FormData {
   name: string;
@@ -10,8 +10,11 @@ interface FormData {
   size: string;
 }
 
-const FormPage = () => {
-  const [errors, setErrors] = useState({} as Record<keyof FormData, boolean>);
+export default function FormPage() {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [formData, setFormData] = useState<FormData>({
     name: '',
     gender: '',
@@ -19,53 +22,44 @@ const FormPage = () => {
     size: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    //Regex for most valid email addresses.
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    //check if form fields are empty
-    const newErrors = {
-      name: formData.name.trim() === '',
-      gender: formData.gender.trim() === '',
-      email: formData.email.trim() === '',
-      size: formData.size.trim() === '',
-      emailFormat: !emailRegex.test(formData.email),
-    };
-
-    setErrors(newErrors);
-
-    // If there are any errors, show an alert and stop the form submission
-    if (newErrors.name || newErrors.gender || newErrors.email || newErrors.size) {
-      alert('Please fill out all required fields.');
-      return;
+    /*
+    Check if any field is empty
+    ----------------------------
+    */
+    if (!formData.name || !formData.gender || !formData.email || !formData.size) {
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Please fill in all fields.');
+      setSnackbarOpen(true);
+      return; // Prevent form submission
     }
-
-    if (newErrors.emailFormat) {
-      alert('Please enter a valid email address.');
-      return;
+    /*
+    Check if email format is correct
+    ---------------------------------
+    */
+    else if (!emailRegex.test(formData.email)) {
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Please enter a valid email address.');
+      setSnackbarOpen(true);
+      return; // Prevent form submission
     }
-
-    //send the email if validation is successful
-    emailjs.sendForm('service_tcqmiub', 'template_umbo1q7', e.target as HTMLFormElement, 'iHLRPRzpKKnhc1Mlr')
-      .then((result) => {
-        alert('Form submitted successfully!');
-        setFormData({
-          name: '',
-          gender: '',
-          email: '',
-          size: '',
-        }); // Clear the form
-      }, (error) => {
-        alert('Error submitting form. Please try again.');
-        console.error(error.text);
-      });
+    /*
+    FORM SUCCESSFULLY SUBMITTED
+    ----------------------------
+    */
+    else {
+      setSnackbarSeverity('success');
+      setSnackbarMessage("Form successfully submitted!");
+      setSnackbarOpen(true);
+      // For use in testing form submission
+      console.log('Form submitted:', formData);
+    }
   };
 
   return (
@@ -101,6 +95,11 @@ const FormPage = () => {
             onChange={handleChange}
             required
           />
+          <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+            <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+              {snackbarMessage}
+            </Alert>
+          </Snackbar>
           <TextField
             type="text"
             name="size"
