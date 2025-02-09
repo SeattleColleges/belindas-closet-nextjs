@@ -27,7 +27,7 @@ export default function FormPage() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     /*
     Check if any field is empty
@@ -121,5 +121,3 @@ export default function FormPage() {
     </Box >
   );
 };
-
-export default FormPage;
