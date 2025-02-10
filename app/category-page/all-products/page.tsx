@@ -67,6 +67,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
         console.log("Gender filters: ", genderFilters)
     }, [productFilters])
 
+    // TODO: Re-attempt to combine the logic below later
     function flipEntryProduct(item:String) {
         console.log("Item: ", item)
         setProductFilters((products) => {
@@ -74,6 +75,17 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                 return [...products, item];
             } else {
                 return products.filter((value) => value !== item);
+            }
+        });
+    }
+
+    function flipEntryGender(item:String) {
+        console.log("Item: ", item)
+        setGenderFilters((gender) => {
+            if (!gender.includes(item)) {
+                return [...gender, item];
+            } else {
+                return gender.filter((value) => value !== item);
             }
         });
     }
@@ -116,6 +128,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                     <FormControlLabel
                                         control={<Checkbox defaultChecked/>}
                                         label={item}
+                                        onClick={(e) => flipEntryGender(item)}
                                     />
                                 ))}
                             </FormGroup>
