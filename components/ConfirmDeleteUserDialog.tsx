@@ -7,6 +7,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Snackbar from "@mui/material/Snackbar";
 import { useTheme } from "@mui/material";
+import { useRouter } from "next/navigation";
+import useAuth from "../hooks/useAuth";
 
 /**
  * Props for the ConfirmDeleteUserDialog component.
@@ -30,6 +32,11 @@ export default function ConfirmDeleteUserDialog({
 }: ConfirmDeleteUserDialogProps) {
     const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     const theme = useTheme();
+
+    // Save the logged in users userID
+    const { user: loggedInUser } = useAuth();
+    const userID = loggedInUser?.id;
+
     /**
      * Handles the click event when the user confirms "No" to deleting user.
      * @returns {void}
@@ -40,6 +47,7 @@ export default function ConfirmDeleteUserDialog({
 
     const handleYes = async () => {
         const token = localStorage.getItem("token");
+
         try {
             const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || `http://localhost:3000/api`;
             const response = await fetch(`${URL}/user/delete/${user.id}`, {
@@ -53,7 +61,14 @@ export default function ConfirmDeleteUserDialog({
             if (response.ok) {
                 setSnackBarMessage("User account deleted successfully!");
                 setTimeout(() => {
-                    window.history.back();
+                    // check if deleted user is current user
+                    if (userID == user.id) {
+                        handleLogOut();
+                        window.location.reload();
+                    } else {
+                        setOpen(false);
+                        window.location.reload();
+                    }
                 }, 2000);
             } else {
                 const errorMessage = await response.json();
@@ -65,6 +80,15 @@ export default function ConfirmDeleteUserDialog({
             console.error("Error deleting user account:", error);
         }
     };
+
+    const router = useRouter();
+
+    const handleLogOut = () => {
+        localStorage.removeItem("token");
+        window.dispatchEvent(new CustomEvent('auth-change'));
+        // router.push("/");
+    };
+
 
     return (
         <React.Fragment>
