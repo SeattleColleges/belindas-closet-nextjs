@@ -2,18 +2,7 @@ import React from "react";
 import { Button, Menu, MenuItem, Box, useTheme, useMediaQuery } from "@mui/material";
 import { ArrowDropDown } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-const navItems = [
-  "All Products",
-  "Shirts",
-  "Shoes",
-  "Pants",
-  "Skirts",
-  "Suits",
-  "Dress",
-  "Casual Wear",
-  "Accessories",
-  "Jacket/Blazer",
-];
+import {navItems} from "@/components/productList";
 
 export default function CategoryDropDownMenu() {
   const theme = useTheme();
