@@ -68,7 +68,7 @@ export default function ConfirmDeleteUserDialog({
                         setOpen(false);
                         window.location.reload();
                     }
-                }, 1000);
+                }, 2000);
             } else {
                 const errorMessage = await response.json();
                 setSnackBarMessage(errorMessage.message);
