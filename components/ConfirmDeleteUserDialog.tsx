@@ -69,11 +69,11 @@ export default function ConfirmDeleteUserDialog({
                         setOpen(false);
                         window.location.reload();
                     }
-                }, 2000);
+                }, 1000);
             } else {
                 const errorMessage = await response.json();
                 setSnackBarMessage(errorMessage.message);
-                console.error("Failed to delete user accounr", response.statusText);
+                console.error("Failed to delete user account", response.statusText);
             }
         } catch (error) {
             setSnackBarMessage("Error deleting user account");
@@ -86,7 +86,7 @@ export default function ConfirmDeleteUserDialog({
     const handleLogOut = () => {
         localStorage.removeItem("token");
         window.dispatchEvent(new CustomEvent('auth-change'));
-        // router.push("/");
+        router.push("/");
     };
 
 
