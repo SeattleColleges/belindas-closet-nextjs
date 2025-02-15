@@ -64,7 +64,6 @@ export default function ConfirmDeleteUserDialog({
                     // check if deleted user is current user
                     if (userID == user.id) {
                         handleLogOut();
-                        window.location.reload();
                     } else {
                         setOpen(false);
                         window.location.reload();
