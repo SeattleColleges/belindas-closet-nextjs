@@ -65,11 +65,11 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
     console.log("Product filters: ", productFilters)
     useEffect(() => {
         console.log("Gender filters: ", genderFilters)
-    }, [productFilters])
+    }, [genderFilters])
 
     // TODO: Re-attempt to combine the logic below later
-    function flipEntryProduct(item:String) {
-        console.log("Item: ", item)
+    function flipEntryProduct(item: String) {
+        console.log("Item: ", item);
         setProductFilters((products) => {
             if (!products.includes(item)) {
                 return [...products, item];
@@ -79,8 +79,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
         });
     }
 
-    function flipEntryGender(item:String) {
-        console.log("Item: ", item)
+    function flipEntryGender(item: String) {
+        console.log("Item: ", item);
         setGenderFilters((gender) => {
             if (!gender.includes(item)) {
                 return [...gender, item];
@@ -112,10 +112,9 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                 {navItems.filter(item => item !== 'All Products').map((item) => (
                                     <FormControlLabel
                                         key={item}
-                                        control={<Checkbox defaultChecked/>}
+                                        control={<Checkbox defaultChecked onChange={() => flipEntryProduct(item)} />}
                                         label={item}
                                         style={{marginBottom: "0rem"}}
-                                        onClick={(e) => flipEntryProduct(item)}
                                     />
                                 ))}
                             </FormGroup>
@@ -126,9 +125,9 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                             <FormGroup>
                                 {Object.values(ProductGenderList).map((item) => (
                                     <FormControlLabel
-                                        control={<Checkbox defaultChecked/>}
+                                        key={item}
+                                        control={<Checkbox defaultChecked onChange={() => flipEntryGender(item)} />}
                                         label={item}
-                                        onClick={(e) => flipEntryGender(item)}
                                     />
                                 ))}
                             </FormGroup>
@@ -159,7 +158,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                 <Container sx={{py: 4}}>
                     <Grid container spacing={2}>
                         {filteredProducts.filter((product) =>
-                            !product.productType.some((typea) => productFilters.includes(typea))
+                            !product.productType.some((typea) => productFilters.includes(typea)) &&
+                            !genderFilters.includes(String(product.productGender))
                         ).map((product, index) => (
                             // <Grid item key={index} xs={12} sm={40} md={40}>
                             <Grid item key={index} xs={12} sm={4} md={3}>
