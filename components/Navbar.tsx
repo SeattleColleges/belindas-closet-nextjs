@@ -121,6 +121,7 @@ export default function Navbar() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              cursor: "pointer",
               ml: 2.5,
               mr: 1
             }}
