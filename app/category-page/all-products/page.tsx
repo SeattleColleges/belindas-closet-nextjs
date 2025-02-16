@@ -103,7 +103,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
 
     return (
         <Grid container spacing={3}>
-            <Grid item xs={3} sx={{ boxShadow: 1 }}>
+            <Grid item xs={3}>
                 <Paper
                     style={{
                         paddingLeft: "24px",
