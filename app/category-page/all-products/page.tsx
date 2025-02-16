@@ -3,7 +3,7 @@
 import React, {useState, useEffect, Dispatch, SetStateAction} from "react";
 import ProductCard from "@/components/ProductCard";
 import logo from "@/public/belinda-images/logo.png";
-import {Checkbox, Container, FormGroup, Grid, Typography} from "@mui/material";
+import {Checkbox, Container, FormGroup, Grid, Paper, Typography} from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import {navItems} from "@/components/productList";
 import {ProductGenderList} from "@/app/add-product-page/product-prop-list";
@@ -103,8 +103,15 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
 
     return (
         <Grid container spacing={3}>
-            <Grid item xs={3} sx={{ backgroundColor: 'white', boxShadow: 1 }}>
-                <div style={{ paddingRight: "24px", paddingTop: "2rem" }}>
+            <Grid item xs={3} sx={{ boxShadow: 1 }}>
+                <Paper
+                    style={{
+                        paddingLeft: "24px",
+                        paddingRight: "24px",
+                        paddingBottom: "4px",
+                        paddingTop: "2rem"
+                    }}
+                >
                     <div>
                         <div style={{marginBottom: "1rem"}}>
                             Product Type
@@ -152,7 +159,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                             {filteredProducts.length} Products
                         </Typography>
                     </div>
-                </div>
+                </Paper>
             </Grid>
             <Grid item xs={9}>
                 <Container sx={{py: 4}}>
