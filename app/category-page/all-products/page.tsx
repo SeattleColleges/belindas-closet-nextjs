@@ -103,7 +103,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
 
     return (
         <Grid container spacing={3}>
-            <Grid item xs={3}>
+            <Grid item md={3} xs={12}>
                 <Paper
                     style={{
                         paddingLeft: "24px",
@@ -161,7 +161,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                     </div>
                 </Paper>
             </Grid>
-            <Grid item xs={9}>
+            <Grid item md={9} xs={12}>
                 <Container sx={{py: 4}}>
                     <Grid container spacing={2}>
                         {filteredProducts.filter((product) =>
