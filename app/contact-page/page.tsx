@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { Typography, Box, TextField, Button } from "@mui/material";
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -40,7 +40,7 @@ const Contact = () => {
     setErrors(newErrors);
 
     //send the email if validation is successful
-    emailjs.sendForm('service_tcqmiub', 'template_umbo1q7', e.target as HTMLFormElement, 'iHLRPRzpKKnhc1Mlr')
+    emailjs.sendForm('service_xinlmmj', 'template_umbo1q7', e.target as HTMLFormElement, 'iHLRPRzpKKnhc1Mlr')
       .then((result) => {
         alert('Message sent successfully!');
         setFormData({

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-      "node": "20.x"
+    "node": "20.x"
   },
   "scripts": {
     "dev": "next dev -p 8082",
@@ -30,13 +30,14 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.20",
     "bcrypt": "5.1.1",
-    "emailjs-com": "3.2.0",
+    "belindas-closet": "file:",
     "chart.js": "4.4.4",
+    "emailjs-com": "3.2.0",
     "eslint": "8.50.0",
     "eslint-config-next": "14.2.14",
-    "mongoose": "8.7.0",
-    "next": "14.2.14",
-    "next-auth": "4.24.8",
+    "mongoose": "^8.10.0",
+    "next": "^14.2.23",
+    "next-auth": "^4.24.11",
     "postcss": "8.4.47",
     "qrcode.react": "4.0.1",
     "react": "18.3.1",
@@ -49,13 +50,13 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "7.25.7",
-    "@testing-library/jest-dom": "6.5.0",
-    "@testing-library/react": "16.0.1",
-    "@testing-library/user-event": "14.5.2",
-    "@types/jest": "29.5.13",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.13",
     "eslint-plugin-jest-dom": "5.4.0",
     "eslint-plugin-testing-library": "6.3.0",
-    "jest": "29.7.0",
+    "jest": "^29.7.0",
     "jest-environment-jsdom": "29.7.0",
     "next-router-mock": "0.9.13",
     "ts-jest": "29.2.5"
