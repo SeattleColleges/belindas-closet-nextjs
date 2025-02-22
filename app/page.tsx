@@ -10,20 +10,9 @@ import CategoryBlock from "@/components/CategoryBlock";
 import ImageBanner from "@/components/ImageBanner";
 import { useRouter } from 'next/navigation'
 import useAuth from "@/hooks/useAuth";
+import {navItems} from "@/components/productList";
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
-
-const navItems = [
-  "Shirts",
-  "Shoes",
-  "Pants",
-  "Skirts",
-  "Suits",
-  "Dress",
-  "Casual Wear",
-  "Accessories",
-  "Jacket/Blazer",
-];
 
 async function fetchData(
   setProducts: Dispatch<SetStateAction<Product[]>>
