@@ -158,8 +158,9 @@ const Home = () => {
           </Grid>
         </Grid>
 
-      <Carousel carouselID="womenswear" 
+     <Carousel carouselID="womenswear" 
       title="Recent Womenswear"
+      
       products={products.filter((product: Product) => (product.productGender.includes('FEMALE') || product.productGender.includes('NON-BINARY')))}/>
 
       <Carousel carouselID="menswear" 
@@ -167,6 +168,7 @@ const Home = () => {
       products={products.filter((product: Product) => (product.productGender.includes('MALE') || product.productGender.includes('NON-BINARY')))}/>
     </WrapperDiv>
   );
+  
 };
 
 export default Home;
