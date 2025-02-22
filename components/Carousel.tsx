@@ -114,7 +114,7 @@ const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(
             }, 25);
         }
 
-        return (
+        return products.length > 0?(
             <CarouselComponentWrapper>
                 <Typography color="#114FA3" variant="h4" mt={2} sx={{fontWeight: 900}}>{title}</Typography>
                 <CarouselContainerWrapper>
@@ -131,6 +131,15 @@ const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(
                             <MdArrowBackIos  aria-label="Toggle Light Theme"/>
                         </IconContext.Provider>
                     </CarouselArrowRight>
+                </CarouselContainerWrapper>
+            </CarouselComponentWrapper>
+        ):(
+            <CarouselComponentWrapper>
+                <Typography color="#114FA3" variant="h4" mt={2} sx={{fontWeight: 900}}>{title}</Typography>
+                <CarouselContainerWrapper>
+                    <CarouselContainer id={carouselID}>
+                    {children}
+                    </CarouselContainer>
                 </CarouselContainerWrapper>
             </CarouselComponentWrapper>
         );
