@@ -9,14 +9,15 @@ import {
   Button,
   IconButton,
   Toolbar,
-  Grid,
   Drawer,
   Box,
   CssBaseline,
-  Divider,
   List,
-  useMediaQuery,
   useTheme,
+  ListItemButton,
+  ListItemText,
+  ListItem
+
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
@@ -24,117 +25,131 @@ import AuthProfileMenu from "./AuthProfileMenu";
 import ThemeToggle from "./ThemeToggle";
 import useAuth from "@/hooks/useAuth";
 
-const drawerWidth = 240;
 
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { isAuth, user } = useAuth();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+  //Toggle mobile menu
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+
+  // Auth Buttons for mobile & desktop
+  const renderAuthButtons = () => {
+    if (isAuth) return null;
+    return (
+        <>
+          <Link href="/auth/sign-up" passHref legacyBehavior>
+            <Button sx={{ color: "primary.contrastText", fontWeight: 700
+            } }>Sign Up</Button>
+          </Link>
+          <Link href="/auth/sign-in" passHref legacyBehavior>
+            <Button sx={{ color: "primary.contrastText", fontWeight: 700, '&:hover': {
+                color: 'primary.contrastText'
+              }}}>Log In</Button>
+          </Link>
+        </>
+    );
   };
 
+  //Sidebar for mobile
+  const drawer = (
+      <Box sx={{ width: 240 }} role="presentation" onClick={(e) => e.stopPropagation()}>
+        <List>
+          <ListItem>
+            <Link href="/" passHref legacyBehavior>
+              <Image src={header_logo} alt="logo" width={100} height={50} />
+            </Link>
+          </ListItem>
+          <ListItem>
+            <CategoryDropDownMenu />
+          </ListItem>
+            {isAuth && user && (user.role === "admin" || user.role === "creator") && (
+              <ListItem>
+                <Link href="/dashboard" passHref legacyBehavior>
+                  <ListItemButton>
+                    <ListItemText primary="Dashboard" />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+          )}
+          {!isAuth && (
+              <>
+                <ListItem>
+                  <Link href="/auth/sign-up" passHref legacyBehavior>
+                    <ListItemButton>
+                      <ListItemText primary="Sign Up" />
+                    </ListItemButton>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link href="/auth/sign-in" passHref legacyBehavior>
+                    <ListItemButton>
+                      <ListItemText primary="Log In" />
+                    </ListItemButton>
+                  </Link>
+                </ListItem>
+              </>
+          )}
+          {isAuth && <ListItem onClick={(e) => e.stopPropagation()}><AuthProfileMenu /></ListItem>}
+        </List>
+      </Box>
+  );
   return (
-    <Box sx={{ display: "flex" }}>
+    <>
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" } }}
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ flexGrow: 1 }}>
-            <Link href="/" passHref>
-              <Button color="secondary">
-                <Image src={header_logo} alt="logo" width={100} height={50}/>
+
+          {/* Logo */}
+          <Box sx={{ flexGrow: 2 }}>
+            <Link href="/" passHref legacyBehavior>
+              <Button color="primary">
+                <Image src={header_logo} alt="logo" width={100} height={50} />
               </Button>
             </Link>
           </Box>
-          <Box sx={{ display: { xs: "none", md: "block" } }}>
-            <Grid container spacing={1}>
-              <Grid item sx={{ 
-                display: "flex",
-                flexShrink: 0,
-                alignItems: "center",
-                marginRight: "1rem", 
-                }}
-                >
-                <CategoryDropDownMenu />
-              </Grid>
-              {isAuth && user && (user.role === "admin" || user.role === "creator") && (
-                <Grid item sx={{
-                  flexShrink: 0,
-                  alignItems: "center",
-                  marginLeft: "1rem",
-                }}
-                >
-                  <Link href="/dashboard" passHref>
-                    <Button sx={{ color: "primary.contrastText" }}>
-                      Dashboard
-                    </Button>
-                  </Link>
-                </Grid>
-              )}
-              {!isAuth ? (
-                <Grid item>
-                <Link href="/auth/sign-up" passHref>
-                  <Button
-                    sx={
-                      { color: "primary.main", 
-                      backgroundColor: 'white', 
-                      filter: 'none',
-                      borderRadius: 0,
-                      fontWeight: 700,
-                      '&:hover': {
-                        color: 'primary.contrastText'
-                      }
-                    }} 
-                    >
-                    Sign Up
-                  </Button>
+
+          {/* Desktop Navigation */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", marginRight: "1rem" }}>
+            <CategoryDropDownMenu />
+            {isAuth && user && ( user.role=== "admin" || user.role === "creator") && (
+                <Link href="/dashboard" passHref legacyBehavior>
+                  <Button sx={{ color: "primary.main" }}>Dashboard</Button>
                 </Link>
-              </Grid>
-              ) : null}
-              {!isAuth ? (
-                <Grid item>
-                <Link href="/auth/sign-in" passHref>
-                  <Button sx={{ color: "primary.contrastText" }}>
-                    Log In
-                  </Button>
-                </Link>
-              </Grid>
-              ) : null}
-            </Grid>
+            )}
+            {renderAuthButtons()}
           </Box>
-          
           {/* Theme Toggle for fullsize */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              ml: 2.5,
-              mr: 1
-            }}
-          >
+          <Box sx={{ display: "flex", alignItems: "center", ml: 2.5, mr: 1 }}>
             <ThemeToggle />
           </Box>
-          <Grid item sx={{ display: "flex", justifyContent: "center" }}>
-            {isAuth ? <AuthProfileMenu /> : null}
-          </Grid>
+          {isAuth && <AuthProfileMenu />}
         </Toolbar>
       </AppBar>
+      {/* Toolbar spacing */}
       <Box component="main">
         <Toolbar />
       </Box>
-    </Box>
+      {/* Mobile Drawer */}
+      <Drawer
+          anchor="left"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+      >
+        {drawer}
+      </Drawer>
+    </>
+
   );
 }
