@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import FormPage from '../../../app/form-page/page';
 import '@testing-library/jest-dom';
 
@@ -35,7 +35,7 @@ describe('FormPage', () => {
     expect(sizeSelect.value).toBe('M');
   });
 
-  test('handles form submission correctly', () => {
+  test('handles form submission correctly', async () => {
     render(<FormPage />);
 
     // Get form fields
@@ -56,15 +56,17 @@ describe('FormPage', () => {
     // Submit the form
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
-    // Wait for log output
-    expect(logSpy).toHaveBeenCalledWith('Form submitted:', {
-      name: 'John Doe',
-      gender: 'Male',
-      email: 'john@example.com',
-      size: 'M',
+    // Wait for the log output asynchronously
+    await waitFor(() => {
+      expect(logSpy).toHaveBeenCalledWith('Form submitted:', {
+        name: 'John Doe',
+        gender: 'Male',
+        email: 'john@example.com',
+        size: 'M',
+      });
     });
 
-    // Cleanup
+    // Cleanup the spy
     logSpy.mockRestore();
   });
 });
