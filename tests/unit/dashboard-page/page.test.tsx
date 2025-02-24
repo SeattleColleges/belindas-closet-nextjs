@@ -2,41 +2,56 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import Dashboard from '@/app/dashboard/page';
 
+// Polyfill ResizeObserver if not defined.
+if (typeof ResizeObserver === 'undefined') {
+  (global as any).ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+}
+
 const roles = ['admin', 'creator', 'user'];
 
 describe.each(roles)('dashboard-page tests for role: %s', (role) => {
-  beforeAll(() => {
-    // Create a minimal fake 2D context with the necessary properties.
-    const fake2dContext = {
-      canvas: document.createElement('canvas'),
-      fillRect: jest.fn(),
-      clearRect: jest.fn(),
-      getImageData: jest.fn(() => ({ data: [] })),
-      putImageData: jest.fn(),
-      createImageData: jest.fn(() => []),
-      setTransform: jest.fn(),
-      drawImage: jest.fn(),
-      save: jest.fn(),
-      restore: jest.fn(),
-      beginPath: jest.fn(),
-      moveTo: jest.fn(),
-      lineTo: jest.fn(),
-      closePath: jest.fn(),
-      stroke: jest.fn(),
-      fill: jest.fn(),
-      translate: jest.fn(),
-      scale: jest.fn(),
-      rotate: jest.fn(),
-      measureText: jest.fn(() => ({ width: 0 })),
-      getContextAttributes: jest.fn(() => ({}))
-    } as unknown as CanvasRenderingContext2D;
+  let originalGetContext: HTMLCanvasElement['getContext'];
 
-    // Use jest.spyOn to override getContext so that when '2d' is requested, we return our fake context.
-    jest.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation((contextId: string, options?: any) => {
-      if (contextId === '2d') {
-        return fake2dContext;
+  beforeAll(() => {
+    // Store the original getContext implementation.
+    originalGetContext = HTMLCanvasElement.prototype.getContext;
+
+    // Override getContext globally for 2d contexts.
+    Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+      configurable: true,
+      value: function (contextId: string) {
+        if (contextId === '2d') {
+          return {
+            canvas: this,
+            fillRect: jest.fn(),
+            clearRect: jest.fn(),
+            getImageData: jest.fn(() => ({ data: [] })),
+            putImageData: jest.fn(),
+            createImageData: jest.fn(() => []),
+            setTransform: jest.fn(),
+            drawImage: jest.fn(),
+            save: jest.fn(),
+            restore: jest.fn(),
+            beginPath: jest.fn(),
+            moveTo: jest.fn(),
+            lineTo: jest.fn(),
+            closePath: jest.fn(),
+            stroke: jest.fn(),
+            fill: jest.fn(),
+            translate: jest.fn(),
+            scale: jest.fn(),
+            rotate: jest.fn(),
+            measureText: jest.fn(() => ({ width: 0 })),
+            getContextAttributes: jest.fn(() => ({})),
+            resetTransform: jest.fn()  // Add resetTransform to satisfy Chart.js
+          };
+        }
+        return null;
       }
-      return null;
     });
 
     // Set up a fake token in localStorage for role-based testing.
@@ -50,7 +65,8 @@ describe.each(roles)('dashboard-page tests for role: %s', (role) => {
 
   afterAll(() => {
     localStorage.removeItem('token');
-    jest.restoreAllMocks();
+    // Restore the original getContext implementation.
+    HTMLCanvasElement.prototype.getContext = originalGetContext;
   });
 
   if (role === 'user') {
@@ -66,7 +82,8 @@ describe.each(roles)('dashboard-page tests for role: %s', (role) => {
     it('renders heading with correct text and style', () => {
       const heading = screen.getByRole('heading', { level: 1 });
       expect(heading).toBeTruthy();
-      
+      // Optionally assert on heading.textContent
+      // expect(heading.textContent).toEqual('Dashboard');
     });
   }
 });
