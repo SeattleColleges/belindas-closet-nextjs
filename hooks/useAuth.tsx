@@ -1,8 +1,9 @@
-{/* Custom React hook to manage and track user authentication state.*/}
+{/* Custom React hook to manage and track user authentication state.*/ }
 import { useState, useEffect } from 'react';
 
 interface User {
-  role: string; 
+  id: string;
+  role: string;
 }
 
 const useAuth = () => {

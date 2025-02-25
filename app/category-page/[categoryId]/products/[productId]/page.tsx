@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
-import ProductDetailDisplay from "../[productId]/ProductDetailDisplay";
+import ProductDetailDisplay from "./ProductDetailDisplay";
 
 const URL =
   process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
