@@ -23,6 +23,7 @@ type JWToken = string | null
  * JWT token for user authentication
  * @param userToken
  */
+
 async function fetchUser(setUserInfo: (userInfo: User[]) => void, userToken: JWToken) {
   const apiUrl = `${URL}/user`;
   try {
@@ -56,13 +57,16 @@ const EditUserRolePage = () => {
   const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
-    const userToken:JWToken = localStorage.getItem("token")
+    const userToken: JWToken = localStorage.getItem("token")
     const token = localStorage.getItem("token");
+    // remove later
+    console.log(token);
+    //
     if (token) {
       const userRole = JSON.parse(atob(token.split(".")[1])).role;
       setUserRole(userRole);
     }
-    fetchUser(setUserInfo,userToken);
+    fetchUser(setUserInfo, userToken);
   }, []);
 
   if ((userRole === "admin")) {
