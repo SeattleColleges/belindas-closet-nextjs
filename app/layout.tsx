@@ -4,6 +4,7 @@ import { CssBaseline } from "@mui/material";
 import WrapperDiv from "@/components/WrapperDiv";
 import ThemeContextProvider from "./theme/providers";
 import Footer from "@/components/Footer";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           <Footer />
         </ThemeContextProvider>
       </body>
+      <GoogleAnalytics gaId="G-955KLGKGOV" />
     </html>
   );
 }
