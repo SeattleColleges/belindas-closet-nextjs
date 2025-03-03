@@ -9,7 +9,6 @@ const CustomCardContent: React.FC<{ children: React.ReactNode }> = ({ children }
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
-        alignItems: "center",
         width: "100%",
         padding: "1rem",
       }}

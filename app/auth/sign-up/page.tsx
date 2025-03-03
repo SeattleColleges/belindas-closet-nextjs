@@ -91,6 +91,7 @@ const SignUp = () => {
     // send request to backend api then log the response
     // hardwired link for local development, change port if needed
     try {
+      console.log(URL)
       const res = await fetch(`${URL}/auth/signup`, {
         method: "POST",
         body: JSON.stringify(userInfo),
