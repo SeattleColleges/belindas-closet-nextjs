@@ -72,7 +72,7 @@ const EditUserRolePage = () => {
   if ((userRole === "admin")) {
     return (
       <Stack spacing={3} sx={{ mt: 3 }}>
-        <Typography component="h1" variant="h4">
+        <Typography component="h1" variant="h4" textAlign={"center"}>
           User Management
         </Typography>
         <Box sx={{ display: "flex" }}>
