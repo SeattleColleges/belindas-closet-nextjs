@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
-import { Stack, Typography } from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
@@ -71,13 +71,15 @@ const EditUserRolePage = () => {
 
   if ((userRole === "admin")) {
     return (
-      <Stack alignItems="center" spacing={3} sx={{ mt: 3 }}>
+      <Stack spacing={3} sx={{ mt: 3 }}>
         <Typography component="h1" variant="h4">
           User Management
         </Typography>
-        {userInfo.map((user, index) => (
-          <UserCard user={user} key={index} />
-        ))}
+        <Box>
+          {userInfo.map((user, index) => (
+            <UserCard user={user} key={index} />
+          ))}
+        </Box>
       </Stack>
     );
   } else {

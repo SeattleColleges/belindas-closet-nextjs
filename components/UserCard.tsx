@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Container, Snackbar, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {Box, Button, Container, Paper, Snackbar, Stack, Typography, useMediaQuery, useTheme} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
@@ -92,78 +92,67 @@ function UserCard({ user }: { user: UserCardProps }) {
   };
 
   return (
-    <Container
-      fixed
-      maxWidth="lg"
-      sx={{
-        border: 1,
-        borderRadius: 1,
-        borderColor: "primary.main",
-        padding: 2,
-        margin: 2,
+    <Paper
+      style={{
+        marginLeft: "2rem",
+        marginRight: "2rem",
+        padding: "2rem",
+        paddingBottom: "1rem",
+        position: "relative"
       }}
     >
       <Stack
         direction="column"
         spacing={2}
-        alignItems="center"
-        justifyContent="center"
       >
-        <Box sx={{ textAlign: "center" }}>
-          <Typography variant="body1" gutterBottom sx={{ mt: 1, mb: isMobile ? 1 : 2 }}>
-            User ID: {user.id}
+        <Box>
+          <Typography variant="h5" gutterBottom sx={{ mb: 1 }}>
+            {user.firstName} {user.lastName}
           </Typography>
-          <Typography variant="body1" gutterBottom sx={{ mb: isMobile ? 1 : 2 }}>
-            Full Name: {user.firstName} {user.lastName}
+          <Typography variant="body1" gutterBottom sx={{ mb: .25, color: "grey" }}>
+            {user.email}
           </Typography>
-          <Typography variant="body1" gutterBottom sx={{ mb: isMobile ? 1 : 2 }}>
-            Email: {user.email}
-          </Typography>
-          <Typography variant="body1" gutterBottom sx={{ mb: isMobile ? 1 : 2 }}>
-            Current Role: {user.role}
-          </Typography>
-          {editCompleted && (
-            <Typography variant="body1" gutterBottom>
-              Selected Role: {newRole}
-            </Typography>
+          {openDialog && (
+              <Box display="flex" justifyContent="center">
+                <EditUserRoleDialog user={user} onClose={handleCloseDialog} />
+              </Box>
           )}
-        </Box>
-        {openDialog && (
-          <Box display="flex" justifyContent="center">
-            <EditUserRoleDialog user={user} onClose={handleCloseDialog} />
-          </Box>
-        )}
-        <Box p={1} display="flex" justifyContent="center">
           {!openDialog && (
-            <Button
-              variant="contained"
-              color="primary"
-              endIcon={editCompleted ? "" : <EditIcon />}
-              onClick={editCompleted ? handleCancel : handleEditClick}
-            >
-              {editCompleted ? "Cancel" : "Edit"}
-            </Button>
+              <Box style={{ display: "inline-block" }}>
+                <Typography variant="body1" gutterBottom sx={{ mb: .25, color: "grey", display: "inline-block" }}>
+                  { editCompleted ? newRole : user.role }
+                </Typography>
+                {editCompleted && (<br />) }
+                <Button
+                    variant="text"
+                    endIcon={editCompleted ? "" : <EditIcon />}
+                    onClick={editCompleted ? handleCancel : handleEditClick}
+                    sx={{padding: 0, display: "inline-block" }}
+                >{editCompleted ? "Cancel" : ""}</Button>
+            </Box>
           )}
           {openDialog && (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleCancel}
-            >
-              Cancel
-            </Button>
+              <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleCancel}
+              >
+                Cancel
+              </Button>
           )}
           {editCompleted && (
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ ml: 2 }}
-              endIcon={<CheckIcon />}
-              onClick={handleEditClick}
-            >
-              Done
-            </Button>
+              <Button
+                  variant="contained"
+                  color="primary"
+                  endIcon={<CheckIcon />}
+                  onClick={handleEditClick}
+              >
+                Done
+              </Button>
           )}
+          <Typography variant="body2" gutterBottom sx={{ mt: 2.25, color: "#B1B1B1", mb: .75}}>
+            ID: {user.id}
+          </Typography>
         </Box>
         {openDeleteDialog && (
           <ConfirmDeleteUserDialog
@@ -171,15 +160,16 @@ function UserCard({ user }: { user: UserCardProps }) {
             open={openDeleteDialog}
             setOpen={setOpenDeleteDialog} />
         )}
-        <Box p={1} display="flex" justifyContent="center">
+        <Box style={{
+          position: "absolute",
+          top: 0,
+          right: 0
+        }}>
           <Button
-            variant="contained"
-            color="primary"
-            sx={{ ml: 2 }}
+            variant="text"
             endIcon={<DeleteIcon />}
             onClick={handleDeleteClick}
           >
-            Delete
           </Button>
         </Box>
       </Stack>
@@ -188,7 +178,7 @@ function UserCard({ user }: { user: UserCardProps }) {
           {snackbarMessage}
         </Alert>
       </Snackbar>
-    </Container>
+    </Paper>
   );
 }
 export default UserCard;
