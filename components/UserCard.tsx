@@ -118,17 +118,29 @@ function UserCard({ user }: { user: UserCardProps }) {
               </Box>
           )}
           {!openDialog && (
-              <Box style={{ display: "inline-block" }}>
+              <Box style={{ display: "inline-block", width: "100%" }}>
                 <Typography variant="body1" gutterBottom sx={{ mb: .25, color: "grey", display: "inline-block" }}>
                   { editCompleted ? newRole : user.role }
                 </Typography>
                 {editCompleted && (<br />) }
-                <Button
-                    variant="text"
-                    endIcon={editCompleted ? "" : <EditIcon />}
-                    onClick={editCompleted ? handleCancel : handleEditClick}
-                    sx={{padding: 0, display: "inline-block" }}
-                >{editCompleted ? "Cancel" : ""}</Button>
+                <Box style={{ display: editCompleted ? "flex" : "inline-block", justifyContent: "space-between" }}>
+                  <Button
+                      variant="text"
+                      endIcon={editCompleted ? "" : <EditIcon />}
+                      onClick={editCompleted ? handleCancel : handleEditClick}
+                      sx={{padding: 0, display: "inline-block" }}
+                  >{editCompleted ? "Cancel" : ""}</Button>
+                  {editCompleted && (
+                      <Button
+                          variant="contained"
+                          color="primary"
+                          endIcon={<CheckIcon/>}
+                          onClick={handleEditClick}
+                      >
+                        Done
+                      </Button>
+                  )}
+                </Box>
             </Box>
           )}
           {openDialog && (
@@ -138,16 +150,6 @@ function UserCard({ user }: { user: UserCardProps }) {
                   onClick={handleCancel}
               >
                 Cancel
-              </Button>
-          )}
-          {editCompleted && (
-              <Button
-                  variant="contained"
-                  color="primary"
-                  endIcon={<CheckIcon />}
-                  onClick={handleEditClick}
-              >
-                Done
               </Button>
           )}
           <Typography variant="body2" gutterBottom sx={{ mt: 2.25, color: "#B1B1B1", mb: .75}}>

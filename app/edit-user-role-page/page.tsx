@@ -75,7 +75,7 @@ const EditUserRolePage = () => {
         <Typography component="h1" variant="h4">
           User Management
         </Typography>
-        <Box>
+        <Box sx={{ display: "flex" }}>
           {userInfo.map((user, index) => (
             <UserCard user={user} key={index} />
           ))}
