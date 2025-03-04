@@ -98,7 +98,8 @@ function UserCard({ user }: { user: UserCardProps }) {
         marginRight: "2rem",
         padding: "2rem",
         paddingBottom: "1rem",
-        position: "relative"
+        position: "relative",
+        height: "100%"
       }}
     >
       <Stack
