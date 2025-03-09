@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
-import { Stack, Typography } from "@mui/material";
+import {Box, Stack, TextField, Typography} from "@mui/material";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
+import Grid from "@mui/material/Grid";
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
@@ -55,6 +56,7 @@ async function fetchUser(setUserInfo: (userInfo: User[]) => void, userToken: JWT
 const EditUserRolePage = () => {
   const [userInfo, setUserInfo] = useState<User[]>([]);
   const [userRole, setUserRole] = useState("");
+  const [search, setSearch] = useState<String>("");
 
   useEffect(() => {
     const userToken: JWToken = localStorage.getItem("token")
@@ -71,13 +73,32 @@ const EditUserRolePage = () => {
 
   if ((userRole === "admin")) {
     return (
-      <Stack alignItems="center" spacing={3} sx={{ mt: 3 }}>
-        <Typography component="h1" variant="h4">
+      <Stack spacing={3} sx={{ mt: 3 }}>
+        <Typography component="h1" variant="h4" textAlign={"center"}>
           User Management
         </Typography>
-        {userInfo.map((user, index) => (
-          <UserCard user={user} key={index} />
-        ))}
+        <Grid item xs={12} sm={4} md={3}>
+          <TextField
+              id="outlined-basic"
+              label="Search"
+              variant="outlined"
+              sx={{ background: "white", marginLeft: 2 }}
+              onChange={(e) => setSearch(e.target.value)}
+          />
+        </Grid>
+        <Box sx={{ display: "flex" }}>
+          {userInfo.filter(item => {
+            const searchLower = search.toLowerCase();
+            return (
+                (item.firstName.toLowerCase() + " " +
+                item.lastName.toLowerCase()).includes(searchLower) ||
+                item.email.toLowerCase().includes(searchLower) ||
+                item.role.toLowerCase().includes(searchLower)
+            );
+          }).map((user, index) => (
+            <UserCard user={user} key={index} />
+          ))}
+        </Box>
       </Stack>
     );
   } else {
