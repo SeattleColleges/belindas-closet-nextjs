@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
-import {Box, Stack, TextField, Typography} from "@mui/material";
+import {Box, Stack, Grid, TextField, Typography, Container} from "@mui/material";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
-import Grid from "@mui/material/Grid";
+import Sidebar from "@/components/Sidebar";
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
@@ -61,9 +61,6 @@ const EditUserRolePage = () => {
   useEffect(() => {
     const userToken: JWToken = localStorage.getItem("token")
     const token = localStorage.getItem("token");
-    // remove later
-    console.log(token);
-    //
     if (token) {
       const userRole = JSON.parse(atob(token.split(".")[1])).role;
       setUserRole(userRole);
@@ -73,33 +70,61 @@ const EditUserRolePage = () => {
 
   if ((userRole === "admin")) {
     return (
-      <Stack spacing={3} sx={{ mt: 3 }}>
-        <Typography component="h1" variant="h4" textAlign={"center"}>
-          User Management
-        </Typography>
-        <Grid item xs={12} sm={4} md={3}>
-          <TextField
-              id="outlined-basic"
-              label="Search"
-              variant="outlined"
-              sx={{ background: "white", marginLeft: 2 }}
-              onChange={(e) => setSearch(e.target.value)}
-          />
-        </Grid>
-        <Box sx={{ display: "flex" }}>
-          {userInfo.filter(item => {
-            const searchLower = search.toLowerCase();
-            return (
-                (item.firstName.toLowerCase() + " " +
-                item.lastName.toLowerCase()).includes(searchLower) ||
-                item.email.toLowerCase().includes(searchLower) ||
-                item.role.toLowerCase().includes(searchLower)
-            );
-          }).map((user, index) => (
-            <UserCard user={user} key={index} />
-          ))}
+      <Box sx={{ 
+        display: "flex", 
+        minHeight: "100vh",
+        margin: "-1rem",
+        flexDirection: { xs: 'column', sm: 'row' },
+      }}>
+        <Sidebar />
+        <Box sx={{ 
+          flexGrow: 1,
+          mt: { xs: '3rem', sm: 0 },
+        }}>
+          <Container sx={{ py: 4 }} maxWidth="lg">
+            <Stack spacing={3}>
+              <Typography component="h1" variant="h4" textAlign={"center"}>
+                User Management
+              </Typography>
+              <Grid container>
+                <Grid item xs={12} sm={6} md={3} style={{ marginLeft: "2rem", marginRight: "2rem" }}>
+                  <TextField
+                    id="outlined-basic"
+                    label="Search"
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                      background: "white",
+                    }}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container justifyContent="center">
+                <Grid item xs={12} sm={12} md={12}>
+                  <Box sx={{ 
+                    display: "flex", 
+                    flexDirection: "row", 
+                    flexWrap: "wrap",
+                    justifyContent: { xs: 'center', sm: 'flex-start' }
+                  }}>
+                    {userInfo.filter(item => {
+                      const searchLower = search.toLowerCase();
+                      return (
+                        (item.firstName.toLowerCase() + " " + item.lastName.toLowerCase()).includes(searchLower) ||
+                        item.email.toLowerCase().includes(searchLower) ||
+                        item.role.toLowerCase().includes(searchLower)
+                      );
+                    }).map((user, index) => (
+                      <UserCard user={user} key={index} />
+                    ))}
+                  </Box>
+                </Grid>
+              </Grid>
+            </Stack>
+          </Container>
         </Box>
-      </Stack>
+      </Box>
     );
   } else {
     return <UnauthorizedPageMessage />

@@ -93,13 +93,19 @@ function UserCard({ user }: { user: UserCardProps }) {
 
   return (
     <Paper
-      style={{
-        marginLeft: "2rem",
-        marginRight: "2rem",
+      sx={{
+        margin: { 
+          xs: "0 0 1.25rem 0", 
+          sm: "0 2rem 1.25rem 2rem" 
+        },
         padding: "2rem",
         paddingBottom: "1rem",
         position: "relative",
-        height: "100%"
+        height: "100%",
+        width: { 
+          xs: "100%",
+          sm: "auto" 
+        }
       }}
     >
       <Stack
