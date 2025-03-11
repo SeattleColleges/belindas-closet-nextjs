@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Typography, Box, TextField, Button } from "@mui/material";
+import { Typography, Box, TextField, Button, Container, Paper } from "@mui/material";
 import emailjs from '@emailjs/browser';
 
 
@@ -75,6 +75,9 @@ const Contact = () => {
           Contact Us
         </Typography>
       </Box>
+
+    <Container maxWidth="lg">
+      <Paper elevation={3} sx={{ p: 4, bgcolor: 'background.paper', color: 'text.primary', borderRadius: 2, width: '100%' }}>
       <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         <Box sx={{ flex: 1, minWidth: '500px', maxWidth: '40%' }}>
           <Typography component="h2" variant="h5" gutterBottom sx={{ textAlign: 'left' }}>
@@ -139,7 +142,10 @@ const Contact = () => {
           </Box>
         </Box>
       </Box>
+      </Paper>
+    </Container>
     </Box>
+    
   );
 };
 
