@@ -131,7 +131,16 @@ export default function Navbar() {
             {renderAuthButtons()}
           </Box>
           {/* Theme Toggle for fullsize */}
-          <Box sx={{ display: "flex", alignItems: "center", ml: 2.5, mr: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "pointer",
+              ml: 2.5,
+              mr: 1
+            }}
+          >
             <ThemeToggle />
           </Box>
           {isAuth && <AuthProfileMenu />}
