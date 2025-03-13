@@ -3,7 +3,7 @@ import FormPage from "../../../app/form-page/page";
 import "@testing-library/jest-dom";
 
 describe("FormPage", () => {
-  test("renders the form with initial state", () => {
+  test("renders the form with initial state", async() => {
     render(<FormPage />);
 
     // Ensure all form fields and submit button are present
@@ -14,41 +14,49 @@ describe("FormPage", () => {
     expect(screen.getByRole("button", { name: /submit/i })).toBeInTheDocument();
   });
 
-  test("updates the form data when input values change", () => {
+  test("updates the form data when input values change", async() => {
     render(<FormPage />);
 
     // Simulate user input
     const nameInput = screen.getByLabelText(/name/i) as HTMLInputElement;
-    const genderSelect = screen.getByLabelText(/gender/i) as HTMLSelectElement;
+    const genderInput = screen.getByLabelText(/gender/i) as HTMLInputElement;
     const emailInput = screen.getByLabelText(/email/i) as HTMLInputElement;
-    const sizeSelect = screen.getByLabelText(/size/i) as HTMLSelectElement;
+    const sizeInput = screen.getByLabelText(/size/i) as HTMLInputElement;
 
     fireEvent.change(nameInput, { target: { value: "John Doe" } });
-    fireEvent.change(genderSelect, { target: { value: "Male" } });
+    fireEvent.change(genderInput, { target: { value: "Male" } });
     fireEvent.change(emailInput, { target: { value: "john@example.com" } });
-    fireEvent.change(sizeSelect, { target: { value: "M" } });
+    fireEvent.change(sizeInput, { target: { value: "M" } });
 
     // Verify the values are updated
     expect(nameInput.value).toBe("John Doe");
-    expect(genderSelect.value).toBe("Male");
+    expect(genderInput.value).toBe("Male");
     expect(emailInput.value).toBe("john@example.com");
-    expect(sizeSelect.value).toBe("M");
+    expect(sizeInput.value).toBe("M");
   });
 
-  test('handles form submission correctly', async () => {
+  test('handles form submission correctly', async() => {
     render(<FormPage />);
 
     // Get form fields
     const nameInput = screen.getByLabelText(/name/i) as HTMLInputElement;
-    const genderSelect = screen.getByLabelText(/gender/i) as HTMLSelectElement;
+    const genderInput = screen.getByLabelText(/gender/i) as HTMLInputElement;
     const emailInput = screen.getByLabelText(/email/i) as HTMLInputElement;
-    const sizeSelect = screen.getByLabelText(/size/i) as HTMLSelectElement;
+    const sizeInput = screen.getByLabelText(/size/i) as HTMLInputElement;
+
+    // Mock fetch request
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({}),
+      })
+    ) as jest.Mock;
 
     // Simulate input changes
     fireEvent.change(nameInput, { target: { value: "John Doe" } });
-    fireEvent.change(genderSelect, { target: { value: "Male" } });
+    fireEvent.change(genderInput, { target: { value: "Male" } });
     fireEvent.change(emailInput, { target: { value: "john@example.com" } });
-    fireEvent.change(sizeSelect, { target: { value: "M" } });
+    fireEvent.change(sizeInput, { target: { value: "M" } });
 
     // Spy on console.log
     const logSpy = jest.spyOn(console, "log").mockImplementation();
@@ -68,5 +76,6 @@ describe("FormPage", () => {
 
     // Cleanup the spy
     logSpy.mockRestore();
+    jest.restoreAllMocks();
   });
 });
