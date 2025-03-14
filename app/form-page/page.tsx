@@ -117,13 +117,15 @@ export default function FormPage() {
             required
           />
           <TextField
+            select
             type="text"
             name="gender"
             variant='outlined'
             label="Gender"
             value={formData.gender}
             onChange={handleChange}
-            required>
+            required
+          >
             <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="Female">Female</MenuItem>
             <MenuItem value="Non-Binary/Non-conforming">Non-Binary/Non-conforming</MenuItem>
