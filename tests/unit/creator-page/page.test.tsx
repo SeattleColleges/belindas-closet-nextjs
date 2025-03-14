@@ -53,7 +53,7 @@ describe.each(roles)('creator-page tests for role: %s', (role) => {
       expect(archivedProductsButton).toBeInTheDocument();
       expect(archivedProductsButton).toHaveAttribute('href', '/archived-products-page');
 
-      // Simulate link clicks
+      
       await userEvent.click(addButton);
       await userEvent.click(allProductsButton);
       await userEvent.click(archivedProductsButton);
