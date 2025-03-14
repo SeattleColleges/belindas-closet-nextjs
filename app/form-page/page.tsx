@@ -141,7 +141,7 @@ export default function FormPage() {
             required
           />
           <Button variant="contained" onClick={verifyEmail}>
-            Verify Email
+            Is Your Email In Correct Format? (Click Me to Check)
           </Button>
           <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
             <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
