@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import Dashboard from '@/app/dashboard/page';
 
-// Polyfill ResizeObserver if not defined.
+
 if (typeof ResizeObserver === 'undefined') {
   (global as any).ResizeObserver = class {
     observe() {}
@@ -17,10 +17,9 @@ describe.each(roles)('dashboard-page tests for role: %s', (role) => {
   let originalGetContext: HTMLCanvasElement['getContext'];
 
   beforeAll(() => {
-    // Store the original getContext implementation.
+    
     originalGetContext = HTMLCanvasElement.prototype.getContext;
 
-    // Override getContext globally for 2d contexts.
     Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
       configurable: true,
       value: function (contextId: string) {
@@ -54,7 +53,7 @@ describe.each(roles)('dashboard-page tests for role: %s', (role) => {
       }
     });
 
-    // Set up a fake token in localStorage for role-based testing.
+    
     const mockToken = btoa(JSON.stringify({ role: role }));
     localStorage.setItem('token', `fakeHeader.${mockToken}.fakeSignature`);
   });
@@ -65,7 +64,7 @@ describe.each(roles)('dashboard-page tests for role: %s', (role) => {
 
   afterAll(() => {
     localStorage.removeItem('token');
-    // Restore the original getContext implementation.
+    
     HTMLCanvasElement.prototype.getContext = originalGetContext;
   });
 
@@ -82,8 +81,7 @@ describe.each(roles)('dashboard-page tests for role: %s', (role) => {
     it('renders heading with correct text and style', () => {
       const heading = screen.getByRole('heading', { level: 1 });
       expect(heading).toBeTruthy();
-      // Optionally assert on heading.textContent
-      // expect(heading.textContent).toEqual('Dashboard');
+      
     });
   }
 });
