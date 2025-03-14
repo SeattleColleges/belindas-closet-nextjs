@@ -102,7 +102,7 @@ export default function FormPage() {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 5, p: 3, bgcolor: 'background.paper', borderRadius: 2, boxShadow: 3 }}>
+    <Container maxWidth="sm" sx={{ mt: 5, p: 3, bgcolor: (theme) => theme.palette.mode === 'dark' ? 'grey.900' : 'background.paper', borderRadius: 2, boxShadow: 3 }}>
       <Typography variant="h4" align="center">Belinda&apos;s Closet Student Form</Typography>
       <Typography variant="subtitle1" color='red'>* Indicates field is required</Typography>
       <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
