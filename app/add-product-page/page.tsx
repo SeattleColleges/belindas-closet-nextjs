@@ -190,27 +190,9 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
                         {showAddForm ? "Hide Add Product Form" : "Add New Product"}
                       </Button>
 
-                      <Box sx={{mb: 2, marginLeft: 2}}>
-                        <Button
-                            variant={viewMode === 'active' ? "contained" : "outlined"}
-                            color="primary"
-                            onClick={() => setViewMode('active')}
-                            sx={{marginRight: 2}}
-                        >
-                          View Active Products
-                        </Button>
-                        <Button
-                            variant={viewMode === 'archived' ? "contained" : "outlined"}
-                            color="primary"
-                            onClick={() => setViewMode('archived')}
-                        >
-                          View Archived Products
-                        </Button>
-                      </Box>
-
                       {showAddForm && (
                           <form onSubmit={handleSubmit}>
-                            <Stack spacing={2} sx={{bgcolor: "white", p: 3, borderRadius: 1}}>
+                            <Stack spacing={2} sx={{bgcolor: "white", p: 3, borderRadius: 1, marginBottom: 5}}>
                               <Typography variant="h5">Add a Product</Typography>
 
                               <FormControl variant="filled">
@@ -355,6 +337,24 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
                             </Stack>
                           </form>
                       )}
+
+                      <Box sx={{mb: 2, marginLeft: 2}}>
+                        <Button
+                            variant={viewMode === 'active' ? "contained" : "outlined"}
+                            color="primary"
+                            onClick={() => setViewMode('active')}
+                            sx={{marginRight: 2}}
+                        >
+                          View Active Products
+                        </Button>
+                        <Button
+                            variant={viewMode === 'archived' ? "contained" : "outlined"}
+                            color="primary"
+                            onClick={() => setViewMode('archived')}
+                        >
+                          View Archived Products
+                        </Button>
+                      </Box>
                     </Box>
 
                 <Grid container spacing={2}>
