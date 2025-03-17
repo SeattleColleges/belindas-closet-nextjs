@@ -13,7 +13,7 @@ const Sidebar = () => {
 
   const menuItems = [
       { text: "Profile", href: "/profile" },
-      { text: "Products", href: "/category-page/all-products" },
+      { text: "Products", href: "/add-product-page" },
       { text: "User Management", href: "/edit-user-role-page" },
   ];
 
