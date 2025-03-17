@@ -14,7 +14,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 type ProductCardProps = {
-  image: StaticImageData;
+  image: StaticImageData | string;
   categories: string[];
   gender: string;
   sizeShoe: string;
@@ -39,6 +39,8 @@ export default function ProductCard({
   description,
   href,
   _id,
+  isHidden,
+  isSold,
   showArchiveButton,
 }: ProductCardProps) {
   const [userRole, setUserRole] = React.useState("");
