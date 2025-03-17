@@ -64,6 +64,7 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [userRole, setUserRole] = useState<string>("");
   const [showAddForm, setShowAddForm] = useState(false);
+  const [viewMode, setViewMode] = useState<'active' | 'archived'>('active');
 
   // Add product form states
   const [productType, setProductType] = useState<string>("");
@@ -88,9 +89,15 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
 
   useEffect(() => {
     setFilteredProducts(
-      products.filter((product) => !product.isHidden && !product.isSold)
+      products.filter((product) => {
+        if (viewMode === 'active') {
+          return !product.isHidden && !product.isSold;
+        } else {
+          return !product.isHidden && product.isSold;
+        }
+      })
     );
-  }, [products]);
+  }, [products, viewMode]);
 
   useEffect(() => {
     if (!productImageBlob) return;
@@ -178,10 +185,28 @@ const ViewProduct = ({ categoryId }: { categoryId: string }) => {
                           variant="contained"
                           color="primary"
                           onClick={() => setShowAddForm(!showAddForm)}
-                          sx={{mb: 2}}
+                          sx={{mb: 5, marginLeft: 2}}
                       >
                         {showAddForm ? "Hide Add Product Form" : "Add New Product"}
                       </Button>
+
+                      <Box sx={{mb: 2, marginLeft: 2}}>
+                        <Button
+                            variant={viewMode === 'active' ? "contained" : "outlined"}
+                            color="primary"
+                            onClick={() => setViewMode('active')}
+                            sx={{marginRight: 2}}
+                        >
+                          View Active Products
+                        </Button>
+                        <Button
+                            variant={viewMode === 'archived' ? "contained" : "outlined"}
+                            color="primary"
+                            onClick={() => setViewMode('archived')}
+                        >
+                          View Archived Products
+                        </Button>
+                      </Box>
 
                       {showAddForm && (
                           <form onSubmit={handleSubmit}>
