@@ -30,12 +30,14 @@ const Sidebar = () => {
           href={item.href}
           onClick={() => isMobile && setMobileOpen(false)}
           sx={{
-            backgroundColor: pathname === item.href ? "#f5f5f5" : "transparent",
+            backgroundColor: pathname === item.href ? 
+              theme.palette.action.selected : 
+              "transparent",
             "&:hover": {
-              backgroundColor: "#f5f5f5",
+              backgroundColor: theme.palette.action.hover,
             },
             textDecoration: "none",
-            color: "inherit",
+            color: theme.palette.text.primary,
             marginBottom: "1rem"
           }}
         >
@@ -55,8 +57,8 @@ const Sidebar = () => {
             left: 0,
             right: 0,
             height: '3rem',
-            backgroundColor: 'white',
-            borderBottom: '1px solid #e0e0e0',
+            backgroundColor: theme.palette.background.paper,
+            borderBottom: `1px solid ${theme.palette.divider}`,
             display: 'flex',
             alignItems: 'center',
             px: 2,
@@ -71,7 +73,7 @@ const Sidebar = () => {
             onClick={handleDrawerToggle}
             sx={{
               '&:hover': {
-                backgroundColor: '#f5f5f5',
+                backgroundColor: theme.palette.action.hover,
               },
             }}
           >
@@ -82,7 +84,7 @@ const Sidebar = () => {
             component="div"
             sx={{ 
               fontWeight: 500,
-              color: 'text.primary',
+              color: theme.palette.text.primary,
               flexGrow: 1,
             }}
           >
@@ -102,8 +104,8 @@ const Sidebar = () => {
               width: 250,
               mt: '7rem',
               height: 'calc(100% - 7rem)',
-              backgroundColor: 'white',
-              borderRight: '1px solid #e0e0e0',
+              backgroundColor: theme.palette.background.paper,
+              borderRight: `1px solid ${theme.palette.divider}`,
             },
           }}
         >
@@ -118,8 +120,8 @@ const Sidebar = () => {
       component="nav"
       sx={{
         width: "250px",
-        backgroundColor: "white",
-        borderRight: "1px solid #e0e0e0",
+        backgroundColor: theme.palette.background.paper,
+        borderRight: `1px solid ${theme.palette.divider}`,
         minHeight: "100%",
       }}
     >

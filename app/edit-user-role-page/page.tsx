@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
-import {Box, Stack, Grid, TextField, Typography, Container} from "@mui/material";
+import {Box, Stack, Grid, TextField, Typography, Container, useTheme} from "@mui/material";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 import Sidebar from "@/components/Sidebar";
 
@@ -57,6 +57,7 @@ const EditUserRolePage = () => {
   const [userInfo, setUserInfo] = useState<User[]>([]);
   const [userRole, setUserRole] = useState("");
   const [search, setSearch] = useState<String>("");
+  const theme = useTheme();
 
   useEffect(() => {
     const userToken: JWToken = localStorage.getItem("token")
@@ -94,7 +95,27 @@ const EditUserRolePage = () => {
                     variant="outlined"
                     fullWidth
                     sx={{
-                      background: "white",
+                      backgroundColor: theme.palette.background.paper,
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: theme.palette.divider,
+                        },
+                        '&:hover fieldset': {
+                          borderColor: theme.palette.primary.main,
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: theme.palette.primary.main,
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: theme.palette.text.secondary,
+                        '&.Mui-focused': {
+                          color: theme.palette.primary.main,
+                        },
+                      },
+                      '& .MuiInputBase-input': {
+                        color: theme.palette.text.primary,
+                      },
                     }}
                     onChange={(e) => setSearch(e.target.value)}
                   />
