@@ -8,7 +8,7 @@ import "@testing-library/jest-dom";
 // some tests below are commented out for now to ensure test passes
 
 describe("FormPage", () => {
-  test("renders the form with initial state", () => {
+  test("renders the form with initial state", async() => {
     render(<FormPage />);
 
     // Ensure all form fields and submit button are present
@@ -33,7 +33,7 @@ describe("FormPage", () => {
 
     // Verify the values are updated
     expect(nameInput.value).toBe("John Doe");
-    expect(genderSelect.value).toBe("Male");
+    expect(genderInput.value).toBe("Male");
     expect(emailInput.value).toBe("john@example.com");
   });
   
@@ -64,6 +64,36 @@ describe("FormPage", () => {
         gender: "Male",
         email: "john@example.com",
       });
+    });
+
+    // Cleanup the spy
+    logSpy.mockRestore();
+    jest.restoreAllMocks();
+  });
+
+  // New test case: Test form submission with invalid email
+  test("handles form submission with invalid email", async () => {
+    render(<FormPage />);
+
+    // Get form fields
+    const nameInput = screen.getByLabelText(/name/i) as HTMLInputElement;
+    const genderSelect = screen.getByRole("combobox", { name: /gender/i }) as HTMLSelectElement;
+    const emailInput = screen.getByLabelText(/email/i) as HTMLInputElement;
+
+    // Simulate input changes
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    userEvent.selectOptions(genderSelect, ["Male"]);
+    fireEvent.change(emailInput, { target: { value: "invalid-email" } });
+
+    // Spy on console.log
+    const logSpy = jest.spyOn(console, "log").mockImplementation();
+
+    // Submit the form
+    fireEvent.click(screen.getByRole("button", { name: /submit/i }));
+
+    // Wait for error message
+    await waitFor(() => {
+      expect(screen.getByText("Invalid email format. Please enter a valid email.")).toBeInTheDocument();
     });
 
     // Cleanup
