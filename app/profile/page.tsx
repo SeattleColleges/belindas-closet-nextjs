@@ -1,86 +1,101 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import CurrentUserCard from "../../components/CurrentUserCard";
-import { Box, Button, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Stack, Typography, Paper, IconButton, Avatar } from "@mui/material";
 import EditUserDetailsDialog from "@/components/EditUserDetailsDialog";
 import { useRouter } from "next/navigation";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
+import AddIcon from '@mui/icons-material/Add';
+import AddLookingForDialog from '@/components/AddLookingForDialog';
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
-/**
- * Represents a user.
- */
-interface User {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    pronoun: string;
-  }
-  type JWToken = string | null
-  /**
-   * fetch user info from the server
-   * @param setUserInfo
-   * JWT token for user authentication
-   * @param userToken
-   */
-  
-async function fetchUserById(setUserInfo: (userInfo: User | null) => void, userId: string, userToken: JWToken) {
-    const apiUrl = `${URL}/user/${userId}`;
-    try {
-      if (!userToken) {
-        throw new Error('JWT token not found in storage')
-      }
-      const res = await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${userToken}`,
-        },
-      });
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      } else {
-        const data = await res.json();
-        setUserInfo(data);
-      }
-    } catch (error) {
-      console.error("Error getting user info:", error);
-    }
-  }
+interface LookingForItem {
+  type: string;
+  size: string;
+  description: string;
+}
 
-/**
- * Profile page
- * @returns
- */
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  pronoun: string;
+  major?: string;
+  graduationDate?: string;
+  lookingFor?: LookingForItem[];
+}
+
+type JWToken = string | null;
+
+async function fetchUserById(setUserInfo: (userInfo: User | null) => void, userId: string, userToken: JWToken) {
+  const apiUrl = `${URL}/user/${userId}`;
+  try {
+    if (!userToken) {
+      throw new Error('JWT token not found in storage')
+    }
+    const res = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${userToken}`,
+      },
+    });
+    if (!res.ok) {
+      throw new Error(res.statusText);
+    } else {
+      const data = await res.json();
+      data.lookingFor = [
+        {
+          type: "Shirt",
+          size: "M - Size L",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        {
+          type: "Suit",
+          size: "M - Size L",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        }
+      ];
+
+      data.degreeType= "Bachelor's ";
+      data.major = "- Computer Science Student";
+      data.graduationDate = "Graduating June, 2026";
+      setUserInfo(data);
+    }
+  } catch (error) {
+    console.error("Error getting user info:", error);
+  }
+}
+
 const Profile = () => {
-    const [userInfo, setUserInfo] = useState<User | null>(null);
-    const [openDialog, setOpenDialog] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const router = useRouter();
+  const [userInfo, setUserInfo] = useState<User | null>(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openAddDialog, setOpenAddDialog] = useState(false);
+  const router = useRouter();
 
   const handleEditClick = () => {
-    if (menuOpen) {
-      setMenuOpen(false);
-      setOpenDialog(false);
-    } else {
-      setOpenDialog(true);
-      setMenuOpen(true);
-    }
+    setOpenDialog(true);
   };
 
   const handleCloseDialog = (updatedUser?: User) => {
     setOpenDialog(false);
-    setMenuOpen(false);
     if (updatedUser) {
       setUserInfo(prevUserInfo => ({ ...prevUserInfo, ...updatedUser }));
     }
   };
-  
+
+  const handleAddItem = (newItem: LookingForItem) => {
+    if (userInfo) {
+      const updatedLookingFor = [...(userInfo.lookingFor || []), newItem];
+      setUserInfo({
+        ...userInfo,
+        lookingFor: updatedLookingFor
+      });
+    }
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       const userToken: JWToken = localStorage.getItem("token");
@@ -90,7 +105,7 @@ const Profile = () => {
       }
     };
     fetchUser();
-    }, []);
+  }, []);
 
   const [userRole, setUserRole] = useState("");
   useEffect(() => {
@@ -103,32 +118,114 @@ const Profile = () => {
 
   if ((userRole === "admin" || userRole === "creator" || userRole === "user")) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", margin: 'auto', width: isMobile ? '75%' : 'auto' }}>
-          <Stack alignItems="center" spacing={3} sx={{ mt: 3, mb: 3 }}>
-              <Typography component="h1" variant="h4">
-                  Welcome, { userInfo?.firstName }!
+      <Box sx={{ 
+        display: "flex", 
+        flexDirection: "column",
+        alignItems: "flex-start",
+        padding: "2rem",
+        maxWidth: "1200px",
+        margin: "0 auto",
+        width: "100%"
+      }}>
+        <Box sx={{ 
+          display: "flex", 
+          alignItems: "center", 
+          gap: "2rem",
+          width: "100%",
+          marginBottom: "2rem"
+        }}>
+          <Avatar 
+            sx={{ 
+              width: 200, 
+              height: 200,
+              bgcolor: "#B4D4FF"
+            }}
+          >
+            {userInfo?.firstName?.[0]}{userInfo?.lastName?.[0]}
+          </Avatar>
+          <Box>
+            <Typography variant="h4" sx={{ marginBottom: "0.5rem" }}>
+              {userInfo?.firstName} {userInfo?.lastName} 
+              <Typography component="span" color="text.secondary" sx={{ ml: 1 }}>
+                ({userInfo?.pronoun})
               </Typography>
-              {userInfo ? (
-              <CurrentUserCard user={userInfo} />
-              ) : null }
-              {openDialog && userInfo && (
-              <Box display="flex" justifyContent="center">
-                  <EditUserDetailsDialog
-                      open={openDialog}
-                      user={userInfo}
-                      onClose={handleCloseDialog}
-                  />
-              </Box>
-              )}
-              <Box p={2} display="flex" flexDirection="column" justifyContent="center">
-                  <Button onClick={handleEditClick}>
-                      {menuOpen ? "Done" : "Edit Profile"}
-                  </Button>
-                  <Button onClick={ () => router.replace('/auth/change-password-page') } >
-                      Change Password
-                  </Button>
-              </Box>
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {userInfo?.degreeType} {userInfo?.major}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {userInfo?.graduationDate}
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box sx={{ width: "100%" }}>
+          <Box sx={{ 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "space-between",
+            marginBottom: "1rem"
+          }}>
+            <Typography variant="h6">Currently looking for:</Typography>
+            <IconButton onClick={() => setOpenAddDialog(true)}>
+              <AddIcon />
+            </IconButton>
+          </Box>
+
+          <Stack spacing={2}>
+            {userInfo?.lookingFor?.map((item, index) => (
+              <Paper 
+                key={index}
+                sx={{ 
+                  p: 3,
+                  backgroundColor: "white",
+                  borderRadius: "8px",
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
+                }}
+              >
+                <Typography variant="h6" gutterBottom>
+                  {item?.type}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>
+                  {item?.size}
+                </Typography>
+                <Typography variant="body1">
+                  {item?.description}
+                </Typography>
+              </Paper>
+            ))}
           </Stack>
+        </Box>
+
+        {openDialog && userInfo && (
+          <EditUserDetailsDialog
+            open={openDialog}
+            user={userInfo}
+            onClose={handleCloseDialog}
+          />
+        )}
+
+        <AddLookingForDialog
+          open={openAddDialog}
+          onClose={() => setOpenAddDialog(false)}
+          onAdd={handleAddItem}
+        />
+
+        <Box sx={{ mt: 3, alignSelf: "center" }}>
+          <Button 
+            variant="contained" 
+            onClick={handleEditClick}
+            sx={{ mr: 2 }}
+          >
+            Edit Profile
+          </Button>
+          <Button 
+            variant="outlined"
+            onClick={() => router.replace('/auth/change-password-page')}
+          >
+            Change Password
+          </Button>
+        </Box>
       </Box>
     );
   } else {
