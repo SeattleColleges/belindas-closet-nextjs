@@ -22,8 +22,10 @@ interface User {
   lastName: string;
   email: string;
   pronoun: string;
+  degreeType?: string;
   major?: string;
-  graduationDate?: string;
+  graduationMonth?: string;
+  graduationYear?: string;
   lookingFor?: LookingForItem[];
 }
 
@@ -46,6 +48,7 @@ async function fetchUserById(setUserInfo: (userInfo: User | null) => void, userI
       throw new Error(res.statusText);
     } else {
       const data = await res.json();
+      // Mock data for development
       data.lookingFor = [
         {
           type: "Shirt",
@@ -59,9 +62,12 @@ async function fetchUserById(setUserInfo: (userInfo: User | null) => void, userI
         }
       ];
 
-      data.degreeType= "Bachelor's ";
-      data.major = "- Computer Science Student";
-      data.graduationDate = "Graduating June, 2026";
+      // Structure the academic data properly
+      data.degreeType = "Bachelor's";
+      data.major = "Computer Science";
+      data.graduationMonth = "June";
+      data.graduationYear = "2026";
+      
       setUserInfo(data);
     }
   } catch (error) {
@@ -151,10 +157,10 @@ const Profile = () => {
               </Typography>
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              {userInfo?.degreeType} {userInfo?.major}
+              {userInfo?.degreeType} - {userInfo?.major}
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              {userInfo?.graduationDate}
+              Graduating {userInfo?.graduationMonth}, {userInfo?.graduationYear}
             </Typography>
           </Box>
         </Box>
