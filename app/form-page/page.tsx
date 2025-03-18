@@ -2,6 +2,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { Typography, Box, TextField, Button, Snackbar, Container, MenuItem } from "@mui/material";
 import Alert, { AlertColor } from '@mui/material/Alert';
+import validator from 'validator';
 
 interface FormData {
   name: string;
@@ -17,7 +18,7 @@ export default function FormPage() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const [formData, setFormData] = useState<FormData>({
     name: '',
     gender: '',
@@ -33,8 +34,43 @@ export default function FormPage() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const validTLDs = [
+    'com', 'org', 'net', 'edu', 'gov', 'co', 'io', 'info', 'biz', 'us', 'uk', 'ca', 'au', 'de', 'fr', 'jp', 'cn'
+    // Add more TLDs as needed
+  ];
+
+  const isValidEmail = (email: string) => {
+    // First, check if the email is in a valid format using validator
+    if (!validator.isEmail(email)) {
+      return false;
+    }
+  
+    // Extract domain part of the email
+    const domain = email.split('@')[1];
+    const parts = domain.split('.');
+  
+    // Check if the domain has more than 2 parts
+    // If there are multiple TLDs, at least one part will repeat (like .com.com or .com.test)
+    const seenParts = new Set();
+    for (let part of parts) {
+      if (seenParts.has(part)) {
+        return false; // Invalid if part is repeated (e.g., com.com, co.uk.co.uk)
+      }
+      seenParts.add(part);
+    }
+
+    // Check if the last part is a valid TLD
+    const lastPart = parts[parts.length - 1];
+    if (!validTLDs.includes(lastPart)) {
+      return false; // Invalid if the TLD is not in the valid list
+    }
+  
+    // If all checks pass, the email is valid
+    return true;
+  };
+
   const verifyEmail = () => {
-    if (emailRegex.test(formData.email)) {
+    if (isValidEmail(formData.email)) {
       setFormData((prevData) => ({ ...prevData, emailVerified: true }));
       setSnackbarSeverity('success');
       setSnackbarMessage('Email is in a valid format!');
@@ -61,7 +97,7 @@ export default function FormPage() {
       Check if email format is correct
       ---------------------------------
       */
-      if (!emailRegex.test(formData.email)) {
+      if (!isValidEmail(formData.email)) {
         throw new Error('Please enter a valid email address.');
       }
       /*
