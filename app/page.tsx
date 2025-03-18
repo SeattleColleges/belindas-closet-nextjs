@@ -2,7 +2,7 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import { Typography, Popover, Link } from "@mui/material";
+import { Typography, Popover, Link, Box } from "@mui/material";
 import WrapperDiv from "../components/WrapperDiv";
 import {Carousel} from "@/components/Carousel";
 import Product from '../models/productModel';
@@ -75,86 +75,97 @@ const Home = () => {
 
   return (
     <WrapperDiv>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center',
+        width: '100%'
+      }}>
+        <ImageBanner />
+        
+        <Carousel carouselID="latest" 
+          title="Latest Arrivals"
+          products={products.slice(0,15)}/>
 
-      <ImageBanner />
-      
-      <Carousel carouselID="latest" 
-      title="Latest Arrivals"
-      products={products.slice(0,15)}/>
-
-      <Stack 
-        width={'100%'}
-        maxWidth={1200}
-        direction={'row'}  
-        justifyContent={'space-between'}
-        alignItems={'flex-end'}
-        mt={2}
-      >
-        <Typography color="#114FA3" variant="h4" sx={{fontWeight: 900}}>
-          Popular Categories
-        </Typography>
-        <Typography 
-          color="#114FA3"
-          variant="h5"
-          sx={{fontWeight: 600, textDecoration: 'underline', cursor: 'pointer'}}
-          aria-describedby={'view-all-categories'}
-          onClick={handlePopOverClick}>
-          View all categories 
-        </Typography>
-        <Popover
-          id={'view-all-categories'}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
+        <Stack 
+          width={'100%'}
+          maxWidth={1200}
+          direction={'row'}  
+          justifyContent={'space-between'}
+          alignItems={'center'}
+          mt={2}
+          px={2}
         >
-          <Stack>
-            {navItems.map((item) => (
-              <Link key={item} variant="h6" p={1} onClick={() => navigate(item)} sx={{cursor: 'pointer'}}>
-                {item}
-              </Link>
-            ))}
-          </Stack>
-        </Popover>
-      </Stack>
-      <Grid container spacing={0} sx={{maxWidth: 1200, width: '100%'}}>
-        <Grid xs={6} md={4} lg={3}>
+          <Typography color="#114FA3" variant="h4" sx={{fontWeight: 900}}>
+            Popular Categories
+          </Typography>
+          <Typography 
+            color="#114FA3"
+            variant="h5"
+            sx={{fontWeight: 600, textDecoration: 'underline', cursor: 'pointer'}}
+            aria-describedby={'view-all-categories'}
+            onClick={handlePopOverClick}>
+            View all categories 
+          </Typography>
+          <Popover
+            id={'view-all-categories'}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <Stack>
+              {navItems.map((item) => (
+                <Link key={item} variant="h6" p={1} onClick={() => navigate(item)} sx={{cursor: 'pointer'}}>
+                  {item}
+                </Link>
+              ))}
+            </Stack>
+          </Popover>
+        </Stack>
+        <Grid container spacing={0} sx={{
+          maxWidth: 1200, 
+          width: '100%',
+          justifyContent: 'center',
+          px: 2
+        }}>
+          <Grid item xs={6} md={4} lg={3}>
             <CategoryBlock category="Shirts"/>
           </Grid>
-          <Grid xs={6} md={4} lg={3}>
+          <Grid item xs={6} md={4} lg={3}>
             <CategoryBlock category="Dress" variant="light"/>
           </Grid>
-          <Grid xs={6} md={4} lg={3}>
+          <Grid item xs={6} md={4} lg={3}>
             <CategoryBlock category="Pants"/>
           </Grid>
-          <Grid xs={6} md={4} lg={3}>
+          <Grid item xs={6} md={4} lg={3}>
             <CategoryBlock category="Shoes" variant="light"/>
           </Grid>
-          <Grid xs={6} md={4} lg={3}>
+          <Grid item xs={6} md={4} lg={3}>
             <CategoryBlock category="Skirts"  variant="light"/>
           </Grid>
-          <Grid xs={6} md={4} lg={3}>
+          <Grid item xs={6} md={4} lg={3}>
             <CategoryBlock category="Casual Wear"/>
           </Grid>
-          <Grid xs={6} md={4} lg={3}>
+          <Grid item xs={6} md={4} lg={3}>
             <CategoryBlock category="Accessories" variant="light"/>
           </Grid>
-          <Grid xs={6} md={4} lg={3}>
+          <Grid item xs={6} md={4} lg={3}>
             <CategoryBlock category="Suits"/>
           </Grid>
         </Grid>
 
-     <Carousel carouselID="womenswear" 
-      title="Recent Womenswear"
-      
-      products={products.filter((product: Product) => (product.productGender.includes('FEMALE') || product.productGender.includes('NON-BINARY')))}/>
+        <Carousel carouselID="womenswear" 
+          title="Recent Womenswear"
+          products={products.filter((product: Product) => (product.productGender.includes('FEMALE') || product.productGender.includes('NON-BINARY')))}/>
 
-      <Carousel carouselID="menswear" 
-      title="Recent Menswear"
-      products={products.filter((product: Product) => (product.productGender.includes('MALE') || product.productGender.includes('NON-BINARY')))}/>
+        <Carousel carouselID="menswear" 
+          title="Recent Menswear"
+          products={products.filter((product: Product) => (product.productGender.includes('MALE') || product.productGender.includes('NON-BINARY')))}/>
+      </Box>
     </WrapperDiv>
   );
   

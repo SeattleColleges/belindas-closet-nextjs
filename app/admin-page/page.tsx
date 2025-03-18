@@ -26,7 +26,7 @@ const Admin = () => {
           variant="h4"
           component="h1"
           gutterBottom
-          sx={{ mt: 4, mb: isMobile ? 4 : 6 }}
+          sx={{ mt: 4, mb: isMobile ? 4 : 6, textAlign: "center" }}
         >
           My Account
         </Typography>
