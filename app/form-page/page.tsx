@@ -38,7 +38,7 @@ export default function FormPage() {
     'com', 'org', 'net', 'edu', 'gov', 'co', 'io', 'info', 'biz', 'us', 'uk', 'ca', 'au', 'de', 'fr', 'jp', 'cn'
     // Add more TLDs as needed
   ];
-
+  
   const isValidEmail = (email: string) => {
     // First, check if the email is in a valid format using validator
     if (!validator.isEmail(email)) {
@@ -67,19 +67,6 @@ export default function FormPage() {
   
     // If all checks pass, the email is valid
     return true;
-  };
-
-  const verifyEmail = () => {
-    if (isValidEmail(formData.email)) {
-      setFormData((prevData) => ({ ...prevData, emailVerified: true }));
-      setSnackbarSeverity('success');
-      setSnackbarMessage('Email is in a valid format!');
-    } else {
-      setFormData((prevData) => ({ ...prevData, emailVerified: false }));
-      setSnackbarSeverity('error');
-      setSnackbarMessage('Invalid email format. Please enter a valid email.');
-    }
-    setSnackbarOpen(true);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -176,9 +163,6 @@ export default function FormPage() {
             onChange={handleChange}
             required
           />
-          <Button variant="contained" onClick={verifyEmail}>
-            Is Your Email In Correct Format? (Click Me to Check)
-          </Button>
           <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
             <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
               {snackbarMessage}
