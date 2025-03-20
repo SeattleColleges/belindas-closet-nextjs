@@ -12,6 +12,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import Image from "next/image";
+import { SelectChangeEvent } from "@mui/material";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import {
   ProductTypeList,
@@ -25,110 +26,97 @@ import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
+interface Product {
+  productType: string;
+  productGender: string;
+  productSizeShoe: string;
+  productSizes: string;
+  productSizePantsWaist: string;
+  productSizePantsInseam: string;
+  productDescription: string;
+  productImage: string;
+  isHidden: boolean;
+  isSold: boolean;
+}
+
 const AddProduct = () => {
-  const [productType, setProductType] = useState<string>("");
-  const [productGender, setProductGender] = useState<string>("");
-  const [productSizeShoe, setProductSizeShoe] = useState<number | string>("");
-  const [productSizes, setProductSizes] = useState<string>("");
-  const [productSizePantsWaist, setProductSizePantsWaist] = useState<
-    number | string
-  >("");
-  const [productSizePantsInseam, setProductSizePantsInseam] = useState<
-    number | string
-  >("");
-  const [productDescription, setProductDescription] = useState<string>("");
-  const [productImage, setProductImage] = useState<string>("");
+
+  const [formData, setFormData] = useState<Product>({
+    productType: "",
+    productGender: "",
+    productSizeShoe: "",
+    productSizes: "",
+    productSizePantsWaist: "",
+    productSizePantsInseam: "",
+    productDescription: "",
+    productImage: "",
+    isHidden: false,
+    isSold: false,
+  })
+
   const [productImageBlob, setProductImageBlob] = useState<null | File>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null | StaticImport>(
-    null
-  );
+  const [previewUrl, setPreviewUrl] = useState<string | null | StaticImport>(null);
   const [previewHeight, setPreviewHeight] = useState(0);
-
   const imgElement = React.useRef<any>(null);
-
+  
   useEffect(() => {
-    if (!productImageBlob) {
-      return;
-    }
+    if (!productImageBlob) return;
 
     const reader = new FileReader();
-
     reader.onloadend = () => {
       setPreviewUrl(reader.result as string);
     };
-
     reader.readAsDataURL(productImageBlob);
   }, [productImageBlob]);
 
-  const handleProductTypeSelect = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setProductType(e.target.value);
-  };
-
-  const handleProductGenderSelect = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setProductGender(e.target.value);
-  };
-
-  const handleProductSizeShoeSelect = (e: {
-    target: { value: React.SetStateAction<number | string> };
-  }) => {
-    setProductSizeShoe(e.target.value);
-  };
-
-  const handleProductSizeSelect = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setProductSizes(e.target.value);
-  };
-
-  const handleProductSizePantsWaistSelect = (e: {
-    target: { value: React.SetStateAction<number | string> };
-  }) => {
-    setProductSizePantsWaist(e.target.value);
-  };
-
-  const handleProductSizePantsInseamSelect = (e: {
-    target: { value: React.SetStateAction<number | string> };
-  }) => {
-    setProductSizePantsInseam(e.target.value);
-  };
-
-  const handleDescriptionChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setProductDescription(e.target.value);
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    setProductImageBlob(event.target.files![0]);
-    setProductImage(event.target.value);
+    if (event.target.files && event.target.files[0]) {
+      setProductImageBlob(event.target.files[0]);
+      setFormData((prevData) => ({
+        ...prevData,
+        productImage: event.target.value, // Only storing filename
+      }));
+    }
   };
+
   // Fetch request to add product to database
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    const processedFormData = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [
+          key,
+          value === "" ? null : value, // ✅ Convert empty string to null
+      ])
+    );
+
+    console.log("Submitting form:", processedFormData);
+
+    const token = localStorage.getItem("token");
+
     try {
       const res = await fetch(`${URL}/products/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + process.env.NEXT_PUBLIC_API_KEY,
+          Authorization: token ? `Bearer ${token}`: "",
         },
-        body: JSON.stringify({
-          productType,
-          productGender,
-          productSizeShoe,
-          productSizes,
-          productSizePantsWaist,
-          productSizePantsInseam,
-          productDescription,
-          productImage,
-        }),
+        body: JSON.stringify(formData),
       });
-      // If response is not ok, throw error
+      
       if (!res.ok) {
+        const errorText = await res.text(); 
+        console.error("Server Response:", errorText);
         throw new Error(res.statusText);
       } else {
         const data = await res.json();
@@ -175,9 +163,10 @@ const AddProduct = () => {
             <Select
               labelId="type-selectlabel"
               id="type-select"
-              value={productType}
               aria-describedby="product-type-field"
-              onChange={handleProductTypeSelect}
+              name="productType"
+              value={formData.productType}
+              onChange={handleChange}
             >
               {Object.values(ProductTypeList).map((type) => (
                 <MenuItem value={type} key={type}>
@@ -188,15 +177,16 @@ const AddProduct = () => {
           </FormControl>
 
           {/* Product Gender Field */}
-          {productType == "" ? null : (
+          {formData.productType == "" ? null : (
             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="gender-selectlabel">Product Gender</InputLabel>
               <Select
                 labelId="gender-selectlabel"
                 id="gender-select"
-                value={productGender}
                 aria-describedby="product-gender-field"
-                onChange={handleProductGenderSelect}
+                name="productGender"
+                value={formData.productGender}
+                onChange={handleChange}
               >
                 <MenuItem value={""}>{"-"}</MenuItem>
                 {Object.values(ProductGenderList).map((gender) => (
@@ -209,15 +199,16 @@ const AddProduct = () => {
           )}
 
           {/* Product Size Shoe Field */}
-          {productType != "Shoes" ? null : (
+          {formData.productType != "Shoes" ? null : (
             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="shoesize-selectlabel">Shoe Size</InputLabel>
               <Select
                 labelId="shoesize-selectlabel"
                 id="shoesize-select"
-                value={productSizeShoe}
                 aria-describedby="product-shoesize-field"
-                onChange={handleProductSizeShoeSelect}
+                name="productSizeShoe"
+                value={formData.productSizeShoe}
+                onChange={handleChange}
               >
                 <MenuItem value={""}>{"-"}</MenuItem>
                 {Object.values(ProductSizeShoeList).map((size) => (
@@ -230,15 +221,16 @@ const AddProduct = () => {
           )}
 
           {/* Product Size Field */}
-          {notSizeApplicable.includes(productType) ? null : (
+          {notSizeApplicable.includes(formData.productType) ? null : (
             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="size-selectlabel">Product Size</InputLabel>
               <Select
                 labelId="size-selectlabel"
                 id="size-select"
-                value={productSizes}
                 aria-describedby="product-size-field"
-                onChange={handleProductSizeSelect}
+                name="productSizes"
+                value={formData.productSizes}
+                onChange={handleChange}
               >
                 <MenuItem value={""}>{"-"}</MenuItem>
                 {Object.values(ProductSizesList).map((size) => (
@@ -251,15 +243,16 @@ const AddProduct = () => {
           )}
 
           {/* Product Size Pants Waist Field */}
-          {productType != "Pants" ? null : (
+          {formData.productType != "Pants" ? null : (
             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="waistsize-selectlabel">Waist Size</InputLabel>
               <Select
                 labelId="waistsize-selectlabel"
                 id="waistsize-select"
-                value={productSizePantsWaist}
                 aria-describedby="product-waist-size-field"
-                onChange={handleProductSizePantsWaistSelect}
+                name="productSizePantsWaist"
+                value={formData.productSizePantsWaist}
+                onChange={handleChange}
               >
                 <MenuItem value={""}>{"-"}</MenuItem>
                 {Object.values(ProductSizePantsWaistList).map((size) => (
@@ -272,15 +265,16 @@ const AddProduct = () => {
           )}
 
           {/* Product Size Pants Inseam Field */}
-          {productType != "Pants" ? null : (
+          {formData.productType != "Pants" ? null : (
             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="inseamsize-selectlabel">Inseam Length</InputLabel>
               <Select
                 labelId="inseamsize-selectlabel"
                 id="inseamsize-select"
-                value={productSizePantsInseam}
                 aria-describedby="product-inseam-size-field"
-                onChange={handleProductSizePantsInseamSelect}
+                name="productSizePantsInseam"
+                value={formData.productSizePantsInseam}
+                onChange={handleChange}
               >
                 <MenuItem value={""}>{"-"}</MenuItem>
                 {Object.values(ProductSizePantsInseamList).map((size) => (
@@ -293,13 +287,15 @@ const AddProduct = () => {
           )}
 
           {/* Product Description Field */}
-          {productType == "" ? null : (
-            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+          {formData.productType == "" ? null : (
+            <FormControl variant="filled" sx={{ m: 1, minWidth: 250 }}>
               <TextField
                 label="Product Description"
-                aria-describedby="product-description-field"
                 id="product-description"
-                onChange={handleDescriptionChange}
+                aria-describedby="product-description-field"
+                name="productDescription"
+                value={formData.productDescription}
+                onChange={handleChange}
                 multiline
                 minRows={2}
                 variant="filled"
@@ -308,7 +304,7 @@ const AddProduct = () => {
           )}
 
           {/* Product Upload Image Field */}
-          {productType == "" ? null : (
+          {formData.productType == "" ? null : (
             <Stack
               direction="row"
               alignItems="center"
@@ -320,7 +316,7 @@ const AddProduct = () => {
                 <Image
                   src={previewUrl}
                   ref={imgElement}
-                  alt="logo"
+                  alt="Product Preview"
                   onLoad={loadImageSize}
                   height={previewHeight}
                   width={150}
@@ -333,18 +329,17 @@ const AddProduct = () => {
                   multiple
                   type="file"
                   onChange={handleImageUpload}
-                  value={productImage}
+                  value={formData.productImage}
                 />
               </Button>
             </Stack>
           )}
 
           {/* Submit Button */}
-          {productType == "" ? null : (
+          {formData.productType == "" ? null : (
             <Button
               variant="contained"
               color="primary"
-              onClick={handleSubmit}
               type="submit"
               sx={{ m: 1, mt: 2 }}
             >
