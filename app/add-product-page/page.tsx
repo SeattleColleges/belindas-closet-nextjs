@@ -5,16 +5,17 @@ import ProductCard from "@/components/ProductCard";
 import logo from "@/public/belinda-images/logo.png";
 import { Box, Container, Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button, TextField, Stack } from "@mui/material";
 import Sidebar from "@/components/Sidebar";
+import React, { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "react";
+import ProductCard from "@/components/ProductCard";
+import logo from "@/public/belinda-images/logo.png";
+import { Box, Container, Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button, TextField, Stack } from "@mui/material";
+import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { SelectChangeEvent } from "@mui/material";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 import {
-  ProductTypeList,
   ProductGenderList,
-  ProductSizeShoeList,
-  ProductSizesList,
-  ProductSizePantsWaistList,
   ProductSizePantsInseamList,
 } from "./product-prop-list";
 
@@ -161,6 +162,20 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
         const data = await res.json();
         console.log(data);
         alert("Product Added!");
+        // Reset form
+        setProductType("");
+        setProductGender("");
+        setProductSizeShoe("");
+        setProductSizes("");
+        setProductSizePantsWaist("");
+        setProductSizePantsInseam("");
+        setProductDescription("");
+        setProductImage("");
+        setProductImageBlob(null);
+        setPreviewUrl(null);
+        setShowAddForm(false);
+        // Refresh products list
+        fetchData(categoryId, setProducts);
       }
     } catch (error) {
       console.error("Error adding product:", error);
@@ -620,7 +635,7 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
       // </form>
     );
   } else {
-    return <UnauthorizedPageMessage />;
+    return <UnauthorizedPageMessage />
   }
 };
 
