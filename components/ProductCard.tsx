@@ -15,7 +15,7 @@ const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 type ProductCardProps = {
   image: StaticImageData;
-  categories: string[];
+  categories: string;
   gender: string;
   sizeShoe: string;
   sizePantsWaist: string;
