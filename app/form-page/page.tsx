@@ -3,6 +3,8 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { Typography, Box, TextField, Button, Snackbar } from "@mui/material";
 import Alert, { AlertColor } from '@mui/material/Alert';
 
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
+
 interface FormData {
   name: string;
   gender: string;
@@ -49,7 +51,7 @@ export default function FormPage() {
       POST form data
       ---------------
       */
-      const response = await fetch('http://localhost:3000/api/submission-form', {
+      const response = await fetch(`${URL}/submission-form`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
