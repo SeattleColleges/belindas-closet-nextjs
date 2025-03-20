@@ -179,8 +179,8 @@ const Profile = () => {
           </Box>
 
           <Stack spacing={2}>
-            {userInfo?.lookingFor?.map((item, index) => (
-              <Paper 
+            {userInfo?.lookingFor?.length ? userInfo?.lookingFor?.map((item, index) => (
+              <Paper
                 key={index}
                 sx={{ 
                   p: 3,
@@ -199,7 +199,7 @@ const Profile = () => {
                   {item?.description}
                 </Typography>
               </Paper>
-            ))}
+            )) : <Typography variant="body1" color="text.secondary" sx={{ mt: 15 }}> No current requests </Typography>}
           </Stack>
         </Box>
 

@@ -31,7 +31,7 @@ export interface User {
   degreeType?: string;
   major?: string;
   graduationMonth?: string;
-  graduationYear?: string;
+  graduationYear?: number;
 }
 
 const degreeTypes = [
