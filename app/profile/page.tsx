@@ -48,26 +48,7 @@ async function fetchUserById(setUserInfo: (userInfo: User | null) => void, userI
       throw new Error(res.statusText);
     } else {
       const data = await res.json();
-      // Mock data for development
-      data.lookingFor = [
-        {
-          type: "Shirt",
-          size: "M - Size L",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        },
-        {
-          type: "Suit",
-          size: "M - Size L",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        }
-      ];
 
-      // Structure the academic data properly
-      data.degreeType = "Bachelor's";
-      data.major = "Computer Science";
-      data.graduationMonth = "June";
-      data.graduationYear = "2026";
-      
       setUserInfo(data);
     }
   } catch (error) {
@@ -157,11 +138,11 @@ const Profile = () => {
               </Typography>
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              {userInfo?.degreeType} - {userInfo?.major}
+              {userInfo?.degreeType} {userInfo?.major ? <> - {userInfo?.major} </> : <> program </>}
             </Typography>
-            <Typography variant="body1" color="text.secondary">
+            {userInfo?.graduationYear && (<Typography variant="body1" color="text.secondary">
               Graduating {userInfo?.graduationMonth}, {userInfo?.graduationYear}
-            </Typography>
+            </Typography>)}
           </Box>
         </Box>
 
