@@ -41,21 +41,21 @@ export default function EditProductDialog({
   product,
 }: EditProductDialogProps) {
   const [snackBarMessage, setSnackBarMessage] = useState<string | null>(null);
-  const [productGender, setProductGender] = useState<string[]>(
-    product.productGender || []
+  const [productGender, setProductGender] = useState<string>(
+    product.productGender
   );
-  const [productSizeShoe, setProductSizeShoe] = useState<string[]>(
-    product.productSizeShoe || []
+  const [productSizeShoe, setProductSizeShoe] = useState<string>(
+    product.productSizeShoe
   );
-  const [productSizes, setProductSizes] = useState<string[]>(
-    product.productSizes || []
+  const [productSizes, setProductSizes] = useState<string>(
+    product.productSizes
   );
-  const [productSizePantsWaist, setProductSizePantsWaist] = useState<string[]>(
-    product.productSizePantsWaist || []
+  const [productSizePantsWaist, setProductSizePantsWaist] = useState<string>(
+    product.productSizePantsWaist
   );
-  const [productSizePantsInseam, setProductSizePantsInseam] = useState<
-    string[]
-  >(product.productSizePantsInseam || []);
+  const [productSizePantsInseam, setProductSizePantsInseam] = useState<string>(
+    product.productSizePantsInseam
+  );
   const [productDescription, setProductDescription] = useState(
     product.productDescription || ""
   );
@@ -158,8 +158,8 @@ export default function EditProductDialog({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const isShoeProduct = product.productType.includes("Shoes");
-  const isPantsProduct = product.productType.includes("Pants");
+  const isShoeProduct = product.productType === "Shoes";
+  const isPantsProduct = product.productType === "Pants";
 
   return (
     <Box
