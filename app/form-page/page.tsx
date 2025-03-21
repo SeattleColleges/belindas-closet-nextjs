@@ -49,6 +49,11 @@ export default function FormPage() {
     const domain = email.split('@')[1];
     const parts = domain.split('.');
   
+    // Check if the last part has more than one '.'
+    if ((domain.match(/\./g) || []).length > 1) {
+      return false; // Invalid if there are multiple '.' in the last part
+    }
+    
     // Check if the domain has more than 2 parts
     // If there are multiple TLDs, at least one part will repeat (like .com.com or .com.test)
     const seenParts = new Set();
