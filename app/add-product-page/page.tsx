@@ -5,17 +5,16 @@ import ProductCard from "@/components/ProductCard";
 import logo from "@/public/belinda-images/logo.png";
 import { Box, Container, Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button, TextField, Stack } from "@mui/material";
 import Sidebar from "@/components/Sidebar";
-import React, { useState, useEffect, Dispatch, SetStateAction, ChangeEvent } from "react";
-import ProductCard from "@/components/ProductCard";
-import logo from "@/public/belinda-images/logo.png";
-import { Box, Container, Grid, Typography, FormControl, InputLabel, Select, MenuItem, Button, TextField, Stack } from "@mui/material";
-import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { SelectChangeEvent } from "@mui/material";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 import {
+  ProductTypeList,
   ProductGenderList,
+  ProductSizeShoeList,
+  ProductSizesList,
+  ProductSizePantsWaistList,
   ProductSizePantsInseamList,
 } from "./product-prop-list";
 
@@ -41,15 +40,15 @@ async function fetchData(
   setProducts: Dispatch<SetStateAction<Product[]>>
 ) {
   const apiUrl = `${URL}/products`;
-  const fetchUrl = `${apiUrl}`;
 
   try {
-    const res = await fetch(fetchUrl, {
+    const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
+
     if (!res.ok) {
       throw new Error(res.statusText);
     } else {
@@ -58,6 +57,7 @@ async function fetchData(
       setProducts(filteredData);
       console.log(filteredData);
     }
+
   } catch (error) {
     console.error("Error getting product:", error);
   }
@@ -100,11 +100,6 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
 
   useEffect(() => {
     fetchData(categoryId, setProducts);
-    const token = localStorage.getItem("token");
-    if (token) {
-      const userRole = JSON.parse(atob(token.split(".")[1])).role;
-      setUserRole(userRole);
-    }
   }, [categoryId]);
 
   useEffect(() => {
@@ -136,12 +131,11 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
     const processedFormData = Object.fromEntries(
       Object.entries(formData).map(([key, value]) => [
           key,
-          value === "" ? null : value, 
+          value === "" ? undefined : value, 
       ])
     );
 
     console.log("Submitting form:", processedFormData);
-
     const token = localStorage.getItem("token");
 
     try {
@@ -162,21 +156,10 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
         const data = await res.json();
         console.log(data);
         alert("Product Added!");
-        // Reset form
-        setProductType("");
-        setProductGender("");
-        setProductSizeShoe("");
-        setProductSizes("");
-        setProductSizePantsWaist("");
-        setProductSizePantsInseam("");
-        setProductDescription("");
-        setProductImage("");
-        setProductImageBlob(null);
-        setPreviewUrl(null);
-        setShowAddForm(false);
-        // Refresh products list
-        fetchData(categoryId, setProducts);
+
+        fetchData(categoryId, setProducts); //Fetch updated data
       }
+
     } catch (error) {
       console.error("Error adding product:", error);
     }
@@ -192,6 +175,12 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
     }));
   };
 
+  const loadImageSize = () => {
+    setPreviewHeight(
+      (imgElement.current.naturalHeight / imgElement.current.naturalWidth) * 150
+    );
+  };
+
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setProductImageBlob(event.target.files[0]);
@@ -203,440 +192,264 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
     }
   };
 
-  const loadImageSize = () => {
-    setPreviewHeight(
-      (imgElement.current.naturalHeight / imgElement.current.naturalWidth) * 150
-    );
-  };
-
-  if ((userRole === "admin" || userRole === "creator")) {
-    return (
+  return (userRole === "admin" || userRole === "creator") ? (
+    <Box sx={{
+      display: "flex",
+      minHeight: "100vh",
+      margin: "-1rem",
+      flexDirection: {xs: 'column', sm: 'row'},
+    }}>
+      <Sidebar/>
       <Box sx={{
-        display: "flex",
-        minHeight: "100vh",
-        margin: "-1rem",
-        flexDirection: {xs: 'column', sm: 'row'},
+        flexGrow: 1,
+        mt: {xs: '3rem', sm: 0},
       }}>
-        <Sidebar/>
-        <Box sx={{
-          flexGrow: 1,
-          mt: {xs: '3rem', sm: 0},
-        }}>
-          <Container sx={{py: 4}} maxWidth="lg">
-            <Stack spacing={3}>
-              <Typography
-                  variant="h4"
-                  gutterBottom
-                  align="center"
-                  mb={3}
-              >
-                Found {filteredProducts.length} products in All Products
-              </Typography>
+        <Container sx={{py: 4}} maxWidth="lg">
+          <Stack spacing={3}>
+            <Typography
+                variant="h4"
+                gutterBottom
+                align="center"
+                mb={3}
+            >
+              Found {filteredProducts.length} products in All Products
+            </Typography>
 
-                  <Box sx={{mb: 4}}>
+            <Box sx={{mb: 4}}>
+              <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setShowAddForm(!showAddForm)}
+                  sx={{mb: 5, marginLeft: 2}}
+              >
+                {showAddForm ? "Hide Add Product Form" : "Add New Product"}
+              </Button>
+
+              {showAddForm && (
+                <form onSubmit={handleSubmit}>
+                  <Stack spacing={2} sx={{bgcolor: "white", p: 3, borderRadius: 1, marginBottom: 5}}>
+                    <Typography variant="h5">Add a Product</Typography>
+
+                    {/* Product Type Field */}
+                    <FormControl variant="filled">
+                      <InputLabel>Product Type</InputLabel>
+                      <Select
+                        labelId="type-selectlabel"
+                        id="type-select"
+                        aria-describedby="product-type-field"
+                        name="productType"
+                        value={formData.productType}
+                        onChange={handleChange}
+                      >
+                        {Object.values(ProductTypeList).map((type) => (
+                          <MenuItem value={type} key={type}>
+                            {type}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+
+                    {/* Product Gender Field */}
+                    {formData.productType && (
+                        <FormControl variant="filled">
+                          <InputLabel>Gender</InputLabel>
+                          <Select
+                            labelId="gender-selectlabel"
+                            id="gender-select"
+                            aria-describedby="product-gender-field"
+                            name="productGender"
+                            value={formData.productGender}
+                            onChange={handleChange}
+                          >
+                            <MenuItem value="">{"-"}</MenuItem>
+                            {Object.values(ProductGenderList).map((gender) => (
+                              <MenuItem value={gender} key={gender}>
+                                {gender}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                    )}
+
+                    {/* Product Size Shoe Field */}
+                    {formData.productType === "Shoes" && (
+                        <FormControl variant="filled">
+                          <InputLabel>Shoe Size</InputLabel>
+                          <Select
+                            labelId="shoesize-selectlabel"
+                            id="shoesize-select"
+                            aria-describedby="product-shoesize-field"
+                            name="productSizeShoe"
+                            value={formData.productSizeShoe}
+                            onChange={handleChange}
+                          >
+                            <MenuItem value="">{"-"}</MenuItem>
+                            {ProductSizeShoeList.map((size) => (
+                              <MenuItem value={size} key={size}>
+                                {size}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                    )}
+
+                    {/* Product Size Field */}
+                    {!notSizeApplicable.includes(formData.productType) && (
+                        <FormControl variant="filled">
+                          <InputLabel>Size</InputLabel>
+                          <Select
+                            labelId="size-selectlabel"
+                            id="size-select"
+                            aria-describedby="product-size-field"
+                            name="productSizes"
+                            value={formData.productSizes}
+                            onChange={handleChange}
+                          >
+                            <MenuItem value="">{"-"}</MenuItem>
+                            {Object.values(ProductSizesList).map((size) => (
+                                <MenuItem value={size} key={size}>
+                                  {size}
+                                </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                    )}
+
+                    {/* Product Size Pants Waist & Inseam Field */}
+                    {formData.productType === "Pants" && (
+                        <>
+                          <FormControl variant="filled">
+                            <InputLabel>Waist Size</InputLabel>
+                            <Select
+                              labelId="waistsize-selectlabel"
+                              id="waistsize-select"
+                              aria-describedby="product-waist-size-field"
+                              name="productSizePantsWaist"
+                              value={formData.productSizePantsWaist}
+                              onChange={handleChange}
+                            >
+                              <MenuItem value="">{"-"}</MenuItem>
+                              {ProductSizePantsWaistList.map((size) => (
+                                <MenuItem value={size} key={size}>
+                                  {size}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+
+                          <FormControl variant="filled">
+                            <InputLabel>Inseam Size</InputLabel>
+                            <Select
+                              labelId="inseamsize-selectlabel"
+                              id="inseamsize-select"
+                              aria-describedby="product-inseam-size-field"
+                              name="productSizePantsInseam"
+                              value={formData.productSizePantsInseam}
+                              onChange={handleChange}
+                            >
+                              <MenuItem value="">{"-"}</MenuItem>
+                              {ProductSizePantsInseamList.map((size) => (
+                                <MenuItem value={size} key={size}>
+                                  {size}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        </>
+                    )}
+
+                    {/* Product Description Field */}
+                    <TextField
+                        label="Description"
+                        id="product-description"
+                        aria-describedby="product-description-field"
+                        name="productDescription"
+                        value={formData.productDescription}
+                        onChange={handleChange}
+                        multiline
+                        minRows={4}
+                        variant="filled"
+                    />
+
+                    {/* Product Upload Image Field */}
+                    <input
+                        multiple
+                        type="file"
+                        accept="image/*"
+                        onChange={handleChange}
+                        // value={formData.productImage}
+                        // Will need to change this later on to handle a file and then upload to a bucket and reference the image url from the bucket upload
+                    />
+
+                    {previewUrl && (
+                        <Box sx={{mt: 2}}>
+                          <Image
+                              src={previewUrl}
+                              alt="Preview"
+                              width={150}
+                              height={150}
+                              style={{objectFit: "contain"}}
+                          />
+                        </Box>
+                    )}
+
+                    {/* Submit Button */}
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => setShowAddForm(!showAddForm)}
-                        sx={{mb: 5, marginLeft: 2}}
+                        type="submit"
+                        sx={{m:1, mt: 2}}
                     >
-                      {showAddForm ? "Hide Add Product Form" : "Add New Product"}
+                      Add Product
                     </Button>
+                  </Stack>
+                </form>
+              )}
 
-                    {showAddForm && (
-                        <form onSubmit={handleSubmit}>
-                          <Stack spacing={2} sx={{bgcolor: "white", p: 3, borderRadius: 1, marginBottom: 5}}>
-                            <Typography variant="h5">Add a Product</Typography>
+              <Box sx={{mb: 2, marginLeft: 2}}>
+                <Button
+                    variant={viewMode === 'active' ? "contained" : "outlined"}
+                    color="primary"
+                    onClick={() => setViewMode('active')}
+                    sx={{marginRight: 2}}
+                >
+                  View Active Products
+                </Button>
+                <Button
+                    variant={viewMode === 'archived' ? "contained" : "outlined"}
+                    color="primary"
+                    onClick={() => setViewMode('archived')}
+                >
+                  View Archived Products
+                </Button>
+              </Box>
+            </Box>
 
-                            <FormControl variant="filled">
-                              <InputLabel>Product Type</InputLabel>
-                              <Select
-                                  value={formData.productType}
-                                  onChange={handleChange}
-                              >
-                                {Object.values(ProductTypeList).map((type) => (
-                                    <MenuItem value={type} key={type}>
-                                      {type}
-                                    </MenuItem>
-                                ))}
-                              </Select>
-                            </FormControl>
-
-                            {formData.productType && (
-                                <FormControl variant="filled">
-                                  <InputLabel>Gender</InputLabel>
-                                  <Select
-                                      value={formData.productGender}
-                                      onChange={handleChange}
-                                  >
-                                    <MenuItem value="">{"-"}</MenuItem>
-                                    {Object.values(ProductGenderList).map((gender) => (
-                                        <MenuItem value={gender} key={gender}>
-                                          {gender}
-                                        </MenuItem>
-                                    ))}
-                                  </Select>
-                                </FormControl>
-                            )}
-
-                            {formData.productType === "Shoes" && (
-                                <FormControl variant="filled">
-                                  <InputLabel>Shoe Size</InputLabel>
-                                  <Select
-                                      value={formData.productSizeShoe}
-                                      onChange={handleChange}
-                                  >
-                                    <MenuItem value="">{"-"}</MenuItem>
-                                    {ProductSizeShoeList.map((size) => (
-                                        <MenuItem value={size} key={size}>
-                                          {size}
-                                        </MenuItem>
-                                    ))}
-                                  </Select>
-                                </FormControl>
-                            )}
-
-                            {!notSizeApplicable.includes(formData.productType) && (
-                                <FormControl variant="filled">
-                                  <InputLabel>Size</InputLabel>
-                                  <Select
-                                      value={formData.productSizes}
-                                      onChange={handleChange}
-                                  >
-                                    <MenuItem value="">{"-"}</MenuItem>
-                                    {Object.values(ProductSizesList).map((size) => (
-                                        <MenuItem value={size} key={size}>
-                                          {size}
-                                        </MenuItem>
-                                    ))}
-                                  </Select>
-                                </FormControl>
-                            )}
-
-                            {formData.productType === "Pants" && (
-                                <>
-                                  <FormControl variant="filled">
-                                    <InputLabel>Waist Size</InputLabel>
-                                    <Select
-                                        value={formData.productSizePantsWaist}
-                                        onChange={handleChange}
-                                    >
-                                      <MenuItem value="">{"-"}</MenuItem>
-                                      {ProductSizePantsWaistList.map((size) => (
-                                          <MenuItem value={size} key={size}>
-                                            {size}
-                                          </MenuItem>
-                                      ))}
-                                    </Select>
-                                  </FormControl>
-
-                                  <FormControl variant="filled">
-                                    <InputLabel>Inseam Size</InputLabel>
-                                    <Select
-                                        value={formData.productSizePantsInseam}
-                                        onChange={handleChange}
-                                    >
-                                      <MenuItem value="">{"-"}</MenuItem>
-                                      {ProductSizePantsInseamList.map((size) => (
-                                          <MenuItem value={size} key={size}>
-                                            {size}
-                                          </MenuItem>
-                                      ))}
-                                    </Select>
-                                  </FormControl>
-                                </>
-                            )}
-
-                            <TextField
-                                variant="filled"
-                                label="Description"
-                                multiline
-                                rows={4}
-                                value={formData.productDescription}
-                                onChange={handleChange}
-                            />
-
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleChange}
-                            />
-
-                            {previewUrl && (
-                                <Box sx={{mt: 2}}>
-                                  <Image
-                                      src={previewUrl}
-                                      alt="Preview"
-                                      width={150}
-                                      height={150}
-                                      style={{objectFit: "contain"}}
-                                  />
-                                </Box>
-                            )}
-
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                sx={{mt: 2}}
-                            >
-                              Add Product
-                            </Button>
-                          </Stack>
-                        </form>
-                    )}
-
-                    <Box sx={{mb: 2, marginLeft: 2}}>
-                      <Button
-                          variant={viewMode === 'active' ? "contained" : "outlined"}
-                          color="primary"
-                          onClick={() => setViewMode('active')}
-                          sx={{marginRight: 2}}
-                      >
-                        View Active Products
-                      </Button>
-                      <Button
-                          variant={viewMode === 'archived' ? "contained" : "outlined"}
-                          color="primary"
-                          onClick={() => setViewMode('archived')}
-                      >
-                        View Archived Products
-                      </Button>
-                    </Box>
-                  </Box>
-
-              <Grid container spacing={2}>
-                {filteredProducts.map((product, index) => (
-                    <Grid item key={index} xs={12} sm={4} md={3} sx={{ marginRight: { xs: 4} }}>
-                      <ProductCard
-                          image={logo}
-                          categories={product.productType}
-                          gender={product.productGender}
-                          sizeShoe=''
-                          size=''
-                          sizePantsWaist=''
-                          sizePantsInseam=''
-                          description={product.productDescription}
-                          href={`/category-page/${categoryId}/products/${product._id}`}
-                          _id={product._id}
-                          isHidden={false}
-                          isSold={false}
-                      />
-                    </Grid>
-                ))}
-              </Grid>
-            </Stack>
-          </Container>
-        </Box>
+            <Grid container spacing={2}>
+              {filteredProducts.map((product, index) => (
+                <Grid item key={index} xs={12} sm={4} md={3} sx={{ marginRight: { xs: 4} }}>
+                  <ProductCard
+                    image={logo}
+                    categories={product.productType}
+                    gender={product.productGender}
+                    sizeShoe=''
+                    size=''
+                    sizePantsWaist=''
+                    sizePantsInseam=''
+                    description={product.productDescription}
+                    href={`/category-page/${categoryId}/products/${product._id}`}
+                    _id={product._id}
+                    isHidden={false}
+                    isSold={false}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Stack>
+        </Container>
       </Box>
-
-
-
-      // <form onSubmit={handleSubmit}>
-      //   <FormControl>
-      //     <Typography
-      //       component="h1"
-      //       variant="h3"
-      //       sx={{ mb: 3, mt: 3 }}
-      //     >
-      //       Add a Product
-      //     </Typography>
-
-      //     {/* Product Type Field */}
-      //     <FormControl variant="filled" sx={{ m: 1, minWidth: 250 }}>
-      //       <InputLabel id="type-selectlabel">Product Type</InputLabel>
-      //       <Select
-      //         labelId="type-selectlabel"
-      //         id="type-select"
-      //         aria-describedby="product-type-field"
-      //         name="productType"
-      //         value={formData.productType}
-      //         onChange={handleChange}
-      //       >
-      //         {Object.values(ProductTypeList).map((type) => (
-      //           <MenuItem value={type} key={type}>
-      //             {type}
-      //           </MenuItem>
-      //         ))}
-      //       </Select>
-      //     </FormControl>
-
-      //     {/* Product Gender Field */}
-      //     {formData.productType == "" ? null : (
-      //       <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-      //         <InputLabel id="gender-selectlabel">Product Gender</InputLabel>
-      //         <Select
-      //           labelId="gender-selectlabel"
-      //           id="gender-select"
-      //           aria-describedby="product-gender-field"
-      //           name="productGender"
-      //           value={formData.productGender}
-      //           onChange={handleChange}
-      //         >
-      //           <MenuItem value={""}>{"-"}</MenuItem>
-      //           {Object.values(ProductGenderList).map((gender) => (
-      //             <MenuItem value={gender} key={gender}>
-      //               {gender}
-      //             </MenuItem>
-      //           ))}
-      //         </Select>
-      //       </FormControl>
-      //     )}
-
-      //     {/* Product Size Shoe Field */}
-      //     {formData.productType != "Shoes" ? null : (
-      //       <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-      //         <InputLabel id="shoesize-selectlabel">Shoe Size</InputLabel>
-      //         <Select
-      //           labelId="shoesize-selectlabel"
-      //           id="shoesize-select"
-      //           aria-describedby="product-shoesize-field"
-      //           name="productSizeShoe"
-      //           value={formData.productSizeShoe}
-      //           onChange={handleChange}
-      //         >
-      //           <MenuItem value={""}>{"-"}</MenuItem>
-      //           {Object.values(ProductSizeShoeList).map((size) => (
-      //             <MenuItem value={size} key={size}>
-      //               {size}
-      //             </MenuItem>
-      //           ))}
-      //         </Select>
-      //       </FormControl>
-      //     )}
-
-      //     {/* Product Size Field */}
-      //     {notSizeApplicable.includes(formData.productType) ? null : (
-      //       <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-      //         <InputLabel id="size-selectlabel">Product Size</InputLabel>
-      //         <Select
-      //           labelId="size-selectlabel"
-      //           id="size-select"
-      //           aria-describedby="product-size-field"
-      //           name="productSizes"
-      //           value={formData.productSizes}
-      //           onChange={handleChange}
-      //         >
-      //           <MenuItem value={""}>{"-"}</MenuItem>
-      //           {Object.values(ProductSizesList).map((size) => (
-      //             <MenuItem value={size} key={size}>
-      //               {size}
-      //             </MenuItem>
-      //           ))}
-      //         </Select>
-      //       </FormControl>
-      //     )}
-
-      //     {/* Product Size Pants Waist Field */}
-      //     {formData.productType != "Pants" ? null : (
-      //       <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-      //         <InputLabel id="waistsize-selectlabel">Waist Size</InputLabel>
-      //         <Select
-      //           labelId="waistsize-selectlabel"
-      //           id="waistsize-select"
-      //           aria-describedby="product-waist-size-field"
-      //           name="productSizePantsWaist"
-      //           value={formData.productSizePantsWaist}
-      //           onChange={handleChange}
-      //         >
-      //           <MenuItem value={""}>{"-"}</MenuItem>
-      //           {Object.values(ProductSizePantsWaistList).map((size) => (
-      //             <MenuItem value={size} key={size}>
-      //               {size}
-      //             </MenuItem>
-      //           ))}
-      //         </Select>
-      //       </FormControl>
-      //     )}
-
-      //     {/* Product Size Pants Inseam Field */}
-      //     {formData.productType != "Pants" ? null : (
-      //       <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-      //         <InputLabel id="inseamsize-selectlabel">Inseam Length</InputLabel>
-      //         <Select
-      //           labelId="inseamsize-selectlabel"
-      //           id="inseamsize-select"
-      //           aria-describedby="product-inseam-size-field"
-      //           name="productSizePantsInseam"
-      //           value={formData.productSizePantsInseam}
-      //           onChange={handleChange}
-      //         >
-      //           <MenuItem value={""}>{"-"}</MenuItem>
-      //           {Object.values(ProductSizePantsInseamList).map((size) => (
-      //             <MenuItem value={size} key={size}>
-      //               {size}
-      //             </MenuItem>
-      //           ))}
-      //         </Select>
-      //       </FormControl>
-      //     )}
-
-      //     {/* Product Description Field */}
-      //     {formData.productType == "" ? null : (
-      //       <FormControl variant="filled" sx={{ m: 1, minWidth: 250 }}>
-      //         <TextField
-      //           label="Product Description"
-      //           id="product-description"
-      //           aria-describedby="product-description-field"
-      //           name="productDescription"
-      //           value={formData.productDescription}
-      //           onChange={handleChange}
-      //           multiline
-      //           minRows={2}
-      //           variant="filled"
-      //         />
-      //       </FormControl>
-      //     )}
-
-      //     {/* Product Upload Image Field */}
-      //     {formData.productType == "" ? null : (
-      //       <Stack
-      //         direction="row"
-      //         alignItems="center"
-      //         justifyContent="center"
-      //         spacing={2}
-      //         sx={{ m: 1 }}
-      //       >
-      //         {previewUrl && (
-      //           <Image
-      //             src={previewUrl}
-      //             ref={imgElement}
-      //             alt="Product Preview"
-      //             onLoad={loadImageSize}
-      //             height={previewHeight}
-      //             width={150}
-      //           />
-      //         )}
-      //         <Button variant="contained" component="label" sx={{ width: 1 }}>
-      //           Upload Image
-      //           <input
-      //             hidden
-      //             multiple
-      //             type="file"
-      //             onChange={handleImageUpload}
-      //             value={formData.productImage}
-      //           />
-      //         </Button>
-      //       </Stack>
-      //     )}
-
-      //     {/* Submit Button */}
-      //     {formData.productType == "" ? null : (
-      //       <Button
-      //         variant="contained"
-      //         color="primary"
-      //         type="submit"
-      //         sx={{ m: 1, mt: 2 }}
-      //       >
-      //         Submit
-      //       </Button>
-      //     )}
-      //   </FormControl>
-      // </form>
-    );
-  } else {
-    return <UnauthorizedPageMessage />
-  }
+    </Box>
+  ) : <UnauthorizedPageMessage />;
 };
 
 // export default AddProduct;
