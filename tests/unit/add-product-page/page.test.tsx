@@ -11,50 +11,51 @@ jest.mock("next/navigation", () => ({
 const roles = ["admin", "creator", "user"];
 
 describe.each(roles)("add-product-page tests for role: %s", (role) => {
-  beforeEach(() => {
-    // Fix API mocking: Ensure expected product data is returned
-    global.fetch = jest.fn((url) => {
-      if (url.includes("/products")) {
-        return Promise.resolve({
-          json: () =>
-            Promise.resolve([
-              {
-                _id: "1",
-                isHidden: false,
-                isSold: false,
-                productType: ["Shoe"],
-                productGender: "Unisex",
-                productDescription: "Test Product",
-              },
-            ]),
-        });
-      }
-      return Promise.reject(new Error("Not found"));
-    }) as jest.Mock;
-
-    render(<ProductList params={{ categoryId: "Shoes" }} />);
-  });
-
   beforeAll(() => {
     // Fix token setup for user role validation
     const mockToken = btoa(JSON.stringify({ role }));
     localStorage.setItem("token", `fakeHeader.${mockToken}.fakeSignature`);
   });
 
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve([{ 
+        _id: '1', 
+        isHidden: false, 
+        isSold: true, 
+        productType: 'Shoe', 
+        productGender: 'Unisex', 
+        productDescription: 'Test Product' 
+      }]),
+    })
+  ) as jest.Mock;
+
+  beforeEach(() => {
+    render(<ProductList params={{ categoryId: "Shoes" }} />);
+  });
+
+
   afterAll(() => {
     localStorage.removeItem("token");
   });
 
-  if (role === "user" || role === "creator") {
+  if (role === "user") {
     it("displays UnauthorizedPageMessage for unauthorized roles", async () => {
+
+
       await waitFor(() => {
         expect(screen.getByText(/401 Unauthorized/i)).toBeInTheDocument();
       });
 
-      const unauthorizedMessage = screen.getByText(
-        /You are not authorized to access this page/i
-      );
-      expect(unauthorizedMessage).toBeInTheDocument();
+      expect(
+        screen.getByText(/You are not authorized to access this page/i)
+      ).toBeInTheDocument();
+
+      // const unauthorizedMessage = screen.getByText(
+      //   /You are not authorized to access this page/i
+      // );
+      // expect(unauthorizedMessage).toBeInTheDocument();
     });
   } else {
     it("contains title", async () => {
