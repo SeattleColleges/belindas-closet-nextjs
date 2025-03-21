@@ -16,7 +16,17 @@ export enum ProductGenderList {
   NON_BINARY = "NON_BINARY",
 }
 
-export const ProductSizeShoeList = [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13];
+export enum ProductSizeShoeList {
+  SIZE_5 = 5,
+  SIZE_6 = 6,
+  SIZE_7 = 7,
+  SIZE_8 = 8,
+  SIZE_9 = 9,
+  SIZE_10 = 10,
+  SIZE_11 = 11,
+  SIZE_12 = 12,
+}
+
 
 export enum ProductSizesList {
   XS = "XS",
@@ -27,6 +37,24 @@ export enum ProductSizesList {
   XXL = "XXL",
 }
 
-export const ProductSizePantsWaistList = [28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42];
+export enum ProductSizePantsWaistList {
+  SIZE_28 = 28,
+  SIZE_30 = 30,
+  SIZE_32 = 32,
+  SIZE_34 = 34,
+  SIZE_36 = 36,
+  SIZE_38 = 38,
+  SIZE_40 = 40,
+  SIZE_42 = 42,
+} 
 
-export const ProductSizePantsInseamList = [28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42];
+export enum ProductSizePantsInseamList {
+  SIZE_28 = 28,
+  SIZE_30 = 30,
+  SIZE_32 = 32,
+  SIZE_34 = 34,
+  SIZE_36 = 36,
+  SIZE_38 = 38,
+  SIZE_40 = 40,
+  SIZE_42 = 42,
+}
