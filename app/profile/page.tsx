@@ -194,6 +194,7 @@ const Profile = () => {
 
         <AddLookingForDialog
           open={openAddDialog}
+          user={userInfo}
           onClose={() => setOpenAddDialog(false)}
           onAdd={handleAddItem}
         />

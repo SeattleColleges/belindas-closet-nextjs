@@ -32,6 +32,10 @@ export interface User {
   major?: string;
   graduationMonth?: string;
   graduationYear?: number;
+  lookingFor?: {
+    type: string;
+    size?: string;
+  }[];
 }
 
 const degreeTypes = [

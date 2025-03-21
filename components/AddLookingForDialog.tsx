@@ -11,6 +11,8 @@ import {
   Select,
   MenuItem,
   Stack,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import {
   ProductTypeList,
@@ -20,20 +22,34 @@ import {
   ProductSizePantsWaistList,
   ProductSizePantsInseamList,
 } from '@/app/add-product-page/product-prop-list';
+import {AlertColor} from "@mui/material/Alert";
 
 interface LookingForItem {
   type: string;
-  size: string;
-  description: string;
+  size?: string;
+}
+
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  pronoun: string;
+  degreeType?: string;
+  major?: string;
+  graduationMonth?: string;
+  graduationYear?: number;
+  lookingFor?: LookingForItem[];
 }
 
 interface AddLookingForDialogProps {
   open: boolean;
+  user: User;
   onClose: () => void;
   onAdd: (item: LookingForItem) => void;
 }
 
-const AddLookingForDialog = ({ open, onClose, onAdd }: AddLookingForDialogProps) => {
+const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialogProps) => {
   const [type, setType] = useState('');
   const [productGender, setProductGender] = useState('');
   const [productSizeShoe, setProductSizeShoe] = useState<number | string>('');
@@ -41,11 +57,21 @@ const AddLookingForDialog = ({ open, onClose, onAdd }: AddLookingForDialogProps)
   const [productSizePantsWaist, setProductSizePantsWaist] = useState<number | string>('');
   const [productSizePantsInseam, setProductSizePantsInseam] = useState<number | string>('');
   const [description, setDescription] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const notSizeApplicable = ["", "Pants", "Shoes"];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!user || !user.id) {
+      setSnackbarSeverity('error');
+      setSnackbarMessage('User ID is not defined');
+      setSnackbarOpen(true);
+      return;
+    }
     
     let finalSize = '';
     if (type === 'Shoes' && productSizeShoe) {
@@ -56,21 +82,48 @@ const AddLookingForDialog = ({ open, onClose, onAdd }: AddLookingForDialogProps)
       finalSize = productSizes;
     }
 
-    if (type && finalSize && description) {
-      onAdd({
-        type,
-        size: finalSize,
-        description
+    const token = localStorage.getItem('token');
+    try {
+      const apiUrl = process.env.NSC_EVENTS_PUBLIC_API_URL || `http://localhost:3000/api`;
+      const response = await fetch(`${apiUrl}/user/update/${user.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          lookingFor: [
+              ...(user.lookingFor || []),
+              { type, size: finalSize, gender: productGender }
+          ]
+        })
       });
-      // Reset form
-      setType('');
-      setProductGender('');
-      setProductSizeShoe('');
-      setProductSizes('');
-      setProductSizePantsWaist('');
-      setProductSizePantsInseam('');
-      setDescription('');
-      onClose();
+
+      if (response.ok) {
+        onAdd({ type, size: finalSize });
+        // Reset form
+        setType('');
+        setProductGender('');
+        setProductSizeShoe('');
+        setProductSizes('');
+        setProductSizePantsWaist('');
+        setProductSizePantsInseam('');
+        setDescription('');
+        setSnackbarSeverity('success');
+        setSnackbarMessage('Item added successfully!');
+        setSnackbarOpen(true);
+        setTimeout(() => onClose(), 1000);
+      } else {
+        console.error('Failed to add item:', response.statusText);
+        setSnackbarSeverity('error');
+        setSnackbarMessage('Failed to add item');
+        setSnackbarOpen(true);
+      }
+    } catch (error) {
+      console.error('Error adding item:', error);
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Error adding item');
+      setSnackbarOpen(true);
     }
   };
 
@@ -191,22 +244,29 @@ const AddLookingForDialog = ({ open, onClose, onAdd }: AddLookingForDialogProps)
               </FormControl>
             )}
 
-            <TextField
-              fullWidth
-              label="Description"
-              multiline
-              rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
+            <DialogActions>
+              <Button onClick={onClose}>Cancel</Button>
+              <Button type="submit" variant="contained" color="primary">
+                Add Item
+              </Button>
+            </DialogActions>
           </Stack>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button type="submit" variant="contained">Add Item</Button>
-        </DialogActions>
       </form>
+      <Snackbar 
+        open={snackbarOpen} 
+        autoHideDuration={6000} 
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={() => setSnackbarOpen(false)} 
+          severity={snackbarSeverity} 
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Dialog>
   );
 };
