@@ -284,10 +284,12 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
                             onChange={handleChange}
                           >
                             <MenuItem value="">{"-"}</MenuItem>
-                            {ProductSizeShoeList.map((size) => (
-                              <MenuItem value={size} key={size}>
-                                {size}
-                              </MenuItem>
+                            {Object.values(ProductSizeShoeList)
+                              .filter((size => typeof size === "number"))
+                              .map((size) => (
+                                <MenuItem value={size} key={size}>
+                                  {size}
+                                </MenuItem>
                             ))}
                           </Select>
                         </FormControl>
@@ -329,10 +331,12 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
                               onChange={handleChange}
                             >
                               <MenuItem value="">{"-"}</MenuItem>
-                              {ProductSizePantsWaistList.map((size) => (
-                                <MenuItem value={size} key={size}>
-                                  {size}
-                                </MenuItem>
+                              {Object.values(ProductSizePantsWaistList)
+                                .filter((size => typeof size === "number"))
+                                .map((size) => (
+                                  <MenuItem value={size} key={size}>
+                                    {size}
+                                  </MenuItem>
                               ))}
                             </Select>
                           </FormControl>
@@ -348,10 +352,12 @@ const AddProduct = ({ categoryId }: { categoryId: string }) => {
                               onChange={handleChange}
                             >
                               <MenuItem value="">{"-"}</MenuItem>
-                              {ProductSizePantsInseamList.map((size) => (
-                                <MenuItem value={size} key={size}>
-                                  {size}
-                                </MenuItem>
+                            {Object.values(ProductSizePantsInseamList)
+                              .filter((size => typeof size === "number"))
+                              .map((size) => (
+                                  <MenuItem value={size} key={size}>
+                                    {size}
+                                  </MenuItem>
                               ))}
                             </Select>
                           </FormControl>
