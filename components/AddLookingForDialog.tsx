@@ -50,17 +50,15 @@ interface AddLookingForDialogProps {
 }
 
 const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialogProps) => {
-  const [type, setType] = useState('');
-  const [productGender, setProductGender] = useState('');
+  const [type, setType] = useState<string>('');
+  const [productGender, setProductGender] = useState<string>('');
   const [productSizeShoe, setProductSizeShoe] = useState<number | string>('');
-  const [productSizes, setProductSizes] = useState('');
+  const [productSizes, setProductSizes] = useState<string>('');
   const [productSizePantsWaist, setProductSizePantsWaist] = useState<number | string>('');
   const [productSizePantsInseam, setProductSizePantsInseam] = useState<number | string>('');
-  // TODO: Remove all references to descr
-  const [description, setDescription] = useState('');
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
 
   const notSizeApplicable = ["", "Pants", "Shoes"];
 
@@ -109,7 +107,6 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
         setProductSizes('');
         setProductSizePantsWaist('');
         setProductSizePantsInseam('');
-        setDescription('');
         setSnackbarSeverity('success');
         setSnackbarMessage('Item added successfully!');
         setSnackbarOpen(true);

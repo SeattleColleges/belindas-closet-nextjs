@@ -61,16 +61,16 @@ const months = [
 ];
 
 const EditUserDetailsDialog: React.FC<EditUserDetailsDialogProps> = ({ open, onClose, user }) => {
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [pronoun, setPronoun] = useState(user.pronoun);
-  const [degreeType, setDegreeType] = useState(user.degreeType || '');
-  const [major, setMajor] = useState(user.major || '');
-  const [graduationMonth, setGraduationMonth] = useState(user.graduationMonth || '');
+  const [firstName, setFirstName] = useState<string>(user.firstName);
+  const [lastName, setLastName] = useState<string>(user.lastName);
+  const [pronoun, setPronoun] = useState<string>(user.pronoun || '');
+  const [degreeType, setDegreeType] = useState<string>(user.degreeType || '');
+  const [major, setMajor] = useState<string>(user.major || '');
+  const [graduationMonth, setGraduationMonth] = useState<string>(user.graduationMonth || '');
   const [graduationYear, setGraduationYear] = useState<string>(user.graduationYear || '');
-  const [isUpdated, setIsUpdated] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [isUpdated, setIsUpdated] = useState<boolean>(false);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
 
   useEffect(() => {
