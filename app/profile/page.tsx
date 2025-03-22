@@ -125,7 +125,7 @@ const Profile = () => {
             sx={{ 
               width: 200, 
               height: 200,
-              bgcolor: "#B4D4FF"
+              bgcolor: "#114fa3"
             }}
           >
             {userInfo?.firstName?.[0]}{userInfo?.lastName?.[0]}
