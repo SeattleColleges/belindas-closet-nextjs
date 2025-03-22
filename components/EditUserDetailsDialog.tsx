@@ -31,7 +31,7 @@ export interface User {
   degreeType?: string;
   major?: string;
   graduationMonth?: string;
-  graduationYear?: number;
+  graduationYear?: string;
   lookingFor?: {
     type: string;
     size?: string;
@@ -67,7 +67,7 @@ const EditUserDetailsDialog: React.FC<EditUserDetailsDialogProps> = ({ open, onC
   const [degreeType, setDegreeType] = useState(user.degreeType || '');
   const [major, setMajor] = useState(user.major || '');
   const [graduationMonth, setGraduationMonth] = useState(user.graduationMonth || '');
-  const [graduationYear, setGraduationYear] = useState(user.graduationYear || '');
+  const [graduationYear, setGraduationYear] = useState<string>(user.graduationYear || '');
   const [isUpdated, setIsUpdated] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
