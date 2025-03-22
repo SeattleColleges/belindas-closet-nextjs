@@ -132,10 +132,10 @@ const Profile = () => {
           </Avatar>
           <Box>
             <Typography variant="h4" sx={{ marginBottom: "0.5rem" }}>
-              {userInfo?.firstName} {userInfo?.lastName} 
-              <Typography component="span" color="text.secondary" sx={{ ml: 1 }}>
+              {userInfo?.firstName} {userInfo?.lastName}
+              {userInfo?.pronoun && (<Typography component="span" color="text.secondary" sx={{ ml: 1 }}>
                 ({userInfo?.pronoun})
-              </Typography>
+              </Typography>) }
             </Typography>
             <Typography variant="body1" color="text.secondary">
               {userInfo?.degreeType} {userInfo?.major ? <> - {userInfo?.major} </> : <> program </>}
