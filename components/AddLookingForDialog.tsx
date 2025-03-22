@@ -111,7 +111,7 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Add Item You're Looking For</DialogTitle>
+        <DialogTitle>Add Item You&apos;re Looking For</DialogTitle>
         <DialogContent>
           <Stack spacing={3} sx={{ mt: 1 }}>
             <FormControl fullWidth variant="filled">
