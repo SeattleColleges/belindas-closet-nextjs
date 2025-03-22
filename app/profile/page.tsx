@@ -13,7 +13,7 @@ const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 interface LookingForItem {
   type: string;
   size: string;
-  description: string;
+  gender: string;
 }
 
 interface User {
@@ -174,10 +174,7 @@ const Profile = () => {
                   {item?.type}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" gutterBottom>
-                  {item?.size}
-                </Typography>
-                <Typography variant="body1">
-                  {item?.description}
+                  {item?.gender} - {item?.size}
                 </Typography>
               </Paper>
             )) : <Typography variant="body1" color="text.secondary" sx={{ mt: 15 }}> No current requests </Typography>}
