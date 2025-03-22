@@ -7,27 +7,9 @@ import { useRouter } from "next/navigation";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 import AddIcon from '@mui/icons-material/Add';
 import AddLookingForDialog from '@/components/AddLookingForDialog';
+import { User, LookingForItem } from '@/types/user';
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
-
-interface LookingForItem {
-  type: string;
-  size: string;
-  gender: string;
-}
-
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  pronoun: string;
-  degreeType?: string;
-  major?: string;
-  graduationMonth?: string;
-  graduationYear?: string;
-  lookingFor?: LookingForItem[];
-}
 
 type JWToken = string | null;
 

@@ -23,24 +23,7 @@ import {
   ProductSizePantsInseamList,
 } from '@/app/add-product-page/product-prop-list';
 import {AlertColor} from "@mui/material/Alert";
-
-interface LookingForItem {
-  type: string;
-  size?: string;
-}
-
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  pronoun: string;
-  degreeType?: string;
-  major?: string;
-  graduationMonth?: string;
-  graduationYear?: string;
-  lookingFor?: LookingForItem[];
-}
+import { User, LookingForItem } from '@/types/user';
 
 interface AddLookingForDialogProps {
   open: boolean;

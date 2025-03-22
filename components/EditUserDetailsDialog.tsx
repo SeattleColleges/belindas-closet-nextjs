@@ -15,27 +15,12 @@ import {
 } from "@mui/material";
 import Snackbar from '@mui/material/Snackbar';
 import Alert, { AlertColor } from '@mui/material/Alert';
+import { User } from '@/types/user';
 
 interface EditUserDetailsDialogProps {
   open: boolean;
   onClose: (updatedUser?: User) => void;
   user: User;
-}
-
-export interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  pronoun: string;
-  degreeType?: string;
-  major?: string;
-  graduationMonth?: string;
-  graduationYear?: string;
-  lookingFor?: {
-    type: string;
-    size?: string;
-  }[];
 }
 
 const degreeTypes = [
