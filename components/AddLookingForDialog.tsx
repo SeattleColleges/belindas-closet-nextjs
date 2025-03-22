@@ -38,13 +38,13 @@ interface User {
   degreeType?: string;
   major?: string;
   graduationMonth?: string;
-  graduationYear?: number;
+  graduationYear?: string;
   lookingFor?: LookingForItem[];
 }
 
 interface AddLookingForDialogProps {
   open: boolean;
-  user: User;
+  user: User | null;
   onClose: () => void;
   onAdd: (item: LookingForItem) => void;
 }
@@ -56,6 +56,7 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
   const [productSizes, setProductSizes] = useState('');
   const [productSizePantsWaist, setProductSizePantsWaist] = useState<number | string>('');
   const [productSizePantsInseam, setProductSizePantsInseam] = useState<number | string>('');
+  // TODO: Remove all references to descr
   const [description, setDescription] = useState('');
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');

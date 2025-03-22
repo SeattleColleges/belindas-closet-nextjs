@@ -189,12 +189,14 @@ const Profile = () => {
           />
         )}
 
-        <AddLookingForDialog
-          open={openAddDialog}
-          user={userInfo}
-          onClose={() => setOpenAddDialog(false)}
-          onAdd={handleAddItem}
-        />
+        {userInfo && (
+          <AddLookingForDialog
+            open={openAddDialog}
+            user={userInfo}
+            onClose={() => setOpenAddDialog(false)}
+            onAdd={handleAddItem}
+          />
+        )}
 
         <Box sx={{ mt: 3, alignSelf: "center" }}>
           <Button 
