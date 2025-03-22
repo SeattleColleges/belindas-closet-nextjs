@@ -82,7 +82,7 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
       });
 
       if (response.ok) {
-        onAdd({ type, size: finalSize });
+        onAdd({ type, size: finalSize, gender: productGender });
         // Reset form
         setType('');
         setProductGender('');
@@ -111,7 +111,7 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>Add Item You&apos;re Looking For</DialogTitle>
+        <DialogTitle>Add the item you&apos;re looking for</DialogTitle>
         <DialogContent>
           <Stack spacing={3} sx={{ mt: 1 }}>
             <FormControl fullWidth variant="filled">
