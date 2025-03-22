@@ -147,7 +147,6 @@ const Profile = () => {
                 key={index}
                 sx={{ 
                   p: 3,
-                  backgroundColor: "white",
                   borderRadius: "8px",
                   boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
                 }}
