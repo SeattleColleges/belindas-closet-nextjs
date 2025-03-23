@@ -212,8 +212,7 @@ export default function ProductCard({
                     </IconButton>
                 </Box>
 
-                {/* Admin Controls - Only visible for admin/creator */}
-                {(userRole === "admin" || userRole === "creator") && (
+
                     <Stack
                         direction="row"
                         spacing={1}
@@ -226,15 +225,18 @@ export default function ProductCard({
                             }
                         }}
                     >
-                        <Button
-                            variant="outlined"
-                            size="small"
-                            startIcon={<DeleteIcon sx={{ fontSize: 24 }}/>}
-                            color="error"
-                            onClick={handleDelete}
-                        >
-                            Delete
-                        </Button>
+                        {/* Admin Controls - Only visible for admin/creator */}
+                        {(userRole === "admin" || userRole === "creator") && (
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                startIcon={<DeleteIcon sx={{ fontSize: 24 }}/>}
+                                color="error"
+                                onClick={handleDelete}
+                            >
+                                Delete
+                            </Button>
+                        )}
                         {showArchiveButton && (
                             <Button
                                 variant="outlined"
@@ -247,7 +249,7 @@ export default function ProductCard({
                             </Button>
                         )}
                     </Stack>
-                )}
+
             </Box>
         </Paper>
     );
