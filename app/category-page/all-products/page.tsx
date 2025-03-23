@@ -36,7 +36,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import {navItems} from "@/components/productList";
 import {ProductGenderList} from "@/app/add-product-page/product-prop-list";
-import { SelectChangeEvent } from "@mui/material";
+import {SelectChangeEvent} from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
@@ -117,9 +117,9 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
     };
 
     const handleColorClick = (color: string) => {
-        setSelectedColors(prev => 
-            prev.includes(color) 
-                ? prev.filter(c => c !== color) 
+        setSelectedColors(prev =>
+            prev.includes(color)
+                ? prev.filter(c => c !== color)
                 : [...prev, color]
         );
     };
@@ -130,10 +130,10 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
 
     useEffect(() => {
         let filtered = products.filter((product) => !product.isHidden && !product.isSold);
-        
+
         // Apply search filter
         if (searchQuery) {
-            filtered = filtered.filter(product => 
+            filtered = filtered.filter(product =>
                 (product.productType?.toLowerCase().includes(searchQuery.toLowerCase()) || false) ||
                 (product.productDescription?.toLowerCase().includes(searchQuery.toLowerCase()) || false)
             );
@@ -171,12 +171,12 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
     );
 
     return (
-        <Container maxWidth="xl" sx={{ py: 4, bgcolor: '#ffffff' }}>
+        <Container maxWidth="xl" sx={{py: 4, bgcolor: '#ffffff'}}>
             {/* Search Header */}
-            <Box sx={{ mb: 4, bgcolor: '#ffffff' }}>
-                <Box sx={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
+            <Box sx={{mb: 4, bgcolor: '#ffffff'}}>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
                     mb: 2,
                     '& .MuiTextField-root': {
                         flexGrow: 1,
@@ -210,15 +210,15 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <FormControl sx={{ minWidth: '120px', mr: 1 }}>
+                                    <FormControl sx={{minWidth: '120px', mr: 1}}>
                                         <Select
                                             value={selectedCategory}
                                             onChange={handleCategoryChange}
                                             displayEmpty
                                             size="small"
-                                            sx={{ 
-                                                '&:before': { display: 'none' },
-                                                '&:after': { display: 'none' },
+                                            sx={{
+                                                '&:before': {display: 'none'},
+                                                '&:after': {display: 'none'},
                                                 '& .MuiSelect-select': {
                                                     padding: '0 8px',
                                                     fontSize: '16px',
@@ -236,7 +236,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                             ),
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <SearchIcon sx={{ color: '#9E9E9E', cursor: 'pointer' }} />
+                                    <SearchIcon sx={{color: '#9E9E9E', cursor: 'pointer'}}/>
                                 </InputAdornment>
                             ),
                         }}
@@ -248,151 +248,151 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
             <Grid container spacing={3}>
                 {/* Filters Sidebar */}
                 <Grid item md={3} xs={12}>
-                    <Paper sx={{ 
-                        p: 2, 
+                    <Paper sx={{
+                        p: 2,
                         bgcolor: '#ffffff',
                         borderRight: '1px solid #e0e0e0',
                         boxShadow: 'none'
                     }}>
-                        <Typography variant="h6" sx={{ 
-                            mb: 2, 
+                        <Typography variant="h6" sx={{
+                            mb: 2,
                             fontWeight: 600,
                             display: 'flex',
                             alignItems: 'center',
                             gap: 1
                         }}>
-                            <FilterListIcon sx={{ fontSize: '1.25rem' }} />
+                            <FilterListIcon sx={{fontSize: '1.25rem'}}/>
                             Filters
                         </Typography>
-                        
+
                         {/* Category Section */}
-                        <Accordion defaultExpanded sx={{ 
+                        <Accordion defaultExpanded sx={{
                             boxShadow: 'none',
                             '&:before': {
                                 display: 'none',
                             },
                         }}>
                             <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                sx={{ 
+                                expandIcon={<ExpandMoreIcon/>}
+                                sx={{
                                     px: 0,
                                     '& .MuiAccordionSummary-content': {
                                         margin: '8px 0',
                                     }
                                 }}
                             >
-                                <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>Category</Typography>
+                                <Typography variant="subtitle1" sx={{fontWeight: 500}}>Category</Typography>
                             </AccordionSummary>
-                            <AccordionDetails sx={{ px: 0 }}>
+                            <AccordionDetails sx={{px: 0}}>
                                 <FormGroup>
-                                    <FormControlLabel 
-                                        control={<Checkbox defaultChecked />} 
-                                        label="All" 
-                                        sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.95rem' } }}
+                                    <FormControlLabel
+                                        control={<Checkbox defaultChecked/>}
+                                        label="All"
+                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
                                     />
-                                    <FormControlLabel 
-                                        control={<Checkbox defaultChecked />} 
-                                        label="Running Shoes" 
-                                        sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.95rem' } }}
+                                    <FormControlLabel
+                                        control={<Checkbox defaultChecked/>}
+                                        label="Running Shoes"
+                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
                                     />
-                                    <FormControlLabel 
-                                        control={<Checkbox />} 
-                                        label="Category 3" 
-                                        sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.95rem' } }}
+                                    <FormControlLabel
+                                        control={<Checkbox/>}
+                                        label="Category 3"
+                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
                                     />
-                                    <FormControlLabel 
-                                        control={<Checkbox />} 
-                                        label="Category 4" 
-                                        sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.95rem' } }}
+                                    <FormControlLabel
+                                        control={<Checkbox/>}
+                                        label="Category 4"
+                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
                                     />
                                 </FormGroup>
                             </AccordionDetails>
                         </Accordion>
 
-                        <Divider sx={{ my: 1 }} />
+                        <Divider sx={{my: 1}}/>
 
                         {/* Stock Status */}
-                        <Accordion defaultExpanded sx={{ 
+                        <Accordion defaultExpanded sx={{
                             boxShadow: 'none',
                             '&:before': {
                                 display: 'none',
                             },
                         }}>
                             <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                sx={{ 
+                                expandIcon={<ExpandMoreIcon/>}
+                                sx={{
                                     px: 0,
                                     '& .MuiAccordionSummary-content': {
                                         margin: '8px 0',
                                     }
                                 }}
                             >
-                                <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>Stock Status</Typography>
+                                <Typography variant="subtitle1" sx={{fontWeight: 500}}>Stock Status</Typography>
                             </AccordionSummary>
-                            <AccordionDetails sx={{ px: 0 }}>
+                            <AccordionDetails sx={{px: 0}}>
                                 <FormGroup>
-                                    <FormControlLabel 
-                                        control={<Checkbox />} 
-                                        label="In Stock" 
-                                        sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.95rem' } }}
+                                    <FormControlLabel
+                                        control={<Checkbox/>}
+                                        label="In Stock"
+                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
                                     />
-                                    <FormControlLabel 
-                                        control={<Checkbox />} 
-                                        label="Out of Stock" 
-                                        sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.95rem' } }}
+                                    <FormControlLabel
+                                        control={<Checkbox/>}
+                                        label="Out of Stock"
+                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
                                     />
                                 </FormGroup>
                             </AccordionDetails>
                         </Accordion>
 
-                        <Divider sx={{ my: 1 }} />
+                        <Divider sx={{my: 1}}/>
 
                         {/* Size */}
-                        <Accordion defaultExpanded sx={{ 
+                        <Accordion defaultExpanded sx={{
                             boxShadow: 'none',
                             '&:before': {
                                 display: 'none',
                             },
                         }}>
                             <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                sx={{ 
+                                expandIcon={<ExpandMoreIcon/>}
+                                sx={{
                                     px: 0,
                                     '& .MuiAccordionSummary-content': {
                                         margin: '8px 0',
                                     }
                                 }}
                             >
-                                <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>Size</Typography>
+                                <Typography variant="subtitle1" sx={{fontWeight: 500}}>Size</Typography>
                             </AccordionSummary>
-                            <AccordionDetails sx={{ px: 0 }}>
+                            <AccordionDetails sx={{px: 0}}>
                                 <FormGroup>
                                     {/* Add size options */}
                                 </FormGroup>
                             </AccordionDetails>
                         </Accordion>
 
-                        <Divider sx={{ my: 1 }} />
+                        <Divider sx={{my: 1}}/>
 
                         {/* Color */}
-                        <Accordion defaultExpanded sx={{ 
+                        <Accordion defaultExpanded sx={{
                             boxShadow: 'none',
                             '&:before': {
                                 display: 'none',
                             },
                         }}>
                             <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                sx={{ 
+                                expandIcon={<ExpandMoreIcon/>}
+                                sx={{
                                     px: 0,
                                     '& .MuiAccordionSummary-content': {
                                         margin: '8px 0',
                                     }
                                 }}
                             >
-                                <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>Color</Typography>
+                                <Typography variant="subtitle1" sx={{fontWeight: 500}}>Color</Typography>
                             </AccordionSummary>
-                            <AccordionDetails sx={{ px: 0 }}>
+                            <AccordionDetails sx={{px: 0}}>
                                 <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                                     {['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'orange', 'cyan', 'magenta', 'black', 'white'].map((color) => (
                                         <Box
@@ -403,7 +403,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                                 height: 24,
                                                 borderRadius: '50%',
                                                 bgcolor: color,
-                                                border: '1px solid #ddd',
+                                                border: '1px solid #7C7C7C',
                                                 cursor: 'pointer',
                                                 position: 'relative',
                                                 display: 'flex',
@@ -413,18 +413,15 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                                 '&:hover': {
                                                     opacity: 0.8,
                                                 },
-                                                ...(color === 'white' && {
-                                                    border: '1px solid #ccc',
-                                                })
                                             }}
                                         >
                                             {selectedColors.includes(color) && (
-                                                <CheckIcon 
-                                                    sx={{ 
+                                                <CheckIcon
+                                                    sx={{
                                                         fontSize: 16,
-                                                        color: color === 'white' ? 'black' : 'white',
+                                                        color: color === 'white' || color === 'yellow' ? 'black' : 'white',
                                                         filter: color === 'yellow' ? 'drop-shadow(0px 0px 1px rgba(0,0,0,0.5))' : 'none'
-                                                    }} 
+                                                    }}
                                                 />
                                             )}
                                         </Box>
@@ -437,34 +434,34 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
 
                 {/* Product Grid */}
                 <Grid item md={9} xs={12}>
-                    <Box sx={{ bgcolor: '#ffffff', p: 2, borderRadius: 1 }}>
+                    <Box sx={{bgcolor: '#ffffff', p: 2, borderRadius: 1}}>
                         {/* Breadcrumb */}
-                        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
-                            <Link underline="hover" color="inherit" href="/" sx={{ textDecoration: 'underline' }}>
+                        <Breadcrumbs aria-label="breadcrumb" sx={{mb: 2}}>
+                            <Link underline="hover" color="inherit" href="/" sx={{textDecoration: 'underline'}}>
                                 Home
                             </Link>
-                            <Link underline="hover" color="inherit" href="/search" sx={{ textDecoration: 'underline' }}>
+                            <Link underline="hover" color="inherit" href="/search" sx={{textDecoration: 'underline'}}>
                                 Search
                             </Link>
                             <Typography color="text.primary">Running Shoes</Typography>
                         </Breadcrumbs>
 
                         {/* Results count and Sort */}
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                            <Typography variant="h4" component="h1" sx={{ fontStyle: 'italic', mb: 3 }}>
+                        <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3}}>
+                            <Typography variant="h4" component="h1" sx={{fontStyle: 'italic', mb: 3}}>
                                 &ldquo;Running Shoes&rdquo;
-                                <Typography color="text.primary" sx={{ fontStyle: 'italic', display: 'inline' }}>
+                                <Typography color="text.primary" sx={{fontStyle: 'italic', display: 'inline'}}>
                                     — {filteredProducts.length} Results
                                 </Typography>
                             </Typography>
 
-                            <FormControl sx={{ minWidth: 120 }}>
+                            <FormControl sx={{minWidth: 120}}>
                                 <Select
                                     value={sortBy}
                                     onChange={handleSortChange}
                                     displayEmpty
                                     size="small"
-                                    sx={{ bgcolor: '#ffffff' }}
+                                    sx={{bgcolor: '#ffffff'}}
                                 >
                                     <MenuItem value="featured">Sort By</MenuItem>
                                     <MenuItem value="price-low-high">Price: Low to High</MenuItem>
@@ -497,14 +494,14 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
 
                         {/* Pagination */}
                         {totalPages > 1 && (
-                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                            <Box sx={{display: 'flex', justifyContent: 'center', mt: 4}}>
                                 <Pagination
                                     count={totalPages}
                                     page={page}
                                     onChange={handlePageChange}
                                     color="primary"
                                     size="large"
-                                    sx={{ bgcolor: '#ffffff' }}
+                                    sx={{bgcolor: '#ffffff'}}
                                 />
                             </Box>
                         )}
@@ -515,7 +512,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
     );
 };
 
-export default function ProductList({ params }: { params: { categoryId: string } }) {
+export default function ProductList({params}: { params: { categoryId: string } }) {
     const decodedCategoryId = decodeURIComponent(params.categoryId);
     return <ViewProduct categoryId={decodedCategoryId}/>;
 }
