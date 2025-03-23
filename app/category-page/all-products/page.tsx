@@ -178,8 +178,9 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
             filtered = filtered.filter(product => !genderFilters.includes(product.productGender));
         }
 
-        // Apply stock status filter
-        if (stockStatus.length > 0) {
+        // FUTURE LOGIC FOR FITLERING ON THE SIDEBAR
+        // Stock status
+        /*if (stockStatus.length > 0) {
             filtered = filtered.filter(product => {
                 if (stockStatus.includes('inStock') && stockStatus.includes('outOfStock')) return true;
                 if (stockStatus.includes('inStock')) return !product.isSold;
@@ -201,7 +202,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
             filtered = filtered.filter(product => 
                 product.productColor && selectedColors.includes(product.productColor)
             );
-        }
+        }*/
 
         // Apply sorting
         switch (sortBy) {
