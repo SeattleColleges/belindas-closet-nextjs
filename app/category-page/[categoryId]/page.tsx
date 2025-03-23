@@ -60,9 +60,9 @@ interface Product {
 }
 
 async function fetchData(categoryId: string, setProducts: Dispatch<SetStateAction<Product[]>>) {
-    const apiUrl = `${URL}/products/findByType/`;
-    const queryParam = encodeURIComponent(categoryId);
-    const fetchUrl = `${apiUrl}${queryParam}`;
+    // If categoryId is empty (All Categories), use the general products endpoint
+    const apiUrl = categoryId ? `${URL}/products/findByType/` : `${URL}/products`;
+    const fetchUrl = categoryId ? `${apiUrl}${encodeURIComponent(categoryId)}` : apiUrl;
 
     try {
         const res = await fetch(fetchUrl, {
@@ -108,8 +108,10 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
     };
 
     const handleCategoryChange = (event: SelectChangeEvent<string>) => {
-        setSelectedCategory(event.target.value);
+        const newCategory = event.target.value;
+        setSelectedCategory(newCategory);
         setPage(1); // Reset to first page when changing category
+        fetchData(newCategory, setProducts); // Fetch new data for the selected category
     };
 
     const handleSortChange = (event: SelectChangeEvent<string>) => {
