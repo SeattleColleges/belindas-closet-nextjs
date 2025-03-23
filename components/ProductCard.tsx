@@ -102,9 +102,6 @@ export default function ProductCard({
         // TODO: Add API call to save favorite status
     };
 
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
-
     function HeartButton() {
         return (
             <IconButton
