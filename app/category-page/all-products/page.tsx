@@ -31,10 +31,9 @@ import {
     AccordionDetails,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import {navItems} from "@/components/productList";
+import CloseIcon from '@mui/icons-material/Close';
 import {ProductGenderList} from "@/app/add-product-page/product-prop-list";
 import {SelectChangeEvent} from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
@@ -297,6 +296,22 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                             ),
                             endAdornment: (
                                 <InputAdornment position="end">
+                                    {searchQuery && (
+                                        <IconButton
+                                            onClick={clearSearch}
+                                            size="small"
+                                            sx={{ mr: 2 }}
+                                            aria-label="clear search"
+                                        >
+                                            <CloseIcon sx={{ 
+                                                fontSize: '1.2rem',
+                                                color: '#9E9E9E',
+                                                '&:hover': {
+                                                    color: '#757575'
+                                                }
+                                            }} />
+                                        </IconButton>
+                                    )}
                                     <SearchIcon sx={{color: '#9E9E9E', cursor: 'pointer'}}/>
                                 </InputAdornment>
                             ),
