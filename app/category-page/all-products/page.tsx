@@ -88,7 +88,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
     const [genderFilters, setGenderFilters] = useState<String[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("Shoes");
-    const [sortBy, setSortBy] = useState("featured");
+    const [sortBy, setSortBy] = useState("newest");
     const [page, setPage] = useState(1);
     const [selectedColors, setSelectedColors] = useState<string[]>(['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'orange', 'cyan', 'magenta', 'black', 'white']);
     const [stockStatus, setStockStatus] = useState<string[]>(['inStock']);
@@ -206,17 +206,12 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
 
         // Apply sorting
         switch (sortBy) {
-            case "price-low-high":
-                // Add price sorting when available
-                break;
-            case "price-high-low":
-                // Add price sorting when available
-                break;
-            case "newest":
-                filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+            case "oldest":
+                filtered.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
                 break;
             default:
-                // Featured sorting (default)
+                // Newest sorting (default)
+                filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                 break;
         }
 
@@ -514,10 +509,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                     size="small"
                                     sx={{bgcolor: '#ffffff'}}
                                 >
-                                    <MenuItem value="featured">Sort By</MenuItem>
-                                    <MenuItem value="price-low-high">Price: Low to High</MenuItem>
-                                    <MenuItem value="price-high-low">Price: High to Low</MenuItem>
                                     <MenuItem value="newest">Newest</MenuItem>
+                                    <MenuItem value="oldest">Oldest</MenuItem>
                                 </Select>
                             </FormControl>
                         </Box>
