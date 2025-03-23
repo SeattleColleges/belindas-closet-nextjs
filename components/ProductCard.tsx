@@ -105,6 +105,26 @@ export default function ProductCard({
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
 
+    function HeartButton() {
+        return (
+            <IconButton
+                onClick={handleFavoriteClick}
+                sx={{
+                    padding: 0.5,
+                    "&:hover": {
+                        bgcolor: 'rgba(0,0,0,0.04)',
+                    },
+                }}
+            >
+                {isFavorite ? (
+                    <FavoriteIcon sx={{color: "error.main", fontSize: 20}}/>
+                ) : (
+                    <FavoriteBorderIcon sx={{fontSize: 20}}/>
+                )}
+            </IconButton>
+        )
+    }
+
     return (
         <Paper
             sx={{
@@ -195,24 +215,8 @@ export default function ProductCard({
                         borderRadius: 1
                     }}
                 >
-                    <IconButton
-                        onClick={handleFavoriteClick}
-                        sx={{
-                            padding: 0.5,
-                            "&:hover": {
-                                bgcolor: 'rgba(0,0,0,0.04)',
-                            },
-                        }}
-                    >
-                        {isFavorite ? (
-                            <FavoriteIcon sx={{color: "error.main", fontSize: 20}}/>
-                        ) : (
-                            <FavoriteBorderIcon sx={{fontSize: 20}}/>
-                        )}
-                    </IconButton>
+                    {userRole ? <HeartButton /> : <Link href={'/auth/sign-in'}><HeartButton /></Link>}
                 </Box>
-
-
                     <Stack
                         direction="row"
                         spacing={1}
