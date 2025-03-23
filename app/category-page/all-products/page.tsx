@@ -134,8 +134,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
         // Apply search filter
         if (searchQuery) {
             filtered = filtered.filter(product => 
-                product.productType.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                product.productDescription.toLowerCase().includes(searchQuery.toLowerCase())
+                (product.productType?.toLowerCase().includes(searchQuery.toLowerCase()) || false) ||
+                (product.productDescription?.toLowerCase().includes(searchQuery.toLowerCase()) || false)
             );
         }
 
