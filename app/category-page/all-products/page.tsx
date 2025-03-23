@@ -87,7 +87,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [genderFilters, setGenderFilters] = useState<String[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("Shoes");
+    const [selectedCategory, setSelectedCategory] = useState("");
     const [sortBy, setSortBy] = useState("newest");
     const [page, setPage] = useState(1);
     const [selectedColors, setSelectedColors] = useState<string[]>(['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'orange', 'cyan', 'magenta', 'black', 'white']);
@@ -282,9 +282,15 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                             }}
                                         >
                                             <MenuItem value="">All Categories</MenuItem>
+                                            <MenuItem value="Shirts">Shirts</MenuItem>
                                             <MenuItem value="Shoes">Shoes</MenuItem>
-                                            <MenuItem value="Clothing">Clothing</MenuItem>
+                                            <MenuItem value="Pants">Pants</MenuItem>
+                                            <MenuItem value="Skirts">Skirts</MenuItem>
+                                            <MenuItem value="Suits">Suits</MenuItem>
+                                            <MenuItem value="Dress">Dress</MenuItem>
+                                            <MenuItem value="Casual Wear">Casual Wear</MenuItem>
                                             <MenuItem value="Accessories">Accessories</MenuItem>
+                                            <MenuItem value="Jacket/Blazer">Jacket/Blazer</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </InputAdornment>
@@ -489,15 +495,15 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                             <Link underline="hover" color="inherit" href="/search" sx={{textDecoration: 'underline'}}>
                                 Search
                             </Link>
-                            <Typography color="text.primary">Running Shoes</Typography>
+                            <Typography color="text.primary">{selectedCategory || "All"}</Typography>
                         </Breadcrumbs>
 
                         {/* Results count and Sort */}
                         <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3}}>
                             <Typography variant="h4" component="h1" sx={{fontStyle: 'italic', mb: 3}}>
-                                &ldquo;Running Shoes&rdquo;
+                                {searchQuery ? <>&ldquo;{searchQuery}&rdquo;</> : <></>}
                                 <Typography color="text.primary" sx={{fontStyle: 'italic', display: 'inline'}}>
-                                    — {filteredProducts.length} Results
+                                    {searchQuery ? <>—</> : <></>} {filteredProducts.length} Results
                                 </Typography>
                             </Typography>
 

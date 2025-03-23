@@ -229,7 +229,7 @@ export default function ProductCard({
                         <Button
                             variant="outlined"
                             size="small"
-                            startIcon={<DeleteIcon/>}
+                            startIcon={<DeleteIcon sx={{ fontSize: 24 }}/>}
                             color="error"
                             onClick={handleDelete}
                         >
