@@ -6,10 +6,12 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import { StaticImageData } from "next/image";
-import { Stack, Button, Link, useTheme, useMediaQuery } from "@mui/material";
+import { Stack, Button, Link, useTheme, useMediaQuery, IconButton, Box } from "@mui/material";
 import Image from "next/image";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArchiveIcon from "@mui/icons-material/Archive";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
@@ -28,6 +30,7 @@ type ProductCardProps = {
   isSold: boolean;
   showArchiveButton?: boolean; // optional
 };
+
 export default function ProductCard({
   image,
   categories,
@@ -44,147 +47,203 @@ export default function ProductCard({
   showArchiveButton,
 }: ProductCardProps) {
   const [userRole, setUserRole] = React.useState("");
+  const [isFavorite, setIsFavorite] = React.useState(false);
+  const theme = useTheme();
 
   const token = localStorage.getItem("token"); // get token from local storage
   React.useEffect(() => {
     if (token) {
-      const role = JSON.parse(atob(token.split(".")[1])).role;
-      setUserRole(role);
+      const userRole = JSON.parse(atob(token.split(".")[1])).role;
+      setUserRole(userRole);
     }
-    // testing what role is returned via console log -- delete later
-    console.log(userRole);
-  }, [token, userRole]);
+  }, [token]);
 
-  // delete product function -----------------------------------
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${URL}/products/remove/${_id}`, {
-        // delete API uses DELETE method
+      const res = await fetch(`${URL}/products/${_id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // pass token to the server
+          Authorization: `Bearer ${token}`,
         },
       });
-      if (!response.ok) {
-        throw new Error(response.statusText);
+      if (!res.ok) {
+        throw new Error(res.statusText);
       }
-      console.log(`Successful delete the product with id: ${_id}`);
+      window.location.reload();
     } catch (error) {
       console.error("Error deleting product:", error);
     }
-    window.location.reload();
   };
 
-  // archive product function -----------------------------------------
   const handleArchive = async () => {
     try {
-      const response = await fetch(`${URL}/products/archive/${_id}`, {
-        // archive API uses PUT method
+      const res = await fetch(`${URL}/products/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // pass token to the server
+          Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({
+          isSold: true,
+        }),
       });
-      console.log("Product archived successfully!");
+      if (!res.ok) {
+        throw new Error(res.statusText);
+      }
+      window.location.reload();
     } catch (error) {
       console.error("Error archiving product:", error);
     }
-    window.location.reload();
   };
 
-  const theme = useTheme();
+  const handleFavoriteClick = () => {
+    setIsFavorite(!isFavorite);
+    // TODO: Add API call to save favorite status
+  };
+
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'lg'));
 
   return (
     <Paper
       sx={{
-        p: 2,
+        p: 0,
         margin: "auto",
         maxWidth: 500,
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
+        position: "relative",
+        bgcolor: '#ffffff',
+        boxShadow: 'none',
+        borderRadius: 2,
+        overflow: 'hidden',
+        transition: 'transform 0.2s, box-shadow 0.2s',
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+        }
       }}
     >
-      <Grid container spacing={2} justifyContent="center">
-        <Grid item>
-          <ButtonBase>
-            <Link href={href}>
-              <Image src={image} alt="product image" width={isTablet ? 120 : 128} />
-            </Link>
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container justifyContent={isMobile ? "center" : isTablet ? "center" : "left"}>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                {categories}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {gender}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {sizeShoe}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {size}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {sizePantsWaist}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {sizePantsInseam}
-              </Typography>
-              <Typography
-                variant="body2"
-                gutterBottom
-                sx={{
-                  overflow: "hidden", // Hide text that overflows
-                  textOverflow: "ellipsis",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 3, // Limit the number of lines
-                  WebkitBoxOrient: "vertical",
-                }}
-              >
-                {description}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Stack direction="column" spacing={2} justifyContent="flex-end" mt={2}>
-        <Button variant="contained" href={href} color="primary">
-          View
-        </Button>
-        {/* Only show delete and archive buttons if user is admin or creator */}
-        {userRole === "admin" || userRole === "creator" ? (
-          <Stack direction="row" spacing={2} justifyContent={"center"}>
+      {/* Product Image */}
+      <Link href={href} style={{ textDecoration: 'none' }}>
+        <Box sx={{ 
+          position: 'relative',
+          width: '100%',
+          paddingTop: '100%', // 1:1 Aspect ratio
+          bgcolor: '#f5f5f5'
+        }}>
+          <Image
+            src={image}
+            alt={categories}
+            fill
+            style={{
+              objectFit: 'cover',
+            }}
+          />
+        </Box>
+
+        {/* Product Info */}
+        <Box sx={{ p: 2 }}>
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{
+              fontSize: '1rem',
+              fontWeight: 500,
+              mb: 0.5,
+              color: 'text.primary',
+            }}
+          >
+            {categories}
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              fontStyle: 'italic',
+              color: 'text.secondary',
+            }}
+          >
+            {description}
+          </Typography>
+        </Box>
+      </Link>
+
+      {/* Bottom Actions Bar */}
+      <Box sx={{
+        p: 2,
+        mt: 1,
+        pt: 0,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        {/* Favorite Icon */}
+        <Box
+          sx={{
+            bgcolor: "#eceff1",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 1,
+            borderRadius: 1
+          }}
+        >
+          <IconButton
+            onClick={handleFavoriteClick}
+            sx={{
+              padding: 0.5,
+              "&:hover": {
+                bgcolor: 'rgba(0,0,0,0.04)',
+              },
+            }}
+          >
+            {isFavorite ? (
+              <FavoriteIcon sx={{ color: "error.main", fontSize: 20 }} />
+            ) : (
+              <FavoriteBorderIcon sx={{ fontSize: 20 }} />
+            )}
+          </IconButton>
+        </Box>
+
+        {/* Admin Controls - Only visible for admin/creator */}
+        {(userRole === "admin" || userRole === "creator") && (
+          <Stack 
+            direction="row" 
+            spacing={1}
+            sx={{
+              height: "100%",
+              opacity: 0,
+              transition: 'opacity 0.2s ease-in-out',
+              '.MuiPaper-root:hover &': {
+                opacity: 1
+              }
+            }}
+          >
             <Button
-              variant="contained"
+              variant="outlined"
+              size="small"
               startIcon={<DeleteIcon />}
               color="error"
-              onClick={() => handleDelete()}
-              sx={{ fontSize: 10 }}
+              onClick={handleDelete}
             >
               Delete
             </Button>
             {showArchiveButton && (
               <Button
-              variant="contained"
-              startIcon={<ArchiveIcon />}
-              color="warning"
-              onClick={() => handleArchive()}
-              sx={{ fontSize: 10 }}
-            >
-              Archive
-            </Button> )}
+                variant="outlined"
+                size="small"
+                startIcon={<ArchiveIcon />}
+                color="warning"
+                onClick={handleArchive}
+              >
+                Archive
+              </Button>
+            )}
           </Stack>
-        ) : null}
-      </Stack>
+        )}
+      </Box>
     </Paper>
   );
 }
