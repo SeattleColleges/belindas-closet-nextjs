@@ -164,6 +164,10 @@ export default function ProductCard({
                         sx={{
                             fontStyle: 'italic',
                             color: 'text.secondary',
+                            display: '-webkit-box',
+                            overflow: 'hidden',
+                            WebkitBoxOrient: 'vertical',
+                            WebkitLineClamp: 1,
                         }}
                     >
                         {description}

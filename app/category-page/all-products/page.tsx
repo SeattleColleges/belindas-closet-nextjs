@@ -178,7 +178,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
             filtered = filtered.filter(product => !genderFilters.includes(product.productGender));
         }
 
-        // FUTURE LOGIC FOR FITLERING ON THE SIDEBAR
+        // FUTURE LOGIC FOR FILTERING ON THE SIDEBAR
         // Stock status
         /*if (stockStatus.length > 0) {
             filtered = filtered.filter(product => {
