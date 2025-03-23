@@ -56,6 +56,7 @@ interface Product {
     isHidden: Boolean;
     isSold: Boolean;
     createdAt: string;
+    productColor?: string;
 }
 
 async function fetchData(categoryId: string, setProducts: Dispatch<SetStateAction<Product[]>>) {
@@ -84,13 +85,14 @@ async function fetchData(categoryId: string, setProducts: Dispatch<SetStateActio
 const ViewProduct = ({categoryId}: { categoryId: string }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-    const [productFilters, setProductFilters] = useState<String[]>([]);
     const [genderFilters, setGenderFilters] = useState<String[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("Shoes");
     const [sortBy, setSortBy] = useState("featured");
     const [page, setPage] = useState(1);
-    const [selectedColors, setSelectedColors] = useState<string[]>([]);
+    const [selectedColors, setSelectedColors] = useState<string[]>(['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'orange', 'cyan', 'magenta', 'black', 'white']);
+    const [stockStatus, setStockStatus] = useState<string[]>(['inStock']);
+    const [selectedSizes, setSelectedSizes] = useState<string[]>(['XS', 'S', 'M', 'L', 'XL', 'XXL']);
 
     // Search and filter handling
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,6 +126,33 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
         );
     };
 
+    const handleStockStatusChange = (status: string) => {
+        setStockStatus(prev =>
+            prev.includes(status)
+                ? prev.filter(s => s !== status)
+                : [...prev, status]
+        );
+    };
+
+    const handleSizeChange = (size: string) => {
+        setSelectedSizes(prev =>
+            prev.includes(size)
+                ? prev.filter(s => s !== size)
+                : [...prev, size]
+        );
+    };
+
+    function flipEntryGender(item: String) {
+        console.log("Item: ", item);
+        setGenderFilters((gender) => {
+            if (!gender.includes(item)) {
+                return [...gender, item];
+            } else {
+                return gender.filter((value) => value !== item);
+            }
+        });
+    }
+
     useEffect(() => {
         fetchData(categoryId, setProducts);
     }, [categoryId]);
@@ -144,6 +173,36 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
             filtered = filtered.filter(product => product.productType === selectedCategory);
         }
 
+        // Apply gender filter
+        if (genderFilters.length > 0) {
+            filtered = filtered.filter(product => !genderFilters.includes(product.productGender));
+        }
+
+        // Apply stock status filter
+        if (stockStatus.length > 0) {
+            filtered = filtered.filter(product => {
+                if (stockStatus.includes('inStock') && stockStatus.includes('outOfStock')) return true;
+                if (stockStatus.includes('inStock')) return !product.isSold;
+                if (stockStatus.includes('outOfStock')) return product.isSold;
+                return true;
+            });
+        }
+
+        // Apply size filter
+        if (selectedSizes.length > 0) {
+            filtered = filtered.filter(product => 
+                selectedSizes.includes(product.productSizes) ||
+                selectedSizes.includes(product.productSizeShoe)
+            );
+        }
+
+        // Apply color filter
+        if (selectedColors.length > 0) {
+            filtered = filtered.filter(product => 
+                product.productColor && selectedColors.includes(product.productColor)
+            );
+        }
+
         // Apply sorting
         switch (sortBy) {
             case "price-low-high":
@@ -161,7 +220,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
         }
 
         setFilteredProducts(filtered);
-    }, [products, searchQuery, selectedCategory, sortBy]);
+    }, [products, searchQuery, selectedCategory, sortBy, genderFilters, stockStatus, selectedSizes, selectedColors]);
 
     // Calculate pagination
     const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -265,7 +324,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                             Filters
                         </Typography>
 
-                        {/* Category Section */}
+                        {/* Gender Section */}
                         <Accordion defaultExpanded sx={{
                             boxShadow: 'none',
                             '&:before': {
@@ -281,37 +340,24 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                     }
                                 }}
                             >
-                                <Typography variant="subtitle1" sx={{fontWeight: 500}}>Category</Typography>
+                                <Typography variant="subtitle1" sx={{fontWeight: 500}}>Gender</Typography>
                             </AccordionSummary>
                             <AccordionDetails sx={{px: 0}}>
                                 <FormGroup>
-                                    <FormControlLabel
-                                        control={<Checkbox defaultChecked/>}
-                                        label="All"
-                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
-                                    />
-                                    <FormControlLabel
-                                        control={<Checkbox defaultChecked/>}
-                                        label="Running Shoes"
-                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
-                                    />
-                                    <FormControlLabel
-                                        control={<Checkbox/>}
-                                        label="Category 3"
-                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
-                                    />
-                                    <FormControlLabel
-                                        control={<Checkbox/>}
-                                        label="Category 4"
-                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
-                                    />
+                                    {Object.values(ProductGenderList).map((item) => (
+                                        <FormControlLabel
+                                            key={item}
+                                            control={<Checkbox defaultChecked onChange={() => flipEntryGender(item)} />}
+                                            label={item}
+                                        />
+                                    ))}
                                 </FormGroup>
                             </AccordionDetails>
                         </Accordion>
 
                         <Divider sx={{my: 1}}/>
 
-                        {/* Stock Status */}
+                        {/* Stock Status Section */}
                         <Accordion defaultExpanded sx={{
                             boxShadow: 'none',
                             '&:before': {
@@ -332,14 +378,12 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                             <AccordionDetails sx={{px: 0}}>
                                 <FormGroup>
                                     <FormControlLabel
-                                        control={<Checkbox/>}
+                                        control={<Checkbox checked={stockStatus.includes('inStock')} onChange={() => handleStockStatusChange('inStock')}/>}
                                         label="In Stock"
-                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
                                     />
                                     <FormControlLabel
-                                        control={<Checkbox/>}
+                                        control={<Checkbox checked={stockStatus.includes('outOfStock')} onChange={() => handleStockStatusChange('outOfStock')}/>}
                                         label="Out of Stock"
-                                        sx={{'& .MuiFormControlLabel-label': {fontSize: '0.95rem'}}}
                                     />
                                 </FormGroup>
                             </AccordionDetails>
@@ -347,7 +391,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
 
                         <Divider sx={{my: 1}}/>
 
-                        {/* Size */}
+                        {/* Size Section */}
                         <Accordion defaultExpanded sx={{
                             boxShadow: 'none',
                             '&:before': {
@@ -367,7 +411,13 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                             </AccordionSummary>
                             <AccordionDetails sx={{px: 0}}>
                                 <FormGroup>
-                                    {/* Add size options */}
+                                    {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                                        <FormControlLabel
+                                            key={size}
+                                            control={<Checkbox checked={selectedSizes.includes(size)} onChange={() => handleSizeChange(size)}/>}
+                                            label={size}
+                                        />
+                                    ))}
                                 </FormGroup>
                             </AccordionDetails>
                         </Accordion>
