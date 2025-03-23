@@ -489,12 +489,12 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                     <Box sx={{bgcolor: '#ffffff', p: 2, borderRadius: 1}}>
                         {/* Breadcrumb */}
                         <Breadcrumbs aria-label="breadcrumb" sx={{mb: 2}}>
-                            <Link underline="hover" color="inherit" href="/" sx={{textDecoration: 'underline'}}>
+                            <Link color="inherit" href="/" sx={{textDecoration: 'underline'}}>
                                 Home
                             </Link>
-                            <Link underline="hover" color="inherit" href="/search" sx={{textDecoration: 'underline'}}>
+                            <Typography sx={{textDecoration: 'underline'}}>
                                 Search
-                            </Link>
+                            </Typography>
                             <Typography color="text.primary">{selectedCategory || "All"}</Typography>
                         </Breadcrumbs>
 
