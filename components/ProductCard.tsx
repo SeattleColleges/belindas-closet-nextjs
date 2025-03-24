@@ -29,6 +29,7 @@ type ProductCardProps = {
     isHidden: boolean;
     isSold: boolean;
     showArchiveButton?: boolean; // optional
+    deleteItem?: any;
 };
 
 export default function ProductCard({
@@ -45,6 +46,7 @@ export default function ProductCard({
                                         isHidden,
                                         isSold,
                                         showArchiveButton,
+                                        deleteItem,
                                     }: ProductCardProps) {
     const [userRole, setUserRole] = React.useState("");
     const [isFavorite, setIsFavorite] = React.useState(false);
@@ -60,12 +62,13 @@ export default function ProductCard({
 
     const handleDelete = async () => {
         try {
-            const res = await fetch(`${URL}/products/${_id}`, {
+            const res = await fetch(`${URL}/products/remove/${_id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
+                body: JSON.stringify({ isHidden: Boolean }),
             });
             if (!res.ok) {
                 throw new Error(res.statusText);
