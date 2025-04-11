@@ -8,12 +8,12 @@ const URL =
   process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 interface Product {
   _id: string;
-  productType: string[];
-  productGender: string[];
-  productSizeShoe: string[];
-  productSizes: string[];
-  productSizePantsWaist: string[];
-  productSizePantsInseam: string[];
+  productType: string;
+  productGender: string;
+  productSizeShoe: string;
+  productSizes: string;
+  productSizePantsWaist: string;
+  productSizePantsInseam: string;
   productDescription: string;
   productImage: string;
   isHidden: boolean;

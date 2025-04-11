@@ -3,7 +3,7 @@ import { StaticImageData } from "next/image";
 interface Product {
     _id: string;
     productImage: string;
-    productType: string[];
+    productType: string;
     productGender: string;
     productSizeShoe: string;
     productSizes: string;
