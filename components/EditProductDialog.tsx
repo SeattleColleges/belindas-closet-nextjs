@@ -17,8 +17,7 @@ import {
   ProductSizePantsInseamList,
 } from "@/app/add-product-page/product-prop-list";
 import { TextField, useMediaQuery, useTheme } from "@mui/material";
-import { Padding } from "@mui/icons-material";
-// WARNING: You won't be able to connect to local backend unless you remove the env variable below.
+
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 /**
@@ -41,27 +40,13 @@ export default function EditProductDialog({
   product,
 }: EditProductDialogProps) {
   const [snackBarMessage, setSnackBarMessage] = useState<string | null>(null);
-  const [productGender, setProductGender] = useState<string[]>(
-    product.productGender || []
-  );
-  const [productSizeShoe, setProductSizeShoe] = useState<string[]>(
-    product.productSizeShoe || []
-  );
-  const [productSizes, setProductSizes] = useState<string[]>(
-    product.productSizes || []
-  );
-  const [productSizePantsWaist, setProductSizePantsWaist] = useState<string[]>(
-    product.productSizePantsWaist || []
-  );
-  const [productSizePantsInseam, setProductSizePantsInseam] = useState<
-    string[]
-  >(product.productSizePantsInseam || []);
-  const [productDescription, setProductDescription] = useState(
-    product.productDescription || ""
-  );
-  const [productImage, setProductImage] = useState<string>(
-    product.productImage || ""
-  );
+  const [productGender, setProductGender] = useState<string>(product.productGender);
+  const [productSizeShoe, setProductSizeShoe] = useState<string>(product.productSizeShoe);
+  const [productSizes, setProductSizes] = useState<string>(product.productSizes);
+  const [productSizePantsWaist, setProductSizePantsWaist] = useState<string>(product.productSizePantsWaist);
+  const [productSizePantsInseam, setProductSizePantsInseam] = useState<string>(product.productSizePantsInseam);
+  const [productDescription, setProductDescription] = useState<string>(product.productDescription || "");
+  const [productImage, setProductImage] = useState<string>(product.productImage || "");
 
   const [isUpdated, setIsUpdated] = useState(false);
 
@@ -69,33 +54,28 @@ export default function EditProductDialog({
     setIsUpdated(false);
   }, [open]);
 
-  const handleProductGenderSelect = (
-    e: React.ChangeEvent<{ value: string }>
-  ) => {
-    setProductGender([e.target.value]);
+  const handleProductGenderSelect = (e: React.ChangeEvent<{ value: string }>) => {
+    setProductGender(e.target.value);
     setIsUpdated(true);
   };
 
-  const handleProductSizeShoeSelect = (
-    e: React.ChangeEvent<{ value: string }>
-  ) => {
-    setProductSizeShoe([e.target.value]);
+  const handleProductSizeShoeSelect = (e: React.ChangeEvent<{ value: string }>) => {
+    setProductSizeShoe(e.target.value);
     setIsUpdated(true);
   };
+
   const handleProductSizeSelect = (e: React.ChangeEvent<{ value: string }>) => {
-    setProductSizes([e.target.value]);
+    setProductSizes(e.target.value);
     setIsUpdated(true);
   };
-  const handleProductSizePantsWaistSelect = (
-    e: React.ChangeEvent<{ value: string }>
-  ) => {
-    setProductSizePantsWaist([e.target.value]);
+
+  const handleProductSizePantsWaistSelect = (e: React.ChangeEvent<{ value: string }>) => {
+    setProductSizePantsWaist(e.target.value);
     setIsUpdated(true);
   };
-  const handleProductSizePantsInseamSelect = (
-    e: React.ChangeEvent<{ value: string }>
-  ) => {
-    setProductSizePantsInseam([e.target.value]);
+
+  const handleProductSizePantsInseamSelect = (e: React.ChangeEvent<{ value: string }>) => {
+    setProductSizePantsInseam(e.target.value);
     setIsUpdated(true);
   };
 
@@ -108,13 +88,11 @@ export default function EditProductDialog({
     setProductImage(e.target.value);
     setIsUpdated(true);
   };
-  /**
-   * Handles the click event when the user confirms "Cancel" to deleting product.
-   * @returns {void}
-   */
+
   const handleCancel = () => {
     onClose();
   };
+
   /**
    * Handles the click event when the user confirms "Save Changes" to editing product.
    * @returns {void}
@@ -158,8 +136,8 @@ export default function EditProductDialog({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const isShoeProduct = product.productType.includes("Shoes");
-  const isPantsProduct = product.productType.includes("Pants");
+  const isShoeProduct = product.productType === "Shoes";
+  const isPantsProduct = product.productType === "Pants";
 
   return (
     <Box
@@ -179,7 +157,7 @@ export default function EditProductDialog({
         <DialogContent dividers>
           <InputSelect
             label="Product Gender"
-            value={productGender.join(",")}
+            value={productGender}
             options={Object.entries(ProductGenderList).map(([key, value]) => ({
               label: value,
               value: key,
@@ -190,7 +168,7 @@ export default function EditProductDialog({
           {isShoeProduct && (
           <InputSelect
             label="Product Size Shoe"
-            value={productSizeShoe.join(",")}
+            value={productSizeShoe}
             options={Object.values(ProductSizeShoeList).map((size) => ({
               label: size,
               value: size,
@@ -202,7 +180,7 @@ export default function EditProductDialog({
           {!isShoeProduct &&  (
           <InputSelect
             label="Product Size"
-            value={productSizes.join(",")}
+            value={productSizes}
             options={Object.entries(ProductSizesList).map(([key, value]) => ({
               label: value,
               value: key,
@@ -214,7 +192,7 @@ export default function EditProductDialog({
           {!isShoeProduct && isPantsProduct && (
           <InputSelect
             label="Product Size Pants Waist"
-            value={productSizePantsWaist.join(",")}
+            value={productSizePantsWaist}
             options={Object.values(ProductSizePantsWaistList).map((size) => ({
               label: size,
               value: size,
@@ -226,7 +204,7 @@ export default function EditProductDialog({
           {!isShoeProduct && isPantsProduct && (
           <InputSelect
             label="Product Size Pants Inseam"
-            value={productSizePantsInseam.join(",")}
+            value={productSizePantsInseam}
             options={Object.values(ProductSizePantsInseamList).map((size) => ({
               label: size,
               value: size,
@@ -257,9 +235,7 @@ export default function EditProductDialog({
           />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCancel}>
-            Cancel
-          </Button>
+          <Button autoFocus onClick={handleCancel}>Cancel</Button>
           <Button onClick={handleSaveChanges} disabled={!isUpdated}>Save Changes</Button>
         </DialogActions>
       </Dialog>
