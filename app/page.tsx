@@ -160,11 +160,11 @@ const Home = () => {
 
         <Carousel carouselID="womenswear" 
           title="Recent Womenswear"
-          products={products.filter((product: Product) => (product.productGender.includes('FEMALE') || product.productGender.includes('NON-BINARY')))}/>
+          products={products.filter((product: Product) => (product.productGender === 'FEMALE' || product.productGender === 'NON-BINARY'))}/>
 
         <Carousel carouselID="menswear" 
           title="Recent Menswear"
-          products={products.filter((product: Product) => (product.productGender.includes('MALE') || product.productGender.includes('NON-BINARY')))}/>
+          products={products.filter((product: Product) => (product.productGender === 'MALE' || product.productGender === 'NON-BINARY'))}/>
       </Box>
     </WrapperDiv>
   );

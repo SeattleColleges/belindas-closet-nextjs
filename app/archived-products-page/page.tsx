@@ -11,7 +11,7 @@ const placeholderImg = logo;
 interface Product {
   _id: string;
   productImage: typeof placeholderImg;
-  productType: string[];
+  productType: string;
   productGender: string;
   productSizeShoe: string;
   productSizes: string;
