@@ -3,7 +3,7 @@ import {Box, Button, Container, Paper, Snackbar, Stack, Typography, useMediaQuer
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
-import EditUserRoleDialog from "./EditUserRoleDialog";
+import EditUserRoleDialog from "./UsersManagementDialog";
 import Alert, { AlertColor } from '@mui/material/Alert';
 import ConfirmDeleteUserDialog from "./ConfirmDeleteUserDialog";
 
