@@ -3,6 +3,7 @@ name: Continuous Integration
 run-name: Node.js CI
 on:
   workflow_call: # required when creating a reusable workflow
+    #test
    inputs:
      config-path:
        required: false
