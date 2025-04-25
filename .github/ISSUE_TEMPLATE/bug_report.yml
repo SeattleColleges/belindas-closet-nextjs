@@ -1,0 +1,51 @@
+name: Bug Report
+description: File a bug report to help us improve.
+labels: ["type:bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the Bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: List steps to reproduce the behavior.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: Describe what you expected to happen.
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Add screenshots to help explain the problem.
+  - type: input
+    id: system
+    attributes:
+      label: Desktop or Mobile Info
+      description: OS, browser, and version (e.g., macOS, Chrome 122).
+  - type: input
+    id: related
+    attributes:
+      label: Related Issues
+      description: Mention related issue IDs if applicable.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Other relevant information or logs.
+  - type: input
+    id: story_points
+    attributes:
+      label: Story Points
+      description: Estimate in 30-minute units.

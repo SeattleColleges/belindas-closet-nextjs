@@ -1,0 +1,46 @@
+name: Feature Request
+description: Suggest a new feature or enhancement.
+labels: ["type:feature"]
+body:
+  - type: input
+    id: user_story
+    attributes:
+      label: User Story
+      description: Format as "As a <role>, I will want to <task>."
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Related Problem
+      description: Explain the issue this feature would solve.
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: What do you want to happen?
+  - type: input
+    id: tutorial_link
+    attributes:
+      label: Relevant Tutorial Link
+      description: Provide a link to a relevant tutorial.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Other solutions you’ve thought of.
+  - type: input
+    id: related_issues
+    attributes:
+      label: Related Issues
+      description: Mention related issue IDs.
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: More information, diagrams, or examples.
+  - type: input
+    id: story_points
+    attributes:
+      label: Story Points
+      description: Estimate in 30-minute units.

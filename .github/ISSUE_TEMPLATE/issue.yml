@@ -1,0 +1,21 @@
+ name: General Issue
+description: Report a general issue not covered by other templates.
+labels: ["type:issue"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Issue Title
+      description: Give a clear title to this issue.
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Include any relevant context, notes, or examples.
+  - type: textarea
+    id: visuals
+    attributes:
+      label: Visual Aids
+      description: Add images, videos, or diagrams to help explain.
