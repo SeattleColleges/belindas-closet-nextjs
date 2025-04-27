@@ -125,7 +125,7 @@ export default function Navbar() {
             <CategoryDropDownMenu />
             {isAuth && user && ( user.role=== "admin" || user.role === "creator") && (
                 <Link href="/dashboard" passHref legacyBehavior>
-                  <Button sx={{ color: "primary.main" }}>Dashboard</Button>
+                  <Button sx={{ color: "white" }}>Dashboard</Button>
                 </Link>
             )}
             {renderAuthButtons()}
