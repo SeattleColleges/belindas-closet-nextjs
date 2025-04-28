@@ -1,20 +1,14 @@
 import React, { useState } from "react";
 import {
-  Box,
-  Button,
-  Paper,
-  Snackbar,
-  Stack,
   Typography,
-  useMediaQuery,
-  useTheme
+  IconButton,
+  Paper,
+  Stack,
+  useTheme,
+  useMediaQuery
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import CheckIcon from "@mui/icons-material/Check";
 import UsersManagementDialog from "./UsersManagementDialog";
-import Alert, { AlertColor } from "@mui/material/Alert";
-import ConfirmDeleteUserDialog from "./ConfirmDeleteUserDialog";
 
 export interface UserCardProps {
   id: string;
@@ -25,198 +19,66 @@ export interface UserCardProps {
 }
 
 function UserCard({ user }: { user: UserCardProps }) {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [editCompleted, setEditCompleted] = useState(false);
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>("success");
-  const [newRole, setNewRole] = useState(user.role);
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleDeleteClick = () => {
-    setOpenDeleteDialog(!openDeleteDialog);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [editType, setEditType] = useState<"role" | "password" | null>(null);
+
+  const handleEditClick = (type: "role" | "password") => {
+    setEditType(type);
+    setOpenDialog(true);
   };
 
-  const handleEditClick = async () => {
-    if (editCompleted) {
-      const token = localStorage.getItem("token");
-      try {
-        const apiUrl = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || `http://localhost:3000/api`;
-        const response = await fetch(`${apiUrl}/user/update/${user.id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify({ role: newRole })
-        });
-        if (response.ok) {
-          setSnackbarSeverity("success");
-          setSnackbarMessage("User role updated successfully!");
-          setSnackbarOpen(true);
-        } else {
-          console.error("Failed to update user role:", response.statusText);
-          setSnackbarSeverity("error");
-          setSnackbarMessage("Failed to update user role");
-          setSnackbarOpen(true);
-        }
-      } catch (error) {
-        console.error("Error updating user role:", error);
-        setSnackbarSeverity("error");
-        setSnackbarMessage("Error updating user role");
-        setSnackbarOpen(true);
-      }
-    } else {
-      setOpenDialog(true);
-    }
-  };
-
-  const handleCloseDialog = (updatedRole?: string, success?: boolean) => {
+  const handleDialogClose = async (updatedRole?: string, updatedPassword?: string) => {
     setOpenDialog(false);
-    if (success && updatedRole) {
-      setNewRole(updatedRole);
-      setEditCompleted(true);
-    }
-  };
 
-  const handleCancel = () => {
-    setOpenDialog(false);
-    setEditCompleted(false);
+    if (!updatedRole && !updatedPassword) return;
+
+    try {
+      const token = localStorage.getItem('token');
+      await fetch(`/api/users/${user.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          ...(updatedRole && { role: updatedRole }),
+          ...(updatedPassword && { password: updatedPassword }),
+        }),
+      });
+      alert("User updated successfully!");
+    } catch (error) {
+      console.error("Error updating user:", error);
+      alert("Something went wrong while updating user.");
+    }
   };
 
   return (
-    <Paper
-      sx={{
-        margin: {
-          xs: "0 0 1.25rem 0",
-          sm: "0 2rem 1.25rem 2rem"
-        },
-        padding: "2rem",
-        paddingBottom: "1rem",
-        position: "relative",
-        height: "100%",
-        width: {
-          xs: "100%",
-          sm: "auto"
-        }
-      }}
-    >
-      <Stack direction="column" spacing={2}>
-        <Box>
-          <Typography variant="h5" gutterBottom sx={{ mb: 1 }}>
-            {user.firstName} {user.lastName}
-          </Typography>
-          <Typography
-            variant="body1"
-            gutterBottom
-            sx={{ mb: 0.25, color: "grey" }}
-          >
-            {user.email}
-          </Typography>
-
-          {openDialog && (
-            <Box display="flex" justifyContent="center">
-              <UsersManagementDialog user={user} onClose={handleCloseDialog} />
-            </Box>
-          )}
-
-          {!openDialog && (
-            <Box style={{ display: "inline-block", width: "100%" }}>
-              <Typography
-                variant="body1"
-                gutterBottom
-                sx={{
-                  mb: 0.25,
-                  color: "grey",
-                  display: "inline-block"
-                }}
-              >
-                {editCompleted ? newRole : user.role}
-              </Typography>
-              {editCompleted && <br />}
-              <Box
-                style={{
-                  display: editCompleted ? "flex" : "inline-block",
-                  justifyContent: "space-between"
-                }}
-              >
-                <Button
-                  variant="text"
-                  endIcon={editCompleted ? null : <EditIcon />}
-                  onClick={editCompleted ? handleCancel : handleEditClick}
-                  sx={{ padding: 0, display: "inline-block" }}
-                >
-                  {editCompleted ? "Cancel" : ""}
-                </Button>
-                {editCompleted && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    endIcon={<CheckIcon />}
-                    onClick={handleEditClick}
-                  >
-                    Done
-                  </Button>
-                )}
-              </Box>
-            </Box>
-          )}
-
-          {openDialog && (
-            <Button variant="contained" color="primary" onClick={handleCancel}>
-              Cancel
-            </Button>
-          )}
-
-          <Typography
-            variant="body2"
-            gutterBottom
-            sx={{ mt: 2.25, color: "#B1B1B1", mb: 0.75 }}
-          >
-            ID: {user.id}
-          </Typography>
-        </Box>
-
-        {openDeleteDialog && (
-          <ConfirmDeleteUserDialog
-            user={user}
-            open={openDeleteDialog}
-            setOpen={setOpenDeleteDialog}
-          />
-        )}
-
-        <Box
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0
-          }}
-        >
-          <Button
-            variant="text"
-            endIcon={<DeleteIcon />}
-            onClick={handleDeleteClick}
-          ></Button>
-        </Box>
+    <Paper elevation={3} sx={{ padding: 2, mb: 2 }}>
+      <Stack direction={isMobile ? "column" : "row"} spacing={2} justifyContent="space-between" alignItems="center">
+        <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
+        <Typography>{user.email}</Typography>
+        <Typography>{user.role}</Typography>
+        <Stack direction="row" spacing={1}>
+          <IconButton onClick={() => handleEditClick("role")}>
+            <EditIcon />
+          </IconButton>
+          <IconButton onClick={() => handleEditClick("password")}>
+            <EditIcon />
+          </IconButton>
+        </Stack>
       </Stack>
 
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity={snackbarSeverity}
-          sx={{ width: "100%" }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      {openDialog && editType && (
+        <UsersManagementDialog
+          open={openDialog}
+          onClose={handleDialogClose}
+          user={user}
+          editType={editType}
+        />
+      )}
     </Paper>
   );
 }

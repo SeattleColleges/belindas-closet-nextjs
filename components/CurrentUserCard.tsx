@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import EditUserDetailsDialog from "./EditUserDetailsDialog";
+import EditUserDetailsDialog from "./UsersManagementDialog";
 
 export interface CurrentUserCardProps {
   firstName: string;
