@@ -36,7 +36,6 @@ const CarouselContainerWrapper = styled('div', {
     height: 'fit-content',
     width: '100%', // full width
     position: 'relative',
-    // NO overflow hidden here!
 }));
 
 const CarouselContainer = styled('div', {
@@ -96,11 +95,28 @@ const CarouselArrowRight = styled('div', {
     boxShadow: "inset 0 0 8px rgba(0, 0, 0, .75)",
     zIndex: 2, // Make sure arrows stay above content
 }));
-
+const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(
+    function Stat(inProps, ref) {
+        const props = useThemeProps({ props: inProps, name: 'CarouselElement' });
+        const {children, carouselID, products, title, ...other } = props;
+        function slide(interval: number){
+            var container = document.getElementById(carouselID);
+            let scrollCompleted = 0;
+            var slideVar = setInterval(function(){
+            container!.scrollLeft += interval;
+                scrollCompleted += 10;
+                if(scrollCompleted >= 100){
+                    window.clearInterval(slideVar);
+                }
+            }, 25);
+        }
+/*
 const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(function CarouselElement(inProps, ref) {
     const props = useThemeProps({ props: inProps, name: 'CarouselElement' });
     const { children, carouselID, products, title, ...other } = props;
+*/
 
+/*
     function slide(interval: number) {
         const container = document.getElementById(carouselID);
         if (!container) return;
@@ -113,28 +129,31 @@ const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(function
             }
         }, 25);
     }
-
-    return (
-        <CarouselComponentWrapper {...other}>
-            <Typography color="#114FA3" variant="h4" mt={2} sx={{ fontWeight: 900 }}>
-                {title}
-            </Typography>
-            <CarouselContainerWrapper>
-                {products.length > 0 && (
-                    <>
-                        <CarouselArrowLeft onClick={() => slide(-70)}>
-                            <IconContext.Provider value={{ color: "#114FA3", size: '60' }}>
-                                <MdArrowBackIos aria-label="Slide Left" />
-                            </IconContext.Provider>
-                        </CarouselArrowLeft>
-                        <CarouselArrowRight onClick={() => slide(70)}>
-                            <IconContext.Provider value={{ color: "#114FA3", size: '60' }}>
-                                <MdArrowBackIos aria-label="Slide Right" />
-                            </IconContext.Provider>
-                        </CarouselArrowRight>
-                    </>
-                )}
-                <CarouselContainer id={carouselID}>
+*/
+return products.length > 0?(
+    <CarouselComponentWrapper>
+        <Typography color="#114FA3" variant="h4" mt={2} sx={{fontWeight: 900}}>{title}</Typography>
+        <CarouselContainerWrapper>
+            <CarouselArrowLeft onClick={()=>slide(-70)}>
+                <IconContext.Provider value={{ color: "#114FA3", size: '60' }}>
+                    <MdArrowBackIos  aria-label="Toggle Light Theme"/>
+                </IconContext.Provider>
+            </CarouselArrowLeft>
+            <CarouselContainer id={carouselID}>
+            {children}
+            </CarouselContainer>
+            <CarouselArrowRight onClick={()=>slide(70)}>
+                <IconContext.Provider value={{ color: "#114FA3", size: '60' }}>
+                    <MdArrowBackIos  aria-label="Toggle Light Theme"/>
+                </IconContext.Provider>
+            </CarouselArrowRight>
+        </CarouselContainerWrapper>
+    </CarouselComponentWrapper>
+):(
+    <CarouselComponentWrapper>
+        <Typography color="#114FA3" variant="h4" mt={2} sx={{fontWeight: 900}}>{title}</Typography>
+        <CarouselContainerWrapper>
+            <CarouselContainer id={carouselID}>
                     {children}
                 </CarouselContainer>
             </CarouselContainerWrapper>
