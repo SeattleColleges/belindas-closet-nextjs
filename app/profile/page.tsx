@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import CurrentUserCard from "../../components/CurrentUserCard";
 import { Box, Button, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
-import EditUserDetailsDialog from "@/components/EditUserDetailsDialog";
+import EditUserDetailsDialog from "@/components/UsersManagementDialog";
 import { useRouter } from "next/navigation";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 
