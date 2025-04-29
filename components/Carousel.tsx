@@ -110,26 +110,7 @@ const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(
                 }
             }, 25);
         }
-/*
-const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(function CarouselElement(inProps, ref) {
-    const props = useThemeProps({ props: inProps, name: 'CarouselElement' });
-    const { children, carouselID, products, title, ...other } = props;
-*/
 
-/*
-    function slide(interval: number) {
-        const container = document.getElementById(carouselID);
-        if (!container) return;
-        let scrollCompleted = 0;
-        const slideInterval = setInterval(() => {
-            container.scrollLeft += interval;
-            scrollCompleted += 10;
-            if (scrollCompleted >= 100) {
-                clearInterval(slideInterval);
-            }
-        }, 25);
-    }
-*/
 return products.length > 0?(
     <CarouselComponentWrapper>
         <Typography color="#114FA3" variant="h4" mt={2} sx={{fontWeight: 900}}>{title}</Typography>
@@ -192,9 +173,11 @@ export function Carousel({ carouselID, products, title }: { carouselID: string; 
         <Stack direction="row" spacing={2} sx={{ width: '100%' }}>
             <ThemeProvider theme={theme}>
                 <CarouselElement carouselID={carouselID} products={products} title={title}>
-                    {products.map((product, index) => (
-                        <SimpleItemPreview key={index} product={product} />
-                    ))}
+                { products &&
+                        products.map((product, index)=>(
+                            <SimpleItemPreview product={product} key={index}/>
+                        ))
+                    }
                 </CarouselElement>
             </ThemeProvider>
         </Stack>
