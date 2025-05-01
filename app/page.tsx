@@ -82,10 +82,12 @@ const Home = () => {
         width: '100%'
       }}>
         <ImageBanner />
-        
-        <Carousel carouselID="latest" 
-          title="Latest Arrivals"
-          products={products.slice(0,15)}/>
+
+          <Box  width="100%" maxWidth={1200} px={2} mt={4}>
+            <Carousel carouselID="latest" 
+              title="Latest Arrivals"
+              products={products.slice(0,15)}/>
+          </Box>
 
         <Stack 
           width={'100%'}
@@ -158,13 +160,17 @@ const Home = () => {
           </Grid>
         </Grid>
 
-        <Carousel carouselID="womenswear" 
-          title="Recent Womenswear"
-          products={products.filter((product: Product) => (product.productGender === 'FEMALE' || product.productGender === 'NON-BINARY'))}/>
+        <Box width="100%" maxWidth={1200} px={2} mt={4}>
+          <Carousel carouselID="womenswear" 
+            title="Recent Womenswear"
+            products={products.filter((product: Product) => (product.productGender === 'FEMALE' || product.productGender === 'NON-BINARY'))}/>
+        </Box>
 
+        <Box width="100%" maxWidth={1200} px={2} mt={4}>
         <Carousel carouselID="menswear" 
           title="Recent Menswear"
           products={products.filter((product: Product) => (product.productGender === 'MALE' || product.productGender === 'NON-BINARY'))}/>
+        </Box>
       </Box>
     </WrapperDiv>
   );
