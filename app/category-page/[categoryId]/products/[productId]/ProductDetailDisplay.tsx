@@ -7,16 +7,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
 import ConfirmArchiveDialog from "@/components/ConfirmArchiveDialog";
-import EditProductDialog from "@/components/EditProductDialog";
+// import EditProductDialog from "@/components/EditProductDialog";
 
 export interface Product {
   _id: string;
-  productType: string[];
-  productGender: string[];
-  productSizeShoe: string[];
-  productSizes: string[];
-  productSizePantsWaist: string[];
-  productSizePantsInseam: string[];
+  productType: string;
+  productGender: string;
+  productSizeShoe: string;
+  productSizes: string;
+  productSizePantsWaist: string;
+  productSizePantsInseam: string;
   productDescription: string;
   productImage: string;
   isHidden: boolean;
@@ -71,8 +71,8 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
   };
 
   // Check if the product is a shoe, pants, etc. 
-  const isShoeProduct = product.productType.includes("Shoes");
-  const isPantsProduct = product.productType.includes("Pants");
+  const isShoeProduct = product.productType === "Shoes";
+  const isPantsProduct = product.productType === "Pants";
 
   return (
     <Stack>
@@ -176,11 +176,12 @@ const ProductDetailDisplay = ({ product }: { product: Product | null }) => {
             </Stack>
           ) : null}
 
-          <EditProductDialog
+          {/* NEED TO FIX EDIT BUTTON FUNCTIONALITY */}
+          {/* <EditProductDialog
             open={openEditDialog}
             onClose={handleCloseEditDialog}
             product={product}
-          />
+          /> */}
           <ConfirmDeleteDialog
             open={openDeleteDialog}
             onClose={handleCloseDeleteDialog}

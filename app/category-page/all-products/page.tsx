@@ -14,7 +14,7 @@ const placeholderImg = logo;
 interface Product {
     _id: string;
     productImage: typeof placeholderImg;
-    productType: string[];
+    productType: string;
     productGender: string;
     productSizeShoe: string;
     productSizes: string;
@@ -25,27 +25,24 @@ interface Product {
     isSold: Boolean;
 }
 
-async function fetchData(
-    categoryId: string,
-    setProducts: Dispatch<SetStateAction<Product[]>>
-) {
+async function fetchData(categoryId: string, setProducts: Dispatch<SetStateAction<Product[]>>) {
     const apiUrl = `${URL}/products`;
-    const fetchUrl = `${apiUrl}`;
 
     try {
-        const res = await fetch(fetchUrl, {
+        const res = await fetch(apiUrl, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
         });
+
         if (!res.ok) {
             throw new Error(res.statusText);
         } else {
             const data = await res.json();
             const filteredData = data.filter((product: Product) => !product.isHidden);
-            setProducts(data);
-            console.log(data);
+            setProducts(filteredData);
+            console.log(filteredData);
         }
     } catch (error) {
         console.error("Error getting product:", error);
@@ -55,14 +52,14 @@ async function fetchData(
 const ViewProduct = ({categoryId}: { categoryId: string }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-
     const [productFilters, setProductFilters] = useState<String[]>([]);
     const [genderFilters, setGenderFilters] = useState<String[]>([]);
 
     useEffect(() => {
         console.log("Product filters: ", productFilters)
     }, [productFilters])
-    console.log("Product filters: ", productFilters)
+    // console.log("Product filters: ", productFilters)
+
     useEffect(() => {
         console.log("Gender filters: ", genderFilters)
     }, [genderFilters])
@@ -89,7 +86,6 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
             }
         });
     }
-
 
     useEffect(() => {
         fetchData(categoryId, setProducts); // Pass categoryId to fetchData
@@ -162,13 +158,12 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                 </Paper>
             </Grid>
             <Grid item md={9} xs={12}>
-                <Container sx={{py: 4}}>
+                <Container sx={{ py: 4 }}>
                     <Grid container spacing={2}>
                         {filteredProducts.filter((product) =>
-                            !product.productType.some((typea) => productFilters.includes(typea)) &&
-                            !genderFilters.includes(String(product.productGender))
+                            !productFilters.includes(product.productType) &&
+                            !genderFilters.includes(product.productGender)
                         ).map((product, index) => (
-                            // <Grid item key={index} xs={12} sm={40} md={40}>
                             <Grid item key={index} xs={12} sm={4} md={3}>
                                 <ProductCard
                                     image={logo}
@@ -190,15 +185,9 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                 </Container>
             </Grid>
         </Grid>
-)
-    ;
+    );
 };
-export default function ProductList({
-                                        params,
-                                    }: {
-    params: { categoryId: string };
-}) {
+export default function ProductList({ params }: { params: { categoryId: string } }) {
     const decodedCategoryId = decodeURIComponent(params.categoryId);
-
     return <ViewProduct categoryId={decodedCategoryId}/>;
 }
