@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, IconButton, Collapse, Divider, useMediaQuery, useTheme } from "@mui/material";
+import { Typography, Box, Button, IconButton, Collapse, Divider, useMediaQuery, useTheme } from "@mui/material";
 import { SetStateAction, useEffect, useState } from "react";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 import WeeklyActivity from "@/app/dashboard/weeklyActivity/page";
@@ -145,7 +145,9 @@ const Dashboard = () => {
           {navOpen ? <KeyboardArrowUpIcon fontSize="small" /> : <KeyboardArrowDownIcon fontSize="small" />}
         </IconButton>
       </Box>
-
+      <Typography component="h1" sx={{ mb: 2 }}>
+        Hello, {userInfo?.firstName}
+      </Typography>
       {/* Collapsible navigation menu */}
       <Collapse in={navOpen} sx={{ width: "100%" }}>
         <Box
