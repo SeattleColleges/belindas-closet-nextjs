@@ -80,8 +80,8 @@ const Home = () => {
         flexDirection: 'column', 
         alignItems: 'center',
         width: '100%',
-        maxWidth: '100vw',
-        overflowx: 'auto'
+        //maxWidth: '100vw',
+        //overflowx: 'auto'
       }}>
         <ImageBanner />
         
