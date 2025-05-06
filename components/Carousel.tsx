@@ -81,7 +81,9 @@ const CarouselArrowLeft = styled('div', {
     backgroundColor: "transparent",
     boxShadow: "inset 0 0 8px rgba(0, 0, 0, .75)",
     zIndex: 2,
-}));
+        }
+    )
+);
 
 const CarouselArrowRight = styled('div', {
     name: 'CarouselElement',
@@ -101,7 +103,9 @@ const CarouselArrowRight = styled('div', {
     backgroundColor: "transparent",
     boxShadow: "inset 0 0 8px rgba(0, 0, 0, .75)",
     zIndex: 2,
-}));
+        }
+    )
+);
 
 const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(
     function Stat(inProps, ref) {
@@ -157,7 +161,8 @@ const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(
                 </CarouselComponentWrapper>
             </ResponsiveWrapper>
         );
-    });
+    },
+);
 
 declare module "@mui/material/styles" {
     interface Components {
@@ -185,13 +190,13 @@ const theme = createTheme({
     },
 });
 
-export function Carousel({ carouselID, products, title }: { carouselID: string; products: Product[]; title: string }) {
+export function Carousel({ carouselID, products, title }: { carouselID: string; products: Product[]; title: string }){
     return (
         <Stack direction="row" spacing={2} sx={{ width: '100%', justifyContent: 'center' }}>
             <ThemeProvider theme={theme}>
                 <CarouselElement carouselID={carouselID} products={products} title={title}>
-                    {products &&
-                        products.map((product, index) => (
+                    { products &&
+                        products.map((product, index)=>(
                             <SimpleItemPreview product={product} key={index} />
                         ))
                     }
