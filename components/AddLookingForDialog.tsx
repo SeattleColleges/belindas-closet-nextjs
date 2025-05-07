@@ -35,10 +35,10 @@ interface AddLookingForDialogProps {
 const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialogProps) => {
   const [type, setType] = useState<string>('');
   const [productGender, setProductGender] = useState<string>('');
-  const [productSizeShoe, setProductSizeShoe] = useState<number | string>('');
+  const [productSizeShoe, setProductSizeShoe] = useState<string>('');
   const [productSizes, setProductSizes] = useState<string>('');
-  const [productSizePantsWaist, setProductSizePantsWaist] = useState<number | string>('');
-  const [productSizePantsInseam, setProductSizePantsInseam] = useState<number | string>('');
+  const [productSizePantsWaist, setProductSizePantsWaist] = useState<string>('');
+  const [productSizePantsInseam, setProductSizePantsInseam] = useState<string>('');
   const [snackbarMessage, setSnackbarMessage] = useState<string>('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
@@ -159,7 +159,7 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
                   required
                 >
                   <MenuItem value="">{"-"}</MenuItem>
-                  {ProductSizeShoeList.map((size) => (
+                  {Object.values(ProductSizeShoeList).map((size) => (
                     <MenuItem key={size} value={size}>
                       {size}
                     </MenuItem>
@@ -179,11 +179,11 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
                     required
                   >
                     <MenuItem value="">{"-"}</MenuItem>
-                    {ProductSizePantsWaistList.map((size) => (
-                      <MenuItem key={size} value={size}>
-                        {size}
-                      </MenuItem>
-                    ))}
+                  {Object.values(ProductSizePantsWaistList).map((size) => (
+                    <MenuItem key={size} value={size}>
+                      {size}
+                    </MenuItem>
+                  ))}
                   </Select>
                 </FormControl>
 
@@ -196,11 +196,11 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
                     required
                   >
                     <MenuItem value="">{"-"}</MenuItem>
-                    {ProductSizePantsInseamList.map((size) => (
+                    {Object.values(ProductSizePantsInseamList).map((size) => (
                       <MenuItem key={size} value={size}>
                         {size}
-                      </MenuItem>
-                    ))}
+                    </MenuItem>
+                  ))}
                   </Select>
                 </FormControl>
               </>
