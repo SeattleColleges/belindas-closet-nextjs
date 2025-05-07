@@ -10,6 +10,7 @@ export interface User {
   lastName: string;
   email: string;
   pronoun: string;
+  role?: string;
   degreeType?: string;
   major?: string;
   graduationMonth?: string;
