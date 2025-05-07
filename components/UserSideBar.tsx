@@ -79,7 +79,7 @@ const UserSideBar: React.FC<UserSideBarProps> = ( { user, onUserUpdate } ) => {
           <Typography sx={{ fontSize: { xs: '1rem' } }}>
             {userInfo?.email}
           </Typography>
-          
+
           {openEditDialog && userInfo && (
               <EditUserDetailsDialog
                 open={openEditDialog}
