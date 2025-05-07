@@ -66,7 +66,7 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
 
     const token = localStorage.getItem('token');
     try {
-      const apiUrl = process.env.NSC_EVENTS_PUBLIC_API_URL || `http://localhost:3000/api`;
+      const apiUrl = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
       const response = await fetch(`${apiUrl}/user/update/${user.id}`, {
         method: 'PATCH',
         headers: {
