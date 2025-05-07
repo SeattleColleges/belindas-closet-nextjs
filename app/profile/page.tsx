@@ -1,16 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Box, Button, Stack, Typography, Paper, IconButton, Avatar, useTheme } from "@mui/material";
-import EditUserDetailsDialog from "@/components/EditUserDetailsDialog";
+import { Box } from "@mui/material";
 import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 import UserHeader from "@/components/UserHeader";
 import UserSideBar from "@/components/UserSideBar";
 import UserContent from "@/components/UserContent";
 import Sidebar from "@/components/Sidebar";
-import AddIcon from '@mui/icons-material/Add';
 
-import { User, LookingForItem } from '@/types/user';
+import { User } from '@/types/user';
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
@@ -33,7 +31,7 @@ async function fetchUserById(setUserInfo: (userInfo: User) => void, userId: stri
       throw new Error(res.statusText);
     } else {
       const data = await res.json();
-
+      console.log(data)
       setUserInfo(data);
     }
   } catch (error) {
