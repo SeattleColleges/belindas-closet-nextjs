@@ -20,7 +20,7 @@ import { User } from '@/types/user';
 interface EditUserDetailsDialogProps {
   open: boolean;
   onClose: (updatedUser?: User) => void;
-  user: User;
+  user: User | null | undefined;
 }
 
 const degreeTypes = [
@@ -46,20 +46,20 @@ const months = [
 ];
 
 const EditUserDetailsDialog: React.FC<EditUserDetailsDialogProps> = ({ open, onClose, user }) => {
-  const [firstName, setFirstName] = useState<string>(user.firstName);
-  const [lastName, setLastName] = useState<string>(user.lastName);
-  const [pronoun, setPronoun] = useState<string>(user.pronoun || '');
-  const [degreeType, setDegreeType] = useState<string>(user.degreeType || '');
-  const [major, setMajor] = useState<string>(user.major || '');
-  const [graduationMonth, setGraduationMonth] = useState<string>(user.graduationMonth || '');
-  const [graduationYear, setGraduationYear] = useState<string>(user.graduationYear || '');
+  const [firstName, setFirstName] = useState<string>(user?.firstName || '');
+  const [lastName, setLastName] = useState<string>(user?.lastName || '');
+  const [pronoun, setPronoun] = useState<string>(user?.pronoun || '');
+  const [degreeType, setDegreeType] = useState<string>(user?.degreeType || '');
+  const [major, setMajor] = useState<string>(user?.major || '');
+  const [graduationMonth, setGraduationMonth] = useState<string>(user?.graduationMonth || '');
+  const [graduationYear, setGraduationYear] = useState<string>(user?.graduationYear || '');
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
 
   useEffect(() => {
-    if (open) {
+    if (open && user) {
       setFirstName(user.firstName);
       setLastName(user.lastName);
       setPronoun(user.pronoun);
@@ -85,7 +85,7 @@ const EditUserDetailsDialog: React.FC<EditUserDetailsDialogProps> = ({ open, onC
     }
     const token = localStorage.getItem('token');
     try {
-      const apiUrl = process.env.NSC_EVENTS_PUBLIC_API_URL || `http://localhost:3000/api`;
+      const apiUrl = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
       const response = await fetch(`${apiUrl}/user/update/${user.id}`, {
         method: 'PATCH',
         headers: {
@@ -137,19 +137,19 @@ const EditUserDetailsDialog: React.FC<EditUserDetailsDialogProps> = ({ open, onC
               fullWidth
               label="First Name"
               value={firstName}
-              onChange={(e) => handleInputChange(setFirstName, e.target.value, user.firstName)}
+              onChange={(e) => handleInputChange(setFirstName, e.target.value, firstName)}
             />
             <TextField
               fullWidth
               label="Last Name"
               value={lastName}
-              onChange={(e) => handleInputChange(setLastName, e.target.value, user.lastName)}
+              onChange={(e) => handleInputChange(setLastName, e.target.value, lastName)}
             />
             <TextField
               fullWidth
               label="Pronouns"
               value={pronoun}
-              onChange={(e) => handleInputChange(setPronoun, e.target.value, user.pronoun)}
+              onChange={(e) => handleInputChange(setPronoun, e.target.value, pronoun)}
             />
 
             <FormControl fullWidth>
@@ -157,7 +157,7 @@ const EditUserDetailsDialog: React.FC<EditUserDetailsDialogProps> = ({ open, onC
               <Select
                 value={degreeType}
                 label="Degree Type"
-                onChange={(e) => handleInputChange(setDegreeType, e.target.value, user.degreeType || '')}
+                onChange={(e) => handleInputChange(setDegreeType, e.target.value, degreeType)}
               >
                 <MenuItem value="">{"-"}</MenuItem>
                 {degreeTypes.map((type) => (
@@ -172,7 +172,7 @@ const EditUserDetailsDialog: React.FC<EditUserDetailsDialogProps> = ({ open, onC
               fullWidth
               label="Major"
               value={major}
-              onChange={(e) => handleInputChange(setMajor, e.target.value, user.major || '')}
+              onChange={(e) => handleInputChange(setMajor, e.target.value, major )}
               placeholder="e.g. Computer Science"
             />
 
@@ -181,7 +181,7 @@ const EditUserDetailsDialog: React.FC<EditUserDetailsDialogProps> = ({ open, onC
               <Select
                 value={graduationMonth}
                 label="Graduation Month"
-                onChange={(e) => handleInputChange(setGraduationMonth, e.target.value, user.graduationMonth || '')}
+                onChange={(e) => handleInputChange(setGraduationMonth, e.target.value, graduationMonth )}
               >
                 <MenuItem value="">{"-"}</MenuItem>
                 {months.map((month) => (
@@ -197,7 +197,7 @@ const EditUserDetailsDialog: React.FC<EditUserDetailsDialogProps> = ({ open, onC
               <Select
                 value={graduationYear}
                 label="Graduation Year"
-                onChange={(e) => handleInputChange(setGraduationYear, e.target.value, user.graduationYear || '')}
+                onChange={(e) => handleInputChange(setGraduationYear, e.target.value, graduationYear )}
               >
                 <MenuItem value="">{"-"}</MenuItem>
                 {years.map((year) => (
