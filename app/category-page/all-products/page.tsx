@@ -68,7 +68,6 @@ async function fetchData(categoryId: string, setProducts: Dispatch<SetStateActio
                 "Content-Type": "application/json",
             },
         });
-
         if (!res.ok) {
             throw new Error(res.statusText);
         } else {
@@ -84,6 +83,7 @@ async function fetchData(categoryId: string, setProducts: Dispatch<SetStateActio
 const ViewProduct = ({categoryId}: { categoryId: string }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const [productFilters, setProductFilters] = useState<String[]>([]);
     const [genderFilters, setGenderFilters] = useState<String[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
