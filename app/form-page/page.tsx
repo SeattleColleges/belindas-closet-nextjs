@@ -6,8 +6,6 @@ import validator from 'validator';
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
-const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
-
 interface FormData {
   name: string;
   gender: string;
