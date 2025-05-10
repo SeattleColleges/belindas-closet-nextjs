@@ -8,7 +8,6 @@ import {
     Container,
     Divider,
     FormGroup,
-    Grid,
     Paper,
     Typography,
     Box,
@@ -18,18 +17,18 @@ import {
     Select,
     MenuItem,
     FormControl,
-    InputLabel,
     Breadcrumbs,
     Link,
     Stack,
     FormControlLabel,
-    Radio,
-    RadioGroup,
     Pagination,
     Accordion,
     AccordionSummary,
     AccordionDetails,
+    AccordionActions,
 } from "@mui/material";
+import Grid from '@mui/system/Grid'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -162,8 +161,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
         // Apply search filter
         if (searchQuery) {
             filtered = filtered.filter(product =>
-                (product.productType?.toLowerCase().includes(searchQuery.toLowerCase()) || false) ||
-                (product.productDescription?.toLowerCase().includes(searchQuery.toLowerCase()) || false)
+                (typeof product.productType === "string" && product.productType.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (typeof product.productDescription === "string" && product.productDescription.toLowerCase().includes(searchQuery.toLowerCase()))
             );
         }
 
@@ -225,9 +224,22 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
     );
 
     return (
-        <Container maxWidth="xl" sx={{py: 4, bgcolor: '#ffffff'}}>
+        <Container maxWidth="xl" 
+            sx={{
+                py: 4, 
+                bgcolor: '#ffffff', 
+                position: 'relative'
+                }}
+        >
+            
             {/* Search Header */}
-            <Box sx={{mb: 4, bgcolor: '#ffffff'}}>
+            <Box 
+                sx={{
+                    mb: 4, 
+                    maxWidth: '1000px',
+                    bgcolor: '#ffffff'
+                }}
+            >
                 <Box sx={{
                     display: 'flex',
                     alignItems: 'center',
@@ -321,14 +333,28 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
             </Box>
 
             {/* Main Content */}
-            <Grid container spacing={3}>
+            <Grid container spacing={4}
+                sx={{
+                    mb: 4,
+                    // maxWidth: '1400px',
+                    // maxHeight: '700px',
+                    bgcolor: '#ffffff'
+                }}
+            >
                 {/* Filters Sidebar */}
-                <Grid item md={3} xs={12}>
+                <Grid 
+                    size={{ xs:4.5, sm: 4, md: 4 }}
+                    sx={{
+                        mr: -5
+                    }}
+                >
                     <Paper sx={{
                         p: 2,
                         bgcolor: '#ffffff',
                         borderRight: '1px solid #e0e0e0',
-                        boxShadow: 'none'
+                        boxShadow: 'none',
+                        maxWidth: '220px',
+                        minWidth: '180px',
                     }}>
                         <Typography variant="h6" sx={{
                             mb: 2,
@@ -342,7 +368,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         </Typography>
 
                         {/* Gender Section */}
-                        <Accordion defaultExpanded sx={{
+                        <Accordion sx={{
                             boxShadow: 'none',
                             '&:before': {
                                 display: 'none',
@@ -375,7 +401,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         <Divider sx={{my: 1}}/>
 
                         {/* Stock Status Section */}
-                        <Accordion defaultExpanded sx={{
+                        <Accordion  sx={{
                             boxShadow: 'none',
                             '&:before': {
                                 display: 'none',
@@ -409,7 +435,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         <Divider sx={{my: 1}}/>
 
                         {/* Size Section */}
-                        <Accordion defaultExpanded sx={{
+                        <Accordion  sx={{
                             boxShadow: 'none',
                             '&:before': {
                                 display: 'none',
@@ -442,7 +468,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         <Divider sx={{my: 1}}/>
 
                         {/* Color */}
-                        <Accordion defaultExpanded sx={{
+                        <Accordion  sx={{
                             boxShadow: 'none',
                             '&:before': {
                                 display: 'none',
@@ -498,10 +524,23 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         </Accordion>
                     </Paper>
                 </Grid>
+                
 
                 {/* Product Grid */}
-                <Grid item md={9} xs={12}>
-                    <Box sx={{bgcolor: '#ffffff', p: 2, borderRadius: 1}}>
+                <Grid 
+                    size={{ md: 8, xs: 12 }}
+                    sx={{
+                        position: 'relative',
+                        ml: 0,
+                    }}
+                >
+                    <Box 
+                        sx={{
+                            bgcolor: '#ffffff', 
+                            borderRadius: 1,
+                            width: '100%',
+                        }}
+                    >
                         {/* Breadcrumb */}
                         <Breadcrumbs aria-label="breadcrumb" sx={{mb: 2}}>
                             <Link color="inherit" href="/" sx={{textDecoration: 'underline'}}>
@@ -536,9 +575,18 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                             </FormControl>
                         </Box>
 
-                        <Grid container spacing={2}>
+                        <Grid container spacing={2}
+                            sx={{
+
+                                display: 'inline-flex',
+                                justifyContent: 'left',
+                            }}
+                        >
                             {paginatedProducts.map((product, index) => (
-                                <Grid item key={index} xs={12} sm={6} md={4}>
+                                <Grid 
+                                    key={index} 
+                                    size={{ xs: 6, sm: 4 }}
+                                >
                                     <ProductCard
                                         image={logo}
                                         categories={product.productType}
