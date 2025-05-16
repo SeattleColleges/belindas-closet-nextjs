@@ -165,43 +165,6 @@ const CarouselElement = React.forwardRef<HTMLDivElement, CarouselProps>(
                     </CarouselContainerWrapper>
                 </CarouselComponentWrapper>
             </ResponsiveWrapper>
-
-        return products.length > 0?(
-            <CarouselComponentWrapper>
-                <Typography color="#114FA3" variant="h4" mt={2} sx={{fontWeight: 900}}>{title}</Typography>
-                <CarouselContainerWrapper>
-                    <CarouselArrowLeft onClick={()=>slide(-70)}>
-                        <IconContext.Provider value={{ color: "#114FA3", size: '60' }}>
-                            <MdArrowBackIos  aria-label="Toggle Light Theme"/>
-                        </IconContext.Provider>
-                    </CarouselArrowLeft>
-                    <CarouselContainer id={carouselID}>
-                    {children}
-                    </CarouselContainer>
-                    <CarouselArrowRight onClick={()=>slide(70)}>
-                        <IconContext.Provider value={{ color: "#114FA3", size: '60' }}>
-                            <MdArrowBackIos  aria-label="Toggle Light Theme"/>
-                        </IconContext.Provider>
-                    </CarouselArrowRight>
-                </CarouselContainerWrapper>
-            </CarouselComponentWrapper>
-        ):(
-                <CarouselComponentWrapper>
-                    <Box sx={{ width: '100%', textAlign: 'center', mt: 2 }}>
-                        <Typography 
-                            color="#114FA3" 
-                            variant="h4" 
-                            sx={{ fontWeight: 900 }}
-        >
-                            {title}
-                        </Typography>
-                    </Box>
-
-                <CarouselContainerWrapper>
-        {/* Arrows and Carousel Items here */}
-    </CarouselContainerWrapper>
-    </CarouselComponentWrapper>
-
         );
     },
 );
