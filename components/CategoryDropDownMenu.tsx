@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Menu, MenuItem, Box, useTheme, useMediaQuery } from "@mui/material";
 import { ArrowDropDown } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import {navItems} from "@/components/productList";
+import { productList } from "@/components/productList";
 
 export default function CategoryDropDownMenu() {
   const theme = useTheme();
@@ -50,7 +50,7 @@ export default function CategoryDropDownMenu() {
         }}
         sx={{ transform: 'translateX(-6px)' }}
       >
-        {navItems.map((item) => (
+        {productList.map((item) => (
           <MenuItem key={item} onClick={() => navigate(item)}>
             {item}
           </MenuItem>

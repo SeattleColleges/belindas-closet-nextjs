@@ -4,13 +4,13 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import { Typography, Popover, Link, Box } from "@mui/material";
 import WrapperDiv from "../components/WrapperDiv";
-import {Carousel} from "@/components/Carousel";
+import { Carousel } from "@/components/Carousel";
 import Product from '../models/productModel';
 import CategoryBlock from "@/components/CategoryBlock";
 import ImageBanner from "@/components/ImageBanner";
 import { useRouter } from 'next/navigation'
 import useAuth from "@/hooks/useAuth";
-import {navItems} from "@/components/productList";
+import { productList } from "@/components/productList";
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
 
@@ -68,46 +68,46 @@ const Home = () => {
 
   const router = useRouter();
   const navigate = (item: string) => {
-      const encodedCategoryId = encodeURIComponent(item); //sanitize item name for route
-      router.push(`/category-page/${encodedCategoryId}`);
+    const encodedCategoryId = encodeURIComponent(item); //sanitize item name for route
+    router.push(`/category-page/${encodedCategoryId}`);
     handleClose();
   };
 
   return (
     <WrapperDiv>
-      <Box sx={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         width: '100%'
       }}>
         <ImageBanner />
 
-          <Box  width="100%" maxWidth={1200} px={2} mt={4}>
-            <Carousel carouselID="latest" 
-              title="Latest Arrivals"
-              products={products.slice(0,15)}/>
-          </Box>
+        <Box width="100%" maxWidth={1200} px={2} mt={4}>
+          <Carousel carouselID="latest"
+            title="Latest Arrivals"
+            products={products.slice(0, 15)} />
+        </Box>
 
-        <Stack 
+        <Stack
           width={'100%'}
           maxWidth={1200}
-          direction={'row'}  
+          direction={'row'}
           justifyContent={'space-between'}
           alignItems={'center'}
           mt={2}
           px={2}
         >
-          <Typography color="#114FA3" variant="h4" sx={{fontWeight: 900}}>
+          <Typography color="#114FA3" variant="h4" sx={{ fontWeight: 900 }}>
             Popular Categories
           </Typography>
-          <Typography 
+          <Typography
             color="#114FA3"
             variant="h5"
-            sx={{fontWeight: 600, textDecoration: 'underline', cursor: 'pointer'}}
+            sx={{ fontWeight: 600, textDecoration: 'underline', cursor: 'pointer' }}
             aria-describedby={'view-all-categories'}
             onClick={handlePopOverClick}>
-            View all categories 
+            View all categories
           </Typography>
           <Popover
             id={'view-all-categories'}
@@ -120,8 +120,8 @@ const Home = () => {
             }}
           >
             <Stack>
-              {navItems.map((item) => (
-                <Link key={item} variant="h6" p={1} onClick={() => navigate(item)} sx={{cursor: 'pointer'}}>
+              {productList.map((item) => (
+                <Link key={item} variant="h6" p={1} onClick={() => navigate(item)} sx={{ cursor: 'pointer' }}>
                   {item}
                 </Link>
               ))}
@@ -129,52 +129,52 @@ const Home = () => {
           </Popover>
         </Stack>
         <Grid container spacing={0} sx={{
-          maxWidth: 1200, 
+          maxWidth: 1200,
           width: '100%',
           justifyContent: 'center',
           px: 2
         }}>
           <Grid item xs={6} md={4} lg={3}>
-            <CategoryBlock category="Shirts"/>
+            <CategoryBlock category="Shirts" />
           </Grid>
           <Grid item xs={6} md={4} lg={3}>
-            <CategoryBlock category="Dress" variant="light"/>
+            <CategoryBlock category="Dress" variant="light" />
           </Grid>
           <Grid item xs={6} md={4} lg={3}>
-            <CategoryBlock category="Pants"/>
+            <CategoryBlock category="Pants" />
           </Grid>
           <Grid item xs={6} md={4} lg={3}>
-            <CategoryBlock category="Shoes" variant="light"/>
+            <CategoryBlock category="Shoes" variant="light" />
           </Grid>
           <Grid item xs={6} md={4} lg={3}>
-            <CategoryBlock category="Skirts"  variant="light"/>
+            <CategoryBlock category="Skirts" variant="light" />
           </Grid>
           <Grid item xs={6} md={4} lg={3}>
-            <CategoryBlock category="Casual Wear"/>
+            <CategoryBlock category="Casual Wear" />
           </Grid>
           <Grid item xs={6} md={4} lg={3}>
-            <CategoryBlock category="Accessories" variant="light"/>
+            <CategoryBlock category="Accessories" variant="light" />
           </Grid>
           <Grid item xs={6} md={4} lg={3}>
-            <CategoryBlock category="Suits"/>
+            <CategoryBlock category="Suits" />
           </Grid>
         </Grid>
 
         <Box width="100%" maxWidth={1200} px={2} mt={4}>
-          <Carousel carouselID="womenswear" 
+          <Carousel carouselID="womenswear"
             title="Recent Womenswear"
-            products={products.filter((product: Product) => (product.productGender === 'FEMALE' || product.productGender === 'NON-BINARY'))}/>
+            products={products.filter((product: Product) => (product.productGender === 'FEMALE' || product.productGender === 'NON-BINARY'))} />
         </Box>
 
         <Box width="100%" maxWidth={1200} px={2} mt={4}>
-        <Carousel carouselID="menswear" 
-          title="Recent Menswear"
-          products={products.filter((product: Product) => (product.productGender === 'MALE' || product.productGender === 'NON-BINARY'))}/>
+          <Carousel carouselID="menswear"
+            title="Recent Menswear"
+            products={products.filter((product: Product) => (product.productGender === 'MALE' || product.productGender === 'NON-BINARY'))} />
         </Box>
       </Box>
     </WrapperDiv>
   );
-  
+
 };
 
 export default Home;
