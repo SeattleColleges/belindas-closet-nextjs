@@ -127,7 +127,7 @@ export default function Navbar() {
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", marginRight: "1rem", width: "100%", justifyContent: "center" }}>
             <List sx={{ display: "flex", flexDirection: "row", alignItems: "center", width: "auto", justifyContent: "space-around" }}>
               <ListItemButton sx={{ marginInline: 4, padding: 0, justifyContent: "center" }}>DONATIONS</ListItemButton>
-              <ListItemButton sx={{ marginInline: 4, padding: 0, justifyContent: "center" }}>ABOUT US</ListItemButton>
+              <ListItemButton sx={{ marginInline: 4, padding: 0, justifyContent: "center", textWrap: "nowrap" }}>ABOUT US</ListItemButton>
               <ListItemButton sx={{ marginInline: 4, padding: 0, justifyContent: "center" }}>CONTACT</ListItemButton>
               <CategoryDropDownMenu />
             </List>
