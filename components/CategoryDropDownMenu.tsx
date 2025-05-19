@@ -38,7 +38,7 @@ export default function CategoryDropDownMenu() {
         color={open ? "inherit" : "inherit"}
         sx={{ mr: isMobile ? 0 : 2 }}
       >
-        Products
+        PRODUCTS
       </Button>
       <Menu
         id="basic-menu"

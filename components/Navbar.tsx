@@ -124,18 +124,36 @@ export default function Navbar() {
           </Box>
 
           {/* Desktop Navigation */}
-          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", marginRight: "1rem", width: "100%", justifyContent: "center" }}>
-            <List sx={{ display: "flex", flexDirection: "row", alignItems: "center", width: "auto", justifyContent: "space-around" }}>
-              <ListItemButton sx={{ marginInline: 4, padding: 0, justifyContent: "center" }}>DONATIONS</ListItemButton>
-              <ListItemButton sx={{ marginInline: 4, padding: 0, justifyContent: "center", textWrap: "nowrap" }}>ABOUT US</ListItemButton>
-              <ListItemButton sx={{ marginInline: 4, padding: 0, justifyContent: "center" }}>CONTACT</ListItemButton>
-              <CategoryDropDownMenu />
-            </List>
-            {isAuth && user && (user.role === "admin" || user.role === "creator") && (
-              <Link href="/dashboard" passHref legacyBehavior>
-                <Button sx={{ color: "white" }}>Dashboard</Button>
-              </Link>
-            )}
+          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", marginRight: "1rem", width: "100%" }}>
+            <CategoryDropDownMenu />
+            <Box sx={{ justifyContent: "center", alignItems: "center", display: "flex", flexGrow: 1, marginRight: "8rem" }}>
+              <List sx={{ display: "flex", flexDirection: "row", alignItems: "center", width: "auto" }}>
+                <Link href={"/"} passHref legacyBehavior>
+                  <ListItemButton sx={{ marginInline: 4, padding: 0 }}>
+                    <ListItemText primary="DONATIONS" />
+                  </ListItemButton>
+                </Link>
+                <Link href={"/"} passHref legacyBehavior>
+                  <ListItemButton sx={{ marginInline: 4, padding: 0, textWrap: "nowrap" }}>
+                    <ListItemText primary="ABOUT US" />
+                  </ListItemButton>
+                </Link>
+                <Link href={"/"} passHref legacyBehavior>
+                  <ListItemButton sx={{ marginInline: 4, padding: 0 }}>
+                    <ListItemText primary="CONTACT" />
+                  </ListItemButton>
+                </Link>
+              </List>
+              {isAuth && user && (user.role === "admin" || user.role === "creator") && (
+                <List>
+                  <Link href={"/dashboard"} passHref legacyBehavior>
+                    <ListItemButton>
+                      <ListItemText primary="DASHBOARD" />
+                    </ListItemButton>
+                  </Link>
+                </List>
+              )}
+            </Box>
             {renderAuthButtons()}
           </Box>
           {/* Theme Toggle for fullsize */}
