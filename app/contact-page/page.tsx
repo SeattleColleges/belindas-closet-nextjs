@@ -106,10 +106,12 @@ const Contact = () => {
                 <Button variant="contained" color="primary" type="submit">
                   Send Message
                 </Button>
+                <Box sx={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}>
                 <Typography variant="body1" paragraph sx={{ textAlign: 'left' }}>
                   Email: edi.north@seattlecolleges.edu<br />
                   Phone: (206) 934-3719
                 </Typography>
+                </Box>
               </Box>
             </Grid>
 
