@@ -128,31 +128,29 @@ export default function Navbar() {
             <CategoryDropDownMenu />
             <Box sx={{ justifyContent: "center", alignItems: "center", display: "flex", flexGrow: 1, marginRight: "8rem" }}>
               <List sx={{ display: "flex", flexDirection: "row", alignItems: "center", width: "auto" }}>
-                <Link href={"/"} passHref legacyBehavior>
+                <Link href={"/donations"} passHref legacyBehavior>
                   <ListItemButton sx={{ marginInline: 4, padding: 0 }}>
                     <ListItemText primary="DONATIONS" />
                   </ListItemButton>
                 </Link>
-                <Link href={"/"} passHref legacyBehavior>
+                <Link href={"/about-us"} passHref legacyBehavior>
                   <ListItemButton sx={{ marginInline: 4, padding: 0, textWrap: "nowrap" }}>
                     <ListItemText primary="ABOUT US" />
                   </ListItemButton>
                 </Link>
-                <Link href={"/"} passHref legacyBehavior>
+                <Link href={"/contact"} passHref legacyBehavior>
                   <ListItemButton sx={{ marginInline: 4, padding: 0 }}>
                     <ListItemText primary="CONTACT" />
                   </ListItemButton>
                 </Link>
-              </List>
-              {isAuth && user && (user.role === "admin" || user.role === "creator") && (
-                <List>
+                {isAuth && user && (user.role === "admin" || user.role === "creator") && (
                   <Link href={"/dashboard"} passHref legacyBehavior>
                     <ListItemButton>
                       <ListItemText primary="DASHBOARD" />
                     </ListItemButton>
                   </Link>
-                </List>
-              )}
+                )}
+              </List>
             </Box>
             {renderAuthButtons()}
           </Box>
