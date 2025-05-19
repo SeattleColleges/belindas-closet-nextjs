@@ -26,8 +26,10 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    //Regex for most valid email addresses.
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    //check if form fields are empty
     const newErrors = {
       name: formData.name.trim() === '',
       email: formData.email.trim() === '',
@@ -37,6 +39,7 @@ const Contact = () => {
 
     setErrors(newErrors);
 
+    //send the email if validation is successful
     emailjs.sendForm('service_xinlmmj', 'template_umbo1q7', e.target as HTMLFormElement, 'iHLRPRzpKKnhc1Mlr')
       .then((result) => {
         alert('Message sent successfully!');
@@ -45,7 +48,7 @@ const Contact = () => {
           email: '',
           business: '',
           message: '',
-        });
+        }); // Clear the form
       }, (error) => {
         alert('Error sending message. Please try again.');
         console.error(error.text);
