@@ -128,17 +128,17 @@ export default function Navbar() {
             <CategoryDropDownMenu />
             <Box sx={{ justifyContent: "center", alignItems: "center", display: "flex", flexGrow: 1, marginRight: "8rem" }}>
               <List sx={{ display: "flex", flexDirection: "row", alignItems: "center", width: "auto" }}>
-                <Link href={"/donations"} passHref legacyBehavior>
+                <Link href={"/donation-info"} passHref legacyBehavior>
                   <ListItemButton sx={{ marginInline: 4, padding: 0 }}>
                     <ListItemText primary="DONATIONS" />
                   </ListItemButton>
                 </Link>
-                <Link href={"/about-us"} passHref legacyBehavior>
+                <Link href={"/mission-page"} passHref legacyBehavior>
                   <ListItemButton sx={{ marginInline: 4, padding: 0, textWrap: "nowrap" }}>
                     <ListItemText primary="ABOUT US" />
                   </ListItemButton>
                 </Link>
-                <Link href={"/contact"} passHref legacyBehavior>
+                <Link href={"/contact-page"} passHref legacyBehavior>
                   <ListItemButton sx={{ marginInline: 4, padding: 0 }}>
                     <ListItemText primary="CONTACT" />
                   </ListItemButton>
