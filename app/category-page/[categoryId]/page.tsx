@@ -34,7 +34,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import {navItems} from "@/components/productList";
+import {productList} from "@/components/productList";
 import {ProductGenderList} from "@/app/add-product-page/product-prop-list";
 import {SelectChangeEvent} from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
