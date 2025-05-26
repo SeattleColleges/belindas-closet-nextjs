@@ -17,7 +17,6 @@ import {
   ListItemButton,
   ListItemText,
   ListItem
-
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CategoryDropDownMenu from "./CategoryDropDownMenu";
