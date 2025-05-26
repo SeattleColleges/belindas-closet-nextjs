@@ -135,8 +135,8 @@ export default function ProductCard({
                 display: "flex",
                 flexDirection: "column",
                 position: "relative",
-                bgcolor: '#ffffff',
-                boxShadow: 'none',
+                bgcolor: theme.palette.primary,
+                boxShadow: "0 4px 20px rgba(0,0,0,0.1)",   
                 borderRadius: 2,
                 overflow: 'hidden',
                 transition: 'transform 0.2s, box-shadow 0.2s',
@@ -152,7 +152,7 @@ export default function ProductCard({
                     position: 'relative',
                     width: '100%',
                     paddingTop: '100%', // 1:1 Aspect ratio
-                    bgcolor: '#f5f5f5'
+                    bgcolor: theme.palette.primary
                 }}>
                     <Image
                         src={image}
@@ -207,7 +207,9 @@ export default function ProductCard({
                 {/* Favorite Icon */}
                 <Box
                     sx={{
-                        bgcolor: "#eceff1",
+                        bgcolor: theme.palette.background.paper,
+                        boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                        color: theme.palette.primary.contrastText,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",

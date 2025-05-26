@@ -36,6 +36,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import {ProductGenderList} from "@/app/add-product-page/product-prop-list";
 import {SelectChangeEvent} from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
+import { useTheme } from "@mui/material/styles";
 
 const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 const placeholderImg = logo;
@@ -91,6 +92,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
     const [selectedColors, setSelectedColors] = useState<string[]>(['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'orange', 'cyan', 'magenta', 'black', 'white']);
     const [stockStatus, setStockStatus] = useState<string[]>(['inStock']);
     const [selectedSizes, setSelectedSizes] = useState<string[]>(['XS', 'S', 'M', 'L', 'XL', 'XXL']);
+    const theme = useTheme();
 
     // Search and filter handling
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -227,7 +229,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
         <Container maxWidth="xl" 
             sx={{
                 py: 4, 
-                bgcolor: '#ffffff', 
+                bgcolor: 'background.paper',
+                color: 'text.primary',
                 position: 'relative'
                 }}
         >
@@ -237,7 +240,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                 sx={{
                     mb: 4, 
                     maxWidth: '1000px',
-                    bgcolor: '#ffffff'
+                    bgcolor: 'background.paper',
+                    color: 'text.primary',
                 }}
             >
                 <Box sx={{
@@ -249,7 +253,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         '& .MuiOutlinedInput-root': {
                             height: '48px',
                             borderRadius: '8px',
-                            bgcolor: '#eceff1',
+                            bgcolor: theme.palette.grey[100],
                             '& fieldset': {
                                 borderColor: 'transparent',
                             },
@@ -338,20 +342,22 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                     mb: 4,
                     // maxWidth: '1400px',
                     // maxHeight: '700px',
-                    bgcolor: '#ffffff'
+                    bgcolor: theme.palette.background.paper
                 }}
             >
                 {/* Filters Sidebar */}
                 <Grid 
                     size={{ xs:4.5, sm: 4, md: 4 }}
                     sx={{
-                        mr: -5
+                        mr: -5,
+                        color: 'text.primary',
                     }}
                 >
                     <Paper sx={{
                         p: 2,
-                        bgcolor: '#ffffff',
-                        borderRight: '1px solid #e0e0e0',
+                        bgcolor: theme.palette.background.paper,
+                        color: 'text.primary',
+                        borderRight: `1px solid ${theme.palette.divider}`,
                         boxShadow: 'none',
                         maxWidth: '220px',
                         minWidth: '180px',
@@ -370,6 +376,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         {/* Gender Section */}
                         <Accordion sx={{
                             boxShadow: 'none',
+                            paddingX: '8px',
+                            borderRadius: '8px',
                             '&:before': {
                                 display: 'none',
                             },
@@ -403,6 +411,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         {/* Stock Status Section */}
                         <Accordion  sx={{
                             boxShadow: 'none',
+                            paddingX: '8px',
+                            borderRadius: '8px',
                             '&:before': {
                                 display: 'none',
                             },
@@ -437,6 +447,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         {/* Size Section */}
                         <Accordion  sx={{
                             boxShadow: 'none',
+                            paddingX: '8px',
+                            borderRadius: '8px',
                             '&:before': {
                                 display: 'none',
                             },
@@ -470,6 +482,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                         {/* Color */}
                         <Accordion  sx={{
                             boxShadow: 'none',
+                            paddingX: '8px',
+                            borderRadius: '8px',
                             '&:before': {
                                 display: 'none',
                             },
@@ -496,7 +510,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                                 height: 24,
                                                 borderRadius: '50%',
                                                 bgcolor: color,
-                                                border: '1px solid #7C7C7C',
+                                                // border: '1px solid #7C7C7C',
+                                                border: `1px solid ${theme.palette.divider}`,
                                                 cursor: 'pointer',
                                                 position: 'relative',
                                                 display: 'flex',
@@ -536,7 +551,8 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                 >
                     <Box 
                         sx={{
-                            bgcolor: '#ffffff', 
+                            // bgcolor: '#ffffff', 
+                            bgcolor: 'background.paper',
                             borderRadius: 1,
                             width: '100%',
                         }}
@@ -567,7 +583,7 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                     onChange={handleSortChange}
                                     displayEmpty
                                     size="small"
-                                    sx={{bgcolor: '#ffffff'}}
+                                    sx={{bgcolor: 'background.paper'}}
                                 >
                                     <MenuItem value="newest">Newest</MenuItem>
                                     <MenuItem value="oldest">Oldest</MenuItem>
@@ -614,7 +630,9 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                                     onChange={handlePageChange}
                                     color="primary"
                                     size="large"
-                                    sx={{bgcolor: '#ffffff'}}
+                                    sx={{
+                                        bgcolor: 'background.paper',
+                                    }}
                                 />
                             </Box>
                         )}

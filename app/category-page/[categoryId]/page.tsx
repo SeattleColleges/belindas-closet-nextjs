@@ -315,7 +315,9 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
                 <Grid item md={3} xs={12}>
                     <Paper sx={{
                         p: 2,
-                        bgcolor: '#ffffff',
+                        // bgcolor: '#ffffff',
+                        bgcolor: 'background.paper',
+                        color: 'text.primary',
                         borderRight: '1px solid #e0e0e0',
                         boxShadow: 'none'
                     }}>
