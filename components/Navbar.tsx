@@ -39,11 +39,6 @@ export default function Navbar() {
     if (isAuth) return null;
     return (
       <>
-        <Link href="/auth/sign-up" passHref legacyBehavior>
-          <Button sx={{
-            color: "primary.contrastText", fontWeight: 700
-          }}>Sign Up</Button>
-        </Link>
         <Link href="/auth/sign-in" passHref legacyBehavior>
           <Button sx={{
             color: "primary.contrastText", fontWeight: 700, '&:hover': {
@@ -182,6 +177,5 @@ export default function Navbar() {
         {drawer}
       </Drawer>
     </>
-
   );
 }
