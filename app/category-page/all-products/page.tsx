@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState, useEffect, Dispatch, SetStateAction} from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import ProductCard from "@/components/ProductCard";
 import logo from "@/public/belinda-images/logo.png";
 import {
@@ -58,7 +58,7 @@ interface Product {
 }
 
 async function fetchData(categoryId: string, setProducts: Dispatch<SetStateAction<Product[]>>) {
-    const apiUrl = `${URL}/products`;
+  const apiUrl = `${URL}/products`;
 
     try {
         const res = await fetch(apiUrl, {
@@ -140,16 +140,16 @@ const ViewProduct = ({categoryId}: { categoryId: string }) => {
         );
     };
 
-    function flipEntryGender(item: String) {
-        console.log("Item: ", item);
-        setGenderFilters((gender) => {
-            if (!gender.includes(item)) {
-                return [...gender, item];
-            } else {
-                return gender.filter((value) => value !== item);
-            }
-        });
-    }
+  function flipEntryGender(item: String) {
+    console.log("Item: ", item);
+    setGenderFilters((gender) => {
+      if (!gender.includes(item)) {
+        return [...gender, item];
+      } else {
+        return gender.filter((value) => value !== item);
+      }
+    });
+  }
 
     useEffect(() => {
         fetchData(categoryId, setProducts);
