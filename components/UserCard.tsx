@@ -16,13 +16,13 @@ export interface UserCardProps {
 }
 
 function UserCard({ user }: { user: UserCardProps }) {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [editCompleted, setEditCompleted] = useState(false);
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [editCompleted, setEditCompleted] = useState<boolean>(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
-  const [newRole, setNewRole] = useState(user.role);
+  const [newRole, setNewRole] = useState<string>(user.role);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
