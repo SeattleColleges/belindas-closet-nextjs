@@ -135,7 +135,6 @@ export default function ProductCard({
                 display: "flex",
                 flexDirection: "column",
                 position: "relative",
-                bgcolor: theme.palette.primary,
                 boxShadow: "0 4px 20px rgba(0,0,0,0.1)",   
                 borderRadius: 2,
                 overflow: 'hidden',
@@ -152,7 +151,6 @@ export default function ProductCard({
                     position: 'relative',
                     width: '100%',
                     paddingTop: '100%', // 1:1 Aspect ratio
-                    bgcolor: theme.palette.primary
                 }}>
                     <Image
                         src={image}
