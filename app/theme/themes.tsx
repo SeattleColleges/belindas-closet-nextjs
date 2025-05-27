@@ -85,7 +85,8 @@ let lightTheme = createTheme({
       contrastText: "#fff",
     },
     background: {
-      default: "#EEE7DA",
+      default: "#ffffff",
+      paper: "#ffffff",
     },
   },
 });
