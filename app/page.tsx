@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 import useAuth from "@/hooks/useAuth";
 import { productList } from "@/components/productList";
 
-const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 async function fetchData(
   setProducts: Dispatch<SetStateAction<Product[]>>

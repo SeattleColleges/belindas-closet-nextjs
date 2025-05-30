@@ -49,7 +49,7 @@ export default function ConfirmDeleteUserDialog({
         const token = localStorage.getItem("token");
 
         try {
-            const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || `http://localhost:3000/api`;
+            const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
             const response = await fetch(`${URL}/user/delete/${user.id}`, {
                 method: 'DELETE',
                 headers: {
