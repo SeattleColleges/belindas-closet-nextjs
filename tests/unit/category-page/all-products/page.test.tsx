@@ -1,4 +1,4 @@
-// __tests__/category-page/all-products/page.test.tsx
+
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import ProductList from "@/app/category-page/all-products/page";
