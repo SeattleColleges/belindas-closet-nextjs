@@ -1,4 +1,7 @@
 import '@testing-library/jest-dom';
+// jest.setup.ts
+import "@testing-library/jest-dom";
+
 
 // Old import replaced by the one above: import '@testing-library/jest-dom/extend-expect';
 
