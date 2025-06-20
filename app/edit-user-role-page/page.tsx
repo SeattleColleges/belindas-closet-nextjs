@@ -136,6 +136,7 @@ const EditUserRolePage = () => {
   async function acceptNewRole(userId: string, role: string) {
     const token = localStorage.getItem("token");
     try {
+      // Check if the API URL is defined
       if (!URL) {
         console.error("API URL is not defined");
         return;

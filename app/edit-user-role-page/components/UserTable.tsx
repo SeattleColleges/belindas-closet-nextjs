@@ -14,8 +14,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-// [TODO] Uncomment and enable EditUserRoleDialog when backend endpoint is ready.
-// import EditUserRoleDialog from './EditUserRoleDialog';
+import EditUserRoleDialog from './EditUserRoleDialog';
 import { User } from "../models/interface";
 
 /**
@@ -92,7 +91,7 @@ const UserTable: React.FC<UserTableProps> = ({ userInfo, handleEditRoleDialog, o
                   {user.role.toUpperCase()}
                 </TableCell>
                 <TableCell sx={{ padding: "8px 16px" }}>
-                  {/* <EditUserRoleDialog user={user} onClose={handleEditRoleDialog} /> */}
+                  <EditUserRoleDialog user={user} onClose={handleEditRoleDialog} />
                 </TableCell>
               </TableRow>
             ))}
