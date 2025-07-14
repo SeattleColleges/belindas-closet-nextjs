@@ -5,7 +5,7 @@ import UnauthorizedPageMessage from "@/components/UnauthorizedPageMessage";
 import WeeklyActivity from "@/app/dashboard/weeklyActivity/page";
 import DashboardNavbar from "@/components/DashboardNavbar";
 
-const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL || "http://localhost:3000/api";
+const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 
 /**
  * Represents a user.
