@@ -67,7 +67,8 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
     const token = localStorage.getItem('token');
     try {
       const apiUrl = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
-      const response = await fetch(`${apiUrl}/user/update/${user.id}`, {
+      // Updated to use the new API endpoint pattern
+      const response = await fetch(`${apiUrl}/users/update/${user.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -252,4 +253,4 @@ const AddLookingForDialog = ({ open, user, onClose, onAdd }: AddLookingForDialog
   );
 };
 
-export default AddLookingForDialog; 
+export default AddLookingForDialog;

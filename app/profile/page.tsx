@@ -15,11 +15,16 @@ const URL = process.env.BELINDAS_CLOSET_PUBLIC_API_URL;
 type JWToken = string | null;
 
 async function fetchUserById(setUserInfo: (userInfo: User) => void, userId: string, userToken: JWToken) {
-  const apiUrl = `${URL}/user/${userId}`;
+  // Updated API URL to match the new backend route structure
+  const apiUrl = `${URL}/users/find/${userId}`;
+  
   try {
     if (!userToken) {
       throw new Error('JWT token not found in storage')
     }
+    
+    console.log("Fetching user from:", apiUrl);
+    
     const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -27,11 +32,13 @@ async function fetchUserById(setUserInfo: (userInfo: User) => void, userId: stri
         "Authorization": `Bearer ${userToken}`,
       },
     });
+    
     if (!res.ok) {
+      console.error("API error:", res.status, res.statusText);
       throw new Error(res.statusText);
     } else {
       const data = await res.json();
-      console.log(data)
+      console.log("User data received:", data);
       setUserInfo(data);
     }
   } catch (error) {

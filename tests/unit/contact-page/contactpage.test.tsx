@@ -23,7 +23,7 @@ describe('Contact component', () => {
   test('renders correctly', () => {
     render(<Contact />);
     expect(Typography).toHaveBeenCalledTimes(3);
-    expect(Box).toHaveBeenCalledTimes(7);
+    expect(Box).toHaveBeenCalledTimes(5);
     expect(TextField).toHaveBeenCalledTimes(4);
     expect(Button).toHaveBeenCalledTimes(1);
   });
